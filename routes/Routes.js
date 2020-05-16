@@ -1,6 +1,7 @@
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
 import Selection from '../components/2_SelectionPage.js';
+import ForgotPassword from '../components/5_FpassPage.js';
 
 import LoginClient from '../components/3_LoginPage_Client.js';
 import SignupClient1 from '../components/4_SignupPage1_Client.js';
@@ -21,6 +22,10 @@ import SignupConsultant2 from '../components/4_SignupPage2_Consultant.js';
 const screens = {
     Selection : {
         screen: Selection
+    },
+
+    ForgotPassword : {
+        screen: ForgotPassword
     },
 
     //Client Side

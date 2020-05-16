@@ -2,6 +2,7 @@ import Global from './components/AP_Global';
 import Selection from './components/SelectionPage';
 import Login from './components/LoginPage';
 import SignUp from './components/SignupPage';
+import ForgotPassword from './components/FpassPage';
 // import LoginConsultant from './components/SelectionPage';
 
 import Home from './components/HomePage';
@@ -18,7 +19,7 @@ export const globalStyles = StyleSheet.create(Global);
 export const selectionStyles = StyleSheet.create(Selection);
 export const loginStyles = StyleSheet.create(Login);
 export const signupStyles = StyleSheet.create(SignUp);
-
+export const fpassStyles = StyleSheet.create(ForgotPassword);
 export const homeStyles = StyleSheet.create(Home);
 export const aboutStyles = StyleSheet.create(About);
 

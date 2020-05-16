@@ -66,7 +66,6 @@ const SignupConsultant2 = ( {navigation} ) => {
                   />  
                 </View>
                 
-        
             </View>
 
             <View style={signupStyles.forms_textinput_container}>

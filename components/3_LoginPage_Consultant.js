@@ -15,8 +15,8 @@ const LoginConsultant = ( {navigation} ) => {
     navigation.navigate('SignupConsultant1');
   }
 
-  const FPass = () => {
-    navigation.navigate('HomeClient');
+  const ForgotPassword = () => {
+    navigation.navigate('ForgotPassword');
   }
 
   return (
@@ -60,7 +60,9 @@ const LoginConsultant = ( {navigation} ) => {
               </TouchableOpacity>
 
               <Text style={loginStyles.forms_text}>Forgot Password?{" "} 
-                <TouchableOpacity>
+                <TouchableOpacity
+                    onPress={ForgotPassword}
+                >
                   <Text style={loginStyles.forms_text_underline}>Tap Here!</Text>
                 </TouchableOpacity>
               </Text>
