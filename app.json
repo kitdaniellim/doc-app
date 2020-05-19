@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "DocApp",
-    "slug": "DocApp",
+    "name": "doc-app-client",
+    "slug": "doc-app-client",
     "platforms": [
       "ios",
       "android",

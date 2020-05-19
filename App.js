@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Alert, Button, TextInput, View, StyleSheet } from 'react-native';
+import { AppRegistry, Alert, Button, TextInput, View, StyleSheet } from 'react-native';
 import { Constants } from 'expo';
+import Routes from './routes/Routes.js';
 import firebase from "firebase"
 require("firebase/firestore");
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyAc9jbCdsAr25GlhpcLMWap-XBJy60Z2uE",
@@ -72,6 +74,8 @@ export default class App extends Component {
   }
 }
 
+AppRegistry.registerComponent("App", () => App);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -88,3 +92,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 });
+=======
+
+
+>>>>>>> App.js
