@@ -58,7 +58,7 @@ const SignupConsultant1 = ( {navigation} ) => {
                   style={signupStyles.forms_textinput}
               />
             </View>
-            <Text style={signupStyles.forms_text}>1/3</Text>
+            <Text style={signupStyles.forms_text}>1/4</Text>
             <TouchableOpacity
               activeOpacity={0.6}
               style={signupStyles.forms_button}

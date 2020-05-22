@@ -12,8 +12,9 @@ import HomeClient from '../components/6_HomePage_Client.js';
 import LoginConsultant from '../components/3_LoginPage_Consultant.js';
 import SignupConsultant1 from '../components/4_SignupPage1_Consultant.js';
 import SignupConsultant2 from '../components/4_SignupPage2_Consultant.js';
-
-
+import SignupConsultant3_1 from '../components/4_SignupPage3_1_Consultant.js';
+import SignupConsultant3_2 from '../components/4_SignupPage3_2_Consultant.js';
+import SignupConsultant4 from '../components/4_SignupPage4_Consultant.js';
 
 // import HomeConsultant from '../components/6_HomePage_Consultant.js';
 
@@ -55,6 +56,15 @@ const screens = {
     },
     SignupConsultant2 : {
         screen: SignupConsultant2
+    },
+    SignupConsultant3_1 : {
+        screen: SignupConsultant3_1
+    },
+    SignupConsultant3_2 : {
+        screen: SignupConsultant3_2
+    },
+    SignupConsultant4 : {
+        screen: SignupConsultant4
     },
 
 

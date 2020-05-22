@@ -3,7 +3,6 @@ const Selection = {
         flex: 1,
         flexDirection: 'row',
         backgroundColor: '#D9E3FE',
-        textAlign: 'center',
     },
 
     left_scaffold: {
@@ -41,13 +40,13 @@ const Selection = {
     left_icon_text: {
         color: '#fff',
         letterSpacing: 1,
-        fontWeight: 500,
+        fontWeight: '500',
     },
 
     right_icon_text: {
         color: '#fff',
         letterSpacing: 1,
-        fontWeight: 500,
+        fontWeight: '500',
     },
 
   }

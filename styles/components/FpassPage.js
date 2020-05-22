@@ -52,7 +52,6 @@ const ForgotPassword = {
         shadowOffset:{  width: 0,  height: 2,  },
         shadowColor: 'black',
         shadowOpacity: 0.1,
-        textAlign: 'center',
         justifyContent: 'center',
         alignSelf: 'center',
     },
@@ -62,6 +61,7 @@ const ForgotPassword = {
         fontSize: 9,
         fontWeight: 600, 
         letterSpacing: 1, 
+        textAlign: 'center',
     },
 
   }
