@@ -8,7 +8,8 @@ import { LinearGradient } from  'expo-linear-gradient';
 
 const LoginConsultant = ( {navigation} ) => {
   const Home = () => {
-    navigation.navigate('HomeClient');
+    // navigation.navigate('HomeConsultant');
+    navigation.navigate('HomeConsultant');
   }
 
   const SignUp = () => {
@@ -30,11 +31,11 @@ const LoginConsultant = ( {navigation} ) => {
     >
     
     <View style={loginStyles.forms_container}>
-            <Icon style={globalStyles.icon_client} name="user-md" size={55} />
+            <Icon style={globalStyles.icon_client} name="user-md" size={42} />
             <Text style={loginStyles.forms_label}> CONSULTANT </Text>
 
             <View style={loginStyles.forms_textinput_container}>
-              <Icon style={globalStyles.icon_global} name="user-circle-o" size={18} />
+              <Icon style={globalStyles.icon_global} name="user-circle" size={18} />
               <TextInput 
                   placeholder="Username" 
                   placeholderTextColor = "#8B8787"

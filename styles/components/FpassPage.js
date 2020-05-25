@@ -15,7 +15,7 @@ const ForgotPassword = {
     scaffold_text: {
         color: '#fff',
         fontSize: 11,
-        fontWeight: 500,
+        fontWeight: '500',
         textAlign: 'center',
     },
 
@@ -59,7 +59,7 @@ const ForgotPassword = {
     button_label: {
         color: '#8B8787',
         fontSize: 9,
-        fontWeight: 600, 
+        fontWeight: '600', 
         letterSpacing: 1, 
         textAlign: 'center',
     },

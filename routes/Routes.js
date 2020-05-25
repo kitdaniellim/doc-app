@@ -16,6 +16,7 @@ import SignupConsultant3_1 from '../components/4_SignupPage3_1_Consultant.js';
 import SignupConsultant3_2 from '../components/4_SignupPage3_2_Consultant.js';
 import SignupConsultant4 from '../components/4_SignupPage4_Consultant.js';
 
+import Search from '../components/SearchPage.js';
 // import HomeConsultant from '../components/6_HomePage_Consultant.js';
 
 
@@ -68,9 +69,11 @@ const screens = {
     },
 
 
+    Search : {
+        screen: Search
+    },
 
-
-
+ 
 
 }
 

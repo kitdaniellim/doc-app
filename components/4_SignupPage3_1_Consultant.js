@@ -9,7 +9,8 @@ export default class SignupConsultant3_1 extends Component {
   constructor(props){
     super(props);
     this.state = {
-      locationID: -1,
+      key: 0, //unique key prop
+      count: 0, //item count
       locationInput : [],
     }
   }
@@ -25,12 +26,12 @@ export default class SignupConsultant3_1 extends Component {
   }
 
   addLocation = () => {
-    let locationID = this.state.locationID;
     let locationInput = this.state.locationInput;
-
-    locationID += 1;
+    let key = this.state.key;
+    let count = this.state.count;
+    
     locationInput.push(
-      <View>
+      <View key={key.toString()}>
         <View style={signupStyles.forms_textinput_container}>
           <Icon style={globalStyles.icon_global} name="map-marker" size={18} />
           <TextInput 
@@ -40,35 +41,38 @@ export default class SignupConsultant3_1 extends Component {
           />
         </View>
         <View style={signupStyles.forms_add_textinput_container}>
-            <TouchableOpacity
-              activeOpacity={0.6}
-              style={signupStyles.forms_add_textinput_button_container}
-              onPress={() => this.addOfficeHours(locationID)}
-            >
-              <Text style={signupStyles.forms_add_textinput_text} >ADD OFFICE HOURS </Text>
-              <Icon style={globalStyles.icon_global} name="plus" size={18} />
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity
+            activeOpacity={0.6}
+            style={signupStyles.forms_add_textinput_button_container}
+            onPress={() => this.addOfficeHours(count)}
+          >
+            <Text style={signupStyles.forms_add_textinput_text} >ADD OFFICE HOURS </Text>
+            <Icon style={globalStyles.icon_global} name="plus" size={18} />
+          </TouchableOpacity>
+        </View>
       </View>
     )
 
+    key += 1;
+    count += 1;
     this.setState({ 
-      locationID: locationID,
+      key: key,
+      count: count,
       locationInput: locationInput,
     })
   }
 
   removeLocation = () => {
-    let locationID = this.state.locationID;
     let locationInput = this.state.locationInput;
+    let count = this.state.count;
 
-    if(locationID != -1) {
-      locationID -= 1;
+    if(count !== 0) {
       locationInput.pop();
+      count -= 1;
     }
 
     this.setState({ 
-      locationID: locationID,
+      count: count,
       locationInput 
     });
   }
@@ -114,7 +118,7 @@ export default class SignupConsultant3_1 extends Component {
                   onPress={() => this.removeLocation()}
                 >
                   <Text style={signupStyles.forms_add_textinput_text} > REMOVE LOCATION </Text>
-                  <Icon style={globalStyles.icon_global} name="plus" size={18} />
+                  <Icon style={globalStyles.icon_global} name="times" size={18} />
                 </TouchableOpacity>
               </View>
             </View>  

@@ -19,7 +19,7 @@ const Search = {
     },
 
     body: {
-      flex: 9,
+      flex: 1,
       backgroundColor: 'white',
       alignSelf: 'stretch',
       marginRight: 30,

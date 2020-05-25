@@ -8,8 +8,9 @@ const SignUp = {
         flex: 1,
         justifyContent: 'space-between',
         alignItems: 'stretch',
-        marginHorizontal: 100,
-        marginVertical: 40,
+        marginHorizontal: 50,
+        marginTop: 20,
+        marginBottom: 60,
     },
 
     forms_scaffold: {
@@ -67,7 +68,7 @@ const SignUp = {
         borderRadius: 15,
         paddingHorizontal: 10,
         paddingVertical: 3,
-        marginHorizontal: 8,
+        marginHorizontal: 5,
         marginVertical: 10,
         justifyContent: 'flex-start',
         alignSelf: 'stretch',
@@ -80,7 +81,7 @@ const SignUp = {
         fontSize: 11,
         width: '100%',
         paddingHorizontal: 5,
-        marginHorizontal: 10,
+        marginHorizontal: 5,
         borderRadius: 20,
         backgroundColor: '#fff',  
     },
@@ -147,7 +148,7 @@ const SignUp = {
     },
 
     forms_button: {
-        width: 200,
+        width: 130,
         height: 30,
         marginTop: 20,
         backgroundColor: '#fff',

@@ -1,19 +1,21 @@
 const Navbar = {
     navBar: {
-      flex: 1,
+      height: 35,
       flexDirection: 'row',
       alignSelf: 'stretch',
+      
     },
 
     navBarItem: {
       flex: 1,
-      backgroundColor: '#0d285f',
-      textAlign: 'center',
+      backgroundColor: '#19BAB9',
+      justifyContent: 'center'
     },
 
     icon: {
       color: 'white',
-      marginTop: 10,
+      textAlign: 'center',
+      margin: 4,
     }
 
   }

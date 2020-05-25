@@ -9,7 +9,6 @@ export default class RadioButtons_MultipleSelect extends Component {
 	render() {
 		const { options } = this.props;
         const { values } = this.state;
-        console.log(options)
 		return (
 			<View style={styles.container}>
 				{options.map((item) => {

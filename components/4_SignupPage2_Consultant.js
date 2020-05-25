@@ -5,9 +5,11 @@ import { signupStyles, globalStyles } from '../styles/styles';
 import { LinearGradient } from  'expo-linear-gradient';
 
 class Dynamic_Input extends Component {
-  constructor(props){
-    super(props);
+  constructor(){
+    super();
     this.state = {
+      key: 0, //unique key prop
+      count: 0, //item count
       textInput : [],
     }
   }
@@ -15,29 +17,42 @@ class Dynamic_Input extends Component {
   //function to add TextInput dynamically
   addField = () => {
     let textInput = this.state.textInput;
+    let key = this.state.key;
+    let count = this.state.key;
+
+    key += 1;
+    count += 1;
     textInput.push(
-    <View style={signupStyles.forms_textinput_container}>
+    <View key={key.toString()} style={signupStyles.forms_textinput_container}>
       <Icon style={globalStyles.icon_global} name="briefcase" size={18} />
       <TextInput 
         placeholder="Sub-specialty" 
         placeholderTextColor = "#8B8787"
         style={signupStyles.forms_textinput}
       />
-      <TouchableOpacity
-        onPress={() => this.removeField()}
-      >
-        <Icon style={globalStyles.icon_global} name="times" size={18} />
-      </TouchableOpacity>
     </View>
     );
-    this.setState({ textInput });
+    
+    this.setState({ 
+      key: key,
+      count: count,
+      textInput 
+    });
   }
 
   //function to remove TextInput dynamically
   removeField = () => {
     let textInput = this.state.textInput;
-    textInput.pop();
-    this.setState({ textInput });
+    let count = this.state.count;
+
+    if(count !== 0){
+      textInput.pop();
+      count -= 1;
+    }
+    this.setState({ 
+      count: count,
+      textInput 
+    });
   }
 
   render(){
@@ -46,15 +61,26 @@ class Dynamic_Input extends Component {
         {this.state.textInput.map((value) => {
           return value
         })}
-        <TouchableOpacity
-          activeOpacity={0.6}
-          style={signupStyles.forms_add_textinput_button_container}
-          onPress={() => this.addField()}
-        >
-          <Text style={signupStyles.forms_add_textinput_text} >ADD SUB-SPECIALTY{" "}</Text>
-          <Icon style={globalStyles.icon_global} name="plus" size={18} />
-        </TouchableOpacity>
+
+        <View style={signupStyles.forms_add_textinput_container}>
+          <TouchableOpacity
+            activeOpacity={0.6}
+            style={signupStyles.forms_add_textinput_button_container}
+            onPress={() => this.addField()}
+          >
+            <Text style={signupStyles.forms_add_textinput_text} > ADD SUB-SPECIALTY </Text>
+            <Icon style={globalStyles.icon_global} name="plus" size={18} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.6}
+            style={signupStyles.forms_add_textinput_button_container}
+            onPress={() => this.removeField()}
+          >
+            <Text style={signupStyles.forms_add_textinput_text} > REMOVE SUB-SPECIALTY </Text>
+            <Icon style={globalStyles.icon_global} name="times" size={18} />
+          </TouchableOpacity>
         </View>
+      </View>
     )
   }
 }

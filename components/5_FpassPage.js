@@ -31,7 +31,7 @@ const ForgotPassword = ( {navigation} ) => {
         email account for you.
       </Text>
       <View style={fpassStyles.scaffold_textinput_container}>
-        <Icon style={globalStyles.icon_global} name="user-o" size={18} />
+        <Icon style={globalStyles.icon_global} name="user-circle" size={18} />
         <TextInput 
           placeholder="Username" 
           placeholderTextColor = "#8B8787"

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Text, View, FlatList, TouchableHighlight, TouchableOpacity } from 'react-native';
-import { Actions } from 'react-native-router-flux';
 import { SearchBar } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { searchStyles, navbarStyles } from '../styles/styles';
@@ -8,18 +7,7 @@ import { searchStyles, navbarStyles } from '../styles/styles';
 
 
 const Search = () => {
-  const goToAbout = () => {
-    Actions.about()
-  }
-  // const goToCalendar = () => {
-  //   Actions.calendar()
-  // }
-  const goToSearch = () => {
-    Actions.search()
-  }
-  // const goToReview = () => {
-  //   Actions.review()
-  // }
+
   
   const list = [
     {
@@ -45,16 +33,42 @@ const Search = () => {
     {
       field: "ARCHITECTS",
       data: ["Pizza", "Burger", "Risotto"]
+    },
+    
+    {
+      field: "LAWYERS",
+      data: ["Madeyo", "Blanca", "Risotto"]
+    },
+
+    {
+      field: "BUSINESSMEN",
+      data: ["Shelby", "Oquias", "Chengretto"]
+    },
+
+    {
+      field: "DOCTORS",
+      data: ["Tokyo", "Denver", "Rio"]
+    },
+
+    {
+      field: "ARCHITECTS",
+      data: ["Arnoco", "Burmuda", "Risotto"]
+    },
+    
+    {
+      field: "LAWYERS",
+      data: ["Madeyo", "Blanca", "Risotto"]
+    },
+
+    {
+      field: "BUSINESSMEN",
+      data: ["Shelby", "Oquias", "Chengretto"]
     }
 
   ];
 
   return (
-    <View style={searchStyles.container}>
-      {/* <View>
-        <Text style={searchStyles.header}>Welcome! This is the home page</Text>
-      </View> */}
-      
+    <View style={searchStyles.container}>  
       <SearchBar style={searchStyles.searchBar}
         platform="android"
         lightTheme
@@ -104,27 +118,33 @@ const Search = () => {
       </View> */}
 
       <View style={navbarStyles.navBar}>
-
-        <TouchableOpacity style={navbarStyles.navBarItem} onPress={goToAbout}>
+        <TouchableOpacity 
+          style={navbarStyles.navBarItem} 
+          onPress={()=>{}}
+        >
           <View>
             <Icon style={navbarStyles.icon} name="calendar" size={21} />
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity style={navbarStyles.navBarItem} onPress={()=>{}}>
+        <TouchableOpacity 
+          style={navbarStyles.navBarItem} 
+          onPress={()=>{}}
+        >
           <View>
             <Icon style={navbarStyles.icon} name="search" size={21} />
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity style={navbarStyles.navBarItem} onPress={goToAbout}>
+        <TouchableOpacity 
+          style={navbarStyles.navBarItem} 
+          onPress={()=>{}}
+        >
           <View>
             <Icon style={navbarStyles.icon} name="star" size={21} />
           </View>
         </TouchableOpacity>
-
       </View>
-
     </View> 
   );
 }

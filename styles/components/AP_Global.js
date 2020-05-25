@@ -3,8 +3,8 @@ const Global = {
     flex: 1,
     backgroundColor: '#333',
     justifyContent: 'center',
-    alignItems: 'center'
-    
+    alignItems: 'center',
+    margin: 0,
   },
 
   text: {
@@ -17,7 +17,7 @@ const Global = {
   gradient: {
     flex: 1,
     alignSelf: 'stretch',
-    backgroundColor: '#507FAF',
+    backgroundColor: '#19BAB9',
   },
 
   icon_client: {
@@ -32,7 +32,7 @@ const Global = {
   },
 
   icon_global: {
-    color: '#507FAF',
+    color: '#19BAB9',
     justifyContent: 'center',
     alignSelf: 'center',
   },

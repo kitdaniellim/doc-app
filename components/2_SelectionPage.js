@@ -30,7 +30,7 @@ const Selection = ( {navigation} ) => {
         >
           <View style={selectionStyles.left_icon_container}>
             <Text style={selectionStyles.left_icon_text}>CLIENT</Text>
-            <Icon style={globalStyles.icon_client} name="wheelchair-alt" size={60} />
+            <Icon style={globalStyles.icon_client} name="wheelchair-alt" size={42} />
           </View>
         </LinearGradient>
       </TouchableOpacity>
@@ -46,7 +46,7 @@ const Selection = ( {navigation} ) => {
         >
           <View style={selectionStyles.right_icon_container}>
             <Text style={selectionStyles.right_icon_text}>CONSULTANT</Text>
-            <Icon style={globalStyles.icon_client} name="user-md" size={60} />
+            <Icon style={globalStyles.icon_client} name="user-md" size={42} />
           </View>
         </LinearGradient>
       </TouchableOpacity>

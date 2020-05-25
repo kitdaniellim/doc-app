@@ -22,7 +22,7 @@ const Selection = {
     left_icon_container: {
         flex: 1,
         padding: 20,
-        marginLeft: 25,
+        marginLeft: 20,
         marginBottom: 70,
         justifyContent: 'center',
         alignItems: 'center',
@@ -31,7 +31,7 @@ const Selection = {
     right_icon_container: {
         flex: 1,
         padding: 20,
-        marginRight: 25,
+        marginRight: 20,
         marginBottom: 70,
         justifyContent: 'center',
         alignItems: 'center',
@@ -41,12 +41,14 @@ const Selection = {
         color: '#fff',
         letterSpacing: 1,
         fontWeight: '500',
+        fontSize: 11,
     },
 
     right_icon_text: {
         color: '#fff',
         letterSpacing: 1,
         fontWeight: '500',
+        fontSize: 11,
     },
 
   }

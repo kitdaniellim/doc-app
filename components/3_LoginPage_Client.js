@@ -30,11 +30,11 @@ const LoginClient = ( {navigation} ) => {
     >
     
     <View style={loginStyles.forms_container}>
-            <Icon style={globalStyles.icon_client} name="wheelchair-alt" size={55} />
+            <Icon style={globalStyles.icon_client} name="wheelchair-alt" size={42} />
             <Text style={loginStyles.forms_label}> CLIENT </Text>
 
             <View style={loginStyles.forms_textinput_container}>
-              <Icon style={globalStyles.icon_global} name="user-circle-o" size={18} />
+              <Icon style={globalStyles.icon_global} name="user-circle" size={18} />
               <TextInput 
                   placeholder="Username" 
                   placeholderTextColor = "#8B8787"
