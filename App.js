@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { Alert, Button, TextInput, View, StyleSheet } from 'react-native';
 import { Constants } from 'expo';
 import Routes from './routes/Routes.js';
-import firebase from "firebase"
+import firebase from "firebase";
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+
 require("firebase/firestore");
 
 const firebaseConfig = {
@@ -15,7 +18,7 @@ const firebaseConfig = {
   appId: "1:346336386740:web:7f7788d6882e9b8c8d41e1",
   measurementId: "G-32FB2FHN7B"
 };
-  
+
 if(!firebase.apps.length){
   firebase.initializeApp(firebaseConfig);
 }
@@ -32,14 +35,14 @@ const db = firebase.firestore();
 export default class App extends Component {
   constructor(props) {
     super(props);
-  
+
      this.state = {  //DONT REMOVE -Eldrin
       username: '',
       password: '',
-    }; 
+    };
 
   }
-  
+
   onLogin() {
     const { username, password } = this.state;
 
