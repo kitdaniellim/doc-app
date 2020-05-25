@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Alert, Button, TextInput, View, StyleSheet } from 'react-native';
+import { Alert, AppRegistry, Button, TextInput, View, StyleSheet } from 'react-native';
+// import Selection from './components/2_SelectionPage.js';
+// import { LinearGradient } from  'expo-linear-gradient';
 import { Constants } from 'expo';
 import Routes from './routes/Routes.js';
 import firebase from "firebase"
