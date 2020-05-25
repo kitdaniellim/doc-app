@@ -2,8 +2,8 @@ const About = {
     container: {
       flex: 1,
       backgroundColor: '#fff',
-      alignItems: 'left',
-      justifyContent: 'left',
+     /* alignItems: 'left',
+      justifyContent: 'left', */
       marginTop: 50,
       marginLeft: 10
     },

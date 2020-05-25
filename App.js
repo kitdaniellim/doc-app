@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { AppRegistry, Alert, Button, TextInput, View, StyleSheet } from 'react-native';
+import { Alert, Button, TextInput, View, StyleSheet } from 'react-native';
 import { Constants } from 'expo';
 import Routes from './routes/Routes.js';
 import firebase from "firebase"
 require("firebase/firestore");
-
 
 const firebaseConfig = {
   apiKey: "AIzaSyAc9jbCdsAr25GlhpcLMWap-XBJy60Z2uE",
@@ -16,7 +15,7 @@ const firebaseConfig = {
   appId: "1:346336386740:web:7f7788d6882e9b8c8d41e1",
   measurementId: "G-32FB2FHN7B"
 };
-
+  
 if(!firebase.apps.length){
   firebase.initializeApp(firebaseConfig);
 }
@@ -33,11 +32,12 @@ const db = firebase.firestore();
 export default class App extends Component {
   constructor(props) {
     super(props);
-    
-    this.state = {
+  
+     this.state = {  //DONT REMOVE -Eldrin
       username: '',
       password: '',
-    };
+    }; 
+
   }
   
   onLogin() {
@@ -49,32 +49,10 @@ export default class App extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <TextInput
-          value={this.state.username}
-          onChangeText={(username) => this.setState({ username })}
-          placeholder={'Username'}
-          style={styles.input}
-        />
-        <TextInput
-          value={this.state.password}
-          onChangeText={(password) => this.setState({ password })}
-          placeholder={'Password'}
-          secureTextEntry={true}
-          style={styles.input}
-        />
-        
-        <Button
-          title={'Login'}
-          style={styles.input}
-          onPress={this.onLogin.bind(this)}
-        />
-      </View>
+     <Routes/>
     );
   }
 }
-
-AppRegistry.registerComponent("App", () => App);
 
 const styles = StyleSheet.create({
   container: {
@@ -92,7 +70,3 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 });
-=======
-
-
->>>>>>> App.js
