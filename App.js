@@ -3,8 +3,8 @@ import { Alert, Button, TextInput, View, StyleSheet } from 'react-native';
 import { Constants } from 'expo';
 import Routes from './routes/Routes.js';
 import firebase from "firebase";
-import { Provider } from 'react-redux'
-import { createStore } from 'redux'
+import { Provider } from 'react-redux';
+import configureStore from './store/configureStore';
 
 require("firebase/firestore");
 
@@ -19,7 +19,7 @@ const firebaseConfig = {
   measurementId: "G-32FB2FHN7B"
 };
 
-if(!firebase.apps.length){
+if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
@@ -29,6 +29,8 @@ if(!firebase.apps.length){
 const auth = firebase.auth();
 const db = firebase.firestore();
 
+const store = configureStore();
+
 //Update Firestore Settings
 //db.settings( {timestampsInSnapshots: true} )
 
@@ -36,7 +38,7 @@ export default class App extends Component {
   constructor(props) {
     super(props);
 
-     this.state = {  //DONT REMOVE -Eldrin
+    this.state = {  //DONT REMOVE -Eldrin
       username: '',
       password: '',
     };
@@ -47,29 +49,31 @@ export default class App extends Component {
     const { username, password } = this.state;
 
     Alert.alert('Credentials', `${username} + ${password}`);
-    auth.createUserWithEmailAndPassword(username,password);
+    auth.createUserWithEmailAndPassword(username, password);
   }
 
   render() {
     return (
-     <Routes/>
+      <Provider store={store}>
+        <Routes />
+      </Provider>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#ecf0f1',
-  },
-  input: {
-    width: 200,
-    height: 44,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: 'black',
-    marginBottom: 10,
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//     backgroundColor: '#ecf0f1',
+//   },
+//   input: {
+//     width: 200,
+//     height: 44,
+//     padding: 10,
+//     borderWidth: 1,
+//     borderColor: 'black',
+//     marginBottom: 10,
+//   },
+// });

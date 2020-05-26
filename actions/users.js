@@ -10,6 +10,7 @@ export const recoverPassword = () => {
     }
 }
 
+//CALL BEFORE EVERY OPERATION
 export const loadBegin = () => ({
     type: 'LOAD_BEGIN'
 });
