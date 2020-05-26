@@ -12,20 +12,7 @@ const Home = {
       padding: 6,
       alignSelf: 'stretch',
       justifyContent: 'center',
-      borderBottomColor: '#fff',
-      borderBottomWidth: 1,
-    },
-
-    header_text: {
-      color: '#8B8787',
-      fontSize: 10,
-      fontWeight: '450',
-    },
-
-    header_text_bold: {
-      color: '#8B8787',
-      fontSize: 10,
-      fontWeight: '450',
+      marginTop: 100
     },
 
     scaffold: {
