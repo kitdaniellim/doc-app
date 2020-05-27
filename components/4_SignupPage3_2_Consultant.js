@@ -45,16 +45,10 @@ class Dynamic_Input extends Component {
         ]
       });
     }
-    console.log('option before setState')
-    console.log(option)
     this.state.optionIndex = optionIndex += 1;
     this.setState({
       option: option,
     })
-    console.log('option after setState')
-    console.log(option)
-    console.log('value of this.state.option')
-    console.log(this.state.option)
 
   }
 
@@ -64,10 +58,9 @@ class Dynamic_Input extends Component {
     this.addDays();
 
     let optionIndex = this.state.optionIndex;
-    console.log('OI Value Right Before Push' + optionIndex)
     if(timeInputID === -1){
       timeInput.push(
-        <View style={signupStyles.forms_time_container}>
+        <View key={timeInputID.toString} style={signupStyles.forms_time_container}>
           <View style={signupStyles.forms_time_scaffold}>
             <View style={signupStyles.forms_timeinput_container}>
               <TextInput
@@ -110,7 +103,7 @@ class Dynamic_Input extends Component {
       )
     } else {
       timeInput.push(
-        <View style={signupStyles.forms_time_container}>
+        <View key={timeInputID.toString()} style={signupStyles.forms_time_container}>
           <View style={signupStyles.forms_time_scaffold}>
             <View style={signupStyles.forms_timeinput_container}>
               <TextInput

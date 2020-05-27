@@ -68,16 +68,16 @@ class Dynamic_Input extends Component {
             style={signupStyles.forms_add_textinput_button_container}
             onPress={() => this.addField()}
           >
+            <Icon style={globalStyles.icon_global} name="plus" size={14} />
             <Text style={signupStyles.forms_add_textinput_text} > ADD SUB-SPECIALTY </Text>
-            <Icon style={globalStyles.icon_global} name="plus" size={18} />
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.6}
             style={signupStyles.forms_add_textinput_button_container}
             onPress={() => this.removeField()}
           >
+            <Icon style={globalStyles.icon_global} name="times" size={14} />
             <Text style={signupStyles.forms_add_textinput_text} > REMOVE SUB-SPECIALTY </Text>
-            <Icon style={globalStyles.icon_global} name="times" size={18} />
           </TouchableOpacity>
         </View>
       </View>

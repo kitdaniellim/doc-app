@@ -196,12 +196,14 @@ const SignUp = {
 
     forms_add_textinput_container: {
         flexDirection: 'row',
+        justifyContent: 'space-between',
         marginVertical: 13,
-        marginHorizontal: 20,
+        marginHorizontal: 15,
     },
 
     forms_add_textinput_button_container: {
         flex: 1,
+        flexDirection: 'row',
         backgroundColor: '#fff',
         borderRadius: 15,
         paddingHorizontal: 10,
@@ -216,7 +218,7 @@ const SignUp = {
     },
 
     forms_add_textinput_text: {
-        fontSize: 9,
+        fontSize: 7,
         fontWeight: '600',
         textAlign: 'center',
         color: '#8B8787',  

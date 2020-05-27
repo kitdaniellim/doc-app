@@ -1,7 +1,11 @@
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+// import { createSwitchNavigator } from 'react-navigation-switch';
 import { createStackNavigator } from 'react-navigation-stack';
-import { createAppContainer } from 'react-navigation';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 import Selection from '../components/2_SelectionPage.js';
 import ForgotPassword from '../components/5_FpassPage.js';
+
+import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 
 import LoginClient from '../components/3_LoginPage_Client.js';
 import SignupClient1 from '../components/4_SignupPage1_Client.js';
@@ -21,42 +25,66 @@ import Search from '../components/SearchPage.js';
 
 
 
-const screens = {
-    Selection : {
-        screen: Selection
-    },
+// const SampleTabStack
 
+
+
+const SampleTabNavigator = createBottomTabNavigator({
+        HomeClient,
+        Selection,
+        Search,
+        LoginClient
+    }, {
+        defaultNavigationOptions: {
+            tabBarOptions: {
+                activeColor: 'red',
+                inactiveColor: 'blue',
+            }
+            
+        },
+
+    }
+)
+
+// const SampleTabStackNavigator = createStackNavigator({
+//     SampleTabNavigator: SampleTabNavigator
+// }, {
+//     navigationOptions:({ navigation }) => {
+//         const
+//     }
+// })
+
+const regScreens = {
+    Selection : {
+        screen: Selection,
+        navigationOptions: () => ({
+            header: null
+        }),
+    },
     ForgotPassword : {
-        screen: ForgotPassword
+        screen: ForgotPassword,
     },
 
     //Client Side
     LoginClient : {
-        screen: LoginClient
+        screen: LoginClient,
     },
     SignupClient1 : {
-        screen: SignupClient1
+        screen: SignupClient1,
     },
     SignupClient2 : {
-        screen: SignupClient2
+        screen: SignupClient2,
     },
-    // LoginConsultant : {
-    //     screen: LoginConsultant
-    // },
-    HomeClient : {
-        screen: HomeClient
-    },
-
 
     //Consultant Side
     LoginConsultant : {
-        screen: LoginConsultant
+        screen: LoginConsultant,
     },
     SignupConsultant1 : {
-        screen: SignupConsultant1
+        screen: SignupConsultant1,
     },
     SignupConsultant2 : {
-        screen: SignupConsultant2
+        screen: SignupConsultant2,
     },
     SignupConsultant3_1 : {
         screen: SignupConsultant3_1
@@ -68,15 +96,51 @@ const screens = {
         screen: SignupConsultant4
     },
 
-
-    Search : {
-        screen: Search
-    },
-
- 
-
 }
 
-const SelectionStack = createStackNavigator(screens);
+const appScreens = {
+    HomeClient : {
+        screen: SampleTabNavigator, 
+        navigationOptions: () => ({
+            title: `insert logo`,
+        }),
+    },
+}
 
-export default createAppContainer(SelectionStack);
+const AuthStack = createStackNavigator(
+    regScreens,
+    {
+        defaultNavigationOptions: {
+            headerStyle: {
+                backgroundColor: '#19BAB9',
+                borderBottomColor: '#19BAB9', //temporary fix
+            },
+            headerTintColor: '#fff',
+            title: null,
+        }
+    }
+);
+
+const AppStack = createStackNavigator(
+        appScreens, 
+    {
+        defaultNavigationOptions: {
+            headerStyle: {
+                backgroundColor: '#19BAB9',
+                borderBottomColor: '#19BAB9', //temporary fix
+            },
+            headerTintColor: '#fff',
+            title: null,
+        }
+    }
+);
+
+const SwitchStack = createSwitchNavigator({
+        Auth: AuthStack,
+        App: AppStack
+    },{
+        initialRouteName: 'Auth'
+    }
+)
+
+export default createAppContainer(SwitchStack);

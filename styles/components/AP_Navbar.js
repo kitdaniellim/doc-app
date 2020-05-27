@@ -1,9 +1,11 @@
 const Navbar = {
     navBar: {
       height: 35,
+      position: 'absolute',
+      left:     0,
+      bottom: 0,
       flexDirection: 'row',
       alignSelf: 'stretch',
-      
     },
 
     navBarItem: {
