@@ -59,66 +59,6 @@ const HomeClient = ({ navigation }) => {
       field: "ARCHITECTS",
       data: ["Arnoco", "Burmuda", "Risotto"],
       key: 7,
-    },
-
-    {
-      field: "LAWYERS",
-      data: ["Madeyo", "Blanca", "Risotto"],
-      key: 8,
-    },
-
-    {
-      field: "BUSINESSMEN",
-      data: ["Shelby", "Oquias", "Chengretto"],
-      key: 9,
-    },
-
-    {
-      field: "DOCTORS",
-      data: ["Tokyo", "Denver", "Rio"],
-      key: 10,
-    },
-
-    {
-      field: "ARCHITECTS",
-      data: ["Arnoco", "Burmuda", "Risotto"],
-      key: 11,
-    },
-
-    {
-      field: "LAWYERS",
-      data: ["Madeyo", "Blanca", "Risotto"],
-      key: 12,
-    },
-
-    {
-      field: "BUSINESSMEN",
-      data: ["Shelby", "Oquias", "Chengretto"],
-      key: 13,
-    },
-
-    {
-      field: "DOCTORS",
-      data: ["Tokyo", "Denver", "Rio"],
-      key: 14,
-    },
-
-    {
-      field: "ARCHITECTS",
-      data: ["Arnoco", "Burmuda", "Risotto"],
-      key: 15,
-    },
-
-    {
-      field: "LAWYERS",
-      data: ["Madeyo", "Blanca", "Risotto"],
-      key: 16,
-    },
-
-    {
-      field: "BUSINESSMEN",
-      data: ["Shelby", "Oquias", "Chengretto"],
-      key: 17,
     }
 
   ];

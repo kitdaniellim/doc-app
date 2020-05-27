@@ -60,17 +60,6 @@ const SignupClient2 = ( {navigation} ) => {
                     style={signupStyles.forms_bday_textinput}
                   />  
                 </View>
-                
-        
-            </View>
-
-            <View style={signupStyles.forms_textinput_container}>
-              <Icon style={globalStyles.icon_global} name="envelope" size={18} />
-              <TextInput 
-                  placeholder="Email" 
-                  placeholderTextColor = "#8B8787"
-                  style={signupStyles.forms_textinput}
-              />
             </View>
             <View style={signupStyles.forms_textinput_container}>
               <Icon style={globalStyles.icon_global} name="mobile" size={25} />

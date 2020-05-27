@@ -117,34 +117,6 @@ const Search = () => {
         />
       </View> */}
 
-      <View style={navbarStyles.navBar}>
-        <TouchableOpacity 
-          style={navbarStyles.navBarItem} 
-          onPress={()=>{}}
-        >
-          <View>
-            <Icon style={navbarStyles.icon} name="calendar" size={21} />
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity 
-          style={navbarStyles.navBarItem} 
-          onPress={()=>{}}
-        >
-          <View>
-            <Icon style={navbarStyles.icon} name="search" size={21} />
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity 
-          style={navbarStyles.navBarItem} 
-          onPress={()=>{}}
-        >
-          <View>
-            <Icon style={navbarStyles.icon} name="star" size={21} />
-          </View>
-        </TouchableOpacity>
-      </View>
     </View> 
   );
 }
