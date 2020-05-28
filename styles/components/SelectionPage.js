@@ -2,21 +2,21 @@ const Selection = {
     container: {
         flex: 1,
         flexDirection: 'row',
-        backgroundColor: '#D9E3FE',
+        backgroundColor: '#19BAB9',
     },
 
     left_scaffold: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#507FAF',
+        backgroundColor: '#fff',
     },
   
     right_scaffold: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#507FAF',
+        backgroundColor: '#fff',
     },
 
     left_icon_container: {

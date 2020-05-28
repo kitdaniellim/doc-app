@@ -8,8 +8,6 @@ import { LinearGradient } from  'expo-linear-gradient';
 
 const ForgotPassword = ( {navigation} ) => {
   const Request = () => {
-    //if Client, navigate to Client Login 
-    //else navigate to Consultant Login
     navigation.navigate('Selection');
   }
 

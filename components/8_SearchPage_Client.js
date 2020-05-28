@@ -2,10 +2,10 @@ import React from 'react';
 import { Text, View, FlatList, TouchableHighlight, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { homeStyles, globalStyles, navbarStyles } from '../styles/styles';
+import { searchStyles, globalStyles, navbarStyles } from '../styles/styles';
 
 
-const HomeClient = ({ navigation }) => {
+const Search = ({ navigation }) => {
   const Submit = () => {
     navigation.navigate('LoginClient');
   }
@@ -64,12 +64,18 @@ const HomeClient = ({ navigation }) => {
   ];
 
   return (
-    <View style={homeStyles.container}>
-      <View style={homeStyles.header_container}>
-        <Text style={homeStyles.header_text_bold}>HOME</Text>
-        <Text style={homeStyles.header_text}>Highest Rated by Profession</Text>
-      </View>
-      <View style={homeStyles.scaffold}>
+    <View style={searchStyles.container}>
+      <View style={searchStyles.header_container}>
+        <Text style={searchStyles.header_text_bold}>Search</Text>
+``    </View>
+      <SearchBar style={searchStyles.searchBar}
+        platform="android"
+        lightTheme
+        round
+        searchIcon={{ size: 18 }}
+        placeholder="Click here to start searching!"
+      />
+      <View style={searchStyles.scaffold}>
         <FlatList
           data={list}
           showsVerticalScrollIndicator={false}
@@ -78,13 +84,12 @@ const HomeClient = ({ navigation }) => {
               <TouchableHighlight
                 onPress={() => { }}
                 underlayColor='#f2f2f2'
-                style={homeStyles.scaffold_list_container}
+                style={searchStyles.scaffold_list_container}
               >
-                <View style={homeStyles.scaffold_list_item_container}>
-                  <Text style={homeStyles.scaffold_list_item_header}>{item.field}</Text>
+                <View style={searchStyles.scaffold_list_item_container}>
+                  <Text style={searchStyles.scaffold_list_item_header}>{item.field}</Text>
                 </View>
               </TouchableHighlight>
-
             </View>
           )}
         />
@@ -93,4 +98,4 @@ const HomeClient = ({ navigation }) => {
   );
 }
 
-export default HomeClient;
+export default Search;

@@ -2,26 +2,26 @@ import React, { Component } from 'react';
 import { Text, TextInput, Picker, Button, View, FlatList, TouchableOpacity, TouchableHighlight, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { signupStyles, globalStyles } from '../styles/styles';
-import { LinearGradient } from  'expo-linear-gradient';
+import { LinearGradient } from 'expo-linear-gradient';
 import RadioButtons_MultipleSelect from '../assets/RadioButtons_MultipleSelect.js';
 
 class Dynamic_Input extends Component {
-  constructor(){
+  constructor() {
     super();
     this.state = {
       timeInputID: -1,
-      timeInput : [],
+      timeInput: [],
       optionIndex: -1,
       option: [
         {
           days: [
-            {key: 'Su', text: 'Su',  Checked: false},
-            {key: 'M', text: 'M',  Checked: false},
-            {key: 'Tu', text: 'Tu',  Checked: false},
-            {key: 'W', text: 'W',  Checked: false},
-            {key: 'Th', text: 'Th',  Checked: false},
-            {key: 'F', text: 'F',  Checked: false},
-            {key: 'Sa', text: 'Sa',  Checked: false},
+            { key: 'Su', text: 'Su', Checked: false },
+            { key: 'M', text: 'M', Checked: false },
+            { key: 'Tu', text: 'Tu', Checked: false },
+            { key: 'W', text: 'W', Checked: false },
+            { key: 'Th', text: 'Th', Checked: false },
+            { key: 'F', text: 'F', Checked: false },
+            { key: 'Sa', text: 'Sa', Checked: false },
           ]
         },
       ]
@@ -32,16 +32,16 @@ class Dynamic_Input extends Component {
     let option = this.state.option;
     let optionIndex = this.state.optionIndex;
 
-    if(optionIndex !== -1){
+    if (optionIndex !== -1) {
       option.push({
         days: [
-          {key: 'Su', text: 'Su',  Checked: false},
-          {key: 'M', text: 'M',  Checked: false},
-          {key: 'Tu', text: 'Tu',  Checked: false},
-          {key: 'W', text: 'W',  Checked: false},
-          {key: 'Th', text: 'Th',  Checked: false},
-          {key: 'F', text: 'F',  Checked: false},
-          {key: 'Sa', text: 'Sa',  Checked: false},
+          { key: 'Su', text: 'Su', Checked: false },
+          { key: 'M', text: 'M', Checked: false },
+          { key: 'Tu', text: 'Tu', Checked: false },
+          { key: 'W', text: 'W', Checked: false },
+          { key: 'Th', text: 'Th', Checked: false },
+          { key: 'F', text: 'F', Checked: false },
+          { key: 'Sa', text: 'Sa', Checked: false },
         ]
       });
     }
@@ -58,7 +58,7 @@ class Dynamic_Input extends Component {
     this.addDays();
 
     let optionIndex = this.state.optionIndex;
-    if(timeInputID === -1){
+    if (timeInputID === -1) {
       timeInput.push(
         <View key={timeInputID.toString} style={signupStyles.forms_time_container}>
           <View style={signupStyles.forms_time_scaffold}>
@@ -69,13 +69,13 @@ class Dynamic_Input extends Component {
               />
               <Text style={signupStyles.forms_text_bold_alt}>{" "} : {" "}</Text>
               <TextInput
-                defaultValue='30' 
+                defaultValue='30'
                 style={signupStyles.forms_timeinput_textinput}
-              />   
+              />
               <TextInput
                 defaultValue='AM'
                 style={signupStyles.forms_time_label}
-              /> 
+              />
             </View>
             <View style={signupStyles.forms_timeinput_divider}>
               <Text style={signupStyles.forms_text_bold}>to</Text>
@@ -93,7 +93,7 @@ class Dynamic_Input extends Component {
               <TextInput
                 defaultValue='PM'
                 style={signupStyles.forms_time_label}
-              /> 
+              />
             </View>
           </View>
           <View>
@@ -111,14 +111,14 @@ class Dynamic_Input extends Component {
                 style={signupStyles.forms_timeinput_textinput}
               />
               <Text style={signupStyles.forms_text_bold_alt}>{" "} : {" "}</Text>
-                <TextInput
-                  placeholder='' 
-                  style={signupStyles.forms_timeinput_textinput}
-                />   
-                <TextInput
-                  defaultValue='AM'
-                  style={signupStyles.forms_time_label}
-                /> 
+              <TextInput
+                placeholder=''
+                style={signupStyles.forms_timeinput_textinput}
+              />
+              <TextInput
+                defaultValue='AM'
+                style={signupStyles.forms_time_label}
+              />
             </View>
             <View style={signupStyles.forms_timeinput_divider}>
               <Text style={signupStyles.forms_text_bold}>to</Text>
@@ -136,7 +136,7 @@ class Dynamic_Input extends Component {
               <TextInput
                 defaultValue='PM'
                 style={signupStyles.forms_time_label}
-              /> 
+              />
             </View>
           </View>
           <View>
@@ -145,16 +145,16 @@ class Dynamic_Input extends Component {
         </View>
       )
     }
-    
+
     this.state.timeInputID = timeInputID += 1;
-    this.setState({ 
+    this.setState({
       timeInput: timeInput,
     })
   }
 
   removeHours = () => {
     let timeInputID = this.state.timeInputID;
-    if(timeInputID > 0) {
+    if (timeInputID > 0) {
       let timeInput = this.state.timeInput;
       let option = this.state.option;
       let optionIndex = this.state.optionIndex;
@@ -163,8 +163,8 @@ class Dynamic_Input extends Component {
       optionIndex -= 1;
       timeInput.pop();
       option.pop();
-      
-      this.setState({ 
+
+      this.setState({
         timeInputID: timeInputID,
         timeInput,
         optionIndex: optionIndex,
@@ -177,12 +177,12 @@ class Dynamic_Input extends Component {
     this.addHours();
   }
 
-  render(){
-    return(
+  render() {
+    return (
       <View>
         <View style={signupStyles.forms_dynamicinput_margin}>
-          {/* Displays All Time Inputs */}
-          {this.state.timeInput.map((value) => { 
+
+          {this.state.timeInput.map((value) => {
             return value;
           })}
         </View>
@@ -203,13 +203,13 @@ class Dynamic_Input extends Component {
             <Text style={signupStyles.forms_add_textinput_text} > REMOVE HOURS </Text>
             <Icon style={globalStyles.icon_global} name="plus" size={18} />
           </TouchableOpacity>
-        </View>  
+        </View>
       </View>
     )
   }
 }
 
-const SignupConsultant3_2 = ( {navigation} ) => {
+const SignupConsultant3_2 = ({ navigation }) => {
   const Cancel = () => {
     navigation.navigate('SignupConsultant3_1');
   }
@@ -220,29 +220,29 @@ const SignupConsultant3_2 = ( {navigation} ) => {
 
   return (
     <View style={signupStyles.container}>
-    <LinearGradient 
+      <LinearGradient
         colors={['rgba(243,243,243,0.4)', 'transparent']}
-        start={{x : 0, y : 1}}
-        end={{x : 0, y : 0}}
+        start={{ x: 0, y: 1 }}
+        end={{ x: 0, y: 0 }}
         style={globalStyles.gradient}
-    >
-    <View style={signupStyles.forms_container}>
-      <View style={signupStyles.forms_label_container}>
-        <Text style={signupStyles.forms_label}> CONSULTANT SIGN UP </Text>
-      </View>
-      <Text style={signupStyles.forms_label_small}> Office Hours: -Location- </Text>
+      >
+        <View style={signupStyles.forms_container}>
+          <View style={signupStyles.forms_label_container}>
+            <Text style={signupStyles.forms_label}> CONSULTANT SIGN UP </Text>
+          </View>
+          <Text style={signupStyles.forms_label_small}> Office Hours: -Location- </Text>
 
-      <Dynamic_Input /> 
-        <TouchableOpacity
-          activeOpacity={0.6}
-          style={signupStyles.forms_button}
-          onPress={Confirm}
-        >
-          <Text style={signupStyles.forms_button_label}>CONFIRM</Text>
-        </TouchableOpacity> 
+          <Dynamic_Input />
+          <TouchableOpacity
+            activeOpacity={0.6}
+            style={signupStyles.forms_button}
+            onPress={Confirm}
+          >
+            <Text style={signupStyles.forms_button_label}>CONFIRM</Text>
+          </TouchableOpacity>
+        </View>
+      </LinearGradient>
     </View>
-    </LinearGradient>
-  </View>
   );
 }
 

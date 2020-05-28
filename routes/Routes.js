@@ -13,6 +13,10 @@ import SignupClient1 from '../components/4_SignupPage1_Client.js';
 import SignupClient2 from '../components/4_SignupPage2_Client.js';
 import HomeClient from '../components/6_HomePage_Client.js';
 
+import Calendar from '../components/7_CalendarPage_Client.js';
+import Search from '../components/8_SearchPage_Client.js';
+import Profile from '../components/9_ProfilePage_Client.js';
+
 
 import LoginConsultant from '../components/3_LoginPage_Consultant.js';
 import SignupConsultant1 from '../components/4_SignupPage1_Consultant.js';
@@ -21,8 +25,6 @@ import SignupConsultant3_1 from '../components/4_SignupPage3_1_Consultant.js';
 import SignupConsultant3_2 from '../components/4_SignupPage3_2_Consultant.js';
 import SignupConsultant4 from '../components/4_SignupPage4_Consultant.js';
 
-import Search from '../components/SearchPage.js';
-// import HomeConsultant from '../components/6_HomePage_Consultant.js';
 
 import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -44,10 +46,10 @@ const tabScreens = {
         },
     },
 
-    Selection: {
-        screen: Selection,
+    Calendar: {
+        screen: Calendar,
         navigationOptions: {
-            title: 'Selection',
+            title: 'Calendar',
             tabBarIcon: ({ tintColor }) => (
                 <Icon
                     color={`${tintColor}`}
@@ -74,10 +76,10 @@ const tabScreens = {
         },
     },
 
-    LoginClient: {
-        screen: LoginClient,
+    Profile: {
+        screen: Profile,
         navigationOptions: {
-            title: 'Login',
+            title: 'Profile',
             tabBarIcon: ({ tintColor }) => (
                 <Icon
                     color={`${tintColor}`}
@@ -90,84 +92,33 @@ const tabScreens = {
     },
 }
 
-// tabscreen2 = {}
 
 const SampleTabNavigator = createBottomTabNavigator(
-    tabScreens, 
-{
-    initialRouteName: 'HomeClient',
-    tabBarOptions: {
-        activeBackgroundColor: '#19BAB9',
-        inactiveBackgroundColor: '#19BAB9',
-        activeTintColor: '#fff',
-        inactiveTintColor: 'gray'
+    tabScreens,
+    {
+        initialRouteName: 'HomeClient',
+        tabBarOptions: {
+            activeBackgroundColor: '#19BAB9',
+            inactiveBackgroundColor: '#19BAB9',
+            activeTintColor: '#fff',
+            inactiveTintColor: '#201d1d'
+        }
     }
-}
 )
 
-// const Tab = createMaterialBottomTabNavigator()
 
-// const SampleTabNavigator = () => (
-//     <Tab.Navigator
-//         initialRouteName="HomeClient"
-//         activeColor="#e91e63"
-//         style={{ backgroundColor: 'tomato' }}
-//     >
-//         <Tab.Screen
-//             name="HomeClient"
-//             component={HomeClient}
-//             options={{
-//                 tabBarLabel: 'HomeClient',
-//                 tabBarIcon: ({ color }) => (
-//                     <Icon name="home" color={color} size={26} />
-//                 ),
-//             }}
-//         />
-//         <Tab.Screen
-//             name="Selection"
-//             component={Selection}
-//             options={{
-//                 tabBarLabel: 'Selection',
-//                 tabBarIcon: ({ color }) => (
-//                     <Icon name="bell" color={color} size={26} />
-//                 ),
-//             }}
-//         />
-//         <Tab.Screen
-//             name="Search"
-//             component={Search}
-//             options={{
-//                 tabBarLabel: 'Search',
-//                 tabBarIcon: ({ color }) => (
-//                     <Icon name="account" color={color} size={26} />
-//                 ),
-//             }}
-//         />
-//     </Tab.Navigator>
-// )
-
-
-
-// const SampleTabStackNavigator = createStackNavigator({
-//     SampleTabNavigator: SampleTabNavigator
-// }, {
-//     navigationOptions:({ navigation }) => {
-//         const
-//     }
-// })
 
 const regScreens = {
     Selection: {
         screen: Selection,
         navigationOptions: () => ({
-            header: null
+            headerShown: false
         }),
     },
     ForgotPassword: {
         screen: ForgotPassword,
     },
 
-    //Client Side
     LoginClient: {
         screen: LoginClient,
     },
@@ -178,7 +129,6 @@ const regScreens = {
         screen: SignupClient2,
     },
 
-    //Consultant Side
     LoginConsultant: {
         screen: LoginConsultant,
     },
@@ -215,7 +165,7 @@ const AuthStack = createStackNavigator(
         defaultNavigationOptions: {
             headerStyle: {
                 backgroundColor: '#19BAB9',
-                borderBottomColor: '#19BAB9', //temporary fix
+                borderBottomColor: '#19BAB9',
             },
             headerTintColor: '#fff',
             title: null,
@@ -229,7 +179,7 @@ const AppStack = createStackNavigator(
         defaultNavigationOptions: {
             headerStyle: {
                 backgroundColor: '#19BAB9',
-                borderBottomColor: '#19BAB9', //temporary fix
+                borderBottomColor: '#19BAB9',
             },
             headerTintColor: '#fff',
             title: null,

@@ -26,14 +26,14 @@ const SignUp = {
 
     forms_scaffold_text: {
         justifyContent: 'flex-start',
-        fontsize: 8,
+        fontSize: 8,
         color: '#8B8787',
     },
 
     forms_scaffold_text_bold: {
         marginBottom: 10,
         justifyContent: 'flex-start',
-        fontsize: 130,
+        fontSize: 130,
         fontWeight: '600',
         color: '#8B8787',
     },
