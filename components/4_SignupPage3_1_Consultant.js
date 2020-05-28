@@ -48,7 +48,6 @@ export default class SignupConsultant3_1 extends Component {
           >
             <Icon style={globalStyles.icon_global} name="plus" size={14} />
             <Text style={signupStyles.forms_add_textinput_text} > ADD OFFICE HOURS </Text>
-            
           </TouchableOpacity>
         </View>
       </View>
