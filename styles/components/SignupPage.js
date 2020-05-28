@@ -79,7 +79,6 @@ const SignUp = {
 
     forms_textinput: {
         fontSize: 11,
-        width: '100%',
         paddingHorizontal: 5,
         marginHorizontal: 5,
         borderRadius: 20,

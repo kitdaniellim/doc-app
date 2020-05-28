@@ -4,15 +4,11 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { signupStyles, globalStyles } from '../styles/styles';
 import { LinearGradient } from 'expo-linear-gradient';
 
-
-
 const SignupClient2 = ({ navigation }) => {
   const Submit = () => {
     navigation.navigate('LoginClient');
   }
-
   return (
-
     <View style={signupStyles.container}>
       <LinearGradient
         colors={['rgba(243,243,243,0.4)', 'transparent']}
@@ -20,7 +16,6 @@ const SignupClient2 = ({ navigation }) => {
         end={{ x: 0, y: 0 }}
         style={globalStyles.gradient}
       >
-
         <View style={signupStyles.forms_container}>
           <Text style={signupStyles.forms_label}> CLIENT SIGN UP </Text>
           <Text style={signupStyles.forms_label_small}> Contact Details: </Text>
@@ -77,9 +72,7 @@ const SignupClient2 = ({ navigation }) => {
           >
             <Text style={signupStyles.forms_button_label}>SUBMIT</Text>
           </TouchableOpacity>
-
         </View>
-
       </LinearGradient>
     </View>
   );

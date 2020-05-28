@@ -38,7 +38,6 @@ const Login = {
 
     forms_textinput: {
         fontSize: 11,
-        width: '100%',
         paddingHorizontal: 5,
         marginHorizontal: 5,
         borderRadius: 20,
@@ -86,6 +85,7 @@ const Login = {
         textDecorationLine: "underline",
         textDecorationStyle: "solid",
         textDecorationColor: "#fff",
+        textAlign: 'center'
     },
 
     forms_text_bold: {

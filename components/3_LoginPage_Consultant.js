@@ -24,12 +24,9 @@ const LoginConsultant = ({ navigation }) => {
         style={globalStyles.gradient}
       >
         <View style={loginStyles.forms_container}>
-          <View>
-            <Icon style={globalStyles.icon_client} name="user-md" size={42} />
-            <Text style={loginStyles.forms_label}>
-              CONSULTANT
-            </Text>
-          </View>
+          <Icon style={globalStyles.icon_client} name="user-md" size={42} />
+          <Text style={loginStyles.forms_label}>CONSULTANT</Text>
+
           <View style={loginStyles.forms_textinput_container}>
             <Icon style={globalStyles.icon_global} name="user-circle" size={18} />
             <TextInput
@@ -55,34 +52,25 @@ const LoginConsultant = ({ navigation }) => {
             >
               <Text style={loginStyles.forms_button_label}>LOGIN</Text>
             </TouchableOpacity>
-
-            <Text style={loginStyles.forms_text}>Forgot Password?{" "}
+            <View style={{ flexDirection: 'row' }}>
+              <Text style={loginStyles.forms_text}>Forgot Password?{" "}</Text>
               <TouchableOpacity
                 onPress={ForgotPassword}
+                style={{justifyContent: 'center'}}
               >
-                <Text style={loginStyles.forms_text_underline}>
-                  Tap Here!
-                </Text>
+                <Text style={loginStyles.forms_text_underline}>Tap Here!</Text>
               </TouchableOpacity>
-            </Text>
+            </View>
           </View>
-          <View>
-            <Text style={loginStyles.forms_text_bold}>
-              Or
-            </Text>
-          </View>
+          <Text style={loginStyles.forms_text_bold}>Or{"\n"}</Text>
           <View style={loginStyles.forms_button_container}>
-            <Text style={loginStyles.forms_text}>
-              No account yet?
-            </Text>
+            <Text style={loginStyles.forms_text}>No account yet?</Text>
             <TouchableOpacity
               activeOpacity={0.6}
               onPress={SignUp}
               style={loginStyles.forms_button}
             >
-              <Text style={loginStyles.forms_button_label}>
-                SIGN UP
-              </Text>
+              <Text style={loginStyles.forms_button_label}>SIGN UP</Text>
             </TouchableOpacity>
           </View>
         </View>

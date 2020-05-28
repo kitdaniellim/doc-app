@@ -18,7 +18,6 @@ const LoginClient = ({ navigation }) => {
   }
 
   return (
-
     <View style={loginStyles.container}>
       <LinearGradient
         colors={['rgba(243,243,243,0.4)', 'transparent']}
@@ -27,10 +26,8 @@ const LoginClient = ({ navigation }) => {
         style={globalStyles.gradient}
       >
         <View style={loginStyles.forms_container}>
-          <View>
-            <Icon style={globalStyles.icon_client} name="wheelchair-alt" size={42} />
-            <Text style={loginStyles.forms_label}>CLIENT</Text>
-          </View>
+          <Icon style={globalStyles.icon_client} name="wheelchair-alt" size={42} />
+          <Text style={loginStyles.forms_label}>CLIENT</Text>
           <View style={loginStyles.forms_textinput_container}>
             <Icon style={globalStyles.icon_global} name="user-circle" size={18} />
             <TextInput
@@ -56,18 +53,17 @@ const LoginClient = ({ navigation }) => {
             >
               <Text style={loginStyles.forms_button_label}>LOGIN</Text>
             </TouchableOpacity>
-
-            <Text style={loginStyles.forms_text}>Forgot Password?
+            <View style={{flexDirection: 'row'}}>
+              <Text style={loginStyles.forms_text}>Forgot Password?{" "}</Text>
               <TouchableOpacity
                 onPress={ForgotPassword}
+                style={{justifyContent: 'center'}}
               >
                 <Text style={loginStyles.forms_text_underline}>Tap Here!</Text>
               </TouchableOpacity>
-            </Text>
+            </View>
           </View>
-          <View>
-            <Text style={loginStyles.forms_text_bold}>Or</Text>
-          </View>
+          <Text style={loginStyles.forms_text_bold}>Or{"\n"}</Text>
           <View style={loginStyles.forms_button_container}>
             <Text style={loginStyles.forms_text}>No account yet?</Text>
             <TouchableOpacity
