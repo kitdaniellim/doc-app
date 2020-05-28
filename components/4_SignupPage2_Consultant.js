@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, TextInput, Button, View, FlatList, TouchableOpacity, TouchableHighlight, StyleSheet } from 'react-native';
+import { Text, TextInput, Button, ScrollView, View, FlatList, TouchableOpacity, TouchableHighlight, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { signupStyles, globalStyles } from '../styles/styles';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -40,7 +40,6 @@ class Dynamic_Input extends Component {
     });
   }
 
-
   removeField = () => {
     let textInput = this.state.textInput;
     let count = this.state.count;
@@ -58,10 +57,13 @@ class Dynamic_Input extends Component {
   render() {
     return (
       <View>
-        {this.state.textInput.map((value) => {
-          return value
-        })}
-
+        <View style={signupStyles.forms_dynamicinput_margin, {height: 150}}>
+          <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+            {this.state.textInput.map((value) => {
+              return value
+            })}
+          </ScrollView>
+        </View>
         <View style={signupStyles.forms_add_textinput_container}>
           <TouchableOpacity
             activeOpacity={0.6}
@@ -91,7 +93,6 @@ const SignupConsultant2 = ({ navigation }) => {
   }
 
   return (
-
     <View style={signupStyles.container}>
       <LinearGradient
         colors={['rgba(243,243,243,0.4)', 'transparent']}
@@ -100,12 +101,10 @@ const SignupConsultant2 = ({ navigation }) => {
         style={globalStyles.gradient}
       >
         <View style={signupStyles.forms_container}>
-          <Text style={signupStyles.forms_label}> 
-            CONSULTANT SIGN UP 
-          </Text>
-          <Text style={signupStyles.forms_label_small}>
-            Professional Details:
-          </Text>
+          <Text style={signupStyles.forms_label}>CONSULTANT SIGN UP</Text>
+          <View style={signupStyles.forms_label_small_container}>
+            <Text style={signupStyles.forms_label_small}>Professional Details:</Text>
+          </View>
           <View style={signupStyles.forms_textinput_container}>
             <Icon style={globalStyles.icon_global} name="user-circle" size={18} />
             <TextInput
@@ -131,17 +130,13 @@ const SignupConsultant2 = ({ navigation }) => {
             />
           </View>
           <Dynamic_Input />
-          <Text style={signupStyles.forms_text}>
-            2/4
-          </Text>
+          <Text style={signupStyles.forms_text}>2/4</Text>
           <TouchableOpacity
             activeOpacity={0.6}
             style={signupStyles.forms_button}
             onPress={Next}
           >
-            <Text style={signupStyles.forms_button_label}>
-              NEXT
-            </Text>
+            <Text style={signupStyles.forms_button_label}>NEXT</Text>
           </TouchableOpacity>
         </View>
       </LinearGradient>

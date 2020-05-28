@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, TextInput, Picker, Button, View, FlatList, TouchableOpacity, TouchableHighlight, StyleSheet } from 'react-native';
+import { Text, TextInput, Picker, Button, ScrollView, View, FlatList, TouchableOpacity, TouchableHighlight, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { signupStyles, globalStyles } from '../styles/styles';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -46,8 +46,9 @@ export default class SignupConsultant3_1 extends Component {
             style={signupStyles.forms_add_textinput_button_container}
             onPress={() => this.addOfficeHours(count)}
           >
-            <Text style={signupStyles.forms_add_textinput_text} >ADD OFFICE HOURS </Text>
-            <Icon style={globalStyles.icon_global} name="plus" size={18} />
+            <Icon style={globalStyles.icon_global} name="plus" size={14} />
+            <Text style={signupStyles.forms_add_textinput_text} > ADD OFFICE HOURS </Text>
+            
           </TouchableOpacity>
         </View>
       </View>
@@ -94,31 +95,34 @@ export default class SignupConsultant3_1 extends Component {
             <View style={signupStyles.forms_label_container}>
               <Text style={signupStyles.forms_label}> CONSULTANT SIGN UP </Text>
             </View>
-            <Text style={signupStyles.forms_label_small}> Office Details: </Text>
-
+            <View style={signupStyles.forms_label_small_container}>
+              <Text style={signupStyles.forms_label_small}>Office Details:</Text>
+            </View>
             <View>
               <View>
-
-                {this.state.locationInput.map((value) => {
-                  return value;
-                })}
-
+                <View style={signupStyles.forms_dynamicinput_margin}>
+                  <ScrollView contentContainerStyle={{flexGrow: 1}}>
+                    {this.state.locationInput.map((value) => {
+                      return value;
+                    })}
+                  </ScrollView>
+                </View>
                 <View style={signupStyles.forms_add_textinput_container}>
                   <TouchableOpacity
                     activeOpacity={0.6}
                     style={signupStyles.forms_add_textinput_button_container}
                     onPress={() => this.addLocation()}
                   >
+                    <Icon style={globalStyles.icon_global} name="plus" size={14} />
                     <Text style={signupStyles.forms_add_textinput_text} > ADD LOCATION </Text>
-                    <Icon style={globalStyles.icon_global} name="plus" size={18} />
                   </TouchableOpacity>
                   <TouchableOpacity
                     activeOpacity={0.6}
                     style={signupStyles.forms_add_textinput_button_container}
                     onPress={() => this.removeLocation()}
                   >
+                    <Icon style={globalStyles.icon_global} name="times" size={14} />
                     <Text style={signupStyles.forms_add_textinput_text} > REMOVE LOCATION </Text>
-                    <Icon style={globalStyles.icon_global} name="times" size={18} />
                   </TouchableOpacity>
                 </View>
               </View>
@@ -134,8 +138,6 @@ export default class SignupConsultant3_1 extends Component {
           </View>
         </LinearGradient>
       </View>
-
-
     )
   }
 }

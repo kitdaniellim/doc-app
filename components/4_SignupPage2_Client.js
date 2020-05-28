@@ -64,6 +64,13 @@ const SignupClient2 = ({ navigation }) => {
               style={signupStyles.forms_textinput}
             />
           </View>
+          <TouchableOpacity
+            activeOpacity={0.6}
+            style={signupStyles.forms_paybutton}
+            onPress={() => { }}
+          >
+            <Text style={signupStyles.forms_paybutton_label}>Pay Through PayPal</Text>
+          </TouchableOpacity>
           <Text style={signupStyles.forms_text}>2/2</Text>
           <TouchableOpacity
             activeOpacity={0.6}

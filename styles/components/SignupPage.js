@@ -8,7 +8,7 @@ const SignUp = {
         flex: 1,
         justifyContent: 'space-between',
         alignItems: 'stretch',
-        marginHorizontal: 50,
+        marginHorizontal: 45,
         marginTop: 20,
         marginBottom: 60,
     },
@@ -33,13 +33,13 @@ const SignUp = {
     forms_scaffold_text_bold: {
         marginBottom: 10,
         justifyContent: 'flex-start',
-        fontSize: 130,
+        fontSize: 60,
         fontWeight: '600',
         color: '#8B8787',
     },
 
     forms_label_container: {
-        marginBottom: 12,
+        marginVertical: 10,
     },
 
     forms_label: {
@@ -47,19 +47,28 @@ const SignUp = {
         alignSelf: 'center',
         fontWeight: '500',
         letterSpacing: 1,
+        marginBottom: 10,
     },
 
-    forms_label_small: {
-        marginTop: 12,
+    forms_label_small_container: {
+        marginTop: 8,
+        marginBottom: 3,
         marginHorizontal: 12,
-        color: '#fff',
+        padding: 4,
         alignSelf: 'stretch',
+        justifyContent: 'center',
+        borderBottomColor: '#fff',
+        borderBottomWidth: 1,
+},
+
+    forms_label_small: {
+        color: '#fff',
         justifyContent: 'flex-end',
         fontWeight: '400',
         fontSize: 12,
         letterSpacing: 1,
-        borderBottomColor: '#fff',
-        borderBottomWidth: 1,
+        marginTop: 15,
+        marginBottom: 5,
     },
 
     forms_textinput_container: {
@@ -167,6 +176,27 @@ const SignUp = {
         textAlign: 'center',
     },
 
+    forms_paybutton: {
+        width: '100%',
+        height: 30,
+        marginTop: 20,
+        backgroundColor: '#FFAD3A',
+        borderRadius: 15,
+        shadowOffset:{  width: 0,  height: 2,  },
+        shadowColor: 'black',
+        shadowOpacity: 0.1,
+        justifyContent: 'center',
+        alignSelf: 'center',
+    },
+
+    forms_paybutton_label: {
+        color: '#fff',
+        fontSize: 10,
+        fontWeight: '600', 
+        letterSpacing: 1, 
+        textAlign: 'center',
+    },
+
     forms_text: {
         color: '#fff',
         fontSize: 11,
@@ -216,6 +246,11 @@ const SignUp = {
         shadowOpacity: 0.1,
     },
 
+    forms_add_textinput_text_container: {
+        margin: 4,
+        flexDirection: 'row',
+    },
+
     forms_add_textinput_text: {
         fontSize: 7,
         fontWeight: '600',
@@ -229,18 +264,18 @@ const SignUp = {
     forms_time_container: {
         flex: 1, 
         flexDirection: 'column',
-        marginVertical: 4,
+        marginVertical: 2,
     },
 
     forms_time_scaffold: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignSelf: 'center',
-        marginHorizontal: 30,
+        marginHorizontal: 10,
     },
 
     forms_timeinput_container: {
-        flex: 4,
+        flex: 3,
         flexDirection: 'row',
         borderRadius: 15,
         backgroundColor: '#fff',
@@ -252,13 +287,13 @@ const SignUp = {
     },
 
     forms_timeinput_textinput: {
-        width: '100%',
+        width: 30,
         textAlign: 'center',
         fontSize: 11,
-        paddingVertical: 3,
-        paddingHorizontal: 3,
+        paddingVertical: 1,
+        paddingHorizontal: 1,
         marginVertical: 5,
-        marginHorizontal: 5,
+        marginHorizontal: 1,
     },
 
     forms_timeinput_divider: {
@@ -278,7 +313,6 @@ const SignUp = {
     },
 
     forms_time_label: {
-        width: '100%',
         color: 'black',
         fontWeight: '600',
         fontSize: 9,
@@ -299,7 +333,8 @@ const SignUp = {
     },
 
     forms_dynamicinput_margin: {
-        marginTop: 18
+        marginTop: 8,
+        height: 220
     }
   }
   

@@ -19,8 +19,8 @@ const SignupConsultant4 = ( {navigation} ) => {
     <View style={signupStyles.forms_container}>
         <View style={signupStyles.forms_scaffold}>
             <Text style={signupStyles.forms_scaffold_text_bold}>BY SIGNING</Text>
-            <Text style={signupStyles.forms_scaffold_text}>to this lorem ipsum blabla wrapwrapwrapawrapraprwparpapra
-            
+            <Text style={signupStyles.forms_scaffold_text}>
+              to this lorem ipsum blabla wrapwrapwrapawrapraprwparpapra
             </Text>
         </View>
         <Text style={signupStyles.forms_text}>4/4</Text>

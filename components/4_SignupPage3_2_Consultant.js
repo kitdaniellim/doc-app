@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, TextInput, Picker, Button, View, FlatList, TouchableOpacity, TouchableHighlight, StyleSheet } from 'react-native';
+import { Text, TextInput, Picker, Button, ScrollView, View, FlatList, TouchableOpacity, TouchableHighlight, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { signupStyles, globalStyles } from '../styles/styles';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -181,10 +181,11 @@ class Dynamic_Input extends Component {
     return (
       <View>
         <View style={signupStyles.forms_dynamicinput_margin}>
-
-          {this.state.timeInput.map((value) => {
-            return value;
-          })}
+          <ScrollView contentContainerStyle={{flexGrow: 1}}>  
+            {this.state.timeInput.map((value) => {
+              return value;
+            })}
+          </ScrollView>  
         </View>
         <View style={signupStyles.forms_add_textinput_container}>
           <TouchableOpacity
@@ -192,16 +193,20 @@ class Dynamic_Input extends Component {
             style={signupStyles.forms_add_textinput_button_container}
             onPress={() => this.addHours()}
           >
-            <Text style={signupStyles.forms_add_textinput_text} > ADD HOURS  </Text>
-            <Icon style={globalStyles.icon_global} name="plus" size={18} />
+            <View style={signupStyles.forms_add_textinput_text_container}>
+              <Icon style={globalStyles.icon_global} name="plus" size={14} />
+              <Text style={signupStyles.forms_add_textinput_text} > ADD HOURS  </Text>
+            </View>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.6}
             style={signupStyles.forms_add_textinput_button_container}
             onPress={() => this.removeHours()}
           >
-            <Text style={signupStyles.forms_add_textinput_text} > REMOVE HOURS </Text>
-            <Icon style={globalStyles.icon_global} name="plus" size={18} />
+            <View style={signupStyles.forms_add_textinput_text_container}>
+              <Icon style={globalStyles.icon_global} name="plus" size={14} />
+              <Text style={signupStyles.forms_add_textinput_text} > REMOVE HOURS </Text>
+            </View>
           </TouchableOpacity>
         </View>
       </View>
@@ -228,10 +233,11 @@ const SignupConsultant3_2 = ({ navigation }) => {
       >
         <View style={signupStyles.forms_container}>
           <View style={signupStyles.forms_label_container}>
-            <Text style={signupStyles.forms_label}> CONSULTANT SIGN UP </Text>
+            <Text style={signupStyles.forms_label}>CONSULTANT SIGN UP</Text>
           </View>
-          <Text style={signupStyles.forms_label_small}> Office Hours: -Location- </Text>
-
+          <View style={signupStyles.forms_label_small_container}>
+            <Text style={signupStyles.forms_label_small}>Office Hours: -Location-</Text>
+          </View>
           <Dynamic_Input />
           <TouchableOpacity
             activeOpacity={0.6}
