@@ -11,7 +11,7 @@ const Global = {
     textAlign: 'center',
     color: 'white',
     fontSize: 30,
-    fontWeight: '50',
+    fontWeight: '100',
   },
   
   gradient: {

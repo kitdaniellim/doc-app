@@ -58,7 +58,7 @@ const regScreens = {
     Selection : {
         screen: Selection,
         navigationOptions: () => ({
-            header: null
+            headerShown: false
         }),
     },
     ForgotPassword : {

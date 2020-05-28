@@ -153,10 +153,6 @@ const HomeClient = ({ navigation }) => {
                   /> */}
 
                 </View>
-                {/* <View>
-                  <Text style={homeStyles.scaffold_list_item_header}>{item.field}</Text>
-                  <Text style={homeStyles.scaffold_list_item_data}>{item.data}</Text>
-                </View> */}
               </TouchableHighlight>
               {/* <View style={homeStyles.divider} /> */}
             </View>

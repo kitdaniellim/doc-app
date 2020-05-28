@@ -34,13 +34,13 @@ const Search = {
     
     contentHeader: {
       fontSize: 18,
-      fontWeight: 100,
+      fontWeight: '100',
       color: 'black',
     },
 
     contentText: {
       fontSize: 8,
-      fontWeight: 50,
+      fontWeight: '100',
       color: 'black',
     },
 
