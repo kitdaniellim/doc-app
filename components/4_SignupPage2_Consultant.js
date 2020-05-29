@@ -130,6 +130,13 @@ const SignupConsultant2 = ({ navigation }) => {
             />
           </View>
           <Dynamic_Input />
+          <TouchableOpacity
+            activeOpacity={0.6}
+            style={signupStyles.forms_paybutton}
+            onPress={() => { }}
+          >
+            <Text style={signupStyles.forms_paybutton_label}>Pay Through PayPal</Text>
+          </TouchableOpacity>
           <Text style={signupStyles.forms_text}>2/4</Text>
           <TouchableOpacity
             activeOpacity={0.6}
