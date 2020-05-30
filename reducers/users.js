@@ -24,6 +24,8 @@ export default (state = reducerDefaultState, action) => {
                 ...state,
                 loading: false,
                 error: action.payload.error
-            }
+            };
+        default:
+            return state;
     }
 }

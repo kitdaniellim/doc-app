@@ -1,12 +1,16 @@
 //USER PASSWORD RECOVERY OPERATION
-export const recoverPassword = () => {
-    try {
-        loadBegin();
-        //insert db query and operations here
-        const result = "DB result here";
-        recoverPassSuccess(result);
-    } catch (error) {
-        recoverPassFailure(error);
+export const recoverPassword = (token) => {
+    return dispatch => {
+        try {
+            dispatch(loadBegin());
+            //insert db query and operations here
+            const result = {
+                message: `DB result here using token: ${token}`
+            };
+            dispatch(recoverPassSuccess(result));
+        } catch (error) {
+            dispatch(recoverPassFailure(error));
+        }
     }
 }
 
@@ -18,10 +22,10 @@ export const loadBegin = () => ({
 //USER PASSWORD RECOVERY STATUS
 export const recoverPassSuccess = result => ({
     type: 'RECOVER_PASS_SUCCESS',
-    payload: result
+    payload: { result }
 });
 
 export const recoverPassFailure = error => ({
     type: 'RECOVER_PASS_FAILURE',
-    payload: error
+    payload: { error }
 });

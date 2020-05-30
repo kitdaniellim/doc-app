@@ -1,4 +1,4 @@
-const Home = {
+const Search = {
 
   container: {
     flex: 1,
@@ -79,4 +79,4 @@ const Home = {
 
 }
 
-export default Home;
+export default Search;
