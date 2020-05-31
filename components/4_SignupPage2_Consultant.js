@@ -57,7 +57,7 @@ class Dynamic_Input extends Component {
   render() {
     return (
       <View>
-        <View style={signupStyles.forms_dynamicinput_margin, {height: 150}}>
+        <View style={signupStyles.forms_dynamicinput_margin, {height: 100}}>
           <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             {this.state.textInput.map((value) => {
               return value

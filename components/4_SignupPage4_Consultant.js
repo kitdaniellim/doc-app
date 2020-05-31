@@ -5,7 +5,7 @@ import { LinearGradient } from  'expo-linear-gradient';
 
 const SignupConsultant4 = ( {navigation} ) => {
   const Submit = () => {
-    navigation.navigate('LoginConsultant');
+    navigation.navigate('Login');
   }
 
   return (

@@ -5,11 +5,11 @@ import { selectionStyles, globalStyles } from '../styles/styles';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const Selection = ({ navigation }) => {
-  const LoginClient = () => {
-    navigation.navigate('LoginClient');
+  const SignUpClient = () => {
+    navigation.navigate('SignupClient1');
   }
-  const LoginConsultant = () => {
-    navigation.navigate('LoginConsultant');
+  const SignUpConsultant = () => {
+    navigation.navigate('SignupConsultant1');
   }
 
   return (
@@ -17,7 +17,7 @@ const Selection = ({ navigation }) => {
       <TouchableOpacity
         activeOpacity={0.6}
         style={selectionStyles.left_scaffold}
-        onPress={LoginClient}>
+        onPress={SignUpClient}>
         <LinearGradient
           colors={['rgba(243,243,243,0.4)', 'transparent']}
           start={{ x: 0, y: 1 }}
@@ -35,7 +35,7 @@ const Selection = ({ navigation }) => {
       <TouchableOpacity
         activeOpacity={0.6}
         style={selectionStyles.right_scaffold}
-        onPress={LoginConsultant}>
+        onPress={SignUpConsultant}>
         <LinearGradient
           colors={['rgba(243,243,243,0.4)', 'transparent']}
           start={{ x: 0, y: 1 }}

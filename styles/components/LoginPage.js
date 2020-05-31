@@ -13,6 +13,10 @@ const Login = {
         marginBottom: 60,
     },
 
+    forms_header_container: {
+        marginVertical: 50,
+    },
+
     forms_label: {
         color: '#fff',
         alignSelf: 'center',
@@ -37,11 +41,11 @@ const Login = {
     },
 
     forms_textinput: {
+        width: '100%',
         fontSize: 11,
         paddingHorizontal: 5,
         marginHorizontal: 5,
-        borderRadius: 20,
-        backgroundColor: '#fff',  
+        borderRadius: 20,      
     },
 
     forms_button_container: {

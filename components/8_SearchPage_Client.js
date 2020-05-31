@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, FlatList, TouchableHighlight, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
-import { ListItem } from 'react-native-elements';
+import { ListItem, SearchBar } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { searchStyles, globalStyles, navbarStyles } from '../styles/styles';
 
@@ -67,7 +67,7 @@ const Search = ({ navigation }) => {
     <View style={searchStyles.container}>
       <View style={searchStyles.header_container}>
         <Text style={searchStyles.header_text_bold}>Search</Text>
-``    </View>
+      </View>
       <SearchBar style={searchStyles.searchBar}
         platform="android"
         lightTheme

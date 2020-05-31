@@ -36,7 +36,6 @@ const ForgotPassword = {
 
     scaffold_textinput: {
         fontSize: 11,
-        width: '100%',
         paddingHorizontal: 5,
         marginHorizontal: 10,
         borderRadius: 20,

@@ -1,15 +1,18 @@
 import Global from './components/AP_Global';
-import Selection from './components/SelectionPage';
+import Navbar from './components/AP_Navbar';
+
 import Login from './components/LoginPage';
-import SignUp from './components/SignupPage';
 import ForgotPassword from './components/FpassPage';
-// import LoginConsultant from './components/SelectionPage';
+import Selection from './components/SelectionPage';
+import SignUp from './components/SignupPage';
+
 import Home from './components/HomePage';
 import Calendar from './components/CalendarPage';
 import Search from './components/SearchPage';
+
 // import Review from './components/ReviewPage';
 
-import Navbar from './components/AP_Navbar';
+
 import { StyleSheet } from 'react-native';
 
 export const globalStyles = StyleSheet.create(Global);

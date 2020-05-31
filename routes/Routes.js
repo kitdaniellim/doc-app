@@ -4,13 +4,13 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 // import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
+import Login from '../components/2_1_LoginPage.js';
+import ForgotPassword from '../components/2_2_FpassPage.js';
+import Selection from '../components/3_SelectionPage.js';
 
-import Selection from '../components/2_SelectionPage.js';
-import ForgotPassword from '../components/5_FpassPage.js';
-
-import LoginClient from '../components/3_LoginPage_Client.js';
 import SignupClient1 from '../components/4_SignupPage1_Client.js';
 import SignupClient2 from '../components/4_SignupPage2_Client.js';
+
 import HomeClient from '../components/6_HomePage_Client.js';
 
 import Calendar from '../components/7_CalendarPage_Client.js';
@@ -18,7 +18,6 @@ import Search from '../components/8_SearchPage_Client.js';
 import Profile from '../components/9_ProfilePage_Client.js';
 
 
-import LoginConsultant from '../components/3_LoginPage_Consultant.js';
 import SignupConsultant1 from '../components/4_SignupPage1_Consultant.js';
 import SignupConsultant2 from '../components/4_SignupPage2_Consultant.js';
 import SignupConsultant3_1 from '../components/4_SignupPage3_1_Consultant.js';
@@ -38,7 +37,7 @@ const tabScreens = {
             tabBarIcon: ({ tintColor }) => (
                 <Icon
                     color={`${tintColor}`}
-                    style={navbarStyles.icon}
+                    
                     name="home"
                     size={21}
                 />
@@ -53,7 +52,7 @@ const tabScreens = {
             tabBarIcon: ({ tintColor }) => (
                 <Icon
                     color={`${tintColor}`}
-                    style={navbarStyles.icon}
+                    
                     name="calendar"
                     size={21}
                 />
@@ -68,7 +67,7 @@ const tabScreens = {
             tabBarIcon: ({ tintColor }) => (
                 <Icon
                     color={`${tintColor}`}
-                    style={navbarStyles.icon}
+                    
                     name="search"
                     size={21}
                 />
@@ -83,7 +82,6 @@ const tabScreens = {
             tabBarIcon: ({ tintColor }) => (
                 <Icon
                     color={`${tintColor}`}
-                    style={navbarStyles.icon}
                     name="star"
                     size={21}
                 />
@@ -99,29 +97,30 @@ const SampleTabNavigator = createBottomTabNavigator(
         initialRouteName: 'HomeClient',
         tabBarOptions: {
             activeBackgroundColor: '#19BAB9',
-            inactiveBackgroundColor: '#19BAB9',
+            inactiveBackgroundColor: '#0FA8A7',
             activeTintColor: '#fff',
-            inactiveTintColor: '#201d1d'
+            inactiveTintColor: '#CFCFCF',
+            showLabel: false,
         }
     }
 )
 
-
-
 const regScreens = {
-    Selection: {
-        screen: Selection,
+    Login: {
+        screen: Login,
         navigationOptions: () => ({
             headerShown: false
         }),
     },
+
     ForgotPassword: {
         screen: ForgotPassword,
     },
 
-    LoginClient: {
-        screen: LoginClient,
+    Selection: {
+        screen: Selection,
     },
+
     SignupClient1: {
         screen: SignupClient1,
     },
@@ -129,9 +128,6 @@ const regScreens = {
         screen: SignupClient2,
     },
 
-    LoginConsultant: {
-        screen: LoginConsultant,
-    },
     SignupConsultant1: {
         screen: SignupConsultant1,
     },

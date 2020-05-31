@@ -87,6 +87,7 @@ const SignUp = {
     },
 
     forms_textinput: {
+        width: '90%',
         fontSize: 11,
         paddingHorizontal: 5,
         marginHorizontal: 5,
@@ -95,18 +96,23 @@ const SignUp = {
     },
 
     forms_bday_container: {
-        flexDirection: 'row',
-        margin: 8,
+        height: 150,
+        flexDirection: 'column',
+        margin: 6,
         alignSelf: 'stretch',
-        
+        justifyContent: 'space-around'
     },
 
     forms_bday_label_container: {
-        flex: 3,
         flexDirection: 'row',
         backgroundColor: '#fff',
         borderRadius: 15,
-        paddingHorizontal: 7,
+        paddingHorizontal: 10,
+        paddingVertical: 3,
+        marginHorizontal: 5,
+        marginTop: 10,
+        marginBottom: 2,
+        justifyContent: 'flex-start',
         alignSelf: 'stretch',
         shadowOffset:{  width: 0,  height: 2,  },
         shadowColor: 'black',
@@ -114,40 +120,23 @@ const SignUp = {
     },
 
     forms_bday_label: {
-        fontSize: 9,
-        width: '100%',
-        paddingHorizontal: 10,
-        borderRadius: 15,
-        color: '#8B8787',
-        alignSelf: 'center',
-        justifyContent: 'flex-start',
+        width: '90%',
+        fontSize: 11,
+        paddingHorizontal: 5,
+        marginHorizontal: 5,
+        borderRadius: 20,
+        backgroundColor: '#fff',   
     },
 
     forms_bday_item_container: {
-        flex: 2,
         borderRadius: 15,
         paddingHorizontal: 6,
-        paddingVertical: 3,
-        marginHorizontal: 3,
-        width: '100%',
+        marginHorizontal: 15,
+        marginVertical: 5,
         backgroundColor: '#fff',
         shadowOffset:{  width: 0,  height: 2,  },
         shadowColor: 'black',
         shadowOpacity: 0.1,
-    },
-
-    forms_bday_item_divider: {
-        color: '#fff',
-        fontWeight: '500', 
-    },
-
-    forms_bday_textinput: {
-        fontSize: 10,
-        width: '100%',
-        paddingHorizontal: 3,
-        marginHorizontal: 5,
-        borderRadius: 15,
-        backgroundColor: '#fff', 
     },
 
     forms_button_container: {

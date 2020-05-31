@@ -3,7 +3,7 @@ import { Text, TextInput, Picker, Button, ScrollView, View, FlatList, TouchableO
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { signupStyles, globalStyles } from '../styles/styles';
 import { LinearGradient } from 'expo-linear-gradient';
-import RadioButtons_MultipleSelect from '../assets/RadioButtons_MultipleSelect.js';
+import RadioButtons_MultipleSelect from './RadioButtons_MultipleSelect.js';
 
 class Dynamic_Input extends Component {
   constructor() {
