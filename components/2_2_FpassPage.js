@@ -68,6 +68,8 @@ const ForgotPassword = ({ navigation }) => {
               placeholder="Username"
               placeholderTextColor="#8B8787"
               style={fpassStyles.scaffold_textinput}
+              onChangeText={text => setUser(text)}
+              value={username}
             />
           </View>
           <TouchableOpacity
