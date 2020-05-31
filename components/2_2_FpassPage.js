@@ -8,18 +8,28 @@ import Modal from 'react-native-modal';
 
 const ForgotPassword = ({ navigation }) => {
   const [username, setUser] = useState('');
+  const [icon, setIcon] = useState('times-circle-o');
+  const [messageLabel, setMessageLabel] = useState('Oops!');
+  const [message, setMessage] = useState('Seems like you missed one. Please fill in all the required fields before proceeding.');
+  const [isVerified, verify] = useState(false);
   const [isModalVisible, toggleModal] = useState(false);
 
   function Close() {
-    toggleModal(false)
+    if(isVerified) {
+      navigation.navigate('Login');
+    } else {
+      toggleModal(false)
+    }
   }
 
   const Request = () => {
-    if (username === '') {
-      toggleModal(true)
-    } else {
-      navigation.navigate('Login');
+    if ((username !== '')) {
+      verify(true)
+      setIcon('check-circle-o')
+      setMessageLabel('Hooray!')
+      setMessage('Your key should be delivered shortly. Please check your email.')
     }
+    toggleModal(true)
   }
 
   return (
@@ -30,24 +40,24 @@ const ForgotPassword = ({ navigation }) => {
         end={{ x: 0, y: 0 }}
         style={globalStyles.gradient}
       >
-        <Modal 
-          isVisible={isModalVisible} 
+        <Modal
+          isVisible={isModalVisible}
           animationIn='bounceInDown'
-          animationOut='bounceOutUp'
-          animationInTiming={600}
-          animationOutTiming={600}
+          animationOut='slideOutUp'
+          animationInTiming={800}
+          animationOutTiming={800}
         >
           <View style={globalStyles.modal_container}>
-            <View style={globalStyles.modal_container_top}>
-              <Icon style={globalStyles.modal_icon} name="times-circle-o" size={29} />
+            <View style={(isVerified)? globalStyles.modal_container_top_verified : globalStyles.modal_container_top}>
+              <Icon style={globalStyles.modal_icon} name={icon} size={29} />
             </View>
             <View style={globalStyles.modal_container_bottom}>
-              <Text style={globalStyles.modal_notif_bold}>Oops!</Text>
-              <Text style={globalStyles.modal_notif}>We can't send you a key without your username! Please fill in all required fields before proceeding.</Text>
+              <Text style={globalStyles.modal_notif_bold}>{messageLabel}</Text>
+              <Text style={globalStyles.modal_notif}>{message}</Text>
               <TouchableOpacity
                 activeOpacity={0.6}
                 onPress={Close}
-                style={globalStyles.modal_button_container}
+                style={(isVerified)? globalStyles.modal_button_container_verified : globalStyles.modal_button_container}
               >
                 <Text style={globalStyles.modal_button_label}>Close</Text>
               </TouchableOpacity>
