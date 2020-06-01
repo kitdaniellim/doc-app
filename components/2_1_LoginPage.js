@@ -26,7 +26,7 @@ const Login = ({ navigation }) => {
     navigation.navigate('ForgotPassword');
   }
 
-  const Selection = () => {
+  const Signup = () => {
     navigation.navigate('Selection');
   }
 
@@ -42,8 +42,8 @@ const Login = ({ navigation }) => {
           isVisible={isModalVisible} 
           animationIn='bounceInDown'
           animationOut='bounceOutUp'
-          animationInTiming={600}
-          animationOutTiming={600}
+          animationInTiming={1100}
+          animationOutTiming={900}
         >
           <View style={globalStyles.modal_container}>
             <View style={globalStyles.modal_container_top}>
@@ -51,7 +51,7 @@ const Login = ({ navigation }) => {
             </View>
             <View style={globalStyles.modal_container_bottom}>
               <Text style={globalStyles.modal_notif_bold}>Oops!</Text>
-              <Text style={globalStyles.modal_notif}>Seems like you missed one. Please fill in all required fields before proceeding.</Text>
+              <Text style={globalStyles.modal_notif}>Incorrect password or username. Please try again.</Text>
               <TouchableOpacity
                 activeOpacity={0.6}
                 onPress={Close}
@@ -121,7 +121,7 @@ const Login = ({ navigation }) => {
             <Text style={loginStyles.forms_text}>No account yet?</Text>
             <TouchableOpacity
               activeOpacity={0.6}
-              onPress={Selection}
+              onPress={Signup}
               style={loginStyles.forms_button}
             >
               <Text style={loginStyles.forms_button_label}>SIGN UP</Text>

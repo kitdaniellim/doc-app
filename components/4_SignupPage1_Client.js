@@ -59,8 +59,8 @@ const SignupClient1 = ({ navigation }) => {
           isVisible={isModalVisible}
           animationIn='bounceInDown'
           animationOut='slideOutUp'
-          animationInTiming={800}
-          animationOutTiming={800}
+          animationInTiming={1100}
+          animationOutTiming={900}
         >
           <View style={globalStyles.modal_container}>
             <View style={globalStyles.modal_container_top}>

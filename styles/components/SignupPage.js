@@ -8,34 +8,55 @@ const SignUp = {
         flex: 1,
         justifyContent: 'space-between',
         alignItems: 'stretch',
-        marginHorizontal: 45,
+        marginHorizontal: 30,
         marginTop: 20,
         marginBottom: 60,
     },
 
     forms_scaffold: {
         flex: 1,
-        justifyContent: 'space-between',
-        alignItems: 'stretch',
+        flexWrap: 'wrap',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
         marginHorizontal: 10,
         marginVertical: 5,
-        padding: 14,
+        paddingTop: 14,
+        paddingHorizontal: 18,
         backgroundColor: '#fff',
         borderRadius: 15,
     },
 
     forms_scaffold_text: {
-        justifyContent: 'flex-start',
         fontSize: 8,
         color: '#8B8787',
     },
 
     forms_scaffold_text_bold: {
         marginBottom: 10,
-        justifyContent: 'flex-start',
-        fontSize: 60,
+        fontSize: 48,
         fontWeight: '600',
         color: '#8B8787',
+    },
+
+    forms_scaffold_checkbox_container: {
+        flexDirection: "row",
+        marginBottom: 20,
+        justifyContent: 'center',
+        alignSelf: 'center'
+    },
+
+    forms_scaffold_checkbox: {
+        alignSelf: "center",
+        
+    },
+    
+    forms_scaffold_checkbox_label: {
+        margin: 4,
+        fontSize: 11,
+        color: '#8B8787',
+        textAlign: 'center',
+        alignSelf: "center",
+        justifyContent: 'center'
     },
 
     forms_label_container: {

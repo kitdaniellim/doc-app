@@ -8,13 +8,14 @@ const ForgotPassword = {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'stretch',
-        marginHorizontal: 100,
+        marginHorizontal: 70,
         marginVertical: 40,
     },
 
     scaffold_text: {
         color: '#fff',
         fontSize: 11,
+        lineHeight: 25,
         fontWeight: '500',
         textAlign: 'center',
     },
@@ -43,7 +44,7 @@ const ForgotPassword = {
     },
 
     button: {
-        width: 200,
+        width: 130,
         height: 30,
         marginVertical: 20,
         backgroundColor: '#fff',

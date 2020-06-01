@@ -10,7 +10,7 @@ const ForgotPassword = ({ navigation }) => {
   const [username, setUser] = useState('');
   const [icon, setIcon] = useState('times-circle-o');
   const [messageLabel, setMessageLabel] = useState('Oops!');
-  const [message, setMessage] = useState('Seems like you missed one. Please fill in all the required fields before proceeding.');
+  const [message, setMessage] = useState('Please fill in all the required fields before proceeding.');
   const [isVerified, verify] = useState(false);
   const [isModalVisible, toggleModal] = useState(false);
 
@@ -26,7 +26,7 @@ const ForgotPassword = ({ navigation }) => {
     if ((username !== '')) {
       verify(true)
       setIcon('check-circle-o')
-      setMessageLabel('Hooray!')
+      setMessageLabel('Recovery Key sent!')
       setMessage('Your key should be delivered shortly. Please check your email.')
     }
     toggleModal(true)
@@ -44,8 +44,8 @@ const ForgotPassword = ({ navigation }) => {
           isVisible={isModalVisible}
           animationIn='bounceInDown'
           animationOut='slideOutUp'
-          animationInTiming={800}
-          animationOutTiming={800}
+          animationInTiming={1100}
+          animationOutTiming={900}
         >
           <View style={globalStyles.modal_container}>
             <View style={(isVerified)? globalStyles.modal_container_top_verified : globalStyles.modal_container_top}>
@@ -66,11 +66,9 @@ const ForgotPassword = ({ navigation }) => {
         </Modal>
         <View style={fpassStyles.scaffold}>
           <Text style={fpassStyles.scaffold_text}>
-            Forgot your password? {"\n"}
-            No worries! {"\n\n"}
-            Enter your username below and {"\n"}
-            we’ll send a recovery key to your {"\n"}
-            email account for you.
+            Forgot your password? No worries! {"\n"}
+            Just enter the username you use to login below and
+            we’ll send a recovery key to your email account for you.
           </Text>
           <View style={fpassStyles.scaffold_textinput_container}>
             <Icon style={globalStyles.icon_global} name="user-circle" size={18} />

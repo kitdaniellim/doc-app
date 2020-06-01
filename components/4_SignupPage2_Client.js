@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, TextInput, View, Picker, TouchableOpacity, TouchableHighlight } from 'react-native';
+import { Text, TextInput, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { signupStyles, globalStyles } from '../styles/styles';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -14,6 +14,7 @@ const SignupClient2 = ({ navigation }) => {
     let startYear = 2020;
     for(let x = 0; x < 100; x++){
       years.push({label: startYear.toString(), value: startYear.toString()})
+      startYear--
     }
   }
 
@@ -70,8 +71,8 @@ const SignupClient2 = ({ navigation }) => {
           isVisible={isModalVisible}
           animationIn='bounceInDown'
           animationOut='slideOutUp'
-          animationInTiming={800}
-          animationOutTiming={800}
+          animationInTiming={1100}
+          animationOutTiming={900}
         >
           <View style={globalStyles.modal_container}>
             <View style={(isVerified)? globalStyles.modal_container_top_verified : globalStyles.modal_container_top}>
@@ -302,7 +303,7 @@ const SignupClient2 = ({ navigation }) => {
             <TextInput
               placeholder="Mobile Number (ex. 09258426943)"
               placeholderTextColor="#8B8787"
-              keyboardType='phone-pad'
+              keyboardType='numeric'
               style={signupStyles.forms_textinput}
               onChangeText={text => setNum(text)}
               value={num}

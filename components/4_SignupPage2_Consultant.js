@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { useState, Component } from 'react';
 import { Text, TextInput, Button, ScrollView, View, FlatList, TouchableOpacity, TouchableHighlight, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { signupStyles, globalStyles } from '../styles/styles';
 import { LinearGradient } from 'expo-linear-gradient';
-
+import Modal from 'react-native-modal';
 class Dynamic_Input extends Component {
   constructor() {
     super();
@@ -13,7 +13,6 @@ class Dynamic_Input extends Component {
       textInput: [],
     }
   }
-
 
   addField = () => {
     let textInput = this.state.textInput;
@@ -57,7 +56,7 @@ class Dynamic_Input extends Component {
   render() {
     return (
       <View>
-        <View style={signupStyles.forms_dynamicinput_margin, {height: 100}}>
+        <View style={signupStyles.forms_dynamicinput_margin, { height: 100 }}>
           <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             {this.state.textInput.map((value) => {
               return value
@@ -88,8 +87,22 @@ class Dynamic_Input extends Component {
 }
 
 const SignupConsultant2 = ({ navigation }) => {
+  const [fname, setName] = useState('');
+  const [specialty, setSpec] = useState('');
+  const [lic, setLic] = useState('');
+  const [message, setMessage] = useState('Seems like you missed one. Please fill in all the required fields before proceeding.');
+  const [isModalVisible, toggleModal] = useState(false);
+
+  function Close() {
+    toggleModal(false)
+  }
+
   const Next = () => {
-    navigation.navigate('SignupConsultant3_1');
+    if ((fname !== '' && specialty !== '' && lic !== '')) {
+      navigation.navigate('SignupConsultant3_1');
+    } else {
+      toggleModal(true)
+    }
   }
 
   return (
@@ -100,6 +113,30 @@ const SignupConsultant2 = ({ navigation }) => {
         end={{ x: 0, y: 0 }}
         style={globalStyles.gradient}
       >
+        <Modal 
+          isVisible={isModalVisible} 
+          animationIn='bounceInDown'
+          animationOut='bounceOutUp'
+          animationInTiming={1100}
+          animationOutTiming={900}
+        >
+          <View style={globalStyles.modal_container}>
+            <View style={globalStyles.modal_container_top}>
+              <Icon style={globalStyles.modal_icon} name="times-circle-o" size={29} />
+            </View>
+            <View style={globalStyles.modal_container_bottom}>
+              <Text style={globalStyles.modal_notif_bold}>Oops!</Text>
+              <Text style={globalStyles.modal_notif}>Seems like you missed one. Please fill in all required fields before proceeding.</Text>
+              <TouchableOpacity
+                activeOpacity={0.6}
+                onPress={Close}
+                style={globalStyles.modal_button_container}
+              >
+                <Text style={globalStyles.modal_button_label}>Close</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
         <View style={signupStyles.forms_container}>
           <Text style={signupStyles.forms_label}>CONSULTANT SIGN UP</Text>
           <View style={signupStyles.forms_label_small_container}>
@@ -111,6 +148,8 @@ const SignupConsultant2 = ({ navigation }) => {
               placeholder="Full Name"
               placeholderTextColor="#8B8787"
               style={signupStyles.forms_textinput}
+              onChangeText={text => setName(text)}
+              value={fname}
             />
           </View>
           <View style={signupStyles.forms_textinput_container}>
@@ -119,6 +158,8 @@ const SignupConsultant2 = ({ navigation }) => {
               placeholder="Specialty"
               placeholderTextColor="#8B8787"
               style={signupStyles.forms_textinput}
+              onChangeText={text => setSpec(text)}
+              value={specialty}
             />
           </View>
           <View style={signupStyles.forms_textinput_container}>
@@ -127,6 +168,8 @@ const SignupConsultant2 = ({ navigation }) => {
               placeholder="LIC Number"
               placeholderTextColor="#8B8787"
               style={signupStyles.forms_textinput}
+              onChangeText={text => setLic(text)}
+              value={lic}
             />
           </View>
           <Dynamic_Input />

@@ -65,15 +65,18 @@ class Dynamic_Input extends Component {
             <View style={signupStyles.forms_timeinput_container}>
               <TextInput
                 defaultValue='7'
+                keyboardType='numeric'
                 style={signupStyles.forms_timeinput_textinput}
               />
               <Text style={signupStyles.forms_text_bold_alt}>{" "} : {" "}</Text>
               <TextInput
                 defaultValue='30'
+                keyboardType='numeric'
                 style={signupStyles.forms_timeinput_textinput}
               />
               <TextInput
                 defaultValue='AM'
+                keyboardType='numeric'
                 style={signupStyles.forms_time_label}
               />
             </View>
@@ -83,15 +86,18 @@ class Dynamic_Input extends Component {
             <View style={signupStyles.forms_timeinput_container}>
               <TextInput
                 defaultValue='4'
+                keyboardType='numeric'
                 style={signupStyles.forms_timeinput_textinput}
               />
               <Text style={signupStyles.forms_text_bold_alt}>{" "} : {" "}</Text>
               <TextInput
                 defaultValue='30'
+                keyboardType='numeric'
                 style={signupStyles.forms_timeinput_textinput}
               />
               <TextInput
                 defaultValue='PM'
+                keyboardType='numeric'
                 style={signupStyles.forms_time_label}
               />
             </View>
@@ -108,15 +114,18 @@ class Dynamic_Input extends Component {
             <View style={signupStyles.forms_timeinput_container}>
               <TextInput
                 placeholder=''
+                keyboardType='numeric'
                 style={signupStyles.forms_timeinput_textinput}
               />
               <Text style={signupStyles.forms_text_bold_alt}>{" "} : {" "}</Text>
               <TextInput
                 placeholder=''
+                keyboardType='numeric'
                 style={signupStyles.forms_timeinput_textinput}
               />
               <TextInput
                 defaultValue='AM'
+                keyboardType='numeric'
                 style={signupStyles.forms_time_label}
               />
             </View>
@@ -126,15 +135,18 @@ class Dynamic_Input extends Component {
             <View style={signupStyles.forms_timeinput_container}>
               <TextInput
                 placeholder=''
+                keyboardType='numeric'
                 style={signupStyles.forms_timeinput_textinput}
               />
               <Text style={signupStyles.forms_text_bold_alt}>{" "} : {" "}</Text>
               <TextInput
                 placeholder=''
+                keyboardType='numeric'
                 style={signupStyles.forms_timeinput_textinput}
               />
               <TextInput
                 defaultValue='PM'
+                keyboardType='numeric'
                 style={signupStyles.forms_time_label}
               />
             </View>
