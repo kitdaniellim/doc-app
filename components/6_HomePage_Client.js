@@ -1,11 +1,23 @@
 import React from 'react';
-import { Text, Image, View, FlatList, TouchableHighlight, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
+import { Text, Image, View, FlatList, RefreshControl, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { homeStyles, globalStyles, navbarStyles } from '../styles/styles';
 
+function wait(timeout) {
+  return new Promise(resolve => {
+    setTimeout(resolve, timeout);
+  });
+}
 
 const HomeClient = ({ navigation }) => {
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(1500).then(() => setRefreshing(false));
+  }, [refreshing]);
+
   const Submit = () => {
     navigation.navigate('LoginClient');
   }
@@ -22,11 +34,11 @@ const HomeClient = ({ navigation }) => {
     {
       field: "ENGINEERS",
       data: [
-        {id: 1, name: "Go", img: require("../assets/troy.png")},
-        {id: 2, name: "Helsinki", img: require("../assets/troy.png")},
-        {id: 3, name: "Berlin", img: require("../assets/troy.png")},
-        {id: 4, name: "Helsinki", img: require("../assets/troy.png")},
-        {id: 5, name: "Berlin", img: require("../assets/troy.png")}, 
+        {id: 1, name: "Dr. Go", img: require("../assets/troy.png")},
+        {id: 2, name: "Dr. Helsinki", img: require("../assets/troy.png")},
+        {id: 3, name: "Dr. Berlin", img: require("../assets/troy.png")},
+        {id: 4, name: "Dr. Helsinki", img: require("../assets/troy.png")},
+        {id: 5, name: "Dr. Berlin", img: require("../assets/troy.png")}, 
       ],
       key: 1,
     },
@@ -34,11 +46,11 @@ const HomeClient = ({ navigation }) => {
     {
       field: "DOCTORS",
       data: [
-        {id: 1, name: "Tokyo", img: require("../assets/troy.png")},
-        {id: 2, name: "Denver", img: require("../assets/troy.png")},
-        {id: 3, name: "Rio", img: require("../assets/troy.png")},
-        {id: 4, name: "Helsinki", img: require("../assets/troy.png")},
-        {id: 5, name: "Berlin", img: require("../assets/troy.png")}, 
+        {id: 1, name: "Dr. Tokyo", img: require("../assets/troy.png")},
+        {id: 2, name: "Dr. Denver", img: require("../assets/troy.png")},
+        {id: 3, name: "Dr. Rio", img: require("../assets/troy.png")},
+        {id: 4, name: "Dr. Helsinki", img: require("../assets/troy.png")},
+        {id: 5, name: "Dr. Berlin", img: require("../assets/troy.png")}, 
       ],
       key: 2,
     },
@@ -46,11 +58,11 @@ const HomeClient = ({ navigation }) => {
     {
       field: "SCULPTORS",
       data: [
-        {id: 1, name: "Arnoco", img: require("../assets/troy.png")},
-        {id: 2, name: "Burmuda", img: require("../assets/troy.png")},
-        {id: 3, name: "Risotto", img: require("../assets/troy.png")},
-        {id: 4, name: "Helsinki", img: require("../assets/troy.png")},
-        {id: 5, name: "Berlin", img: require("../assets/troy.png")}, 
+        {id: 1, name: "Dr. Arnoco", img: require("../assets/troy.png")},
+        {id: 2, name: "Dr. Burmuda", img: require("../assets/troy.png")},
+        {id: 3, name: "Dr. Risotto", img: require("../assets/troy.png")},
+        {id: 4, name: "Dr. Helsinki", img: require("../assets/troy.png")},
+        {id: 5, name: "Dr. Berlin", img: require("../assets/troy.png")}, 
       ],
       key: 3,
     },
@@ -58,11 +70,11 @@ const HomeClient = ({ navigation }) => {
     {
       field: "LAWYERS",
       data: [
-        {id: 1, name: "Madeyo", img: require("../assets/troy.png")},
-        {id: 2, name: "Blanca", img: require("../assets/troy.png")},
-        {id: 3, name: "Risotto", img: require("../assets/troy.png")},
-        {id: 4, name: "Helsinki", img: require("../assets/troy.png")},
-        {id: 5, name: "Berlin", img: require("../assets/troy.png")}, 
+        {id: 1, name: "Dr. Madeyo", img: require("../assets/troy.png")},
+        {id: 2, name: "Dr. Blanca", img: require("../assets/troy.png")},
+        {id: 3, name: "Dr. Risotto", img: require("../assets/troy.png")},
+        {id: 4, name: "Dr. Helsinki", img: require("../assets/troy.png")},
+        {id: 5, name: "Dr. Berlin", img: require("../assets/troy.png")}, 
       ],
       key: 4,
     },
@@ -70,11 +82,11 @@ const HomeClient = ({ navigation }) => {
     {
       field: "BUSINESSMEN",
       data: [
-        {id: 1, name: "Shelby", img: require("../assets/troy.png")},
-        {id: 2, name: "Oquias", img: require("../assets/troy.png")},
-        {id: 3, name: "Chengretto", img: require("../assets/troy.png")},
-        {id: 4, name: "Helsinki", img: require("../assets/troy.png")},
-        {id: 5, name: "Berlin", img: require("../assets/troy.png")}, 
+        {id: 1, name: "Dr. Shelby", img: require("../assets/troy.png")},
+        {id: 2, name: "Dr. Oquias", img: require("../assets/troy.png")},
+        {id: 3, name: "Dr. Chengretto", img: require("../assets/troy.png")},
+        {id: 4, name: "Dr. Helsinki", img: require("../assets/troy.png")},
+        {id: 5, name: "Dr. Berlin", img: require("../assets/troy.png")}, 
       ],
       key: 5,
     },
@@ -82,11 +94,11 @@ const HomeClient = ({ navigation }) => {
     {
       field: "ARTISTS",
       data: [
-        {id: 1, name: "Tokyo", img: require("../assets/troy.png")},
-        {id: 2, name: "Denver", img: require("../assets/troy.png")},
-        {id: 3, name: "Rio", img: require("../assets/troy.png")},
-        {id: 4, name: "Helsinki", img: require("../assets/troy.png")},
-        {id: 5, name: "Berlin", img: require("../assets/troy.png")}, 
+        {id: 1, name: "Dr. Tokyo", img: require("../assets/troy.png")},
+        {id: 2, name: "Dr. Denver", img: require("../assets/troy.png")},
+        {id: 3, name: "Dr. Rio", img: require("../assets/troy.png")},
+        {id: 4, name: "Dr. Helsinki", img: require("../assets/troy.png")},
+        {id: 5, name: "Dr. Berlin", img: require("../assets/troy.png")}, 
       ],
       key: 6,
     },
@@ -94,11 +106,11 @@ const HomeClient = ({ navigation }) => {
     {
       field: "ARCHITECTS",
       data: [
-        {id: 1, name: "Arnoco", img: require("../assets/troy.png")},
-        {id: 2, name: "Burmuda", img: require("../assets/troy.png")},
-        {id: 3, name: "Risotto", img: require("../assets/troy.png")},
-        {id: 4, name: "Helsinki", img: require("../assets/troy.png")},
-        {id: 5, name: "Berlin", img: require("../assets/troy.png")}, 
+        {id: 1, name: "Dr. Arnoco", img: require("../assets/troy.png")},
+        {id: 2, name: "Dr. Burmuda", img: require("../assets/troy.png")},
+        {id: 3, name: "Dr. Risotto", img: require("../assets/troy.png")},
+        {id: 4, name: "Dr. Helsinki", img: require("../assets/troy.png")},
+        {id: 5, name: "Dr. Berlin", img: require("../assets/troy.png")}, 
       ],
       key: 7,
     }
@@ -112,9 +124,17 @@ const HomeClient = ({ navigation }) => {
         <Text style={homeStyles.header_text}>Highest Rated by Profession</Text>
       </View>
       <View style={homeStyles.scaffold}>
+        {/* <Text>{ navigation.getParam(`user`) }</Text> */}
         <FlatList
           data={list}
+          style={{marginVertical: -10}}
           showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl 
+              refreshing={refreshing} 
+              onRefresh={onRefresh} 
+            />
+          }
           keyExtractor = { (item) => item.key.toString() }
           renderItem={({ item }) => (
             <View key={item.key.toString()}>
@@ -127,28 +147,29 @@ const HomeClient = ({ navigation }) => {
                   >
                     <Text style={homeStyles.scaffold_vlist_item_header}>{item.field}</Text>
                   </TouchableOpacity>
-                  <View style={homeStyles.scaffold_vlist_item_container}>
+                  <View style={homeStyles.scaffold_hlist_container}>
                     <ScrollView
                       horizontal={true}
+                      showsHorizontalScrollIndicator={false}
                       contentContainerStyle={{}}
                     >
-                      {item.data.map((data, index) => {
+                      {item.data.map((data) => {
                         return (
                           <View style={homeStyles.scaffold_hlist_item_container} key={data.id.toString()}>
-                            <View style={{flexDirection: 'row'}}>
-                              <Text>{index + 1}</Text>
-                              <View style={{flexDirection: 'column'}}>
+                            <View style={homeStyles.scaffold_hlist_item_box_container}>
+                              <Text style={homeStyles.scaffold_hlist_item_box_id}>{data.id}</Text>
+                              <View style={homeStyles.scaffold_hlist_item_box_content}>
                                 <TouchableOpacity
                                   activeOpacity={0.6}
                                   onPress={Profile}
-                                  style={{paddingVertical: 2, marginVertical: 2}}
+                                  style={homeStyles.scaffold_hlist_item_box_image_container}
                                 >
                                   <Image
                                     source={data.img}
-                                    style={{height: 60, width: 80}}
+                                    style={homeStyles.scaffold_hlist_item_box_image}
                                   />
                                 </TouchableOpacity>
-                                <Text>{data.name}</Text>
+                                <Text style={homeStyles.scaffold_hlist_item_box_name}>{data.name}</Text>
                               </View>
                             </View>                         
                          </View>

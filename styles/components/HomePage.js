@@ -29,50 +29,88 @@ const Home = {
   },
 
   scaffold: {
-    flex: 9,
+    flex: 10,
     padding: 10,
-    backgroundColor: '#F5F5F5',
+    margin: 0,
+    backgroundColor: '#ECECEC',
     alignSelf: 'stretch',
     justifyContent: 'center',
   },
 
   scaffold_list_container: {
     backgroundColor: '#fff',
-    padding: 15,
+    paddingVertical: 12,
     borderRadius: 15,
     margin: 10,
     alignSelf: 'stretch',
-  },
-  
-  scaffold_vlist_item_container: {
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    paddingVertical: 8,
-  },
-
-  scaffold_vlist_item_header: {
-    fontSize: 14,
-    marginBottom: 5,
-    fontWeight: '100',
-    color: '#8B8787',
   },
 
   scaffold_vlist_item_container: {
     flex: 1,
     paddingVertical: 8,
-    paddingHorizontal: 4,
-    backgroundColor: 'pink',
+    paddingHorizontal: 8,
+    backgroundColor: '#FDBB3B',
     alignSelf: 'stretch',
     justifyContent: 'center'
   },
 
-  scaffold_hlist_item_container: {
-    justifyContent: 'center'
+  scaffold_vlist_item_header: {
+    fontSize: 14,
+    marginBottom: 5,
+    paddingLeft: 5,
+    letterSpacing: 0.5,
+    fontWeight: '300',
+    color: '#fff',
   },
+
+  scaffold_hlist_container: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+
+
+  scaffold_hlist_item_container: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+
+  scaffold_hlist_item_box_container: {
+    flexDirection: 'row'
+  },
+
+  scaffold_hlist_item_box_id: {
+    color: '#fff',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    marginHorizontal: 5,
+  },
+
+  scaffold_hlist_item_box_content: {
+    flexDirection: 'column',
+    marginHorizontal: 8,
+    justifyContent: 'center',
+    alignSelf: 'center',
+  },
+
+  scaffold_hlist_item_box_image_container: {
+    borderColor: '#fff',
+    borderWidth: 1,
+  },
+
+  scaffold_hlist_item_box_image: {
+    height: 60, 
+    width: 80
+  },
+  
+  scaffold_hlist_item_box_name: {
+    color: '#fff',
+    textAlign: 'center'
+  },
+
 
   scaffold_list_item_data_container: {
     backgroundColor: '#DCB246',
-
+    justifyContent: 'center',
   },
 
   divider: {

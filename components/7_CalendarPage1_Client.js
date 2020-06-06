@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, View, FlatList, TouchableHighlight, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -6,57 +6,52 @@ import {Calendar, CalendarList} from 'react-native-calendars';
 import { calendarStyles, globalStyles } from '../styles/styles';
 
 
-
-
-
-
-
-
 const CalendarPage = ({ navigation }) => {
-  const Submit = () => {
-    navigation.navigate('LoginClient');
+  //Highlighted dates 
+  const markedDates={
+    //Finished Appointments
+    '2020-06-10': {selected: true, selectedColor: '#56EC65'},
+    '2020-06-11': {selected: true, selectedColor: '#56EC65'},
+
+    //Upcoming Appointments
+    '2020-06-12': {selected: true, selectedColor: '#FCD034'},
+    '2020-06-13': {selected: true, selectedColor: '#FCD034'},
   }
 
-  const Search = () => {
-    navigation.navigate('Search');
-  }
-
-  const b = () => {
-    navigation.navigate('LoginClient');
+  const Appointment = () => {
+    navigation.navigate('Calendar2');
   }
 
   return (
     <View style={calendarStyles.container}>
       <View style={calendarStyles.header_container}>
-        <Text style={calendarStyles.header_text_bold}>CALENDAR</Text>
+        <View style={calendarStyles.header_text_container}>
+          <Text style={calendarStyles.header_text_bold}>CALENDAR</Text>
+        </View>
       </View>
       <View style={calendarStyles.scaffold}>
         <View style={calendarStyles.calendar_container}>
           <Calendar
-            current={'2020-05-30'}
-            markedDates={{
-              '2020-05-10': {selected: true, marked: true, selectedColor: 'blue'},
-              '2020-05-12': {marked: true},
-              '2020-05-14': {marked: true, dotColor: 'red', activeOpacity: 0},
-              '2020-05-20': {disabled: true, disableTouchEvent: true}
-            }}
-            
+            onDayPress={Appointment}
+            markedDates={markedDates}
+            //36 months
+            pastScrollRange={36}
+            //24 months
+            futureScrollRange={24}
             style={{
               borderRadius: 15,
-              
             }}
 
             theme={{
               backgroundColor: '#fff',
-              calendarBackground: 'pink',
-              
+              calendarBackground: '#fff',
               textSectionTitleColor: '#8B8787',
-              // selectedDayBackgroundColor: '#00adf5',
-              // selectedDayTextColor: '#ffffff',
+              // selectedDayBackgroundColor: '#56EC65',
+              // selectedDayTextColor: 'orange',
               // todayTextColor: '#00adf5',
               dayTextColor: 'black',
-              textDayFontSize: 8,
-              // textDisabledColor: '#d9e1e8',
+              textDayFontSize: 10,
+              // textDisabledColor: 'orange',
               // dotColor: '#00adf5',
               // selectedDotColor: '#ffffff',
               // arrowColor: 'orange',
@@ -74,23 +69,24 @@ const CalendarPage = ({ navigation }) => {
               textDayHeaderFontSize: 12,
               'stylesheet.day.basic':{
                 'base':{
-                  width: 30,
-                  height: 10,
-                  alignItems: 'center'
+                  width: 25,
+                  height: 25,
+                  alignItems: 'center',
+                  borderRadius: 0,
                 }
               }
             }}
           />
         </View>
         <View style={calendarStyles.calendar_legend_container}>
-          <Text>Legend: </Text>
-          <View style={calendarStyles.calendar_legend_finished}>
-            <View></View>
-            <Text> - Finished Appointment</Text>
+          <Text style={calendarStyles.calendar_legend_label}>Legend:</Text>
+          <View style={calendarStyles.calendar_legend_text_container}>
+            <View style={calendarStyles.calendar_legend_finished_hue}></View>
+            <Text style={calendarStyles.calendar_legend_text}> - Finished Appointments</Text>
           </View>
-          <View style={calendarStyles.calendar_legend_upcoming}>
-            <View></View>
-            <Text> - Upcoming Appointment</Text>
+          <View style={calendarStyles.calendar_legend_text_container}>
+            <View style={calendarStyles.calendar_legend_upcoming_hue}></View>
+            <Text style={calendarStyles.calendar_legend_text}> - Upcoming Appointments</Text>
           </View>
         </View>
       </View>

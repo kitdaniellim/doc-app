@@ -2,7 +2,7 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-// import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 
 import Login from '../components/2_1_LoginPage.js';
 import ForgotPassword from '../components/2_2_FpassPage.js';
@@ -13,10 +13,11 @@ import SignupClient2 from '../components/4_SignupPage2_Client.js';
 
 import HomeClient from '../components/6_HomePage_Client.js';
 
-import Calendar from '../components/7_CalendarPage_Client.js';
+import Calendar1 from '../components/7_CalendarPage1_Client.js';
+import Calendar2 from '../components/7_CalendarPage2_Client.js';
 import Search from '../components/8_SearchPage_Client.js';
+import Review from '../components/9_ReviewPage_Client.js';
 import Profile from '../components/9_ProfilePage_Client.js';
-
 
 import SignupConsultant1 from '../components/4_SignupPage1_Consultant.js';
 import SignupConsultant2 from '../components/4_SignupPage2_Consultant.js';
@@ -29,82 +30,6 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { navbarStyles } from '../styles/styles';
 
-const tabScreens = {
-    HomeClient: {
-        screen: HomeClient,
-        navigationOptions: {
-            title: 'Home',
-            tabBarIcon: ({ tintColor }) => (
-                <Icon
-                    color={`${tintColor}`}
-                    
-                    name="home"
-                    size={21}
-                />
-            )
-        },
-    },
-
-    Calendar: {
-        screen: Calendar,
-        navigationOptions: {
-            title: 'Calendar',
-            tabBarIcon: ({ tintColor }) => (
-                <Icon
-                    color={`${tintColor}`}
-                    
-                    name="calendar"
-                    size={21}
-                />
-            )
-        },
-    },
-
-    Search: {
-        screen: Search,
-        navigationOptions: {
-            title: 'Search',
-            tabBarIcon: ({ tintColor }) => (
-                <Icon
-                    color={`${tintColor}`}
-                    
-                    name="search"
-                    size={21}
-                />
-            )
-        },
-    },
-
-    Profile: {
-        screen: Profile,
-        navigationOptions: {
-            title: 'Profile',
-            tabBarIcon: ({ tintColor }) => (
-                <Icon
-                    color={`${tintColor}`}
-                    name="star"
-                    size={21}
-                />
-            )
-        },
-    },
-}
-
-
-const SampleTabNavigator = createBottomTabNavigator(
-    tabScreens,
-    {
-        initialRouteName: 'HomeClient',
-        tabBarOptions: {
-            activeBackgroundColor: '#19BAB9',
-            inactiveBackgroundColor: '#0FA8A7',
-            activeTintColor: '#fff',
-            inactiveTintColor: '#CFCFCF',
-            showLabel: false,
-        }
-    }
-)
-
 const regScreens = {
     Login: {
         screen: Login,
@@ -112,7 +37,6 @@ const regScreens = {
             headerShown: false
         }),
     },
-
     ForgotPassword: {
         screen: ForgotPassword,
     },
@@ -143,12 +67,191 @@ const regScreens = {
     SignupConsultant4: {
         screen: SignupConsultant4
     },
+}
 
+const calendarScreens = {
+    Calendar1: {
+        screen: Calendar1,
+    },
+
+    Calendar2: {
+        screen: Calendar2,
+    },
+}
+
+const CalendarStack = createStackNavigator(
+    calendarScreens,
+    {
+        defaultNavigationOptions: {
+            headerStyle: {
+                backgroundColor: '#19BAB9',
+                borderBottomColor: '#19BAB9',
+            },
+            headerTintColor: '#fff',
+            title: null,
+            headerShown: false
+        }
+    }
+);
+
+const clientTabScreens = {
+    HomeClient: {
+        screen: HomeClient,
+        navigationOptions: {
+            title: 'Home',
+            tabBarIcon: ({ tintColor }) => (
+                <Icon
+                    color={`${tintColor}`}
+                    name="home"
+                    size={21}
+                />
+            ),
+            tabBarColor: '#19BAB9',
+        },
+    },
+
+    Calendar: {
+        screen: CalendarStack,
+        navigationOptions: {
+            headerShown: false,
+            tabBarIcon: ({ tintColor }) => (
+                <Icon
+                    color={`${tintColor}`}
+                    name="calendar"
+                    size={21}
+                />
+            ),
+            tabBarColor: '#19BAB9',
+        },
+    },
+
+    Search: {
+        screen: Search,
+        navigationOptions: {
+            title: 'Search',
+            tabBarIcon: ({ tintColor }) => (
+                <Icon
+                    color={`${tintColor}`}
+                    name="search"
+                    size={21}
+                />
+            ),
+            tabBarColor: '#19BAB9',
+        },
+    },
+
+    Review: {
+        screen: Review,
+        navigationOptions: {
+            title: 'Review',
+            tabBarIcon: ({ tintColor }) => (
+                <Icon
+                    color={`${tintColor}`}
+                    name="pencil"
+                    size={21}
+                />
+            ),
+            tabBarColor: '#FDBB3B',
+        },
+    },
+}
+
+const consultantTabScreens = {
+    HomeClient: {
+        screen: HomeClient,
+        navigationOptions: {
+            title: 'Home',
+            tabBarIcon: ({ tintColor }) => (
+                <Icon
+                    color={`${tintColor}`}
+                    name="home"
+                    size={21}
+                />
+            ),
+            tabBarColor: '#19BAB9',
+        },
+    },
+
+    Calendar: {
+        screen: CalendarStack,
+        navigationOptions: {
+            title: 'Calendar',
+            tabBarIcon: ({ tintColor }) => (
+                <Icon
+                    color={`${tintColor}`}
+                    name="calendar"
+                    size={21}
+                />
+            ),
+            tabBarColor: '#56D74F',
+        },
+    },
+
+    Search: {
+        screen: Search,
+        navigationOptions: {
+            title: 'Search',
+            tabBarIcon: ({ tintColor }) => (
+                <Icon
+                    color={`${tintColor}`}
+                    name="search"
+                    size={21}
+                />
+            ),
+            tabBarColor: '#0CB4A6', 
+        },
+    },
+
+    Profile: {
+        screen: Profile,
+        navigationOptions: {
+            title: 'Profile',
+            tabBarIcon: ({ tintColor }) => (
+                <Icon
+                    color={`${tintColor}`}
+                    name="user-o"
+                    size={21}
+                />
+            ),
+            tabBarColor: '#FDBB3B',
+        },
+    },
+}
+
+//Client Tab Navigator
+const clientTabNavigator = createMaterialBottomTabNavigator(
+    clientTabScreens,
+    {
+        initialRouteName: 'HomeClient',
+        activeColor: '#fff',
+        inactiveColor: '#e3e3e3',
+    }
+)
+
+//Consultant Tab Navigator
+const consultantTabNavigator = createMaterialBottomTabNavigator(
+    consultantTabScreens,
+    {
+        initialRouteName: 'HomeClient',
+        tabBarOptions: {
+            activeBackgroundColor: '#19BAB9',
+            inactiveBackgroundColor: '#0FA8A7',
+            activeTintColor: '#fff',
+            inactiveTintColor: '#CFCFCF',
+            showLabel: false,
+        }
+    }
+)
+
+function getTabs() {
+    // insert identifer whether logged in user is client or a consultant using firestore
+    let client = true; //temporary identifier, <--insert here
+    return (client) ? clientTabNavigator : consultantTabNavigator
 }
 
 const appScreens = {
     HomeClient: {
-        screen: SampleTabNavigator,
+        screen: getTabs(),
         navigationOptions: () => ({
             title: `insert logo`,
         }),

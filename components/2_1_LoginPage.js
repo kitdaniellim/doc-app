@@ -6,8 +6,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Modal from 'react-native-modal';
 
 const Login = ({ navigation }) => {
-  const [username, setUser] = useState('');
-  const [password, setPass] = useState('');
+  const [username, setUser] = useState('a');
+  const [password, setPass] = useState('b');
   const [isModalVisible, toggleModal] = useState(false);
 
   function Close() {
@@ -18,7 +18,8 @@ const Login = ({ navigation }) => {
     if (username === '' || password === '') {
       toggleModal(true)
     } else {
-      navigation.navigate('HomeClient');
+      let objparam = {user: username}
+      navigation.navigate('HomeClient', objparam);
     }
   }
 
