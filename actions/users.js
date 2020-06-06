@@ -1,13 +1,18 @@
+import Firebase, { db } from '../config/Firebase';
+
 //USER PASSWORD RECOVERY OPERATION
 export const recoverPassword = (token) => {
     return dispatch => {
         try {
             dispatch(loadBegin());
             //insert db query and operations here
-            const result = {
-                message: `DB result here using token: ${token}`
-            };
-            dispatch(recoverPassSuccess(result));
+            Firebase.auth().getUserByEmail(token)
+                .then((userRecord) => {
+                    dispatch(recoverPassSuccess(userRecord));
+                })
+                .catch((error) => {
+                    dispatch(recoverPassFailure(error));
+                });
         } catch (error) {
             dispatch(recoverPassFailure(error));
         }
