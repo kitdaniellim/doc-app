@@ -2,13 +2,16 @@ import Firebase, { db } from '../config/Firebase';
 
 //USER PASSWORD RECOVERY OPERATION
 export const recoverPassword = (token) => {
-    return dispatch => {
+    return async dispatch => {
         try {
             dispatch(loadBegin());
             //insert db query and operations here
-            Firebase.auth().getUserByEmail(token)
-                .then((userRecord) => {
-                    dispatch(recoverPassSuccess(userRecord));
+            await Firebase.auth().sendPasswordResetEmail(token)
+                .then(() => {
+                    const result = {
+                        message: "Email has been sent for " + token + ". \n\n Please check the email for instructions in resetting the password."
+                    }
+                    dispatch(recoverPassSuccess(result));
                 })
                 .catch((error) => {
                     dispatch(recoverPassFailure(error));

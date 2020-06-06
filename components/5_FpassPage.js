@@ -18,8 +18,12 @@ class ForgotPassword extends React.Component {
     this.setState(() => ({ token }));
   }
   onRequest = async () => {
-    await this.props.recoverPassword(this.state.token);
-    !this.props.error? alert(this.props.item.message) : alert("An error occured");
+    if (this.state.token.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
+      await this.props.recoverPassword(this.state.token);
+      !this.props.error ? alert(this.props.item.message) : alert("An error occured \n\n " + this.props.error);
+    } else {
+      alert("Invalid Email Input");
+    }
   }
   render() {
     return (
@@ -34,7 +38,7 @@ class ForgotPassword extends React.Component {
             <Text style={fpassStyles.scaffold_text}>
               Forgot your password? {"\n"}
             No worries! {"\n\n"}
-            Enter your username or email address below and {"\n"}
+            Enter your registered email address below and {"\n"}
             we’ll send a recovery key to your {"\n"}
             email account for you.
           </Text>
