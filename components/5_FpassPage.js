@@ -39,13 +39,13 @@ class ForgotPassword extends React.Component {
               Forgot your password? {"\n"}
             No worries! {"\n\n"}
             Enter your registered email address below and {"\n"}
-            we’ll send a recovery key to your {"\n"}
+            we’ll send a reset password link to your {"\n"}
             email account for you.
           </Text>
             <View style={fpassStyles.scaffold_textinput_container}>
               <Icon style={globalStyles.icon_global} name="user-circle" size={18} />
               <TextInput
-                placeholder="Email or Username"
+                placeholder="Email address"
                 placeholderTextColor="#8B8787"
                 onChangeText={this.onTokenChange}
                 style={fpassStyles.scaffold_textinput}
