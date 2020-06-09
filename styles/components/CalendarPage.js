@@ -41,6 +41,19 @@ const Calendar = {
       justifyContent: 'center', 
     },
 
+    header_confirmall_container: {
+      flex: 1.6,
+      alignItems: 'center', 
+      justifyContent: 'center', 
+    },
+
+    header_confirmall_text: {
+      fontSize: 12,
+      color: '#8B8787',
+      justifyContent: 'center',
+      textAlign: 'center'
+    },
+
     scaffold: {
       flex: 1,
       padding: 10,
@@ -171,7 +184,7 @@ const Calendar = {
 
     date_details_button_pending: {
       height: 30,
-      backgroundColor: '#FDBB3B',
+      backgroundColor: '#FDBB3B80',
       borderRadius: 15,
       padding: 5,
       justifyContent: 'center',
@@ -199,27 +212,63 @@ const Calendar = {
       marginHorizontal: 9,
     },
 
-    date_details_button_label_pending: {
+    date_details_button_label: {
       color: '#fff',
       fontSize: 12,
       justifyContent: 'center',
       alignSelf: 'center'
     },
 
-    date_details_button_label_review: {
+    date_details_button_icon: {
       color: '#fff',
-      fontSize: 12,
       justifyContent: 'center',
-      alignSelf: 'center'
+      alignSelf: 'center',
     },
 
-    date_details_button_label_reviewed: {
-      color: '#fff',
-      fontSize: 12,
+    date_details_button_confirm: {
+      height: 30,
+      width: 40,
+      backgroundColor: '#56EC65',
+      borderRadius: 15,
+      padding: 5,
       justifyContent: 'center',
-      alignSelf: 'center'
+      alignSelf: 'stretch',
+      marginHorizontal: 9,
     },
-  
+
+    date_details_button_decline: {
+      height: 30,
+      width: 40,
+      backgroundColor: 'red',
+      borderRadius: 15,
+      padding: 5,
+      justifyContent: 'center',
+      alignSelf: 'stretch',
+      marginHorizontal: 9,
+    },
+
+    date_details_button_confirmed: {
+      height: 30,
+      backgroundColor: '#56EC6580',
+      borderRadius: 15,
+      padding: 5,
+      justifyContent: 'center',
+      alignSelf: 'stretch',
+      marginHorizontal: 9,
+    },
+
+    date_details_button_notify: {
+      height: 30,
+      backgroundColor: '#56EC65',
+      borderRadius: 15,
+      padding: 5,
+      justifyContent: 'center',
+      alignSelf: 'stretch',
+      marginHorizontal: 9,
+      marginTop: 5
+    },
+    
+
   }
   
   export default Calendar;

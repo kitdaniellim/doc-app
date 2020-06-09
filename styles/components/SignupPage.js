@@ -186,27 +186,6 @@ const SignUp = {
         textAlign: 'center',
     },
 
-    forms_paybutton: {
-        width: '100%',
-        height: 30,
-        marginTop: 20,
-        backgroundColor: '#FFAD3A',
-        borderRadius: 15,
-        shadowOffset:{  width: 0,  height: 2,  },
-        shadowColor: 'black',
-        shadowOpacity: 0.1,
-        justifyContent: 'center',
-        alignSelf: 'center',
-    },
-
-    forms_paybutton_label: {
-        color: '#fff',
-        fontSize: 10,
-        fontWeight: '600', 
-        letterSpacing: 1, 
-        textAlign: 'center',
-    },
-
     forms_text: {
         color: '#fff',
         fontSize: 11,

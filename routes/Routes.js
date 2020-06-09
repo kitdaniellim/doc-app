@@ -1,20 +1,25 @@
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
 import { createStackNavigator } from 'react-navigation-stack';
-import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 
 import Login from '../components/2_1_LoginPage.js';
 import ForgotPassword from '../components/2_2_FpassPage.js';
 import Selection from '../components/3_SelectionPage.js';
+import Paypal from '../components/PaypalPage.js';
+
 
 import SignupClient1 from '../components/4_SignupPage1_Client.js';
 import SignupClient2 from '../components/4_SignupPage2_Client.js';
+import SignupClient3 from '../components/4_SignupPage3_Client.js';
 
-import HomeClient from '../components/6_HomePage_Client.js';
+import Home from '../components/6_HomePage.js';
 
-import Calendar1 from '../components/7_CalendarPage1_Client.js';
-import Calendar2 from '../components/7_CalendarPage2_Client.js';
+import Calendar1 from '../components/7_CalendarPage1.js';
+import Calendar2 from '../components/7_CalendarPage2.js';
+import Calendar3_Notify from '../components/7_CalendarPage3_Notify.js';
+import Calendar3_Review from '../components/7_CalendarPage3_Review.js';
+
 import Search from '../components/8_SearchPage_Client.js';
 import Review from '../components/9_ReviewPage_Client.js';
 import Profile from '../components/9_ProfilePage_Client.js';
@@ -51,6 +56,9 @@ const regScreens = {
     SignupClient2: {
         screen: SignupClient2,
     },
+    SignupClient3: {
+        screen: SignupClient3,
+    },
 
     SignupConsultant1: {
         screen: SignupConsultant1,
@@ -73,9 +81,14 @@ const calendarScreens = {
     Calendar1: {
         screen: Calendar1,
     },
-
     Calendar2: {
         screen: Calendar2,
+    },
+    Calendar3_Notify: {
+        screen: Calendar3_Notify,
+    },
+    Calendar3_Review: {
+        screen: Calendar3_Review,
     },
 }
 
@@ -95,8 +108,8 @@ const CalendarStack = createStackNavigator(
 );
 
 const clientTabScreens = {
-    HomeClient: {
-        screen: HomeClient,
+    Home: {
+        screen: Home,
         navigationOptions: {
             title: 'Home',
             tabBarIcon: ({ tintColor }) => (
@@ -157,8 +170,8 @@ const clientTabScreens = {
 }
 
 const consultantTabScreens = {
-    HomeClient: {
-        screen: HomeClient,
+    Home: {
+        screen: Home,
         navigationOptions: {
             title: 'Home',
             tabBarIcon: ({ tintColor }) => (
@@ -183,7 +196,7 @@ const consultantTabScreens = {
                     size={21}
                 />
             ),
-            tabBarColor: '#56D74F',
+            tabBarColor: '#19BAB9',
         },
     },
 
@@ -198,7 +211,7 @@ const consultantTabScreens = {
                     size={21}
                 />
             ),
-            tabBarColor: '#0CB4A6', 
+            tabBarColor: '#19BAB9', 
         },
     },
 
@@ -209,7 +222,7 @@ const consultantTabScreens = {
             tabBarIcon: ({ tintColor }) => (
                 <Icon
                     color={`${tintColor}`}
-                    name="user-o"
+                    name="user"
                     size={21}
                 />
             ),
@@ -222,7 +235,7 @@ const consultantTabScreens = {
 const clientTabNavigator = createMaterialBottomTabNavigator(
     clientTabScreens,
     {
-        initialRouteName: 'HomeClient',
+        initialRouteName: 'Home',
         activeColor: '#fff',
         inactiveColor: '#e3e3e3',
     }
@@ -232,7 +245,7 @@ const clientTabNavigator = createMaterialBottomTabNavigator(
 const consultantTabNavigator = createMaterialBottomTabNavigator(
     consultantTabScreens,
     {
-        initialRouteName: 'HomeClient',
+        initialRouteName: 'Home',
         tabBarOptions: {
             activeBackgroundColor: '#19BAB9',
             inactiveBackgroundColor: '#0FA8A7',
@@ -245,17 +258,23 @@ const consultantTabNavigator = createMaterialBottomTabNavigator(
 
 function getTabs() {
     // insert identifer whether logged in user is client or a consultant using firestore
-    let client = true; //temporary identifier, <--insert here
+    let client = false; //temporary identifier, <--insert here
     return (client) ? clientTabNavigator : consultantTabNavigator
 }
 
 const appScreens = {
-    HomeClient: {
+    Home: {
         screen: getTabs(),
         navigationOptions: () => ({
             title: `insert logo`,
         }),
     },
+    Paypal: {
+        screen: Paypal,
+        navigationOptions: () => ({
+            headerShown: false
+        }),
+    }
 }
 
 const AuthStack = createStackNavigator(

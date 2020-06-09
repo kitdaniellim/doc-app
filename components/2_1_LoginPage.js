@@ -19,7 +19,7 @@ const Login = ({ navigation }) => {
       toggleModal(true)
     } else {
       let objparam = {user: username}
-      navigation.navigate('HomeClient', objparam);
+      navigation.navigate('Home', objparam);
     }
   }
 

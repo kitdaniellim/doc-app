@@ -23,40 +23,25 @@ const SignupClient2 = ({ navigation }) => {
   const [day, setDay] = useState('');
   const [year, setYear] = useState('');
   const [num, setNum] = useState('');
-  const [icon, setIcon] = useState('times-circle-o');
-  const [messageLabel, setMessageLabel] = useState('Oops!');
-  const [message, setMessage] = useState('Seems like you missed one. Please fill in all the required fields before proceeding.');
-  const [isVerified, verify] = useState(false);
+
   const [isModalVisible, toggleModal] = useState(false);
 
   function Close() {
-    if(isVerified) {
-      navigation.navigate('Login');
-    } else {
-      toggleModal(false)
-    }
-  }
-
-  //validate mobile number field
-  function validate() {
-    let reg = /^\d{10}$/
-    return (reg.test(num) === true)? true : false
+    toggleModal(false)
   }
 
   const Submit = () => {
     if ((fname !== '' && month !== '' && day !== '' && year !== '' && num !== '')) {
-      // let isValid = validate() 
-      verify(true)
-      setIcon('check-circle-o')
-      setMessageLabel('Hooray!')
-      setMessage('You have successfully created an account! Close this tab to start logging in with your username.')
-      // if(isValid === true) {
-        
-      // } else {
-      //   setMessage('Your mobile number should only contain numeric digits.')
-      // }
+      navigation.navigate('SignupClient3');
+    } else {
+      console.log('why is this here?')
+      console.log(fname)
+      console.log(month)
+      console.log(day)
+      console.log(year)
+      console.log(num)
+      toggleModal(true)
     }
-    toggleModal(true)
   }
 
   return (
@@ -75,16 +60,16 @@ const SignupClient2 = ({ navigation }) => {
           animationOutTiming={900}
         >
           <View style={globalStyles.modal_container}>
-            <View style={(isVerified)? globalStyles.modal_container_top_verified : globalStyles.modal_container_top}>
-              <Icon style={globalStyles.modal_icon} name={icon} size={29} />
+            <View style={globalStyles.modal_container_top}>
+              <Icon style={globalStyles.modal_icon} name="times-circle-o" size={29} />
             </View>
             <View style={globalStyles.modal_container_bottom}>
-              <Text style={globalStyles.modal_notif_bold}>{messageLabel}</Text>
-              <Text style={globalStyles.modal_notif}>{message}</Text>
+              <Text style={globalStyles.modal_notif_bold}>Oops!</Text>
+              <Text style={globalStyles.modal_notif}>Seems like you missed one. Please fill in all the required fields before proceeding.</Text>
               <TouchableOpacity
                 activeOpacity={0.6}
                 onPress={Close}
-                style={(isVerified)? globalStyles.modal_button_container_verified : globalStyles.modal_button_container}
+                style={globalStyles.modal_button_container}
               >
                 <Text style={globalStyles.modal_button_label}>Close</Text>
               </TouchableOpacity>
@@ -294,6 +279,49 @@ const SignupClient2 = ({ navigation }) => {
                   { label: '1975', value: '1975' },
                   { label: '1974', value: '1974' },
                   { label: '1973', value: '1973' },
+                  { label: '1972', value: '1972' },
+                  { label: '1971', value: '1971' },
+                  { label: '1970', value: '1970' },
+                  { label: '1969', value: '1969' },
+                  { label: '1968', value: '1968' },
+                  { label: '1967', value: '1967' },
+                  { label: '1966', value: '1966' },
+                  { label: '1965', value: '1965' },
+                  { label: '1964', value: '1964' },
+                  { label: '1963', value: '1963' },
+                  { label: '1962', value: '1962' },
+                  { label: '1961', value: '1961' },
+                  { label: '1960', value: '1960' },
+                  { label: '1959', value: '1959' },
+                  { label: '1958', value: '1958' },
+                  { label: '1957', value: '1957' },
+                  { label: '1956', value: '1956' },
+                  { label: '1955', value: '1955' },
+                  { label: '1954', value: '1954' },
+                  { label: '1953', value: '1953' },
+                  { label: '1952', value: '1952' },
+                  { label: '1951', value: '1951' },
+                  { label: '1950', value: '1950' },
+                  { label: '1949', value: '1949' },
+                  { label: '1948', value: '1948' },
+                  { label: '1947', value: '1947' },
+                  { label: '1946', value: '1946' },
+                  { label: '1945', value: '1945' },
+                  { label: '1944', value: '1944' },
+                  { label: '1943', value: '1943' },
+                  { label: '1942', value: '1942' },
+                  { label: '1941', value: '1941' },
+                  { label: '1940', value: '1940' },
+                  { label: '1939', value: '1939' },
+                  { label: '1938', value: '1938' },
+                  { label: '1937', value: '1937' },
+                  { label: '1936', value: '1936' },
+                  { label: '1935', value: '1935' },
+                  { label: '1934', value: '1934' },
+                  { label: '1933', value: '1933' },
+                  { label: '1932', value: '1932' },
+                  { label: '1931', value: '1931' },
+                  { label: '1930', value: '1930' },
                 ]}
               />
             </View>
@@ -309,14 +337,7 @@ const SignupClient2 = ({ navigation }) => {
               value={num}
             />
           </View>
-          <TouchableOpacity
-            activeOpacity={0.6}
-            style={signupStyles.forms_paybutton}
-            onPress={() => {}}
-          >
-            <Text style={signupStyles.forms_paybutton_label}>Pay Through PayPal</Text>
-          </TouchableOpacity>
-          <Text style={signupStyles.forms_text}>2/2</Text>
+          <Text style={signupStyles.forms_text}>2/3</Text>
           <TouchableOpacity
             activeOpacity={0.6}
             style={signupStyles.forms_button}
