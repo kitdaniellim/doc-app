@@ -1,5 +1,5 @@
 import Global from './components/AP_Global';
-import Navbar from './components/AP_Navbar';
+import Nav from './components/AP_Nav';
 
 import Login from './components/LoginPage';
 import ForgotPassword from './components/FpassPage';
@@ -27,4 +27,4 @@ export const searchStyles = StyleSheet.create(Search);
 export const profileStyles = StyleSheet.create(Profile);
 export const paypalStyles = StyleSheet.create(Paypal);
 
-export const navbarStyles = StyleSheet.create(Navbar);
+export const navStyles = StyleSheet.create(Nav);

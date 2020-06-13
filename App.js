@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Alert, Text, AppRegistry, Button, TextInput, View, StyleSheet } from 'react-native';
-// import Selection from './components/2_SelectionPage.js';
-// import { LinearGradient } from  'expo-linear-gradient';
 
 //temp
 import Icon1 from 'react-native-vector-icons/FontAwesome';
@@ -15,6 +13,8 @@ import { globalStyles } from './styles/styles';
 import { Constants } from 'expo';
 import Routes from './routes/Routes.js';
 import firebase from "firebase"
+// import MenuButton from 'react-native-menu-button'
+import { MenuProvider } from 'react-native-popup-menu';
 require("firebase/firestore");
 
 const firebaseConfig = {
@@ -27,8 +27,8 @@ const firebaseConfig = {
   appId: "1:346336386740:web:7f7788d6882e9b8c8d41e1",
   measurementId: "G-32FB2FHN7B"
 };
-  
-if(!firebase.apps.length){
+
+if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
@@ -44,24 +44,27 @@ const db = firebase.firestore();
 export default class App extends Component {
   constructor(props) {
     super(props);
-  
-     this.state = {  //DONT REMOVE -Eldrin
+
+    this.state = {  //DONT REMOVE -Eldrin
       username: '',
       password: '',
-    }; 
+    };
 
   }
-  
+
   onLogin() {
     const { username, password } = this.state;
 
     Alert.alert('Credentials', `${username} + ${password}`);
-    auth.createUserWithEmailAndPassword(username,password);
+    auth.createUserWithEmailAndPassword(username, password);
   }
 
   render() {
     return (
-     <Routes/>
+      <MenuProvider>
+        <Routes />
+      </MenuProvider>
+
       // <View style={{flex: 1, backgroundColor: '#fff', justifyContent: 'space-around', alignItems: 'center', marginVertical: 50}}>
       //   {/* FontAwesome */}
       //   <View style={{flexDirection: 'row', backgroundColor: '#19BAB9', padding: 15}}>
@@ -71,7 +74,7 @@ export default class App extends Component {
       //     <Icon1 style={globalStyles.icon_global} name="pencil" size={20} />
       //     <Icon1 style={globalStyles.icon_global} name="user" size={20} />
       //   </View>
-        
+
       //   {/* AntDesign */}
       //   <View style={{flexDirection: 'row', backgroundColor: '#19BAB9', padding: 15}}>
       //     <Icon2 style={globalStyles.icon_global} name="home" size={18} />

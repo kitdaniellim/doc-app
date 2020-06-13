@@ -28,9 +28,36 @@ import Profile from '../components/9_ProfilePage.js';
 import Paypal from '../components/PaypalPage.js';
 
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';                     
+import { View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { navbarStyles } from '../styles/styles';
+import {
+    Menu,
+    MenuOptions,
+    MenuOption,
+    MenuTrigger,
+} from 'react-native-popup-menu';
+import { navStyles } from '../styles/styles';
+
+const optionsStyles = {
+    optionsContainer: {
+    //   backgroundColor: 'green',
+      padding: 5,
+      marginTop: 35,
+    },
+    optionsWrapper: {
+    //   backgroundColor: 'purple',
+    },
+    optionWrapper: {
+    //   backgroundColor: 'yellow',
+    },
+    optionTouchable: {
+    //   underlayColor: 'gold',
+      activeOpacity: 70,
+    },
+    optionText: {
+      color: 'black',
+    },
+  };
 
 const regScreens = {
     Login: {
@@ -208,7 +235,7 @@ const consultantTabScreens = {
                     size={21}
                 />
             ),
-            tabBarColor: '#19BAB9', 
+            tabBarColor: '#19BAB9',
         },
     },
 
@@ -259,33 +286,42 @@ function getTabs() {
     return (client) ? clientTabNavigator : consultantTabNavigator
 }
 
-
 const appScreens = {
     Home: {
         screen: getTabs(),
-        navigationOptions: ( {navigation} ) => ({
+        navigationOptions: ({ navigation }) => ({
             title: `insert logo`,
             headerRight: () => {
-                return(
-                    <TouchableOpacity
-                        onPress={()=>{navigation.navigate('Login')}}
-                        style={{paddingRight: 25}}
-                    >
-                        <Icon
-                            color='#fff'
-                            name='sign-out'
-                            size={21}
-                        />
-                    </TouchableOpacity>
+                return (
+                    <Menu onSelect={
+                        value => {
+                            if(value === 1){
+                                navigation.navigate('Login')
+                            }
+                        }
+                    }>
+                        <MenuTrigger
+                            style={{ marginRight: 25, padding: 10, }}
+                        >
+                            <Icon
+                                color='#fff'
+                                name='ellipsis-v'
+                                size={21}
+                            />
+                        </MenuTrigger>
+                        <MenuOptions customStyles={optionsStyles}>
+                            <MenuOption value={1} text='Sign Out' />
+                            {/* <MenuOption value={2} text='Sign Out' /> */}
+                            {/* <MenuOption value={3} text='Sign Out' /> */}
+                        </MenuOptions>
+                    </Menu>
                 )
             }
         }),
     },
-
     Profile: {
         screen: Profile,
     },
-
     Paypal: {
         screen: Paypal,
         navigationOptions: () => ({
@@ -337,3 +373,4 @@ const SwitchStack = createSwitchNavigator({
 )
 
 export default createAppContainer(SwitchStack);
+

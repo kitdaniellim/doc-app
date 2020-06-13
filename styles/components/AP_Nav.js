@@ -1,4 +1,4 @@
-const Navbar = {
+const Nav = {
     navBar: {
       height: 35,
       position: 'absolute',
@@ -18,8 +18,9 @@ const Navbar = {
       color: 'white',
       textAlign: 'center',
       margin: 4,
-    }
+    },
+    
 
   }
 
-export default Navbar;
+export default Nav;
