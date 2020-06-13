@@ -1,14 +1,26 @@
 import React, { useState } from 'react';
-import { Text, View, FlatList, TouchableOpacity, ScrollView } from 'react-native';
+import { Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { calendarStyles, globalStyles } from '../styles/styles';
-
+import { GiftedChat } from 'react-native-gifted-chat'
 
 const CalendarPage3_Notify = ({ navigation }) => {
+    const [messages, setMessages] = useState([
+        {
+          _id: 1,
+          text: 'Hello developer',
+          createdAt: new Date(),
+          user: { _id: 2, name: 'Name' },
+        },
+      ]);
 
     const Close = () => {
         navigation.goBack()
     }
+
+    const onSend = (newMessage = []) => {
+        setMessages(GiftedChat.append(messages, newMessage));
+    };
 
     return (
         <View style={calendarStyles.container}>
@@ -25,7 +37,13 @@ const CalendarPage3_Notify = ({ navigation }) => {
                 </TouchableOpacity>
             </View>
             <View style={calendarStyles.scaffold}>
-                <Text>Notify Client</Text>
+                <GiftedChat
+                    messages={messages}
+                    onSend={newMessage => onSend(newMessage)}
+                    user={{
+                        _id: 1,
+                    }}
+                />
             </View>
         </View>
     );

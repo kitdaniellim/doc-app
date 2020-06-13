@@ -27,7 +27,7 @@ const HomeClient = ({ navigation }) => {
   }
 
   const Profile = () => {
-    // navigation.navigate('LoginClient');
+    navigation.navigate('Profile');
   }
 
   const list = [

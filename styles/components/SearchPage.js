@@ -9,14 +9,17 @@ const Search = {
   },
 
   header_container: {
-    flex: 1,
-    margin: 5,
-    paddingLeft: 10,
-    paddingVertical: 4,
-    justifyContent: 'flex-start',
+    flexDirection: 'row',
+    height: 40,
     alignSelf: 'stretch',
+    justifyContent: 'flex-start',
     borderBottomColor: '#8B8787',
     borderBottomWidth: 1
+  },
+  
+  header_text_container: {
+    flex: 5,
+    justifyContent: 'center',
   },
 
   header_text: {
@@ -25,8 +28,10 @@ const Search = {
   },
 
   header_text_bold: {
+    paddingLeft: 10,
     fontSize: 11,
     color: '#8B8787',
+    justifyContent: 'center',
   },
 
   scaffold: {

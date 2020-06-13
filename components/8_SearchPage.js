@@ -66,7 +66,9 @@ const Search = ({ navigation }) => {
   return (
     <View style={searchStyles.container}>
       <View style={searchStyles.header_container}>
-        <Text style={searchStyles.header_text_bold}>Search</Text>
+          <View style={searchStyles.header_text_container}>
+            <Text style={searchStyles.header_text_bold}>SEARCH</Text>
+          </View>
       </View>
       <SearchBar style={searchStyles.searchBar}
         platform="android"
@@ -79,6 +81,7 @@ const Search = ({ navigation }) => {
         <FlatList
           data={list}
           showsVerticalScrollIndicator={false}
+          keyExtractor={(item) => item.key.toString()}
           renderItem={({ item }) => (
             <View>
               <TouchableHighlight

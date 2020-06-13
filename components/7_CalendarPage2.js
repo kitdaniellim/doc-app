@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Text, View, FlatList, TouchableOpacity } from 'react-native';
+import { Text, TextInput, Component, View, FlatList, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { calendarStyles, globalStyles } from '../styles/styles';
 import Modal from 'react-native-modal';
 
 const CalendarPage2 = ({ navigation }) => {
-  const userType = 'consultant' // <-- switch between 'client' or 'consultant'
+  //sample userType
+  const userType = 'client' // <-- switch between 'client' or 'consultant'
   //sample data
   const selected = [
     {
@@ -63,16 +64,31 @@ const CalendarPage2 = ({ navigation }) => {
       isConfirmed: false,
     },
   ]
-
-  const [isModalVisible, toggleModal] = useState(false);
-
+  
+  const [text, setText] = useState('');
+  const [isConfirmModalVisible, toggleConfirmModal] = useState(false);
+  const [isNotifyModalVisible, toggleNotifyModal] = useState(false);
+  
   function Okay() {
-    toggleModal(false)
+    toggleConfirmModal(false)
   }
 
   const ConfirmAll = () => {
-    toggleModal(true)
+    toggleConfirmModal(true)
   }
+
+  function Cancel() {
+    toggleNotifyModal(false)
+  }
+
+  const Notify_2 = () => {
+    toggleNotifyModal(false)
+  }
+
+  const Notify = () => {
+    toggleNotifyModal(true)
+  }
+
 
   const Close = () => {
     navigation.goBack()
@@ -82,16 +98,14 @@ const CalendarPage2 = ({ navigation }) => {
     navigation.navigate('Calendar3_Review')
   }
 
-  const Notify = () => {
-    navigation.navigate('Calendar3_Notify')
-  }
+  
 
   
 
   return (
     <View style={calendarStyles.container}>
       <Modal
-        isVisible={isModalVisible}
+        isVisible={isConfirmModalVisible}
         animationIn='bounceInDown'
         animationOut='bounceOutUp'
         animationInTiming={1100}
@@ -110,6 +124,45 @@ const CalendarPage2 = ({ navigation }) => {
               style={globalStyles.modal_button_container_verified}
             >
               <Text style={globalStyles.modal_button_label}>Okay</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+      <Modal
+        isVisible={isNotifyModalVisible}
+        animationIn='slideInUp'
+        animationOut='slideOutDown'
+        animationInTiming={1100}
+        animationOutTiming={900}
+      >
+        <View style={calendarStyles.modal_container}>
+          <View style={calendarStyles.modal_container_top}>
+            <Text style={calendarStyles.modal_notif_bold}>Notify Your Client</Text>
+            <Text style={calendarStyles.modal_notif}>Text and inform your client.</Text>
+            <View style={calendarStyles.modal_textinput_container}>
+              <TextInput
+                placeholder="Type your message here.."
+                placeholderTextColor="#8B8787"
+                style={calendarStyles.modal_textinput}
+                onChangeText={text => setText(text)}
+                value={text}
+              />
+            </View>
+          </View>
+          <View style={calendarStyles.modal_container_bottom}>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={Cancel}
+              style={calendarStyles.modal_button_container_cancel}
+            >
+              <Text style={calendarStyles.modal_button_label}>Cancel</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={Notify_2}
+              style={calendarStyles.modal_button_container_notify}
+            >
+              <Text style={calendarStyles.modal_button_label_bold}>Notify</Text>
             </TouchableOpacity>
           </View>
         </View>

@@ -6,12 +6,14 @@ import { createMaterialBottomTabNavigator } from 'react-navigation-material-bott
 import Login from '../components/2_1_LoginPage.js';
 import ForgotPassword from '../components/2_2_FpassPage.js';
 import Selection from '../components/3_SelectionPage.js';
-import Paypal from '../components/PaypalPage.js';
-
-
 import SignupClient1 from '../components/4_SignupPage1_Client.js';
 import SignupClient2 from '../components/4_SignupPage2_Client.js';
 import SignupClient3 from '../components/4_SignupPage3_Client.js';
+import SignupConsultant1 from '../components/4_SignupPage1_Consultant.js';
+import SignupConsultant2 from '../components/4_SignupPage2_Consultant.js';
+import SignupConsultant3_1 from '../components/4_SignupPage3_1_Consultant.js';
+import SignupConsultant3_2 from '../components/4_SignupPage3_2_Consultant.js';
+import SignupConsultant4 from '../components/4_SignupPage4_Consultant.js';
 
 import Home from '../components/6_HomePage.js';
 
@@ -20,18 +22,13 @@ import Calendar2 from '../components/7_CalendarPage2.js';
 import Calendar3_Notify from '../components/7_CalendarPage3_Notify.js';
 import Calendar3_Review from '../components/7_CalendarPage3_Review.js';
 
-import Search from '../components/8_SearchPage_Client.js';
-import Review from '../components/9_ReviewPage_Client.js';
-import Profile from '../components/9_ProfilePage_Client.js';
-
-import SignupConsultant1 from '../components/4_SignupPage1_Consultant.js';
-import SignupConsultant2 from '../components/4_SignupPage2_Consultant.js';
-import SignupConsultant3_1 from '../components/4_SignupPage3_1_Consultant.js';
-import SignupConsultant3_2 from '../components/4_SignupPage3_2_Consultant.js';
-import SignupConsultant4 from '../components/4_SignupPage4_Consultant.js';
-
+import Search from '../components/8_SearchPage.js';
+import Review from '../components/9_ReviewPage.js';
+import Profile from '../components/9_ProfilePage.js';
+import Paypal from '../components/PaypalPage.js';
 
 import React from 'react';
+import { Text, TouchableOpacity } from 'react-native';                     
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { navbarStyles } from '../styles/styles';
 
@@ -262,13 +259,33 @@ function getTabs() {
     return (client) ? clientTabNavigator : consultantTabNavigator
 }
 
+
 const appScreens = {
     Home: {
         screen: getTabs(),
-        navigationOptions: () => ({
+        navigationOptions: ( {navigation} ) => ({
             title: `insert logo`,
+            headerRight: () => {
+                return(
+                    <TouchableOpacity
+                        onPress={()=>{navigation.navigate('Login')}}
+                        style={{paddingRight: 25}}
+                    >
+                        <Icon
+                            color='#fff'
+                            name='sign-out'
+                            size={21}
+                        />
+                    </TouchableOpacity>
+                )
+            }
         }),
     },
+
+    Profile: {
+        screen: Profile,
+    },
+
     Paypal: {
         screen: Paypal,
         navigationOptions: () => ({

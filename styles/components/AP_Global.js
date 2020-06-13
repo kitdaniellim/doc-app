@@ -33,7 +33,7 @@ const Global = {
     alignSelf: 'center',
   },
 
-  // //temp
+  // //temp for showing icons
   // icon_global: {
   //   color: '#fff',
   //   justifyContent: 'center',
