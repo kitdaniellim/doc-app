@@ -25,8 +25,10 @@ import SignupConsultant3_1 from '../components/4_SignupPage3_1_Consultant.js';
 import SignupConsultant3_2 from '../components/4_SignupPage3_2_Consultant.js';
 import SignupConsultant4 from '../components/4_SignupPage4_Consultant.js';
 
+import AppointmentPage from '../components/AppointmentPage.js';
 
 import React from 'react';
+import { Button, Text, View, TouchableOpacity, Modal } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { navbarStyles } from '../styles/styles';
 
@@ -67,6 +69,9 @@ const regScreens = {
     SignupConsultant4: {
         screen: SignupConsultant4
     },
+    AppointmentPage: {
+        screen: AppointmentPage
+    }
 }
 
 const calendarScreens = {
@@ -198,7 +203,7 @@ const consultantTabScreens = {
                     size={21}
                 />
             ),
-            tabBarColor: '#0CB4A6', 
+            tabBarColor: '#0CB4A6',
         },
     },
 
@@ -243,7 +248,7 @@ const consultantTabNavigator = createMaterialBottomTabNavigator(
     }
 )
 
-function getTabs() {
+const getTabs = () => {
     // insert identifer whether logged in user is client or a consultant using firestore
     let client = true; //temporary identifier, <--insert here
     return (client) ? clientTabNavigator : consultantTabNavigator
@@ -252,8 +257,18 @@ function getTabs() {
 const appScreens = {
     HomeClient: {
         screen: getTabs(),
-        navigationOptions: () => ({
+        navigationOptions: ({navigation}) => ({
             title: `insert logo`,
+            headerRight: (
+                <TouchableOpacity
+                    style={navbarStyles.appointment_button}
+                    onPress={() => {
+                        navigation.navigate('AppointmentPage');
+                    }}
+                >
+                    <Text style={navbarStyles.button_text}>+ New Appointment</Text>
+                </TouchableOpacity>
+            )
         }),
     },
 }
