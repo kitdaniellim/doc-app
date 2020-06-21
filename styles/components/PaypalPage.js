@@ -14,7 +14,7 @@ const Paypal = {
 
     scaffold_text: {
         color: '#fff',
-        fontSize: 11,
+        fontSize: 12,
         lineHeight: 25,
         fontWeight: '500',
         textAlign: 'center',
@@ -71,7 +71,7 @@ const Paypal = {
 
     forms_paybutton_label: {
         color: '#fff',
-        fontSize: 10,
+        fontSize: 12,
         fontWeight: '600', 
         letterSpacing: 1, 
         textAlign: 'center',

@@ -55,7 +55,7 @@ const Paypal = ({ navigation }) => {
         </Modal>
         <View style={paypalStyles.scaffold}>
           <Text style={paypalStyles.scaffold_text}>
-            Hello Pay Here! {"\n"}
+            Hello, your account is currently limited. Before proceeding, you have to etcetc.  {"\n"}
           </Text>
           <TouchableOpacity
             activeOpacity={0.6}
@@ -70,7 +70,7 @@ const Paypal = ({ navigation }) => {
             style={paypalStyles.forms_paybutton}
             onPress={Skip}
           >
-            <Text style={paypalStyles.forms_button}>Skip</Text>
+            <Text style={paypalStyles.forms_paybutton_label}>Skip</Text>
           </TouchableOpacity>
         </View>
       </LinearGradient>

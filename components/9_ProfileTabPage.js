@@ -6,35 +6,24 @@ import { profileStyles, globalStyles } from '../styles/styles';
 
 
 
-const Profile = ({ navigation }) => {
-  const isUserClient = true
+const ProfileTab = ({ navigation }) => {
+
   const selected = {
     name: "Dr. Go",
     office_img: require("../assets/office.jpg"),
     profile_img: require("../assets/troy.png"),
   }
 
-  const Close = () => {
-    navigation.goBack()
-  }
-
-  const Paypal = () => {
-    navigation.navigate('Paypal')
+  const Edit = () => {
+    navigation.navigate('EditProfile_1')
   }
 
   return (
     <View style={profileStyles.container}>
       <View style={profileStyles.header_container}>
         <View style={profileStyles.header_text_container}>
-          <Text style={profileStyles.header_text_bold}>PROFILE: Go</Text>
+          <Text style={profileStyles.header_text_bold}>MY PROFILE: Go</Text>
         </View>
-        <TouchableOpacity
-          activeOpacity={0.6}
-          onPress={Close}
-          style={profileStyles.header_icon_container}
-        >
-          <Icon style={globalStyles.icon_global} name="times" size={18} />
-        </TouchableOpacity>
       </View>
       <View style={profileStyles.scaffold}>
         <View style={profileStyles.profile_container}>
@@ -63,7 +52,7 @@ const Profile = ({ navigation }) => {
                   />
                 </View>
                 <View style={profileStyles.profile_b_info_details}>
-                  <Text>
+                  <Text >
                     Dr. Go{"\n"}
                     Opthalmology{"\n"}
                     troygo@gmail.com{"\n"}
@@ -112,16 +101,13 @@ const Profile = ({ navigation }) => {
               </View>
             </View>
             <View style={profileStyles.divider} />
-            {(isUserClient === true) ?
-              <TouchableOpacity
-                activeOpacity={0.6}
-                style={profileStyles.edit_button}
-                onPress={Paypal}
-              >
-                <Text style={profileStyles.edit_button_label}>Book Appointment</Text>
-              </TouchableOpacity>
-              :
-              null}
+            <TouchableOpacity
+              activeOpacity={0.6}
+              style={profileStyles.edit_button}
+              onPress={Edit}
+            >
+              <Text style={profileStyles.edit_button_label}>Edit Profile</Text>
+            </TouchableOpacity>
             <View style={profileStyles.review_container}>
               <Text style={profileStyles.review_header}>Reviews</Text>
               <View style={profileStyles.review_details}>
@@ -132,6 +118,7 @@ const Profile = ({ navigation }) => {
                       disabled={true}
                       maxStars={5}
                       rating={3}
+                      selectedStar={() => { }}
                       fullStarColor='#FDBB3B'
                       starSize={12}
                       starStyle={{ marginRight: 5 }}
@@ -152,6 +139,7 @@ const Profile = ({ navigation }) => {
                       disabled={true}
                       maxStars={5}
                       rating={4}
+                      selectedStar={() => { }}
                       fullStarColor='#FDBB3B'
                       starSize={12}
                       starStyle={{ marginRight: 5 }}
@@ -170,6 +158,7 @@ const Profile = ({ navigation }) => {
                       disabled={true}
                       maxStars={5}
                       rating={5}
+                      selectedStar={() => { }}
                       fullStarColor='#FDBB3B'
                       starSize={12}
                       starStyle={{ marginRight: 5 }}
@@ -188,4 +177,4 @@ const Profile = ({ navigation }) => {
   );
 }
 
-export default Profile;
+export default ProfileTab;

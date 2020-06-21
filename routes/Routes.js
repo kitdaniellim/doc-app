@@ -25,10 +25,13 @@ import Calendar3_Review from '../components/7_CalendarPage3_Review.js';
 import Search from '../components/8_SearchPage.js';
 import Review from '../components/9_ReviewPage.js';
 import Profile from '../components/9_ProfilePage.js';
+import ProfileTab from '../components/9_ProfileTabPage.js';
+import EditProfile_1 from '../components/EditProfilePage_1.js';
+import EditProfile_2 from '../components/EditProfilePage_2.js';
 import Paypal from '../components/PaypalPage.js';
 
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, ScrollView, FlatList, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
     Menu,
@@ -40,24 +43,34 @@ import { navStyles } from '../styles/styles';
 
 const optionsStyles = {
     optionsContainer: {
-    //   backgroundColor: 'green',
-      padding: 5,
-      marginTop: 35,
+        //   backgroundColor: 'green',
+        marginTop: 48,
+        justifyContent: 'flex-end',
+        width: 200,
     },
     optionsWrapper: {
-    //   backgroundColor: 'purple',
+        //   backgroundColor: 'purple',
+        // marginRight: 50,
+
     },
     optionWrapper: {
-    //   backgroundColor: 'yellow',
+        //   backgroundColor: 'yellow',
+        // marginRight: 50,
+        height: 50,
+        justifyContent: 'center',
+
     },
     optionTouchable: {
-    //   underlayColor: 'gold',
-      activeOpacity: 70,
+        //   underlayColor: 'gold',
+        activeOpacity: 70,
+        padding: 15,
+        margin: 10,
     },
     optionText: {
-      color: 'black',
+        color: 'black',
+        margin: 10,
     },
-  };
+};
 
 const regScreens = {
     Login: {
@@ -101,6 +114,15 @@ const regScreens = {
     },
 }
 
+const homeScreens = {
+    Home: {
+        screen: Home,
+    },
+    Profile: {
+        screen: Profile,
+    },
+}
+
 const calendarScreens = {
     Calendar1: {
         screen: Calendar1,
@@ -115,6 +137,33 @@ const calendarScreens = {
         screen: Calendar3_Review,
     },
 }
+
+const profileScreens = {
+    ProfileTab: {
+        screen: ProfileTab,
+    },
+    EditProfile_1: {
+        screen: EditProfile_1,
+    },
+    EditProfile_2: {
+        screen: EditProfile_2,
+    },
+}
+
+const HomeStack = createStackNavigator(
+    homeScreens,
+    {
+        defaultNavigationOptions: {
+            headerStyle: {
+                backgroundColor: '#19BAB9',
+                borderBottomColor: '#19BAB9',
+            },
+            headerTintColor: '#fff',
+            title: null,
+            headerShown: false
+        }
+    }
+);
 
 const CalendarStack = createStackNavigator(
     calendarScreens,
@@ -131,9 +180,26 @@ const CalendarStack = createStackNavigator(
     }
 );
 
+const ProfileStack = createStackNavigator(
+    profileScreens,
+    {
+        defaultNavigationOptions: {
+            headerStyle: {
+                backgroundColor: '#19BAB9',
+                borderBottomColor: '#19BAB9',
+            },
+            headerTintColor: '#fff',
+            title: null,
+            headerShown: false
+        }
+    }
+);
+
+
+
 const clientTabScreens = {
     Home: {
-        screen: Home,
+        screen: HomeStack,
         navigationOptions: {
             title: 'Home',
             tabBarIcon: ({ tintColor }) => (
@@ -195,7 +261,7 @@ const clientTabScreens = {
 
 const consultantTabScreens = {
     Home: {
-        screen: Home,
+        screen: HomeStack,
         navigationOptions: {
             title: 'Home',
             tabBarIcon: ({ tintColor }) => (
@@ -239,8 +305,8 @@ const consultantTabScreens = {
         },
     },
 
-    Profile: {
-        screen: Profile,
+    ProfileTab: {
+        screen: ProfileStack,
         navigationOptions: {
             title: 'Profile',
             tabBarIcon: ({ tintColor }) => (
@@ -281,10 +347,49 @@ const consultantTabNavigator = createMaterialBottomTabNavigator(
 )
 
 function getTabs() {
-    // insert identifer whether logged in user is client or a consultant using firestore
-    let client = false; //temporary identifier, <--insert here
+    //temporary identifier, switch between true or false to change tab display <--insert here
+    let client = true;
     return (client) ? clientTabNavigator : consultantTabNavigator
 }
+
+const notifs = [
+    {
+        key: 1,
+        text: 'Caesar De Los Santos would like to schedule an appointment with you.'
+    },
+    {
+        key: 2,
+        text: 'Jessica Wong would like to schedule an appointment with you.'
+    },
+    {
+        key: 3,
+        text: 'Charles Lee has posted a review about you!'
+    },
+    {
+        key: 4,
+        text: 'Patrick Escobar would like to schedule an appointment with you.'
+    },
+    {
+        key: 5,
+        text: 'Jefferson Yao would like to schedule an appointment with you.'
+    },
+    {
+        key: 6,
+        text: 'Thomas Wu would like to schedule an appointment with you.'
+    },
+    {
+        key: 7,
+        text: 'Sherlock Holmes would like to schedule an appointment with you.'
+    },
+    {
+        key: 8,
+        text: 'Connor McGregor would like to schedule an appointment with you.'
+    },
+    {
+        key: 9,
+        text: 'Elon Musk would like to schedule an appointment with you.'
+    },
+]
 
 const appScreens = {
     Home: {
@@ -293,34 +398,61 @@ const appScreens = {
             title: `insert logo`,
             headerRight: () => {
                 return (
-                    <Menu onSelect={
-                        value => {
-                            if(value === 1){
-                                navigation.navigate('Login')
+                    <View style={{ flexDirection: 'row' }}>
+                        <Menu onSelect={() => { }}>
+                            <MenuTrigger
+                                style={{ marginRight: 25, padding: 10, }}
+                            >
+                                <Icon
+                                    color='#fff'
+                                    name='bell'
+                                    size={21}
+                                />
+                            </MenuTrigger>
+                            <MenuOptions customStyles={optionsStyles}>
+                                <View style={{ height: 250 }}>
+                                    <FlatList
+                                        data={notifs}
+                                        showsVerticalScrollIndicator={false}
+                                        keyExtractor={(item) => item.key.toString()}
+                                        ItemSeparatorComponent={()=>{
+                                            return(
+                                                <View style={{borderBottomColor: '#00000080', borderBottomWidth: 1,  alignSelf: 'stretch'}}/>
+                                            );
+                                        }}
+                                        renderItem={({ item }) => (
+                                            <MenuOption key={item.key} value={item.key} text={item.text} />
+                                        )}
+                                    />
+                                </View>
+                            </MenuOptions>
+                        </Menu>
+                        <Menu onSelect={
+                            value => {
+                                if (value === 1) {
+                                    navigation.navigate('Login')
+                                }
                             }
-                        }
-                    }>
-                        <MenuTrigger
-                            style={{ marginRight: 25, padding: 10, }}
-                        >
-                            <Icon
-                                color='#fff'
-                                name='ellipsis-v'
-                                size={21}
-                            />
-                        </MenuTrigger>
-                        <MenuOptions customStyles={optionsStyles}>
-                            <MenuOption value={1} text='Sign Out' />
-                            {/* <MenuOption value={2} text='Sign Out' /> */}
-                            {/* <MenuOption value={3} text='Sign Out' /> */}
-                        </MenuOptions>
-                    </Menu>
+                        }>
+                            <MenuTrigger
+                                style={{ marginRight: 25, padding: 10, }}
+                            >
+                                <Icon
+                                    color='#fff'
+                                    name='ellipsis-v'
+                                    size={21}
+                                />
+                            </MenuTrigger>
+                            <MenuOptions customStyles={optionsStyles}>
+                                <MenuOption value={1} text='Sign Out' />
+                                <MenuOption value={2} text='About Us' />
+                                <MenuOption value={3} text='Hello World' />
+                            </MenuOptions>
+                        </Menu>
+                    </View>
                 )
             }
         }),
-    },
-    Profile: {
-        screen: Profile,
     },
     Paypal: {
         screen: Paypal,

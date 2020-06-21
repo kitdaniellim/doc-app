@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { calendarStyles, globalStyles } from '../styles/styles';
 import { GiftedChat } from 'react-native-gifted-chat'
 
+//Ignore this --not part
 const CalendarPage3_Notify = ({ navigation }) => {
     const [messages, setMessages] = useState([
         {

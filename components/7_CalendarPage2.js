@@ -64,11 +64,11 @@ const CalendarPage2 = ({ navigation }) => {
       isConfirmed: false,
     },
   ]
-  
+
   const [text, setText] = useState('');
   const [isConfirmModalVisible, toggleConfirmModal] = useState(false);
   const [isNotifyModalVisible, toggleNotifyModal] = useState(false);
-  
+
   function Okay() {
     toggleConfirmModal(false)
   }
@@ -98,16 +98,12 @@ const CalendarPage2 = ({ navigation }) => {
     navigation.navigate('Calendar3_Review')
   }
 
-  
-
-  
-
   return (
     <View style={calendarStyles.container}>
       <Modal
         isVisible={isConfirmModalVisible}
         animationIn='bounceInDown'
-        animationOut='bounceOutUp'
+        animationOut='slideOutUp'
         animationInTiming={1100}
         animationOutTiming={900}
       >
@@ -116,7 +112,7 @@ const CalendarPage2 = ({ navigation }) => {
             <Icon style={globalStyles.modal_icon} name="check-circle-o" size={29} />
           </View>
           <View style={globalStyles.modal_container_bottom}>
-          <Text style={globalStyles.modal_notif_bold}>Confirmed.</Text>
+            <Text style={globalStyles.modal_notif_bold}>Confirmed.</Text>
             <Text style={globalStyles.modal_notif}>All appointments for this day have been scheduled!</Text>
             <TouchableOpacity
               activeOpacity={0.6}
@@ -172,14 +168,23 @@ const CalendarPage2 = ({ navigation }) => {
           <Text style={calendarStyles.header_text_bold}>APPOINTMENT</Text>
         </View>
         {/* if consultant then show button, else not */}
-        {(userType === 'consultant') ?
-          <TouchableOpacity
-            activeOpacity={0.6}
-            onPress={ConfirmAll}
-            style={calendarStyles.header_confirmall_container}
-          >
-            <Text style={calendarStyles.header_confirmall_text}>Confirm All</Text>
-          </TouchableOpacity>
+        {(userType === 'consultant' && selected.length !== 0) ?
+          <View style={{ flexDirection: 'row', flex: 3 }}>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={Notify}
+              style={calendarStyles.header_confirmall_container}
+            >
+              <Text style={calendarStyles.header_confirmall_text}>Notify All</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={ConfirmAll}
+              style={calendarStyles.header_confirmall_container}
+            >
+              <Text style={calendarStyles.header_confirmall_text}>Confirm All</Text>
+            </TouchableOpacity>
+          </View>
           : null
         }
         <TouchableOpacity
@@ -192,101 +197,118 @@ const CalendarPage2 = ({ navigation }) => {
       </View>
       <View style={calendarStyles.scaffold}>
         <View style={calendarStyles.date_container}>
-          <View style={calendarStyles.date_header_container}>
-            <Text style={calendarStyles.date_header_text}>DECEMBER{" "} 25{" "} 2020</Text>
-          </View>
           <View style={calendarStyles.date_details_container}>
-            <Text style={calendarStyles.date_details_header}>Wednesday</Text>
-            <FlatList
-              data={selected}
-              scrollEnabled={true}
-              showsVerticalScrollIndicator={false}
-              keyExtractor={(item) => item.key.toString()}
-              renderItem={({ item }) => (
-                <View key={item.key.toString()} style={calendarStyles.date_details_scaffold}>
-                  <View style={calendarStyles.date_details_text_container}>
-                    <Text style={calendarStyles.date_details_text}>
-                      Appointment with{" "}
-                      {item.name} {"\n"}
-                      {item.location} {"\n"}
-                      {item.time}
-                    </Text>
-                  </View>
-                  <View style={calendarStyles.date_details_button_container}>
-                    {/* if user is a client then button displays, else null and does not display */}
-                    {(userType === 'client') ?
-                      (item.status === 'pending') ?
-                        <TouchableOpacity
-                          activeOpacity={0.6}
-                          disabled
-                          style={calendarStyles.date_details_button_pending}
-                        >
-                          <Text style={calendarStyles.date_details_button_label}>Upcoming</Text>
-                        </TouchableOpacity>
-                        :
-                        (item.status === 'review') ?
+            {(selected.length !== 0) ?
+              <FlatList
+                data={selected}
+                scrollEnabled={true}
+                showsVerticalScrollIndicator={false}
+                keyExtractor={(item) => item.key.toString()}
+                ListHeaderComponent={() => {
+                  return (
+                    <View style={calendarStyles.date_header_container}>
+                      <Text style={calendarStyles.date_details_header}>DECEMBER{" "} 25{" "} 2020, {" "}Wednesday</Text>
+                    </View>
+                  );
+                }}
+                renderItem={({ item }) => (
+                  <View key={item.key.toString()} style={calendarStyles.date_details_scaffold}>
+                    <View style={calendarStyles.date_details_text_container}>
+                      <Text style={calendarStyles.date_details_text}>
+                        Appointment with{" "}
+                        {item.name} {"\n"}
+                        {item.location} {"\n"}
+                        {item.time}
+                      </Text>
+                    </View>
+                    <View style={calendarStyles.date_details_button_container}>
+                      {/* if user is a client then button displays, else null and does not display */}
+                      {(userType === 'client') ?
+                        (item.status === 'pending') ?
                           <TouchableOpacity
                             activeOpacity={0.6}
-                            onPress={Review}
-                            style={calendarStyles.date_details_button_review}
+                            disabled
+                            style={calendarStyles.date_details_button_pending}
                           >
-                            <Text style={calendarStyles.date_details_button_label}>Review</Text>
+                            <Text style={calendarStyles.date_details_button_label}>Pending</Text>
                           </TouchableOpacity>
                           :
-                          <TouchableOpacity
-                            activeOpacity={0.6}
-                            disabled
-                            style={calendarStyles.date_details_button_reviewed}
-                          >
-                            <Text style={calendarStyles.date_details_button_label}>Reviewed</Text>
-                          </TouchableOpacity>
-                      :
-                      (item.isConfirmed === false) ?
-                        <View>
-                          <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginHorizontal: 4 }}>
+                          (item.status === 'review') ?
                             <TouchableOpacity
                               activeOpacity={0.6}
-                              style={calendarStyles.date_details_button_confirm}
+                              onPress={Review}
+                              style={calendarStyles.date_details_button_review}
                             >
-                              <Icon style={calendarStyles.date_details_button_icon} name="check" size={16} />
+                              <Text style={calendarStyles.date_details_button_label}>Review</Text>
                             </TouchableOpacity>
+                            :
                             <TouchableOpacity
                               activeOpacity={0.6}
-                              style={calendarStyles.date_details_button_decline}
+                              disabled
+                              style={calendarStyles.date_details_button_reviewed}
                             >
-                              <Icon style={calendarStyles.date_details_button_icon} name="times" size={16} />
+                              <Text style={calendarStyles.date_details_button_label}>Finished</Text>
+                            </TouchableOpacity>
+                        :
+                        (item.isConfirmed === false) ?
+                          <View>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginHorizontal: 4 }}>
+                              <TouchableOpacity
+                                activeOpacity={0.6}
+                                style={calendarStyles.date_details_button_confirm}
+                              >
+                                <Icon style={calendarStyles.date_details_button_icon} name="check" size={16} />
+                              </TouchableOpacity>
+                              <TouchableOpacity
+                                activeOpacity={0.6}
+                                style={calendarStyles.date_details_button_decline}
+                              >
+                                <Icon style={calendarStyles.date_details_button_icon} name="times" size={16} />
+                              </TouchableOpacity>
+                            </View>
+                            <TouchableOpacity
+                              activeOpacity={0.6}
+                              style={calendarStyles.date_details_button_notify}
+                              onPress={Notify}
+                            >
+                              <Text style={calendarStyles.date_details_button_label}>Notify</Text>
                             </TouchableOpacity>
                           </View>
-                          <TouchableOpacity
-                            activeOpacity={0.6}
-                            style={calendarStyles.date_details_button_notify}
-                            onPress={Notify}
-                          >
-                            <Text style={calendarStyles.date_details_button_label}>Notify</Text>
-                          </TouchableOpacity>
-                        </View>
-                        :
-                        <View>
-                          <TouchableOpacity
-                            activeOpacity={0.6}
-                            disabled
-                            style={calendarStyles.date_details_button_confirmed}
-                          >
-                            <Text style={calendarStyles.date_details_button_label}>Confirmed</Text>
-                          </TouchableOpacity>
-                          <TouchableOpacity
-                            activeOpacity={0.6}
-                            style={calendarStyles.date_details_button_notify}
-                            onPress={Notify}
-                          >
-                            <Text style={calendarStyles.date_details_button_label}>Notify</Text>
-                          </TouchableOpacity>
-                        </View>
-                    }
+                          :
+                          <View>
+                            <TouchableOpacity
+                              activeOpacity={0.6}
+                              disabled
+                              style={calendarStyles.date_details_button_confirmed}
+                            >
+                              <Text style={calendarStyles.date_details_button_label}>Confirmed</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                              activeOpacity={0.6}
+                              style={calendarStyles.date_details_button_notify}
+                              onPress={Notify}
+                            >
+                              <Text style={calendarStyles.date_details_button_label}>Notify</Text>
+                            </TouchableOpacity>
+                          </View>
+                      }
+                    </View>
+                  </View>
+                )}
+              />
+              :
+              <View>
+                <View style={calendarStyles.date_header_container}>
+                  <Text style={calendarStyles.date_details_header}>DECEMBER{" "} 25{" "} 2020, {" "}Wednesday</Text>
+                </View>
+                <View style={calendarStyles.date_details_scaffold}>
+                  <View style={{margin: 5}}>
+                    <Text>No upcoming or past appointments for this day.</Text>
                   </View>
                 </View>
-              )}
-            />
+              </View>
+            }
+
           </View>
         </View>
       </View>

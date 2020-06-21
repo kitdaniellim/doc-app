@@ -63,17 +63,19 @@ const Calendar = {
   },
 
   calendar_container: {
-    height: 330,
-    paddingVertical: 5,
-    paddingHorizontal: 20,
+    height: 320,
+    paddingVertical: 2,
+    paddingHorizontal: 2,
     marginTop: 15,
     marginBottom: 18,
+    marginHorizontal: 10,
     borderRadius: 15,
     backgroundColor: '#fff',
   },
 
   calendar_legend_container: {
     marginVertical: 8,
+    marginHorizontal: 12,
     borderRadius: 15,
     paddingVertical: 8,
     paddingHorizontal: 12,
@@ -111,16 +113,13 @@ const Calendar = {
 
   date_container: {
     flex: 1,
-    marginTop: 10,
-    marginBottom: 30,
+    marginVertical: 5,
     marginHorizontal: 15,
   },
 
   date_header_container: {
     height: 40,
-    backgroundColor: '#fff',
     borderRadius: 15,
-    marginBottom: 15,
     padding: 5,
     paddingLeft: 8,
     justifyContent: 'center'
@@ -141,7 +140,6 @@ const Calendar = {
     paddingHorizontal: 8,
     justifyContent: 'center',
     alignSelf: 'stretch',
-    marginBottom: 35,
   },
 
   date_details_header: {
@@ -149,7 +147,6 @@ const Calendar = {
     fontSize: 12,
     letterSpacing: 1,
     margin: 2,
-    marginBottom: 3,
     justifyContent: 'center',
   },
 
@@ -158,7 +155,8 @@ const Calendar = {
     borderRadius: 5,
     backgroundColor: '#ECECEC',
     marginHorizontal: 5,
-    marginVertical: 15,
+    marginBottom: 15,
+    marginTop: -5,
     padding: 5,
   },
 
@@ -268,6 +266,56 @@ const Calendar = {
     marginTop: 5
   },
 
+  review_container: {
+    flex: 2,
+    marginTop: 20,
+    marginHorizontal: 15,
+    backgroundColor: '#fff',
+    borderRadius: 15,
+    padding: 8,
+  },
+
+  review_details_container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignSelf: 'stretch',
+    marginTop: 3,
+    marginBottom: 5,
+  },
+
+  review_details_header: {
+    color: '#8B8787',
+    fontSize: 12,
+    letterSpacing: 1,
+    margin: 2,
+    marginBottom: 3,
+    justifyContent: 'center',
+  },
+
+  review_details_submit_button: {
+    height: 24,
+    width: 80,
+    backgroundColor: '#56EC65',
+    borderRadius: 5,
+    padding: 5,
+    marginTop: 5,
+    justifyContent: 'center',
+    alignSelf: 'stretch',
+    marginHorizontal: 11,
+  },
+
+  review_textinput_container: {
+    flex: 1,
+    backgroundColor: '#ECECEC',
+    borderRadius: 15,
+  },
+
+  review_textinput: {
+    fontSize: 13,
+    padding: 8,
+    borderRadius: 20,
+  },
+
   modal_container: {
     flexDirection: 'column',
     height: 160,
@@ -302,7 +350,7 @@ const Calendar = {
     shadowOpacity: 0.1,
   },
 
-  modal_textinput: {  
+  modal_textinput: {
     alignSelf: 'stretch',
     fontSize: 11,
     paddingHorizontal: 5,

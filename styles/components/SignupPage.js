@@ -3,7 +3,7 @@ const SignUp = {
         flex: 1,
         backgroundColor: '#D9E3FE',
     },
-    
+
     forms_container: {
         flex: 1,
         justifyContent: 'space-between',
@@ -47,9 +47,9 @@ const SignUp = {
 
     forms_scaffold_checkbox: {
         alignSelf: "center",
-        
+
     },
-    
+
     forms_scaffold_checkbox_label: {
         margin: 4,
         fontSize: 11,
@@ -80,7 +80,7 @@ const SignUp = {
         justifyContent: 'center',
         borderBottomColor: '#fff',
         borderBottomWidth: 1,
-},
+    },
 
     forms_label_small: {
         color: '#fff',
@@ -102,7 +102,7 @@ const SignUp = {
         marginVertical: 10,
         justifyContent: 'flex-start',
         alignSelf: 'stretch',
-        shadowOffset:{  width: 0,  height: 2,  },
+        shadowOffset: { width: 0, height: 2, },
         shadowColor: 'black',
         shadowOpacity: 0.1,
     },
@@ -113,7 +113,7 @@ const SignUp = {
         paddingHorizontal: 5,
         marginHorizontal: 5,
         borderRadius: 20,
-        backgroundColor: '#fff',  
+        backgroundColor: '#fff',
     },
 
     forms_bday_container: {
@@ -135,7 +135,7 @@ const SignUp = {
         marginBottom: 2,
         justifyContent: 'flex-start',
         alignSelf: 'stretch',
-        shadowOffset:{  width: 0,  height: 2,  },
+        shadowOffset: { width: 0, height: 2, },
         shadowColor: 'black',
         shadowOpacity: 0.1,
     },
@@ -146,7 +146,7 @@ const SignUp = {
         paddingHorizontal: 5,
         marginHorizontal: 5,
         borderRadius: 20,
-        backgroundColor: '#fff',   
+        backgroundColor: '#fff',
     },
 
     forms_bday_item_container: {
@@ -155,7 +155,7 @@ const SignUp = {
         marginHorizontal: 15,
         marginVertical: 5,
         backgroundColor: '#fff',
-        shadowOffset:{  width: 0,  height: 2,  },
+        shadowOffset: { width: 0, height: 2, },
         shadowColor: 'black',
         shadowOpacity: 0.1,
     },
@@ -171,7 +171,7 @@ const SignUp = {
         marginTop: 20,
         backgroundColor: '#fff',
         borderRadius: 15,
-        shadowOffset:{  width: 0,  height: 2,  },
+        shadowOffset: { width: 0, height: 2, },
         shadowColor: 'black',
         shadowOpacity: 0.1,
         justifyContent: 'center',
@@ -181,8 +181,8 @@ const SignUp = {
     forms_button_label: {
         color: '#8B8787',
         fontSize: 9,
-        fontWeight: '600', 
-        letterSpacing: 1, 
+        fontWeight: '600',
+        letterSpacing: 1,
         textAlign: 'center',
     },
 
@@ -230,7 +230,7 @@ const SignUp = {
         marginVertical: 4,
         justifyContent: 'center',
         alignSelf: 'stretch',
-        shadowOffset:{  width: 0,  height: 2,  },
+        shadowOffset: { width: 0, height: 2, },
         shadowColor: 'black',
         shadowOpacity: 0.1,
     },
@@ -244,14 +244,14 @@ const SignUp = {
         fontSize: 7,
         fontWeight: '600',
         textAlign: 'center',
-        color: '#8B8787',  
+        color: '#8B8787',
         justifyContent: 'center',
         alignSelf: 'center',
-        letterSpacing: 1, 
+        letterSpacing: 1,
     },
 
     forms_time_container: {
-        flex: 1, 
+        flex: 1,
         flexDirection: 'column',
         marginVertical: 2,
     },
@@ -270,7 +270,7 @@ const SignUp = {
         backgroundColor: '#fff',
         justifyContent: 'center',
         alignSelf: 'center',
-        shadowOffset:{  width: 0,  height: 2,  },
+        shadowOffset: { width: 0, height: 2, },
         shadowColor: 'black',
         shadowOpacity: 0.1,
     },
@@ -306,7 +306,7 @@ const SignUp = {
         fontWeight: '600',
         fontSize: 9,
         paddingRight: 2,
-        textAlign:'center',
+        textAlign: 'center',
         marginVertical: 5,
         marginRight: 5,
     },
@@ -325,6 +325,6 @@ const SignUp = {
         marginTop: 8,
         height: 220
     }
-  }
-  
-  export default SignUp;
+}
+
+export default SignUp;

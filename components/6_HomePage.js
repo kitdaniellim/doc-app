@@ -15,7 +15,7 @@ const HomeClient = ({ navigation }) => {
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
-    wait(1500).then(() => setRefreshing(false));
+    wait(1000).then(() => setRefreshing(false));
   }, [refreshing]);
 
   const Submit = () => {
