@@ -6,7 +6,7 @@ import Modal from 'react-native-modal';
 
 const CalendarPage2 = ({ navigation }) => {
   //sample userType
-  const userType = 'client' // <-- switch between 'client' or 'consultant'
+  const userType = 'consultant' // <-- switch between 'client' or 'consultant'
   //sample data
   const selected = [
     {
@@ -214,12 +214,28 @@ const CalendarPage2 = ({ navigation }) => {
                 renderItem={({ item }) => (
                   <View key={item.key.toString()} style={calendarStyles.date_details_scaffold}>
                     <View style={calendarStyles.date_details_text_container}>
-                      <Text style={calendarStyles.date_details_text}>
-                        Appointment with{" "}
-                        {item.name} {"\n"}
-                        {item.location} {"\n"}
-                        {item.time}
-                      </Text>
+                      <View>
+                        <Text style={calendarStyles.date_details_text}>
+                          Appointment with{" "}
+                          {item.name} {"\n"}
+                          {item.location} {"\n"}
+                          {item.time}
+                        </Text>
+                      </View>
+                      <View style={{flexDirection: 'row'}}>
+                        <TouchableOpacity
+                          activeOpacity={0.6}
+                          style={calendarStyles.date_details_button_download_container}
+                        >
+                          <Text style={calendarStyles.date_details_button_download_label}>Download PDF</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          activeOpacity={0.6}
+                          style={calendarStyles.date_details_button_download_container}
+                        >
+                          <Text style={calendarStyles.date_details_button_download_label}>Download Form</Text>
+                        </TouchableOpacity>
+                      </View>
                     </View>
                     <View style={calendarStyles.date_details_button_container}>
                       {/* if user is a client then button displays, else null and does not display */}

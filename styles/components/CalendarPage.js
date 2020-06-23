@@ -162,7 +162,6 @@ const Calendar = {
 
   date_details_text_container: {
     flex: 0.6,
-    flexDirection: 'row',
     padding: 5,
   },
 
@@ -171,6 +170,20 @@ const Calendar = {
     fontSize: 13,
     lineHeight: 28,
     color: 'black'
+  },
+
+  date_details_button_download_container: {
+    marginRight: 5,
+    marginVertical: 4,
+  },
+
+  date_details_button_download_icon: {
+    
+  },
+
+  date_details_button_download_label: {
+    color: '#12345690',
+    textDecorationLine: 'underline'
   },
 
   date_details_button_container: {
@@ -281,14 +294,14 @@ const Calendar = {
     alignSelf: 'stretch',
     marginTop: 3,
     marginBottom: 5,
+    marginHorizontal: 10,
   },
 
   review_details_header: {
     color: '#8B8787',
     fontSize: 12,
     letterSpacing: 1,
-    margin: 2,
-    marginBottom: 3,
+    marginVertical: 3,
     justifyContent: 'center',
   },
 
@@ -301,19 +314,21 @@ const Calendar = {
     marginTop: 5,
     justifyContent: 'center',
     alignSelf: 'stretch',
-    marginHorizontal: 11,
   },
 
   review_textinput_container: {
     flex: 1,
     backgroundColor: '#ECECEC',
-    borderRadius: 15,
+    marginHorizontal: 4,
   },
 
   review_textinput: {
     fontSize: 13,
-    padding: 8,
+    padding: 4,
     borderRadius: 20,
+    height: '100%',
+    textAlignVertical: 'top'
+    
   },
 
   modal_container: {

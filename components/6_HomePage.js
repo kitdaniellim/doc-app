@@ -1,6 +1,5 @@
 import React from 'react';
 import { Text, Image, View, FlatList, RefreshControl, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
-import { ListItem } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { homeStyles, globalStyles, navbarStyles } from '../styles/styles';
 
@@ -10,7 +9,7 @@ function wait(timeout) {
   });
 }
 
-const HomeClient = ({ navigation }) => {
+const Home = ({ navigation }) => {
   const [refreshing, setRefreshing] = React.useState(false);
 
   const onRefresh = React.useCallback(() => {
@@ -18,11 +17,11 @@ const HomeClient = ({ navigation }) => {
     wait(1000).then(() => setRefreshing(false));
   }, [refreshing]);
 
-  const Submit = () => {
-    navigation.navigate('LoginClient');
+  const Field = () => {
+    navigation.navigate('Search');
   }
 
-  const Search = () => {
+  const SeeAll = () => {
     navigation.navigate('Search');
   }
 
@@ -140,13 +139,22 @@ const HomeClient = ({ navigation }) => {
             <View key={item.key.toString()}>
               <View style={homeStyles.scaffold_list_container}>
                 <View style={homeStyles.scaffold_vlist_item_container}>
-                  <TouchableOpacity
-                    activeOpacity={0.6}
-                    onPress={()=>{}}
-                    style={{paddingVertical: 2, marginVertical: 2}}
-                  >
-                    <Text style={homeStyles.scaffold_vlist_item_header}>{item.field}</Text>
-                  </TouchableOpacity>
+                  <View style={{flexDirection: 'row'}}>
+                    <TouchableOpacity
+                      activeOpacity={0.6}
+                      onPress={Field}
+                      style={homeStyles.scaffold_vlist_item_header_container}
+                    >
+                      <Text style={homeStyles.scaffold_vlist_item_header}>{item.field}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      activeOpacity={0.6}
+                      onPress={SeeAll}
+                      style={homeStyles.scaffold_vlist_item_header_container_2}
+                    >
+                      <Text style={homeStyles.scaffold_vlist_item_header_2}>See All</Text>
+                    </TouchableOpacity>
+                  </View>
                   <View style={homeStyles.scaffold_hlist_container}>
                     <ScrollView
                       horizontal={true}
@@ -187,4 +195,4 @@ const HomeClient = ({ navigation }) => {
   );
 }
 
-export default HomeClient;
+export default Home;

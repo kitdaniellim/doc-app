@@ -118,7 +118,7 @@ const Profile = ({ navigation }) => {
                 style={profileStyles.edit_button}
                 onPress={Paypal}
               >
-                <Text style={profileStyles.edit_button_label}>Book Appointment</Text>
+                <Text style={profileStyles.edit_button_label}>BOOK</Text>
               </TouchableOpacity>
               :
               null}

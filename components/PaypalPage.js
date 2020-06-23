@@ -10,7 +10,7 @@ const Paypal = ({ navigation }) => {
   const [isModalVisible, toggleModal] = useState(false);
 
   function Close() {
-    navigation.pop();
+    navigation.navigate('Book1_Date');
   }
 
   const Pay = () => {
@@ -18,7 +18,7 @@ const Paypal = ({ navigation }) => {
   }
 
   const Skip = () => {
-    navigation.pop();
+    navigation.navigate('Book1_Date');
   }
 
   return (
@@ -64,7 +64,6 @@ const Paypal = ({ navigation }) => {
           >
             <Text style={paypalStyles.forms_paybutton_label}>Pay Through PayPal</Text>
           </TouchableOpacity>
-
           <TouchableOpacity
             activeOpacity={0.6}
             style={paypalStyles.forms_paybutton}

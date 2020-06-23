@@ -3,6 +3,7 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 
+//Auth Screens
 import Login from '../components/2_1_LoginPage.js';
 import ForgotPassword from '../components/2_2_FpassPage.js';
 import Selection from '../components/3_SelectionPage.js';
@@ -15,16 +16,18 @@ import SignupConsultant3_1 from '../components/4_SignupPage3_1_Consultant.js';
 import SignupConsultant3_2 from '../components/4_SignupPage3_2_Consultant.js';
 import SignupConsultant4 from '../components/4_SignupPage4_Consultant.js';
 
+//App Screens
 import Home from '../components/6_HomePage.js';
-
 import Calendar1 from '../components/7_CalendarPage1.js';
 import Calendar2 from '../components/7_CalendarPage2.js';
 import Calendar3_Notify from '../components/7_CalendarPage3_Notify.js';
 import Calendar3_Review from '../components/7_CalendarPage3_Review.js';
-
 import Search from '../components/8_SearchPage.js';
 import Review from '../components/9_ReviewPage.js';
 import Profile from '../components/9_ProfilePage.js';
+import Book1_Date from '../components/BookPage1_Date.js';
+import Book2_Time from '../components/BookPage2_Time.js';
+import Book3_Form from '../components/BookPage3_Form.js';
 import ProfileTab from '../components/9_ProfileTabPage.js';
 import EditProfile_1 from '../components/EditProfilePage_1.js';
 import EditProfile_2 from '../components/EditProfilePage_2.js';
@@ -58,17 +61,19 @@ const optionsStyles = {
         // marginRight: 50,
         height: 50,
         justifyContent: 'center',
-
+        marginVertical: 10,
     },
     optionTouchable: {
         //   underlayColor: 'gold',
         activeOpacity: 70,
         padding: 15,
         margin: 10,
+        
     },
     optionText: {
         color: 'black',
-        margin: 10,
+        marginHorizontal: 10,
+        
     },
 };
 
@@ -121,6 +126,16 @@ const homeScreens = {
     Profile: {
         screen: Profile,
     },
+    Book1_Date: {
+        screen: Book1_Date,
+    },
+    Book2_Time: {
+        screen: Book2_Time,
+    },
+    Book3_Form: {
+        screen: Book3_Form,
+    },
+
 }
 
 const calendarScreens = {
@@ -348,7 +363,7 @@ const consultantTabNavigator = createMaterialBottomTabNavigator(
 
 function getTabs() {
     //temporary identifier, switch between true or false to change tab display <--insert here
-    let client = true;
+    let client = false;
     return (client) ? clientTabNavigator : consultantTabNavigator
 }
 
@@ -410,7 +425,7 @@ const appScreens = {
                                 />
                             </MenuTrigger>
                             <MenuOptions customStyles={optionsStyles}>
-                                <View style={{ height: 250 }}>
+                                <View style={{ height: 270 }}>
                                     <FlatList
                                         data={notifs}
                                         showsVerticalScrollIndicator={false}
@@ -446,7 +461,6 @@ const appScreens = {
                             <MenuOptions customStyles={optionsStyles}>
                                 <MenuOption value={1} text='Sign Out' />
                                 <MenuOption value={2} text='About Us' />
-                                <MenuOption value={3} text='Hello World' />
                             </MenuOptions>
                         </Menu>
                     </View>
@@ -459,7 +473,8 @@ const appScreens = {
         navigationOptions: () => ({
             headerShown: false
         }),
-    }
+    },
+
 }
 
 const AuthStack = createStackNavigator(
