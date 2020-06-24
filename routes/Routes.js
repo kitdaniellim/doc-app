@@ -259,7 +259,7 @@ const appScreens = {
         screen: getTabs(),
         navigationOptions: ({navigation}) => ({
             title: `insert logo`,
-            headerRight: (
+            headerRight: () => 
                 <TouchableOpacity
                     style={navbarStyles.appointment_button}
                     onPress={() => {
@@ -268,7 +268,7 @@ const appScreens = {
                 >
                     <Text style={navbarStyles.button_text}>+ New Appointment</Text>
                 </TouchableOpacity>
-            )
+            
         }),
     },
 }

@@ -9,18 +9,11 @@ const Appointment = {
   },
 
   header_container: {
-    flex: 1,
-    margin: 5,
-    paddingLeft: 10,
-    paddingVertical: 4,
-    justifyContent: 'flex-start',
-    alignSelf: 'stretch',
-    borderBottomColor: '#8B8787',
-    borderBottomWidth: 1
+    marginTop: 10
   },
 
   header_text: {
-    fontSize: 10,
+    fontSize: 24,
     color: '#8B8787',
   },
 
@@ -47,7 +40,7 @@ const Appointment = {
     margin: 8,
     alignSelf: 'stretch',
   },
-  
+
   scaffold_list_item_container: {
     backgroundColor: '#fff',
     borderRadius: 10,
@@ -60,7 +53,7 @@ const Appointment = {
     fontWeight: '100',
     color: '#8B8787',
   },
-  
+
   scaffold_list_item_data: {
     fontSize: 12,
     color: '#8B8787',
@@ -77,12 +70,49 @@ const Appointment = {
     alignSelf: 'stretch',
   },
 
+  formView: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+
   picker: {
-    height: 50, 
-    width: 200, 
-    alignSelf: 'stretch' 
+    height: 50,
+    width: 350,
+    alignSelf: 'stretch',
+    borderColor: '#000000',
+    borderWidth: 1,
+    marginBottom: 10,
+  },
+
+  textInput: {
+    paddingVertical: 2,
+    paddingLeft: 4,
+    backgroundColor: "white",
+    borderColor: '#000000',
+    borderWidth: 1,
+    marginBottom: 10,
+  },
+
+  calendarPicker: {
+    paddingVertical: 2,
+    paddingLeft: 4,
+    backgroundColor: "white",
+    borderColor: '#000000',
+    borderWidth: 1,
+    marginBottom: 10,
+  },
+
+  selectedDate: {
+    borderTopColor: 'black',
+    borderTopWidth: 1,
+  },
+
+  submitButton: {
+    height: 100,
+    marginTop: 16
   }
-  
-  }
-  
-  export default Appointment;
+
+}
+
+export default Appointment;
