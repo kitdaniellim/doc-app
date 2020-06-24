@@ -113,7 +113,7 @@ const Calendar = {
 
   date_container: {
     flex: 1,
-    marginVertical: 5,
+    marginVertical: -10,
     marginHorizontal: 15,
   },
 
@@ -136,7 +136,7 @@ const Calendar = {
   date_details_container: {
     backgroundColor: '#fff',
     borderRadius: 15,
-    padding: 5,
+    marginTop: 8,
     paddingHorizontal: 8,
     justifyContent: 'center',
     alignSelf: 'stretch',
@@ -429,6 +429,110 @@ const Calendar = {
     textAlign: 'center',
   },
 
+  forms_container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    borderRadius: 15,
+    marginVertical: 2,
+    marginHorizontal: 10,
+    padding: 10,
+    justifyContent: 'space-between',
+    alignSelf: 'stretch'
+  },
+
+  forms_button_submit: {
+    height: 60,
+    backgroundColor: '#56EC65',
+    borderRadius: 15,
+    padding: 5,
+    justifyContent: 'center',
+    alignSelf: 'stretch',
+    marginHorizontal: 12,
+    marginTop: 15,
+  },
+
+  forms_button_submit_label: {
+    color: '#fff',
+    fontSize: 16,
+    letterSpacing: 1,
+    justifyContent: 'center',
+    alignSelf: 'center'
+  },
+
+  forms_button_upload: {
+    height: 45,
+    backgroundColor: '#56EC65',
+    borderRadius: 15,
+    padding: 5,
+    justifyContent: 'center',
+    alignSelf: 'stretch',
+    marginHorizontal: 12,
+    marginBottom: 15,
+  },
+
+  forms_button_upload_label: {
+    color: '#fff',
+    fontSize: 12,
+    letterSpacing: 1,
+    justifyContent: 'center',
+    alignSelf: 'center',
+    textAlign: 'center'
+  },
+
+  forms_disclaimer: {
+    fontSize: 12,
+    color: '#8B8787',
+    lineHeight: 20,
+    marginHorizontal: 10,
+  },
+
+  forms_options_header: {
+    fontSize: 12,
+    color: '#8B8787',
+    marginBottom: 10,
+    marginHorizontal: 10,
+  },
+
+  forms_options_container: {
+    flexDirection: 'row',
+    backgroundColor: '#ECECEC',
+    borderRadius: 15,
+    padding: 5,
+    justifyContent: 'center',
+    alignSelf: 'stretch',
+    marginHorizontal: 12,
+  },
+
+  forms_options_col: {
+    flex: 1,
+    justifyContent: 'center',
+    alignSelf: 'center',
+    paddingLeft: 5,
+  },
+
+  forms_options_button_wlabel_container: {
+    flexDirection: 'row',
+    margin: 8,
+    justifyContent: 'flex-start',
+  },
+
+  form_options_button_lit: {
+    height: 20,
+    width: 20,
+    borderRadius: 40,
+    backgroundColor: '#19BAB9',
+    marginRight: 5,
+  },
+
+  form_options_button: {
+    height: 20,
+    width: 20,
+    borderRadius: 40,
+    borderColor: '#8B8787',
+    borderWidth: 1,
+    backgroundColor: '#fff',
+    marginRight: 5,
+  },
 
 }
 

@@ -64,7 +64,7 @@ const Book1_Date = ({ navigation }) => {
           <Text style={calendarStyles.calendar_legend_label}>Legend:</Text>
           <View style={calendarStyles.calendar_legend_text_container}>
             <View style={calendarStyles.calendar_legend_finished_hue}></View>
-            <Text style={calendarStyles.calendar_legend_text}> - Finished Appointments</Text>
+            <Text style={calendarStyles.calendar_legend_text}> - Available Date</Text>
           </View>
         </View>
       </View>
