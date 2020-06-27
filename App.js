@@ -1,10 +1,20 @@
 import React, { Component } from 'react';
-import { Alert, AppRegistry, Button, TextInput, View, StyleSheet } from 'react-native';
-// import Selection from './components/2_SelectionPage.js';
-// import { LinearGradient } from  'expo-linear-gradient';
+import { Alert, Text, AppRegistry, Button, TextInput, View, StyleSheet } from 'react-native';
+
+//temp
+import Icon1 from 'react-native-vector-icons/FontAwesome';
+import Icon2 from 'react-native-vector-icons/AntDesign';
+import Icon3 from 'react-native-vector-icons/EvilIcons';
+import Icon4 from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon5 from 'react-native-vector-icons/Octicons';
+import Icon6 from 'react-native-vector-icons/Feather';
+import { globalStyles } from './styles/styles';
+
 import { Constants } from 'expo';
 import Routes from './routes/Routes.js';
 import firebase from "firebase"
+// import MenuButton from 'react-native-menu-button'
+import { MenuProvider } from 'react-native-popup-menu';
 require("firebase/firestore");
 
 const firebaseConfig = {
@@ -17,8 +27,8 @@ const firebaseConfig = {
   appId: "1:346336386740:web:7f7788d6882e9b8c8d41e1",
   measurementId: "G-32FB2FHN7B"
 };
-  
-if(!firebase.apps.length){
+
+if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
@@ -34,24 +44,86 @@ const db = firebase.firestore();
 export default class App extends Component {
   constructor(props) {
     super(props);
-  
-     this.state = {  //DONT REMOVE -Eldrin
+
+    this.state = {  //DONT REMOVE -Eldrin
       username: '',
       password: '',
-    }; 
+    };
 
   }
-  
+
   onLogin() {
     const { username, password } = this.state;
 
     Alert.alert('Credentials', `${username} + ${password}`);
-    auth.createUserWithEmailAndPassword(username,password);
+    auth.createUserWithEmailAndPassword(username, password);
   }
 
   render() {
     return (
-     <Routes/>
+      <MenuProvider>
+        <Routes />
+      </MenuProvider>
+
+      // <View style={{flex: 1, backgroundColor: '#fff', justifyContent: 'space-around', alignItems: 'center', marginVertical: 50}}>
+      //   {/* FontAwesome */}
+      //   <View style={{flexDirection: 'row', backgroundColor: '#19BAB9', padding: 15}}>
+      //     <Icon1 style={globalStyles.icon_global} name="home" size={20} />
+      //     <Icon1 style={globalStyles.icon_global} name="calendar" size={20} />
+      //     <Icon1 style={globalStyles.icon_global} name="search" size={20} />
+      //     <Icon1 style={globalStyles.icon_global} name="pencil" size={20} />
+      //     <Icon1 style={globalStyles.icon_global} name="user" size={20} />
+      //   </View>
+
+      //   {/* AntDesign */}
+      //   <View style={{flexDirection: 'row', backgroundColor: '#19BAB9', padding: 15}}>
+      //     <Icon2 style={globalStyles.icon_global} name="home" size={18} />
+      //     <Icon2 style={globalStyles.icon_global} name="calendar" size={18} />
+      //     <Icon2 style={globalStyles.icon_global} name="search1" size={18} />
+      //     <Icon2 style={globalStyles.icon_global} name="edit" size={18} />
+      //     <Icon2 style={globalStyles.icon_global} name="user" size={18} />
+      //   </View>
+
+      //   {/* Evilicons */}
+      //   {/* <View style={{flexDirection: 'row', backgroundColor: '#19BAB9', padding: 15}}>
+      //     <Icon3 style={globalStyles.icon_global} name="home" size={18} />
+      //     <Icon3 style={globalStyles.icon_global} name="calendar" size={25} />
+      //     <Icon3 style={globalStyles.icon_global} name="search" size={25} />
+      //     <Icon3 style={globalStyles.icon_global} name="pencil" size={25} />
+      //     <Icon3 style={globalStyles.icon_global} name="user" size={25} />
+      //   </View> */}
+
+      //   {/* MaterialCommunityIcons */}
+      //   <View style={{flexDirection: 'row', backgroundColor: '#19BAB9', padding: 15}}>
+      //     <Icon4 style={globalStyles.icon_global} name="home" size={18} />
+      //     <Icon4 style={globalStyles.icon_global} name="calendar" size={18} />
+      //     <Icon4 style={globalStyles.icon_global} name="magnify" size={18} />
+      //     <Icon4 style={globalStyles.icon_global} name="pencil" size={18} />
+      //     <Icon4 style={globalStyles.icon_global} name="account" size={18} />
+      //   </View>
+
+      //   {/* Octicons */}
+      //   <View style={{flexDirection: 'row', backgroundColor: '#19BAB9', padding: 15}}>
+      //     <Icon5 style={globalStyles.icon_global} name="home" size={20} />
+      //     <Icon5 style={globalStyles.icon_global} name="calendar" size={20} />
+      //     <Icon5 style={globalStyles.icon_global} name="search" size={20} />
+      //     <Icon5 style={globalStyles.icon_global} name="pencil" size={20} />
+      //     <Icon5 style={globalStyles.icon_global} name="person" size={20} />
+      //   </View>
+
+      //   {/* Feather */}
+      //   <View style={{flexDirection: 'row', backgroundColor: '#19BAB9', padding: 15}}>
+      //     <Icon6 style={globalStyles.icon_global} name="home" size={18} />
+      //     <Icon6 style={globalStyles.icon_global} name="calendar" size={18} />
+      //     <Icon6 style={globalStyles.icon_global} name="search" size={18} />
+      //     <Icon6 style={globalStyles.icon_global} name="edit" size={18} />
+      //     <Icon6 style={globalStyles.icon_global} name="user" size={18} />
+      //   </View>
+
+      // </View>
+
+
+
     );
   }
 }

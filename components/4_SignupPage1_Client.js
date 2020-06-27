@@ -124,7 +124,7 @@ const SignupClient1 = ({ navigation }) => {
               value={cpassword}
             />
           </View>
-          <Text style={signupStyles.forms_text}>1/2</Text>
+          <Text style={signupStyles.forms_text}>1/3</Text>
           <TouchableOpacity
             activeOpacity={0.6}
             style={signupStyles.forms_button}

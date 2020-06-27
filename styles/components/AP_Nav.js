@@ -1,12 +1,12 @@
-const Navbar = {
-  navBar: {
-    height: 35,
-    position: 'absolute',
-    left: 0,
-    bottom: 0,
-    flexDirection: 'row',
-    alignSelf: 'stretch',
-  },
+const Nav = {
+    navBar: {
+      height: 35,
+      position: 'absolute',
+      left:     0,
+      bottom: 0,
+      flexDirection: 'row',
+      alignSelf: 'stretch',
+    },
 
   navBarItem: {
     flex: 1,
@@ -14,11 +14,12 @@ const Navbar = {
     justifyContent: 'center'
   },
 
-  icon: {
-    color: 'white',
-    textAlign: 'center',
-    margin: 4,
-  },
+    icon: {
+      color: 'white',
+      textAlign: 'center',
+      margin: 4,
+    },
+
 
   appointment_button: {
     alignItems: "center",
@@ -32,7 +33,6 @@ const Navbar = {
     color: '#19BAB9',
     fontWeight: 'bold'
   }
-
 }
 
-export default Navbar;
+export default Nav;

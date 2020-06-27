@@ -1,5 +1,5 @@
 import Global from './components/AP_Global';
-import Navbar from './components/AP_Navbar';
+import Nav from './components/AP_Nav';
 
 import Login from './components/LoginPage';
 import ForgotPassword from './components/FpassPage';
@@ -14,6 +14,9 @@ import Appointment from './components/AppointmentPage';
 
 // import Review from './components/ReviewPage';
 
+import Review from './components/ReviewPage';
+import Profile from './components/ProfilePage';
+import Paypal from './components/PaypalPage';
 
 import { StyleSheet } from 'react-native';
 
@@ -27,5 +30,8 @@ export const calendarStyles = StyleSheet.create(Calendar);
 export const searchStyles = StyleSheet.create(Search);
 export const appointmentStyles = StyleSheet.create(Appointment);
 // export const reviewStyles = StyleSheet.create(Review);
+export const reviewStyles = StyleSheet.create(Review);
+export const profileStyles = StyleSheet.create(Profile);
+export const paypalStyles = StyleSheet.create(Paypal);
 
-export const navbarStyles = StyleSheet.create(Navbar);
+export const navStyles = StyleSheet.create(Nav);

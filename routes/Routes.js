@@ -1,36 +1,81 @@
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
 import { createStackNavigator } from 'react-navigation-stack';
-import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 
+//Auth Screens
 import Login from '../components/2_1_LoginPage.js';
 import ForgotPassword from '../components/2_2_FpassPage.js';
 import Selection from '../components/3_SelectionPage.js';
-
 import SignupClient1 from '../components/4_SignupPage1_Client.js';
 import SignupClient2 from '../components/4_SignupPage2_Client.js';
-
-import HomeClient from '../components/6_HomePage_Client.js';
-
-import Calendar1 from '../components/7_CalendarPage1_Client.js';
-import Calendar2 from '../components/7_CalendarPage2_Client.js';
-import Search from '../components/8_SearchPage_Client.js';
-import Review from '../components/9_ReviewPage_Client.js';
-import Profile from '../components/9_ProfilePage_Client.js';
-
+import SignupClient3 from '../components/4_SignupPage3_Client.js';
 import SignupConsultant1 from '../components/4_SignupPage1_Consultant.js';
 import SignupConsultant2 from '../components/4_SignupPage2_Consultant.js';
 import SignupConsultant3_1 from '../components/4_SignupPage3_1_Consultant.js';
 import SignupConsultant3_2 from '../components/4_SignupPage3_2_Consultant.js';
 import SignupConsultant4 from '../components/4_SignupPage4_Consultant.js';
 
-import AppointmentPage from '../components/AppointmentPage.js';
+//App Screens
+import Home from '../components/6_HomePage.js';
+import Calendar1 from '../components/7_CalendarPage1.js';
+import Calendar2 from '../components/7_CalendarPage2.js';
+import Calendar3_Notify from '../components/7_CalendarPage3_Notify.js';
+import Calendar3_Review from '../components/7_CalendarPage3_Review.js';
+import Search from '../components/8_SearchPage.js';
+import Review from '../components/9_ReviewPage.js';
+import Profile from '../components/9_ProfilePage.js';
+import Book1_Date from '../components/BookPage1_Date.js';
+import Book2_Time from '../components/BookPage2_Time.js';
+import Book3_Form from '../components/BookPage3_Form.js';
+import ProfileTab from '../components/9_ProfileTabPage.js';
+import EditProfile_1 from '../components/EditProfilePage_1.js';
+import EditProfile_2 from '../components/EditProfilePage_2.js';
+import Paypal from '../components/PaypalPage.js';
 
 import React from 'react';
-import { Button, Text, View, TouchableOpacity, Modal } from 'react-native';
+import { View, ScrollView, FlatList, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { navbarStyles } from '../styles/styles';
+import {
+    Menu,
+    MenuOptions,
+    MenuOption,
+    MenuTrigger,
+} from 'react-native-popup-menu';
+import { navStyles } from '../styles/styles';
+
+const optionsStyles = {
+    optionsContainer: {
+        //   backgroundColor: 'green',
+        marginTop: 48,
+        justifyContent: 'flex-end',
+        width: 200,
+    },
+    optionsWrapper: {
+        //   backgroundColor: 'purple',
+        // marginRight: 50,
+
+    },
+    optionWrapper: {
+        //   backgroundColor: 'yellow',
+        // marginRight: 50,
+        height: 50,
+        justifyContent: 'center',
+        marginVertical: 10,
+    },
+    optionTouchable: {
+        //   underlayColor: 'gold',
+        activeOpacity: 70,
+        padding: 15,
+        margin: 10,
+
+    },
+    optionText: {
+        color: 'black',
+        marginHorizontal: 10,
+
+    },
+};
 
 const regScreens = {
     Login: {
@@ -53,6 +98,9 @@ const regScreens = {
     SignupClient2: {
         screen: SignupClient2,
     },
+    SignupClient3: {
+        screen: SignupClient3,
+    },
 
     SignupConsultant1: {
         screen: SignupConsultant1,
@@ -74,15 +122,66 @@ const regScreens = {
     }
 }
 
+const homeScreens = {
+    Home: {
+        screen: Home,
+    },
+    Profile: {
+        screen: Profile,
+    },
+    Book1_Date: {
+        screen: Book1_Date,
+    },
+    Book2_Time: {
+        screen: Book2_Time,
+    },
+    Book3_Form: {
+        screen: Book3_Form,
+    },
+
+}
+
 const calendarScreens = {
     Calendar1: {
         screen: Calendar1,
     },
-
     Calendar2: {
         screen: Calendar2,
     },
+    Calendar3_Notify: {
+        screen: Calendar3_Notify,
+    },
+    Calendar3_Review: {
+        screen: Calendar3_Review,
+    },
 }
+
+const profileScreens = {
+    ProfileTab: {
+        screen: ProfileTab,
+    },
+    EditProfile_1: {
+        screen: EditProfile_1,
+    },
+    EditProfile_2: {
+        screen: EditProfile_2,
+    },
+}
+
+const HomeStack = createStackNavigator(
+    homeScreens,
+    {
+        defaultNavigationOptions: {
+            headerStyle: {
+                backgroundColor: '#19BAB9',
+                borderBottomColor: '#19BAB9',
+            },
+            headerTintColor: '#fff',
+            title: null,
+            headerShown: false
+        }
+    }
+);
 
 const CalendarStack = createStackNavigator(
     calendarScreens,
@@ -99,9 +198,26 @@ const CalendarStack = createStackNavigator(
     }
 );
 
+const ProfileStack = createStackNavigator(
+    profileScreens,
+    {
+        defaultNavigationOptions: {
+            headerStyle: {
+                backgroundColor: '#19BAB9',
+                borderBottomColor: '#19BAB9',
+            },
+            headerTintColor: '#fff',
+            title: null,
+            headerShown: false
+        }
+    }
+);
+
+
+
 const clientTabScreens = {
-    HomeClient: {
-        screen: HomeClient,
+    Home: {
+        screen: HomeStack,
         navigationOptions: {
             title: 'Home',
             tabBarIcon: ({ tintColor }) => (
@@ -162,8 +278,8 @@ const clientTabScreens = {
 }
 
 const consultantTabScreens = {
-    HomeClient: {
-        screen: HomeClient,
+    Home: {
+        screen: HomeStack,
         navigationOptions: {
             title: 'Home',
             tabBarIcon: ({ tintColor }) => (
@@ -188,7 +304,7 @@ const consultantTabScreens = {
                     size={21}
                 />
             ),
-            tabBarColor: '#56D74F',
+            tabBarColor: '#19BAB9',
         },
     },
 
@@ -203,18 +319,18 @@ const consultantTabScreens = {
                     size={21}
                 />
             ),
-            tabBarColor: '#0CB4A6',
+            tabBarColor: '#19BAB9',
         },
     },
 
-    Profile: {
-        screen: Profile,
+    ProfileTab: {
+        screen: ProfileStack,
         navigationOptions: {
             title: 'Profile',
             tabBarIcon: ({ tintColor }) => (
                 <Icon
                     color={`${tintColor}`}
-                    name="user-o"
+                    name="user"
                     size={21}
                 />
             ),
@@ -227,7 +343,7 @@ const consultantTabScreens = {
 const clientTabNavigator = createMaterialBottomTabNavigator(
     clientTabScreens,
     {
-        initialRouteName: 'HomeClient',
+        initialRouteName: 'Home',
         activeColor: '#fff',
         inactiveColor: '#e3e3e3',
     }
@@ -237,7 +353,7 @@ const clientTabNavigator = createMaterialBottomTabNavigator(
 const consultantTabNavigator = createMaterialBottomTabNavigator(
     consultantTabScreens,
     {
-        initialRouteName: 'HomeClient',
+        initialRouteName: 'Home',
         tabBarOptions: {
             activeBackgroundColor: '#19BAB9',
             inactiveBackgroundColor: '#0FA8A7',
@@ -248,29 +364,120 @@ const consultantTabNavigator = createMaterialBottomTabNavigator(
     }
 )
 
-const getTabs = () => {
-    // insert identifer whether logged in user is client or a consultant using firestore
-    let client = true; //temporary identifier, <--insert here
+function getTabs() {
+    //temporary identifier, switch between true or false to change tab display <--insert here
+    let client = false;
     return (client) ? clientTabNavigator : consultantTabNavigator
 }
 
+const notifs = [
+    {
+        key: 1,
+        text: 'Caesar De Los Santos would like to schedule an appointment with you.'
+    },
+    {
+        key: 2,
+        text: 'Jessica Wong would like to schedule an appointment with you.'
+    },
+    {
+        key: 3,
+        text: 'Charles Lee has posted a review about you!'
+    },
+    {
+        key: 4,
+        text: 'Patrick Escobar would like to schedule an appointment with you.'
+    },
+    {
+        key: 5,
+        text: 'Jefferson Yao would like to schedule an appointment with you.'
+    },
+    {
+        key: 6,
+        text: 'Thomas Wu would like to schedule an appointment with you.'
+    },
+    {
+        key: 7,
+        text: 'Sherlock Holmes would like to schedule an appointment with you.'
+    },
+    {
+        key: 8,
+        text: 'Connor McGregor would like to schedule an appointment with you.'
+    },
+    {
+        key: 9,
+        text: 'Elon Musk would like to schedule an appointment with you.'
+    },
+]
+
 const appScreens = {
-    HomeClient: {
+    Home: {
         screen: getTabs(),
-        navigationOptions: ({navigation}) => ({
+        navigationOptions: ({ navigation }) => ({
             title: `insert logo`,
-            headerRight: () => 
-                <TouchableOpacity
-                    style={navbarStyles.appointment_button}
-                    onPress={() => {
-                        navigation.navigate('AppointmentPage');
-                    }}
-                >
-                    <Text style={navbarStyles.button_text}>+ New Appointment</Text>
-                </TouchableOpacity>
-            
+            headerRight: () => {
+                return (
+                    <View style={{ flexDirection: 'row' }}>
+                        <Menu onSelect={() => { }}>
+                            <MenuTrigger
+                                style={{ marginRight: 25, padding: 10, }}
+                            >
+                                <Icon
+                                    color='#fff'
+                                    name='bell'
+                                    size={21}
+                                />
+                            </MenuTrigger>
+                            <MenuOptions customStyles={optionsStyles}>
+                                <View style={{ height: 270 }}>
+                                    <FlatList
+                                        data={notifs}
+                                        showsVerticalScrollIndicator={false}
+                                        keyExtractor={(item) => item.key.toString()}
+                                        ItemSeparatorComponent={()=>{
+                                            return(
+                                                <View style={{borderBottomColor: '#00000080', borderBottomWidth: 1,  alignSelf: 'stretch'}}/>
+                                            );
+                                        }}
+                                        renderItem={({ item }) => (
+                                            <MenuOption key={item.key} value={item.key} text={item.text} />
+                                        )}
+                                    />
+                                </View>
+                            </MenuOptions>
+                        </Menu>
+                        <Menu onSelect={
+                            value => {
+                                if (value === 1) {
+                                    navigation.navigate('Login')
+                                }
+                            }
+                        }>
+                            <MenuTrigger
+                                style={{ marginRight: 25, padding: 10, }}
+                            >
+                                <Icon
+                                    color='#fff'
+                                    name='ellipsis-v'
+                                    size={21}
+                                />
+                            </MenuTrigger>
+                            <MenuOptions customStyles={optionsStyles}>
+                                <MenuOption value={1} text='Sign Out' />
+                                <MenuOption value={2} text='About Us' />
+                            </MenuOptions>
+                        </Menu>
+                    </View>
+                )
+            }
         }),
     },
+    Paypal: {
+        screen: Paypal,
+        navigationOptions: () => ({
+            headerShown: false
+        }),
+    },
+
 }
 
 const AuthStack = createStackNavigator(
@@ -316,3 +523,4 @@ const SwitchStack = createSwitchNavigator({
 )
 
 export default createAppContainer(SwitchStack);
+

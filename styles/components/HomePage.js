@@ -54,6 +54,18 @@ const Home = {
     justifyContent: 'center'
   },
 
+  scaffold_vlist_item_header_container: {
+    flex: 1,
+    paddingVertical: 2, 
+    marginVertical: 2,
+  },
+
+  scaffold_vlist_item_header_container_2: {
+    flex: 1,
+    paddingVertical: 2, 
+    marginVertical: 2,
+  },
+
   scaffold_vlist_item_header: {
     fontSize: 14,
     marginBottom: 5,
@@ -61,6 +73,18 @@ const Home = {
     letterSpacing: 0.5,
     fontWeight: '300',
     color: '#fff',
+  },
+
+  scaffold_vlist_item_header_2: {
+    fontSize: 14,
+    marginBottom: 5,
+    paddingLeft: 5,
+    letterSpacing: 0.5,
+    fontWeight: '300',
+    color: '#fff',
+    textAlign: 'right',
+    marginRight: 10,
+    textDecorationLine: 'underline'
   },
 
   scaffold_hlist_container: {

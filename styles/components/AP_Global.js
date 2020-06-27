@@ -33,6 +33,14 @@ const Global = {
     alignSelf: 'center',
   },
 
+  // //temp for showing icons
+  // icon_global: {
+  //   color: '#fff',
+  //   justifyContent: 'center',
+  //   alignSelf: 'center',
+  //   marginHorizontal: 20,
+  // },
+
   modal_icon: {
     color: '#fff',
     justifyContent: 'center',

@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import { Text, View, FlatList, TouchableHighlight, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
-import { ListItem } from 'react-native-elements';
+import React from 'react';
+import { Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {Calendar, CalendarList} from 'react-native-calendars';
+import {Calendar} from 'react-native-calendars';
 import { calendarStyles, globalStyles } from '../styles/styles';
 
 

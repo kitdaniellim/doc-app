@@ -15,10 +15,7 @@ export default class SignupConsultant3_1 extends Component {
       isModalVisible: false
     }
   }
-
   
-
-
   toggleModal(visible) {
     this.setState({isModalVisible: visible})
   }
