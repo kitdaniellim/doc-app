@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, Image, View, FlatList, RefreshControl, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Carousel from 'react-native-banner-carousel';
 import { homeStyles, globalStyles, navbarStyles } from '../styles/styles';
 
 function wait(timeout) {
@@ -116,6 +117,25 @@ const Home = ({ navigation }) => {
 
   ];
 
+
+  const BannerWidth = Dimensions.get('window').width;
+  const BannerHeight = 260;
+
+  const images = [
+    {
+      key: 1,
+      img: require("../assets/troy.png"),
+    },
+    {
+      key: 2,
+      img: require("../assets/troy.png"),
+    },
+    {
+      key: 3,
+      img: require("../assets/troy.png"),
+    },
+  ];
+
   return (
     <View style={homeStyles.container}>
       <View style={homeStyles.header_container}>
@@ -123,7 +143,19 @@ const Home = ({ navigation }) => {
         <Text style={homeStyles.header_text}>Highest Rated by Profession</Text>
       </View>
       <View style={homeStyles.scaffold}>
-        {/* <Text>{ navigation.getParam(`user`) }</Text> */}
+        <Carousel
+          autoplay
+          autoplayTimeout={5000}
+          loop
+          index={0}
+          pageSize={BannerWidth}
+        >
+          {images.map((image) => {
+            <View key={image.key}>
+              <Image style={{ width: BannerWidth, height: BannerHeight }} source={image.img} />
+            </View>
+          })}
+        </Carousel>
         <FlatList
           data={list}
           style={{marginVertical: -10}}
