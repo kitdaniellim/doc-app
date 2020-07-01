@@ -30,7 +30,6 @@ const Home = {
 
   scaffold: {
     flex: 10,
-    padding: 10,
     margin: 0,
     backgroundColor: '#ECECEC',
     alignSelf: 'stretch',
@@ -40,8 +39,6 @@ const Home = {
   scaffold_list_container: {
     backgroundColor: '#fff',
     paddingVertical: 12,
-    borderRadius: 15,
-    margin: 10,
     alignSelf: 'stretch',
   },
 
@@ -49,7 +46,7 @@ const Home = {
     flex: 1,
     paddingVertical: 8,
     paddingHorizontal: 8,
-    backgroundColor: '#FDBB3B',
+    // backgroundColor: '#FDBB3B',
     alignSelf: 'stretch',
     justifyContent: 'center'
   },
@@ -67,21 +64,21 @@ const Home = {
   },
 
   scaffold_vlist_item_header: {
-    fontSize: 14,
+    fontSize: 17,
     marginBottom: 5,
-    paddingLeft: 5,
-    letterSpacing: 0.5,
-    fontWeight: '300',
-    color: '#fff',
+    paddingLeft: 8,
+    letterSpacing: 0.2,
+    fontWeight: '600',
+    color: '#000',
   },
 
   scaffold_vlist_item_header_2: {
-    fontSize: 14,
+    fontSize: 12,
     marginBottom: 5,
     paddingLeft: 5,
     letterSpacing: 0.5,
     fontWeight: '300',
-    color: '#fff',
+    color: 'gray',
     textAlign: 'right',
     marginRight: 10,
     textDecorationLine: 'underline'
@@ -102,12 +99,12 @@ const Home = {
     flexDirection: 'row'
   },
 
-  scaffold_hlist_item_box_id: {
-    color: '#fff',
-    justifyContent: 'center',
-    alignSelf: 'center',
-    marginHorizontal: 5,
-  },
+  // scaffold_hlist_item_box_id: {
+  //   color: '#000',
+  //   justifyContent: 'center',
+  //   alignSelf: 'center',
+  //   marginHorizontal: 5,
+  // },
 
   scaffold_hlist_item_box_content: {
     flexDirection: 'column',
@@ -117,18 +114,18 @@ const Home = {
   },
 
   scaffold_hlist_item_box_image_container: {
-    borderColor: '#fff',
-    borderWidth: 1,
+    
   },
 
   scaffold_hlist_item_box_image: {
-    height: 60, 
-    width: 80
+    height: 100, 
+    width: 100
   },
   
   scaffold_hlist_item_box_name: {
-    color: '#fff',
-    textAlign: 'center'
+    color: '#000',
+    textAlign: 'left',
+    fontWeight: '200'
   },
 
 
