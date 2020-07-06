@@ -8,9 +8,10 @@ import Modal from 'react-native-modal';
 
 const Paypal = ({ navigation }) => {
   const [isModalVisible, toggleModal] = useState(false);
+  const consultant_id = navigation.state.params.consultant_id;
 
   function Close() {
-    navigation.navigate('Book1_Date');
+    navigation.navigate('BookPage');
   }
 
   const Pay = () => {
@@ -18,7 +19,9 @@ const Paypal = ({ navigation }) => {
   }
 
   const Skip = () => {
-    navigation.navigate('Book1_Date');
+    navigation.navigate('BookPage', {
+      consultant_id
+    });
   }
 
   return (

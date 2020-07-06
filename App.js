@@ -15,31 +15,37 @@ import Routes from './routes/Routes.js';
 import firebase from "firebase"
 // import MenuButton from 'react-native-menu-button'
 import { MenuProvider } from 'react-native-popup-menu';
-require("firebase/firestore");
+import configureStore from './store/configureStore';
+import { Provider } from 'react-redux';
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAc9jbCdsAr25GlhpcLMWap-XBJy60Z2uE",
-  authDomain: "appointmentapp-d867d.firebaseapp.com",
-  databaseURL: "https://appointmentapp-d867d.firebaseio.com",
-  projectId: "appointmentapp-d867d",
-  storageBucket: "appointmentapp-d867d.appspot.com",
-  messagingSenderId: "346336386740",
-  appId: "1:346336386740:web:7f7788d6882e9b8c8d41e1",
-  measurementId: "G-32FB2FHN7B"
-};
+// require("firebase/firestore");
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
+// const firebaseConfig = {
+//   apiKey: "AIzaSyAc9jbCdsAr25GlhpcLMWap-XBJy60Z2uE",
+//   authDomain: "appointmentapp-d867d.firebaseapp.com",
+//   databaseURL: "https://appointmentapp-d867d.firebaseio.com",
+//   projectId: "appointmentapp-d867d",
+//   storageBucket: "appointmentapp-d867d.appspot.com",
+//   messagingSenderId: "346336386740",
+//   appId: "1:346336386740:web:7f7788d6882e9b8c8d41e1",
+//   measurementId: "G-32FB2FHN7B"
+// };
+
+// if (!firebase.apps.length) {
+//   firebase.initializeApp(firebaseConfig);
+// }
 
 
 // Make Auth and Firestore References
 //const auth = firebase.auth();
-const auth = firebase.auth();
-const db = firebase.firestore();
+
+// const auth = firebase.auth();
+// const db = firebase.firestore();
 
 //Update Firestore Settings
 //db.settings( {timestampsInSnapshots: true} )
+
+const store = configureStore();
 
 export default class App extends Component {
   constructor(props) {
@@ -52,18 +58,20 @@ export default class App extends Component {
 
   }
 
-  onLogin() {
-    const { username, password } = this.state;
+  // onLogin() {
+  //   const { username, password } = this.state;
 
-    Alert.alert('Credentials', `${username} + ${password}`);
-    auth.createUserWithEmailAndPassword(username, password);
-  }
+  //   Alert.alert('Credentials', `${username} + ${password}`);
+  //   auth.createUserWithEmailAndPassword(username, password);
+  // }
 
   render() {
     return (
-      <MenuProvider>
-        <Routes />
-      </MenuProvider>
+      <Provider store={store}>
+        <MenuProvider>
+          <Routes />
+        </MenuProvider>
+      </Provider>
 
       // <View style={{flex: 1, backgroundColor: '#fff', justifyContent: 'space-around', alignItems: 'center', marginVertical: 50}}>
       //   {/* FontAwesome */}
