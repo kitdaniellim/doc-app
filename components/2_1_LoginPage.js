@@ -34,9 +34,9 @@ const Login = ({ navigation }) => {
   return (
     <View style={loginStyles.container}>
       <LinearGradient
-        colors={['rgba(243,243,243,0.4)', 'transparent']}
-        start={{ x: 0, y: 1 }}
-        end={{ x: 0, y: 0 }}
+        colors={['rgba(239,239,239,0.5)', 'transparent']}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 0, y: 1 }}
         style={globalStyles.gradient}
       >
         <Modal 
@@ -66,16 +66,7 @@ const Login = ({ navigation }) => {
         <View style={loginStyles.forms_container}>
           <View style={loginStyles.forms_header_container}>
             <Icon style={globalStyles.icon_client} name="user" size={42} />
-            {/* <Image
-              source={require('../assets/doc_logo.png')}
-              style={{
-                height: 60, 
-                width: 80,
-                alignSelf: 'center',
-                justifyContent: 'center'
-              }}
-            /> */}
-            <Text style={loginStyles.forms_label}>LOGIN</Text>
+            <Text style={loginStyles.forms_label}>JOIN A MEETING</Text>
           </View>
           <View style={loginStyles.forms_textinput_container}>
             <Icon style={globalStyles.icon_global} name="user-circle" size={18} />

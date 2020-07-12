@@ -172,12 +172,6 @@ const HomeStack = createStackNavigator(
     homeScreens,
     {
         defaultNavigationOptions: {
-            headerStyle: {
-                backgroundColor: '#19BAB9',
-                borderBottomColor: '#19BAB9',
-            },
-            headerTintColor: '#fff',
-            title: null,
             headerShown: false
         }
     }
@@ -187,12 +181,6 @@ const CalendarStack = createStackNavigator(
     calendarScreens,
     {
         defaultNavigationOptions: {
-            headerStyle: {
-                backgroundColor: '#19BAB9',
-                borderBottomColor: '#19BAB9',
-            },
-            headerTintColor: '#fff',
-            title: null,
             headerShown: false
         }
     }
@@ -202,12 +190,6 @@ const ProfileStack = createStackNavigator(
     profileScreens,
     {
         defaultNavigationOptions: {
-            headerStyle: {
-                backgroundColor: '#19BAB9',
-                borderBottomColor: '#19BAB9',
-            },
-            headerTintColor: '#fff',
-            title: null,
             headerShown: false
         }
     }
@@ -224,10 +206,10 @@ const clientTabScreens = {
                 <Icon
                     color={`${tintColor}`}
                     name="home"
-                    size={21}
+                    size={22}
                 />
             ),
-            tabBarColor: '#19BAB9',
+            tabBarColor: '#fff',
         },
     },
 
@@ -239,10 +221,10 @@ const clientTabScreens = {
                 <Icon
                     color={`${tintColor}`}
                     name="calendar"
-                    size={21}
+                    size={22}
                 />
             ),
-            tabBarColor: '#19BAB9',
+            tabBarColor: '#fff',
         },
     },
 
@@ -254,10 +236,10 @@ const clientTabScreens = {
                 <Icon
                     color={`${tintColor}`}
                     name="search"
-                    size={21}
+                    size={22}
                 />
             ),
-            tabBarColor: '#19BAB9',
+            tabBarColor: '#fff',
         },
     },
 
@@ -269,10 +251,10 @@ const clientTabScreens = {
                 <Icon
                     color={`${tintColor}`}
                     name="pencil"
-                    size={21}
+                    size={22}
                 />
             ),
-            tabBarColor: '#FDBB3B',
+            tabBarColor: '#fff',
         },
     },
 }
@@ -286,10 +268,10 @@ const consultantTabScreens = {
                 <Icon
                     color={`${tintColor}`}
                     name="home"
-                    size={21}
+                    size={22}
                 />
             ),
-            tabBarColor: '#19BAB9',
+            tabBarColor: '#fff',
         },
     },
 
@@ -301,10 +283,10 @@ const consultantTabScreens = {
                 <Icon
                     color={`${tintColor}`}
                     name="calendar"
-                    size={21}
+                    size={22}
                 />
             ),
-            tabBarColor: '#19BAB9',
+            tabBarColor: '#fff',
         },
     },
 
@@ -316,10 +298,10 @@ const consultantTabScreens = {
                 <Icon
                     color={`${tintColor}`}
                     name="search"
-                    size={21}
+                    size={22}
                 />
             ),
-            tabBarColor: '#19BAB9',
+            tabBarColor: '#fff',
         },
     },
 
@@ -331,10 +313,10 @@ const consultantTabScreens = {
                 <Icon
                     color={`${tintColor}`}
                     name="user"
-                    size={21}
+                    size={22}
                 />
             ),
-            tabBarColor: '#FDBB3B',
+            tabBarColor: '#fff',
         },
     },
 }
@@ -344,8 +326,8 @@ const clientTabNavigator = createMaterialBottomTabNavigator(
     clientTabScreens,
     {
         initialRouteName: 'Home',
-        activeColor: '#fff',
-        inactiveColor: '#e3e3e3',
+        activeColor: '#19BAB9',
+        inactiveColor: '#CFCFCF',
     }
 )
 
@@ -354,19 +336,21 @@ const consultantTabNavigator = createMaterialBottomTabNavigator(
     consultantTabScreens,
     {
         initialRouteName: 'Home',
-        tabBarOptions: {
-            activeBackgroundColor: '#19BAB9',
-            inactiveBackgroundColor: '#0FA8A7',
-            activeTintColor: '#fff',
-            inactiveTintColor: '#CFCFCF',
-            showLabel: false,
-        }
+        activeColor: '#19BAB9',
+        inactiveColor: '#CFCFCF',
+        // tabBarOptions: {
+        //     activeBackgroundColor: '#19BAB9',
+        //     inactiveBackgroundColor: '#0FA8A7',
+        //     activeTintColor: '#fff',
+        //     inactiveTintColor: '#CFCFCF',
+        //     showLabel: false,
+        // }
     }
 )
 
 function getTabs() {
     //temporary identifier, switch between true or false to change tab display <--insert here
-    let client = false;
+    let client = true;
     return (client) ? clientTabNavigator : consultantTabNavigator
 }
 
@@ -414,6 +398,7 @@ const appScreens = {
         screen: getTabs(),
         navigationOptions: ({ navigation }) => ({
             title: `insert logo`,
+            
             headerRight: () => {
                 return (
                     <View style={{ flexDirection: 'row' }}>

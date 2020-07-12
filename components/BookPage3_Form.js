@@ -16,33 +16,7 @@ class Book3_Form extends React.Component {
     this.setState(() => ({ symptoms: this.props.symptoms }));
   }
   onAttachFile = (files) => {
-    // //Opening Document Picker for selection of multiple file
-    // try {
-    //   const results = await DocumentPicker.pickMultiple({
-    //     type: [DocumentPicker.types.images],
-    //     //There can me more options as well find above
-    //   });
-    //   for (const res of results) {
-    //     //Printing the log realted to the file
-    //     console.log('res : ' + JSON.stringify(res));
-    //     console.log('URI : ' + res.uri);
-    //     console.log('Type : ' + res.type);
-    //     console.log('File Name : ' + res.name);
-    //     console.log('File Size : ' + res.size);
-    //   }
-    //   //Setting the state to show multiple file attributes
-    //   this.setState({ multipleFile: results });
-    // } catch (err) {
-    //   //Handling any exception (If any)
-    //   if (DocumentPicker.isCancel(err)) {
-    //     //If user canceled the document selection
-    //     alert('Canceled from multiple doc picker');
-    //   } else {
-    //     //For Unknown Error
-    //     alert('Unknown Error: ' + JSON.stringify(err));
-    //     throw err;
-    //   }
-    // }
+
   }
   onCheck = (value) => {
     let symptoms = this.state.symptoms;

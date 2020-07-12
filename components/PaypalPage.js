@@ -27,9 +27,9 @@ const Paypal = ({ navigation }) => {
   return (
     <View style={paypalStyles.container}>
       <LinearGradient
-        colors={['rgba(243,243,243,0.4)', 'transparent']}
-        start={{ x: 0, y: 1 }}
-        end={{ x: 0, y: 0 }}
+        colors={['rgba(239,239,239,0.5)', 'transparent']}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 0, y: 1 }}
         style={globalStyles.gradient}
       >
         <Modal

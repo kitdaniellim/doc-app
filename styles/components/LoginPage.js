@@ -14,7 +14,8 @@ const Login = {
     },
 
     forms_header_container: {
-        marginVertical: 50,
+        marginVertical: 30,
+        marginTop: 50,
     },
 
     forms_label: {
@@ -22,7 +23,7 @@ const Login = {
         alignSelf: 'center',
         fontWeight: '500',
         letterSpacing: 1,
-        fontSize: 12,
+        fontSize: 15,
     },
 
     forms_textinput_container: {
@@ -42,7 +43,7 @@ const Login = {
 
     forms_textinput: {
         width: '100%',
-        fontSize: 11,
+        fontSize: 14,
         paddingHorizontal: 5,
         marginHorizontal: 5,
         borderRadius: 20,      
@@ -69,7 +70,7 @@ const Login = {
 
     forms_button_label: {
         color: '#8B8787',
-        fontSize: 9,
+        fontSize: 14,
         fontWeight: '600', 
         letterSpacing: 1,  
         textAlign: 'center',
@@ -77,14 +78,14 @@ const Login = {
 
     forms_text: {
         color: '#fff',
-        fontSize: 11,
+        fontSize: 15,
         fontWeight: '500',
         margin: 5,
     },
 
     forms_text_underline: {
         color: '#fff',
-        fontSize: 11,
+        fontSize: 15,
         fontWeight: '500',
         textDecorationLine: "underline",
         textDecorationStyle: "solid",
@@ -94,7 +95,7 @@ const Login = {
 
     forms_text_bold: {
         color: '#fff',
-        fontSize: 11,
+        fontSize: 15,
         fontWeight: '600',
         textAlign: 'center',
         marginTop: 10,

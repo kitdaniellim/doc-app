@@ -11,13 +11,6 @@ import { bookAppointment } from '../actions/appointments';
 class BookPage extends React.Component {
     constructor(props) {
         super(props);
-        // this.onStep1Submit = this.onStep1Submit.bind(this);
-        // this.onStep2Submit = this.onStep2Submit.bind(this);
-        // this.onStep3Submit = this.onStep3Submit.bind(this);
-        // this.onStep3Change = this.onStep3Change.bind(this);
-        // this._prev = this._prev.bind(this);
-        // this._next = this._next.bind(this);
-        // this.showOccupiedDates = this.showOccupiedDates.bind(this);
         this.state = {
             currentStep: 1,
             date: '',
@@ -90,7 +83,7 @@ class BookPage extends React.Component {
         await this.props.bookAppointment(appointment);
         if (this.props.error) {
             alert(this.props.error);
-        } else if (!this.props.error && this.props.item) {
+        } else if (!this.props.error && this.props.appointment) {
             alert("Booking Successful");
         }
     }
@@ -153,7 +146,7 @@ class BookPage extends React.Component {
 
 const mapStateToProps = state => ({
     loading: state.appointments.loading,
-    item: state.appointments.item,
+    appointment: state.appointments.item,
     error: state.appointments.error
 });
 
