@@ -37,6 +37,12 @@ class BookPage4_Confirmation extends React.Component {
                                     this.props.symptoms.length > 0? this.props.symptoms.map((item, key) => <Text key={key}>{item}</Text>) : <Text>None</Text>
                                 }
                             </View>
+                            <View>
+                                <Text style={calendarStyles.conf_label}>Documents</Text>
+                                {
+                                    this.props.files.length > 0? this.props.files.map((item, key) => <Text key={key}>{item.name}</Text>) : <Text>None</Text>
+                                }
+                            </View>
                             <TouchableOpacity
                                 activeOpacity={0.6}
                                 onPress={() => { this.props.onFormSubmit() }}

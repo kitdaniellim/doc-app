@@ -1,22 +1,41 @@
 import React, { useState } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { FlatList, Text, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { calendarStyles, globalStyles } from '../styles/styles';
 import CheckBox from '@react-native-community/checkbox';
-// import DocumentPicker from 'react-native-document-picker';
+import * as DocumentPicker from 'expo-document-picker';
 
 class Book3_Form extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      symptoms: []
+      symptoms: [],
+      files: [],
     }
   }
   componentDidMount() {
     this.setState(() => ({ symptoms: this.props.symptoms }));
   }
-  onAttachFile = (files) => {
-
+  onFilePick = async () => {
+    let files = this.state.files;
+    const result = await DocumentPicker.getDocumentAsync({
+      multiple: true
+    });
+    if (!result.cancelled) {
+      let check = this.state.files.filter(file => result.name == file.name).length;
+      if (check != 0) {
+        alert("File name already attached");
+      } else {
+        files.push(result);
+        this.setState(() => ({ files }));
+        this.props.onStep3FilesChange(this.state.files);
+      }
+    }
+  }
+  onFileRemove = async (uri) => {
+    let files = this.state.files.filter(file => file.uri != uri);
+    await this.setState(() => ({ files }));
+    this.props.onStep3FilesChange(this.state.files);
   }
   onCheck = (value) => {
     let symptoms = this.state.symptoms;
@@ -26,7 +45,7 @@ class Book3_Form extends React.Component {
       symptoms = symptoms.filter(item => item !== value);
     }
     this.setState(() => ({ symptoms }));
-    this.props.onStep3Change(symptoms);
+    this.props.onStep3SymptomsChange(symptoms);
   }
   render() {
     if (this.props.currentStep !== 3) {
@@ -50,7 +69,7 @@ class Book3_Form extends React.Component {
                     <View style={calendarStyles.forms_options_button_wlabel_container}>
                       <Text>Fever</Text>
                       <CheckBox
-                        value={this.state.symptoms.includes("Fever")? true : false}
+                        value={this.state.symptoms.includes("Fever") ? true : false}
                         onValueChange={() => {
                           this.onCheck("Fever")
                         }}
@@ -59,7 +78,7 @@ class Book3_Form extends React.Component {
                     <View style={calendarStyles.forms_options_button_wlabel_container}>
                       <Text>Cough</Text>
                       <CheckBox
-                        value={this.state.symptoms.includes("Cough")? true : false}
+                        value={this.state.symptoms.includes("Cough") ? true : false}
                         onValueChange={() => {
                           this.onCheck("Cough")
                         }}
@@ -68,7 +87,7 @@ class Book3_Form extends React.Component {
                     <View style={calendarStyles.forms_options_button_wlabel_container}>
                       <Text>Colds</Text>
                       <CheckBox
-                        value={this.state.symptoms.includes("Colds")? true : false}
+                        value={this.state.symptoms.includes("Colds") ? true : false}
                         onValueChange={() => {
                           this.onCheck("Colds")
                         }}
@@ -79,7 +98,7 @@ class Book3_Form extends React.Component {
                     <View style={calendarStyles.forms_options_button_wlabel_container}>
                       <Text>Sore Throat</Text>
                       <CheckBox
-                        value={this.state.symptoms.includes("Sore Throat")? true : false}
+                        value={this.state.symptoms.includes("Sore Throat") ? true : false}
                         onValueChange={() => {
                           this.onCheck("Sore Throat")
                         }}
@@ -88,7 +107,7 @@ class Book3_Form extends React.Component {
                     <View style={calendarStyles.forms_options_button_wlabel_container}>
                       <Text>Hand Pain</Text>
                       <CheckBox
-                        value={this.state.symptoms.includes("Hand Pain")? true : false}
+                        value={this.state.symptoms.includes("Hand Pain") ? true : false}
                         onValueChange={() => {
                           this.onCheck("Hand Pain")
                         }}
@@ -97,7 +116,7 @@ class Book3_Form extends React.Component {
                     <View style={calendarStyles.forms_options_button_wlabel_container}>
                       <Text>Headache</Text>
                       <CheckBox
-                        value={this.state.symptoms.includes("Headache")? true : false}
+                        value={this.state.symptoms.includes("Headache") ? true : false}
                         onValueChange={() => {
                           this.onCheck("Headache")
                         }}
@@ -111,7 +130,7 @@ class Book3_Form extends React.Component {
               </Text>
               <TouchableOpacity
                 activeOpacity={0.6}
-                onPress={this.onAttachFile}
+                onPress={this.onFilePick}
                 style={calendarStyles.forms_button_upload}
               >
                 <Text style={calendarStyles.forms_button_upload_label}>
@@ -119,6 +138,14 @@ class Book3_Form extends React.Component {
                   (Medical Records for Doctor)
                 </Text>
               </TouchableOpacity>
+
+              {
+                this.state.files.length > 0 && <FlatList
+                  style={calendarStyles.files_list}
+                  data={this.state.files}
+                  renderItem={({ item }) => <View style={calendarStyles.files_list_item} key={item.name}><Text>{item.name}</Text><TouchableOpacity activeOpacity={0.6} style={calendarStyles.remove_file_button} onPress={() => { this.onFileRemove(item.uri) }}><Text style={calendarStyles.remove_file_button_label}>X</Text></TouchableOpacity></View>}
+                />
+              }
 
               <TouchableOpacity
                 activeOpacity={0.6}

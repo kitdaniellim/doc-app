@@ -22,7 +22,8 @@ class BookPage extends React.Component {
             occupied_dates: ['2020-06-29', '2020-07-02'],
             occupied_dates_obj: {},
             consultant_id: this.props.navigation.state.params.consultant_id,
-            symptoms: []
+            symptoms: [],
+            files: []
         }
     }
     componentDidMount() {
@@ -59,8 +60,11 @@ class BookPage extends React.Component {
         this.setState(() => ({ time_end: item.time_end }));
         this.setState(() => ({ currentStep: 3 }));
     }
-    onStep3Change = (symptoms) => {
+    onStep3SymptomsChange = (symptoms) => {
         this.setState(() => ({ symptoms }));
+    }
+    onStep3FilesChange = (files) => {
+        this.setState(() => ({ files }));
     }
     onStep3Submit = () => {
         if (this.state.date == "" || this.state.location == "" || this.state.time_start == "" || this.state.time_end == "") {
@@ -70,6 +74,13 @@ class BookPage extends React.Component {
         }
     }
     onFormSubmit = async () => {
+        let files = [];
+        this.state.files.map(file => {
+            files.push({
+                uri: file.uri,
+                name: file.name
+            });
+        });
         const appointment = {
             date: this.state.date,
             time_start: this.state.time_start,
@@ -78,10 +89,12 @@ class BookPage extends React.Component {
             client_id: 1,
             consultant_id: this.state.consultant_id,
             symptoms: this.state.symptoms,
+            files,
             status: "Pending"
         }
         await this.props.bookAppointment(appointment);
         if (this.props.error) {
+            console.log(this.props.error);
             alert(this.props.error);
         } else if (!this.props.error && this.props.appointment) {
             alert("Booking Successful");
@@ -107,7 +120,8 @@ class BookPage extends React.Component {
                 />
                 <BookPage3_Form
                     currentStep={this.state.currentStep}
-                    onStep3Change={this.onStep3Change}
+                    onStep3SymptomsChange={this.onStep3SymptomsChange}
+                    onStep3FilesChange={this.onStep3FilesChange}
                     onStep3Submit={this.onStep3Submit}
                     symptoms={this.state.symptoms}
                 />
@@ -119,6 +133,7 @@ class BookPage extends React.Component {
                     time_start={this.state.time_start}
                     time_end={this.state.time_end}
                     symptoms={this.state.symptoms}
+                    files={this.state.files}
                 />
 
                 <View style={this.state.currentStep !== 1 ? calendarStyles.step_buttons_container : calendarStyles.step_buttons_container_reverse}>

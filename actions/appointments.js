@@ -1,21 +1,30 @@
-import Firebase, { db } from '../config/Firebase';
+import Firebase, { db, storage } from '../config/Firebase';
 import uuid from 'react-native-uuid';
 
 export const bookAppointment = (data) => {
     return async dispatch => {
-        try {
-            dispatch(loadBegin());
-            const new_id = uuid.v1();
-            data.uid = new_id;
-            db.collection('appointments').doc(data.uid).set(data)
-                .then(() => {
-                    dispatch(bookAppointmentSuccess("Booking Successful"));
-                });
-        } catch (error) {
-            dispatch(bookAppointmentFailure(error));
-        }
+        dispatch(loadBegin());
+        const new_id = uuid.v1();
+        data.uid = new_id;
+        data.files.map(async (file) => {
+            const response = await fetch(file.uri);
+            const blob = await response.blob();
+            let ref = storage.ref().child(`appointments/${new_id}/${file.name}`) ;
+            ref.put(blob).catch(error => {
+                console.log(error);
+                dispatch(bookAppointmentFailure(error));
+            });
+        });
+        db.collection('appointments').doc(data.uid).set(data)
+            .then(() => {
+                dispatch(bookAppointmentSuccess("Booking Successful"));
+            })
+            .catch((error) => {
+                dispatch(bookAppointmentFailure(error));
+            });
     }
 }
+
 
 //CALL BEFORE EVERY OPERATION
 export const loadBegin = () => ({

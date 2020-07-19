@@ -544,7 +544,8 @@ const Calendar = {
     justifyContent: 'center',
     alignSelf: 'stretch',
     marginHorizontal: 12,
-    marginBottom: 15,
+    marginBottom: 10,
+    marginTop: 10,
   },
 
   forms_button_upload_label: {
@@ -556,11 +557,37 @@ const Calendar = {
     textAlign: 'center'
   },
 
+  files_list: {
+    marginBottom: 15,
+  },
+
+  files_list_item: {
+    marginBottom: 2,
+    backgroundColor: '#ECECEC',
+    padding: 5,
+    alignSelf: 'stretch',
+    marginHorizontal: 15,
+  },
+
+  remove_file_button: {
+    alignSelf: 'flex-end',
+    backgroundColor: '#d9534f',
+    color: 'white',
+    width: '10%',
+    borderRadius: 5,
+  },
+
+  remove_file_button_label: {
+    textAlign: 'center',
+    color: 'white',
+  },
+
   forms_disclaimer: {
     fontSize: 12,
     color: '#8B8787',
     lineHeight: 20,
     marginHorizontal: 10,
+    marginBottom: 10,
   },
 
   forms_options_header: {
