@@ -13,6 +13,19 @@ export default (state = reducerDefaultState, action) => {
                 loading: true,
                 error: null
             };
+        case 'GET_APPOINTMENTS_SUCCESS':
+            return {
+                ...state,
+                loading: false,
+                error: null,
+                items: action.payload.results
+            };
+        case 'GET_APPOINTMENTS_FAILURE':
+            return {
+                ...state,
+                loading: false,
+                error: action.payload.error
+            };
         case 'BOOK_APPOINTMENT_SUCCESS':
             return {
                 ...state,
