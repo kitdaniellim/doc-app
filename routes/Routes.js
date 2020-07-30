@@ -28,6 +28,7 @@ import Profile from '../components/9_ProfilePage.js';
 import Book1_Date from '../components/BookPage1_Date.js';
 import Book2_Time from '../components/BookPage2_Time.js';
 import Book3_Form from '../components/BookPage3_Form.js';
+import Book4_Confirmation from '../components/BookPage4_Confirmation.js';
 import ProfileTab from '../components/9_ProfileTabPage.js';
 import EditProfile_1 from '../components/EditProfilePage_1.js';
 import EditProfile_2 from '../components/EditProfilePage_2.js';
@@ -68,12 +69,12 @@ const optionsStyles = {
         activeOpacity: 70,
         padding: 15,
         margin: 10,
-        
+
     },
     optionText: {
         color: 'black',
         marginHorizontal: 10,
-        
+
     },
 };
 
@@ -134,6 +135,9 @@ const homeScreens = {
     },
     Book3_Form: {
         screen: Book3_Form,
+    },
+    Book4_Confirmation: {
+        screen: Book4_Confirmation,
     },
 
 }
@@ -395,7 +399,7 @@ const appScreens = {
         screen: getTabs(),
         navigationOptions: ({ navigation }) => ({
             title: `insert logo`,
-            
+
             headerRight: () => {
                 return (
                     <View style={{ flexDirection: 'row' }}>
