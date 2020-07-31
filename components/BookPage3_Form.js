@@ -16,6 +16,10 @@ const Book3_Form = ({ navigation }) => {
     navigation.goBack()
   }
 
+  const Submit = () => {
+    navigation.navigate('Book4_Confirmation');
+  }
+
   return (
     <View style={calendarStyles.container}>
       <View style={calendarStyles.header_container}>
@@ -37,7 +41,7 @@ const Book3_Form = ({ navigation }) => {
             :
             <TouchableOpacity
               activeOpacity={0.6}
-              onPress={() => { }}
+              onPress={Submit}
               style={calendarStyles.forms_button_submit}
             >
               <Text style={calendarStyles.forms_button_submit_label}>SUBMIT</Text>
