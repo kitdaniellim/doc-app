@@ -60,6 +60,14 @@ class Book2_Time extends React.Component {
                 AVAILABLE TIME
               </Text>
             </View>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={this.props._prev}
+              style={calendarStyles.header_icon_container}
+            >
+              <Icon style={globalStyles.icon_global} name="times" size={18} />
+            </TouchableOpacity>
+
           </View>
           <View style={calendarStyles.scaffold}>
             <View style={calendarStyles.date_container}>
@@ -71,10 +79,10 @@ class Book2_Time extends React.Component {
                   <Text style={calendarStyles.date_details_header}>
                     {this.props.date
                       ? moment(this.props.date).format("dddd").toUpperCase() +
-                        ", " +
-                        moment(this.props.date)
-                          .format("MMMM DD YYYY")
-                          .toUpperCase()
+                      ", " +
+                      moment(this.props.date)
+                        .format("MMMM DD YYYY")
+                        .toUpperCase()
                       : "No Date Selected"}
                   </Text>
                 </View>
@@ -91,7 +99,7 @@ class Book2_Time extends React.Component {
                         this.getUTCValue(item.time_end)
                       ) ||
                       this.state.current_time >=
-                        this.getUTCValue(item.time_end) ||
+                      this.getUTCValue(item.time_end) ||
                       moment(this.state.current_time, "HH:mm")
                         .add(30, "minutes")
                         .format("HH:mm")
@@ -155,8 +163,8 @@ class Book2_Time extends React.Component {
                             }}
                             style={
                               this.props.location == item.location &&
-                              this.props.time_start == item.time_start &&
-                              this.props.time_end == item.time_end
+                                this.props.time_start == item.time_start &&
+                                this.props.time_end == item.time_end
                                 ? calendarStyles.date_details_button_review_active
                                 : calendarStyles.date_details_button_review
                             }
@@ -164,8 +172,8 @@ class Book2_Time extends React.Component {
                             <Text
                               style={
                                 this.props.location == item.location &&
-                                this.props.time_start == item.time_start &&
-                                this.props.time_end == item.time_end
+                                  this.props.time_start == item.time_start &&
+                                  this.props.time_end == item.time_end
                                   ? calendarStyles.date_details_button_label_active
                                   : calendarStyles.date_details_button_label
                               }
@@ -208,8 +216,8 @@ class Book2_Time extends React.Component {
                             }}
                             style={
                               this.props.location == item.location &&
-                              this.props.time_start == item.time_start &&
-                              this.props.time_end == item.time_end
+                                this.props.time_start == item.time_start &&
+                                this.props.time_end == item.time_end
                                 ? calendarStyles.date_details_button_review_active
                                 : calendarStyles.date_details_button_review
                             }
@@ -217,8 +225,8 @@ class Book2_Time extends React.Component {
                             <Text
                               style={
                                 this.props.location == item.location &&
-                                this.props.time_start == item.time_start &&
-                                this.props.time_end == item.time_end
+                                  this.props.time_start == item.time_start &&
+                                  this.props.time_end == item.time_end
                                   ? calendarStyles.date_details_button_label_active
                                   : calendarStyles.date_details_button_label
                               }

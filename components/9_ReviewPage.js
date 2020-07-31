@@ -10,7 +10,7 @@ const Review = ({ navigation }) => {
   const [starCount, setStar] = useState(3);
 
   const Edit = () => {
-
+    navigation.navigate('EditReview')
   }
 
   const review_list = [

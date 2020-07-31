@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import { calendarStyles, globalStyles } from '../styles/styles';
@@ -18,6 +18,13 @@ class BookPage1_Date extends React.Component {
             <View style={calendarStyles.header_text_container}>
               <Text style={calendarStyles.header_text_bold}>AVAILABLE DATES</Text>
             </View>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={this.props._prev}
+              style={calendarStyles.header_icon_container}
+            >
+              <Icon style={globalStyles.icon_global} name="times" size={18} />
+            </TouchableOpacity>
           </View>
           <View style={calendarStyles.scaffold}>
             <View style={calendarStyles.calendar_container}>

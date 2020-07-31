@@ -1,5 +1,5 @@
 import React from "react";
-import { View, TouchableOpacity, Text } from "react-native";
+import { Alert, View, TouchableOpacity, Text } from "react-native";
 import { connect } from "react-redux";
 import BookPage1_Date from "./BookPage1_Date";
 import BookPage2_Time from "./BookPage2_Time";
@@ -78,9 +78,24 @@ class BookPage extends React.Component {
   };
   _prev = () => {
     let currentStep = this.state.currentStep;
-    currentStep = currentStep <= 1 ? 1 : currentStep - 1;
-    this.setState(() => ({ currentStep }));
-    this.showOccupiedDates();
+    if (currentStep == 1) {
+      Alert.alert(
+        'Cancel Application',
+        'Are you sure you want to cancel your application?',
+        [
+          {
+            text: 'No',
+            style: 'cancel'
+          },
+          { text: 'OK', onPress: () => this.props.navigation.navigate("Home") }
+        ],
+        { cancelable: true }
+      );
+    } else {
+      currentStep = currentStep <= 1 ? 1 : currentStep - 1;
+      this.setState(() => ({ currentStep }));
+      this.showOccupiedDates();
+    }
   };
   onStep1Submit = async (date) => {
     await this.setState(() => ({ date }));
@@ -137,9 +152,29 @@ class BookPage extends React.Component {
     await this.props.bookAppointment(appointment);
     if (this.props.error) {
       console.log(this.props.error);
-      alert(this.props.error);
+      Alert.alert(
+        'Oops!',
+        `There was a problem in booking. \n Details: ${this.props.error}`,
+        [
+          {
+            text: 'OK',
+            style: 'cancel'
+          }
+        ],
+        { cancelable: true }
+      );
     } else if (!this.props.error && this.props.appointment) {
-      alert("Booking Successful");
+      Alert.alert(
+        'Booking Successful',
+        'Thank you for booking',
+        [
+          {
+            text: 'OK',
+            style: 'cancel'
+          }
+        ],
+        { cancelable: true }
+      );
     }
   };
   render() {
@@ -150,6 +185,7 @@ class BookPage extends React.Component {
           onStep1Submit={this.onStep1Submit}
           date={this.state.date}
           occupied_dates_obj={this.state.occupied_dates_obj}
+          _prev={this._prev}
         />
         <BookPage2_Time
           appointments_on_date={this.state.appointments_on_date}
@@ -159,6 +195,7 @@ class BookPage extends React.Component {
           location={this.state.location}
           time_start={this.state.time_start}
           time_end={this.state.time_end}
+          _prev={this._prev}
         />
         <BookPage3_Form
           currentStep={this.state.currentStep}
@@ -166,6 +203,7 @@ class BookPage extends React.Component {
           onStep3FilesChange={this.onStep3FilesChange}
           onStep3Submit={this.onStep3Submit}
           symptoms={this.state.symptoms}
+          _prev={this._prev}
         />
         <BookPage4_Confirmation
           currentStep={this.state.currentStep}
@@ -176,34 +214,8 @@ class BookPage extends React.Component {
           time_end={this.state.time_end}
           symptoms={this.state.symptoms}
           files={this.state.files}
+          _prev={this._prev}
         />
-
-        <View
-          style={
-            this.state.currentStep !== 1
-              ? calendarStyles.step_buttons_container
-              : calendarStyles.step_buttons_container_reverse
-          }
-        >
-          {this.state.currentStep !== 1 && (
-            <TouchableOpacity
-              activeOpacity={0.6}
-              onPress={this._prev}
-              style={calendarStyles.prev_step_button}
-            >
-              <Text style={calendarStyles.step_buttons_label}>Previous</Text>
-            </TouchableOpacity>
-          )}
-
-          {this.state.currentStep < 3 && (
-            <TouchableOpacity
-              onPress={this._next}
-              style={calendarStyles.next_step_button}
-            >
-              <Text style={calendarStyles.step_buttons_label}>Next</Text>
-            </TouchableOpacity>
-          )}
-        </View>
       </View>
     );
   }

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Alert, Text, AppRegistry, Button, TextInput, View, StyleSheet } from 'react-native';
-import {BackgroundCarousel} from './components/BackgroundCarousel'
 
 //temp
 import Icon1 from 'react-native-vector-icons/FontAwesome';

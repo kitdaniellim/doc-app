@@ -3,7 +3,7 @@ const SignUp = {
         flex: 1,
         backgroundColor: '#D9E3FE',
     },
-
+    
     forms_container: {
         flex: 1,
         justifyContent: 'space-between',

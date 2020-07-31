@@ -18,8 +18,7 @@ const Login = ({ navigation }) => {
     if (username === '' || password === '') {
       toggleModal(true)
     } else {
-      let objparam = {user: username}
-      navigation.navigate('Home', objparam);
+      navigation.navigate('Tutorial');
     }
   }
 
@@ -65,8 +64,16 @@ const Login = ({ navigation }) => {
         </Modal>
         <View style={loginStyles.forms_container}>
           <View style={loginStyles.forms_header_container}>
-            <Icon style={globalStyles.icon_client} name="user" size={42} />
-            <Text style={loginStyles.forms_label}>JOIN A MEETING</Text>
+            {/* <Icon style={globalStyles.icon_client} name="user" size={42} />
+            <Text style={loginStyles.forms_label}>JOIN A MEETING</Text> */}
+            <Image
+              source={require("../assets/app_logo.png")}
+              style={{height: 110, width: 110}}
+            />
+            <Image
+              source={require("../assets/app_name_1.png")}
+              style={{height: 50, width: 120,}}
+            />
           </View>
           <View style={loginStyles.forms_textinput_container}>
             <Icon style={globalStyles.icon_global} name="user-circle" size={18} />

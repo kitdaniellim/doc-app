@@ -6,7 +6,7 @@ import Modal from 'react-native-modal';
 
 const CalendarPage2 = ({ navigation }) => {
   //sample userType
-  const userType = 'consultant' // <-- switch between 'client' or 'consultant'
+  const isClient = false // <-- switch between true or false
   //sample data
   const selected = [
     {
@@ -168,7 +168,7 @@ const CalendarPage2 = ({ navigation }) => {
           <Text style={calendarStyles.header_text_bold}>APPOINTMENT</Text>
         </View>
         {/* if consultant then show button, else not */}
-        {(userType === 'consultant' && selected.length !== 0) ?
+        {(isClient === false && selected.length !== 0) ?
           <View style={{ flexDirection: 'row', flex: 3 }}>
             <TouchableOpacity
               activeOpacity={0.6}
@@ -233,7 +233,7 @@ const CalendarPage2 = ({ navigation }) => {
                   </View>
                   <View style={calendarStyles.date_details_button_container}>
                     {/* if user is a client then button displays, else null and does not display */}
-                    {(userType === 'client') ?
+                    {(isClient === true) ?
                       (item.status === 'pending') ?
                         <TouchableOpacity
                           activeOpacity={0.6}

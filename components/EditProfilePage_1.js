@@ -15,7 +15,7 @@ export default class EditProfile_1 extends Component {
       text: '',
       isModalVisible: false,
       name: "Dr. Go",
-      bio: 'Dr. Go\n Opthalmology\n troygo@gmail.com\n 09324758192',
+      bio: 'Dr. Go\nOpthalmology\ntroygo@gmail.com\n09324758192',
       office_img: require("../assets/office.jpg"),
       profile_img: require("../assets/troy.png"),
     }
@@ -35,6 +35,11 @@ export default class EditProfile_1 extends Component {
     }
   }
 
+  Close = () => {
+    const navigation = this.props.navigation;
+    navigation.goBack()
+  }
+
   addOfficeHours = (e) => {
     const navigation = this.props.navigation;
     navigation.navigate('EditProfile_2');
@@ -47,23 +52,23 @@ export default class EditProfile_1 extends Component {
 
     locationInput.push(
       <View key={key.toString()}>
-        <View style={signupStyles.forms_textinput_container}>
+        <View style={profileStyles.forms_textinput_container_3}>
           <Icon style={globalStyles.icon_global} name="map-marker" size={18} />
           <TextInput
-            placeholder="Location"
-            placeholderTextColor="#8B8787"
-            style={signupStyles.forms_textinput}
+            placeholder="Input Location"
+            placeholderTextColor="#000"
+            style={profileStyles.forms_textinput_3}
             onChangeText={text => this.setState({ text })}
           />
         </View>
-        <View style={signupStyles.forms_add_textinput_container}>
+        <View style={profileStyles.forms_add_textinput_container_2}>
           <TouchableOpacity
             activeOpacity={0.6}
-            style={signupStyles.forms_add_textinput_button_container}
+            style={profileStyles.forms_add_textinput_button_container_2}
             onPress={() => this.addOfficeHours(count)}
           >
             <Icon style={globalStyles.icon_global} name="plus" size={14} />
-            <Text style={signupStyles.forms_add_textinput_text} > ADD OFFICE HOURS </Text>
+            <Text style={profileStyles.forms_add_textinput_text_2} > ADD OFFICE HOURS </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -100,12 +105,19 @@ export default class EditProfile_1 extends Component {
   render() {
     return (
       <View style={profileStyles.container}>
-        <LinearGradient
-          colors={['rgba(243,243,243,0.4)', 'transparent']}
-          start={{ x: 0, y: 1 }}
-          end={{ x: 0, y: 0 }}
-          style={globalStyles.gradient}
-        >
+        <View style={profileStyles.header_container}>
+          <View style={profileStyles.header_text_container}>
+            <Text style={profileStyles.header_text_bold}>EDIT PROFILE: Go</Text>
+          </View>
+          <TouchableOpacity
+            activeOpacity={0.6}
+            onPress={this.Close}
+            style={profileStyles.header_icon_container}
+          >
+            <Icon style={globalStyles.icon_global} name="times" size={18} />
+          </TouchableOpacity>
+        </View>
+        <View style={profileStyles.scaffold}>
           <Modal
             isVisible={this.state.isModalVisible}
             animationIn='bounceInDown'
@@ -130,20 +142,19 @@ export default class EditProfile_1 extends Component {
               </View>
             </View>
           </Modal>
-          <View style={profileStyles.forms_container}>
+          <View style={{marginVertical: -15,}}>
             <ScrollView
               showsVerticalScrollIndicator={false}
-              contentContainerStyle={{ 
-                flexGrow: 1, 
+              contentContainerStyle={{
+                flexGrow: 1,
                 justifyContent: 'space-around',
-                marginVertical: 10,
-                paddingBottom: 20
+                backgroundColor: '#fff',
+                borderRadius: 15,
+                padding: 15,
+                marginVertical: 10
               }}
             >
               <View>
-                <View style={profileStyles.forms_label_small_container}>
-                  <Text style={profileStyles.forms_label_small}>Profile Details:</Text>
-                </View>
                 <View style={profileStyles.profile_officeimg_container}>
                   <Image
                     source={this.state.office_img}
@@ -152,23 +163,23 @@ export default class EditProfile_1 extends Component {
                 </View>
                 <TouchableOpacity
                   activeOpacity={0.6}
-                  style={profileStyles.forms_chooseimg_button_container}
+                  style={profileStyles.forms_chooseimg_button_container_edit}
                   onPress={() => { }}
                 >
-                  <Text style={profileStyles.forms_chooseimg_button_text} > CHOOSE OFFICE IMAGE </Text>
+                  <Text style={profileStyles.forms_chooseimg_button_text_edit} > CHOOSE OFFICE IMAGE </Text>
                 </TouchableOpacity>
                 <View style={profileStyles.forms_editbio_container}>
-                  <View style={{ flexDirection: 'row', justifyContent: 'space-around'}}>
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <View style={profileStyles.profile_b_info_profileimg_container}>
                       <Image
                         source={this.state.profile_img}
                         style={profileStyles.profile_b_info_profileimg}
                       />
                     </View>
-                    <View style={profileStyles.forms_textinput_container}>
+                    <View style={profileStyles.forms_textinput_container_4}>
                       <TextInput
                         multiline
-                        style={profileStyles.forms_textinput}
+                        // style={profileStyles.forms_textinput_3}
                         onChangeText={text => this.setState({ bio: text })}
                         value={this.state.bio}
                       />
@@ -177,15 +188,15 @@ export default class EditProfile_1 extends Component {
                 </View>
                 <TouchableOpacity
                   activeOpacity={0.6}
-                  style={profileStyles.forms_chooseimg_button_container}
+                  style={profileStyles.forms_chooseimg_button_container_edit}
                   onPress={() => { }}
                 >
-                  <Text style={profileStyles.forms_chooseimg_button_text} > CHOOSE PROFILE IMAGE </Text>
+                  <Text style={profileStyles.forms_chooseimg_button_text_edit} > CHOOSE PROFILE IMAGE </Text>
                 </TouchableOpacity>
-               </View>
+              </View>
               <View>
-                <View style={profileStyles.forms_label_small_container}>
-                  <Text style={profileStyles.forms_label_small}>Office Details:</Text>
+                <View style={profileStyles.forms_label_small_container_edit}>
+                  <Text style={profileStyles.forms_label_small_edit}>Office Details:</Text>
                 </View>
                 <View style={profileStyles.forms_dynamicinput_margin}>
 
@@ -197,33 +208,33 @@ export default class EditProfile_1 extends Component {
                 <View style={profileStyles.forms_add_textinput_container}>
                   <TouchableOpacity
                     activeOpacity={0.6}
-                    style={profileStyles.forms_add_textinput_button_container}
+                    style={profileStyles.forms_add_textinput_button_container_2}
                     onPress={() => this.addLocation()}
                   >
                     <Icon style={globalStyles.icon_global} name="plus" size={14} />
-                    <Text style={profileStyles.forms_add_textinput_text} > ADD LOCATION </Text>
+                    <Text style={profileStyles.forms_add_textinput_text_2} > ADD LOCATION </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     activeOpacity={0.6}
-                    style={signupStyles.forms_add_textinput_button_container}
+                    style={profileStyles.forms_add_textinput_button_container_2}
                     onPress={() => this.removeLocation()}
                   >
                     <Icon style={globalStyles.icon_global} name="times" size={14} />
-                    <Text style={profileStyles.forms_add_textinput_text} > REMOVE LOCATION </Text>
+                    <Text style={profileStyles.forms_add_textinput_text_2} > REMOVE LOCATION </Text>
                   </TouchableOpacity>
                 </View>
 
               </View>
               <TouchableOpacity
                 activeOpacity={0.6}
-                style={profileStyles.forms_button}
+                style={profileStyles.forms_button_edit}
                 onPress={this.Confirm}
               >
-                <Text style={profileStyles.forms_button_label}>CONFIRM</Text>
+                <Text style={profileStyles.forms_button_label_edit}>CONFIRM</Text>
               </TouchableOpacity>
             </ScrollView>
           </View>
-        </LinearGradient>
+        </View>
       </View>
     )
   }

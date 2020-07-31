@@ -57,70 +57,93 @@ class Book3_Form extends React.Component {
             <View style={calendarStyles.header_text_container}>
               <Text style={calendarStyles.header_text_bold}>FORM SUBMISSION</Text>
             </View>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={this.props._prev}
+              style={calendarStyles.header_icon_container}
+            >
+              <Icon style={globalStyles.icon_global} name="times" size={18} />
+            </TouchableOpacity>
           </View>
           <View style={calendarStyles.scaffold}>
-
-
             <View style={calendarStyles.forms_container}>
               <View>
                 <Text style={calendarStyles.forms_options_header}>Do you have any of the following?</Text>
                 <View style={calendarStyles.forms_options_container}>
                   <View style={calendarStyles.forms_options_col}>
                     <View style={calendarStyles.forms_options_button_wlabel_container}>
+                      <TouchableOpacity
+                        activeOpacity={0.6}
+                        onPress={() => { this.onCheck("Fever") }}
+                        style={(this.state.symptoms.includes("Fever")) ?
+                          calendarStyles.form_options_button_lit
+                          :
+                          calendarStyles.form_options_button
+                        }
+                      />
                       <Text>Fever</Text>
-                      <CheckBox
-                        value={this.state.symptoms.includes("Fever") ? true : false}
-                        onValueChange={() => {
-                          this.onCheck("Fever")
-                        }}
-                      />
                     </View>
                     <View style={calendarStyles.forms_options_button_wlabel_container}>
+                      <TouchableOpacity
+                        activeOpacity={0.6}
+                        onPress={() => { this.onCheck("Cough") }}
+                        style={(this.state.symptoms.includes("Cough")) ?
+                          calendarStyles.form_options_button_lit
+                          :
+                          calendarStyles.form_options_button
+                        }
+                      />
                       <Text>Cough</Text>
-                      <CheckBox
-                        value={this.state.symptoms.includes("Cough") ? true : false}
-                        onValueChange={() => {
-                          this.onCheck("Cough")
-                        }}
-                      />
                     </View>
                     <View style={calendarStyles.forms_options_button_wlabel_container}>
-                      <Text>Colds</Text>
-                      <CheckBox
-                        value={this.state.symptoms.includes("Colds") ? true : false}
-                        onValueChange={() => {
-                          this.onCheck("Colds")
-                        }}
+                      <TouchableOpacity
+                        activeOpacity={0.6}
+                        onPress={() => { this.onCheck("Colds") }}
+                        style={(this.state.symptoms.includes("Colds")) ?
+                          calendarStyles.form_options_button_lit
+                          :
+                          calendarStyles.form_options_button
+                        }
                       />
+                      <Text>Colds</Text>
                     </View>
                   </View>
                   <View style={calendarStyles.forms_options_col}>
                     <View style={calendarStyles.forms_options_button_wlabel_container}>
+                      <TouchableOpacity
+                        activeOpacity={0.6}
+                        onPress={() => { this.onCheck("Sore Throat") }}
+                        style={(this.state.symptoms.includes("Sore Throat")) ?
+                          calendarStyles.form_options_button_lit
+                          :
+                          calendarStyles.form_options_button
+                        }
+                      />
                       <Text>Sore Throat</Text>
-                      <CheckBox
-                        value={this.state.symptoms.includes("Sore Throat") ? true : false}
-                        onValueChange={() => {
-                          this.onCheck("Sore Throat")
-                        }}
-                      />
                     </View>
                     <View style={calendarStyles.forms_options_button_wlabel_container}>
+                      <TouchableOpacity
+                        activeOpacity={0.6}
+                        onPress={() => { this.onCheck("Hand Pain") }}
+                        style={(this.state.symptoms.includes("Hand Pain")) ?
+                          calendarStyles.form_options_button_lit
+                          :
+                          calendarStyles.form_options_button
+                        }
+                      />
                       <Text>Hand Pain</Text>
-                      <CheckBox
-                        value={this.state.symptoms.includes("Hand Pain") ? true : false}
-                        onValueChange={() => {
-                          this.onCheck("Hand Pain")
-                        }}
-                      />
                     </View>
                     <View style={calendarStyles.forms_options_button_wlabel_container}>
-                      <Text>Headache</Text>
-                      <CheckBox
-                        value={this.state.symptoms.includes("Headache") ? true : false}
-                        onValueChange={() => {
-                          this.onCheck("Headache")
-                        }}
+                      <TouchableOpacity
+                        activeOpacity={0.6}
+                        onPress={() => { this.onCheck("Headache") }}
+                        style={(this.state.symptoms.includes("Headache")) ?
+                          calendarStyles.form_options_button_lit
+                          :
+                          calendarStyles.form_options_button
+                        }
                       />
+                      <Text>Headache</Text>
                     </View>
                   </View>
                 </View>
