@@ -14,8 +14,10 @@ const Login = {
     },
 
     forms_header_container: {
-        marginVertical: 30,
+        marginVertical: 20,
         marginTop: 50,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
 
     forms_label: {

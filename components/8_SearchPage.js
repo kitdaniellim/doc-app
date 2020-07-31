@@ -7,7 +7,30 @@ import { searchStyles } from '../styles/styles';
 
 const Search = ({ navigation }) => {
   const [search, setSearch] = useState('');
-  const [isFilterVisible, toggleFilter] = useState(false);
+  const filter_temp = (navigation.getParam('userSpecialty') !== null) ? true : false;
+  const [isFilterVisible, toggleFilter] = useState(filter_temp);
+  let button_temp = (navigation.getParam('userSpecialty') === 'ENGINEERS') ?
+    1
+    :
+    (navigation.getParam('userSpecialty') === 'DOCTORS') ?
+      2
+      :
+      (navigation.getParam('userSpecialty') === 'ARCHITECTS') ?
+        3
+        :
+        (navigation.getParam('userSpecialty') === 'LAWYERS') ?
+          4
+          :
+          (navigation.getParam('userSpecialty') === 'BUSINESSMEN') ?
+            5
+            :
+            (navigation.getParam('userSpecialty') === 'THERAPISTS') ?
+              6
+              :
+              (navigation.getParam('userSpecialty') === 'TEACHERS') ?
+                7
+                :
+                0
   const [button1, toggleButton1] = useState(false);
   const [button2, toggleButton2] = useState(false);
   const [button3, toggleButton3] = useState(false);
@@ -193,25 +216,28 @@ const Search = ({ navigation }) => {
           style={searchStyles.filter_label_container}
         >
           <Text style={searchStyles.filter_label}>FILTER</Text>
-          <Icon 
-            style={searchStyles.filter_icon} 
-            name={(isFilterVisible)? "caret-up" : "caret-down"} 
-            size={16} 
+          <Icon
+            style={searchStyles.filter_icon}
+            name={(isFilterVisible) ? "caret-up" : "caret-down"}
+            size={16}
           />
         </TouchableOpacity>
         {(isFilterVisible) ?
           <View style={searchStyles.filter_options_container}>
             <TouchableOpacity
               activeOpacity={0.6}
-              onPress={() => { toggleButton1(!button1) }}
-              style={(button1) ?
+              onPress={() => { 
+                toggleButton1(!button1) 
+                button_temp = 0
+              }}
+              style={((button_temp === 1) ? () => { toggleButton1(!button1) } : button1) ?
                 searchStyles.filter_options_button_lit
                 :
                 searchStyles.filter_options_button
               }
             >
               <Text
-                style={(button1) ?
+                style={((button_temp === 1) ? () => { toggleButton1(!button1) } : button1) ?
                   searchStyles.filter_options_button_label_lit
                   :
                   searchStyles.filter_options_button_label
@@ -223,14 +249,14 @@ const Search = ({ navigation }) => {
             <TouchableOpacity
               activeOpacity={0.6}
               onPress={() => { toggleButton2(!button2) }}
-              style={(button2) ?
+              style={((button_temp === 2) ? () => { toggleButton2(!button2) } : button2) ?
                 searchStyles.filter_options_button_lit
                 :
                 searchStyles.filter_options_button
               }
             >
               <Text
-                style={(button2) ?
+                style={((button_temp === 2) ? () => { toggleButton2(!button2) } : button2) ?
                   searchStyles.filter_options_button_label_lit
                   :
                   searchStyles.filter_options_button_label
@@ -242,14 +268,14 @@ const Search = ({ navigation }) => {
             <TouchableOpacity
               activeOpacity={0.6}
               onPress={() => { toggleButton3(!button3) }}
-              style={(button3) ?
+              style={((button_temp === 3) ? () => { toggleButton3(!button3) } : button3) ?
                 searchStyles.filter_options_button_lit
                 :
                 searchStyles.filter_options_button
               }
             >
               <Text
-                style={(button3) ?
+                style={((button_temp === 3) ? () => { toggleButton3(!button3) } : button3) ?
                   searchStyles.filter_options_button_label_lit
                   :
                   searchStyles.filter_options_button_label
@@ -261,14 +287,14 @@ const Search = ({ navigation }) => {
             <TouchableOpacity
               activeOpacity={0.6}
               onPress={() => { toggleButton4(!button4) }}
-              style={(button4) ?
+              style={((button_temp === 4) ? () => { toggleButton4(!button4) } : button4) ?
                 searchStyles.filter_options_button_lit
                 :
                 searchStyles.filter_options_button
               }
             >
               <Text
-                style={(button4) ?
+                style={((button_temp === 4) ? () => { toggleButton4(!button4) } : button4) ?
                   searchStyles.filter_options_button_label_lit
                   :
                   searchStyles.filter_options_button_label
@@ -280,14 +306,14 @@ const Search = ({ navigation }) => {
             <TouchableOpacity
               activeOpacity={0.6}
               onPress={() => { toggleButton5(!button5) }}
-              style={(button5) ?
+              style={((button_temp === 5) ? () => { toggleButton5(!button5) } : button5) ?
                 searchStyles.filter_options_button_lit
                 :
                 searchStyles.filter_options_button
               }
             >
               <Text
-                style={(button5) ?
+                style={((button_temp === 5) ? () => { toggleButton5(!button5) } : button5) ?
                   searchStyles.filter_options_button_label_lit
                   :
                   searchStyles.filter_options_button_label
@@ -299,14 +325,14 @@ const Search = ({ navigation }) => {
             <TouchableOpacity
               activeOpacity={0.6}
               onPress={() => { toggleButton6(!button6) }}
-              style={(button6) ?
+              style={((button_temp === 6) ? () => { toggleButton6(!button6) } : button6) ?
                 searchStyles.filter_options_button_lit
                 :
                 searchStyles.filter_options_button
               }
             >
               <Text
-                style={(button6) ?
+                style={((button_temp === 6) ? () => { toggleButton6(!button6) } : button6) ?
                   searchStyles.filter_options_button_label_lit
                   :
                   searchStyles.filter_options_button_label
@@ -318,14 +344,14 @@ const Search = ({ navigation }) => {
             <TouchableOpacity
               activeOpacity={0.6}
               onPress={() => { toggleButton7(!button7) }}
-              style={(button7) ?
+              style={((button_temp === 7) ? () => { toggleButton7(!button7) } : button7) ?
                 searchStyles.filter_options_button_lit
                 :
                 searchStyles.filter_options_button
               }
             >
               <Text
-                style={(button7) ?
+                style={((button_temp === 7) ? () => { toggleButton7(!button7) } : button7) ?
                   searchStyles.filter_options_button_label_lit
                   :
                   searchStyles.filter_options_button_label
@@ -340,6 +366,7 @@ const Search = ({ navigation }) => {
         }
       </View>
       <View style={searchStyles.scaffold}>
+        {/* <Text>{navigation.getParam('userSpecialty')}</Text> */}
         <FlatList
           data={list}
           showsVerticalScrollIndicator={false}

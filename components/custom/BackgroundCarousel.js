@@ -5,6 +5,7 @@ const DEVICE_WIDTH = Dimensions.get("window").width;
 
 class BackgroundCarousel extends React.Component {
     scrollRef = React.createRef();
+    _isMounted = false;
     constructor(props) {
         super(props);
         this.state = {
@@ -12,21 +13,29 @@ class BackgroundCarousel extends React.Component {
         }
     }
 
-    componentDidMount = () => {
-        setInterval(() => {
-            this.setState(prev => ({ selectedIndex: prev.selectedIndex === this.props.images.length - 1
-                ? 0 
-                :  prev.selectedIndex + 1
-            }),
-            () => {
-                this.scrollRef.current.scrollTo({
-                    animated: true,
-                    y: 0,
-                    x: DEVICE_WIDTH * this.state.selectedIndex
-                })
-            })
-        }, 3000)
-    }
+    //for carousel auto interval, works but throws warning
+    // componentDidMount = () => {
+    //     this._isMounted = true;
+    //     if(this._isMounted){
+    //         setInterval(() => {
+    //             this.setState(prev => ({ selectedIndex: prev.selectedIndex === this.props.images.length - 1
+    //                 ? 0 
+    //                 :  prev.selectedIndex + 1
+    //             }),
+    //             () => {
+    //                 this.scrollRef.current.scrollTo({
+    //                     animated: true,
+    //                     y: 0,
+    //                     x: DEVICE_WIDTH * this.state.selectedIndex
+    //                 })
+    //             })
+    //         }, 3000)
+    //     }
+    // }
+
+    // componentWillUnmount = () => {
+    //     this._isMounted = false;
+    // }
 
     setSelectedIndex = event => {
         const viewSize = event.nativeEvent.layoutMeasurement.width;

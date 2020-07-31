@@ -15,7 +15,7 @@ const Profile = ({ navigation }) => {
   }
 
   const Close = () => {
-    navigation.goBack()
+    navigation.pop()
   }
 
   const Paypal = () => {

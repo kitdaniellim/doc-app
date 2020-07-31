@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Text, TextInput, Picker, Button, ScrollView, View, FlatList, TouchableOpacity, TouchableHighlight, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { signupStyles, globalStyles } from '../styles/styles';
+import { signupStyles, profileStyles, globalStyles } from '../styles/styles';
 import { LinearGradient } from 'expo-linear-gradient';
-import RadioButtons_MultipleSelect from './RadioButtons_MultipleSelect.js';
+import RadioButtons_MultipleSelect from './custom/RadioButtons_MultipleSelect.js';
 
 class Dynamic_Input extends Component {
   constructor() {
@@ -62,7 +62,7 @@ class Dynamic_Input extends Component {
       timeInput.push(
         <View key={timeInputID.toString} style={signupStyles.forms_time_container}>
           <View style={signupStyles.forms_time_scaffold}>
-            <View style={signupStyles.forms_timeinput_container}>
+            <View style={profileStyles.forms_timeinput_container}>
               <TextInput
                 defaultValue='7'
                 keyboardType='numeric'
@@ -81,9 +81,9 @@ class Dynamic_Input extends Component {
               />
             </View>
             <View style={signupStyles.forms_timeinput_divider}>
-              <Text style={signupStyles.forms_text_bold}>to</Text>
+              <Text style={profileStyles.forms_text_bold}>to</Text>
             </View>
-            <View style={signupStyles.forms_timeinput_container}>
+            <View style={profileStyles.forms_timeinput_container}>
               <TextInput
                 defaultValue='4'
                 keyboardType='numeric'
@@ -102,7 +102,7 @@ class Dynamic_Input extends Component {
               />
             </View>
           </View>
-          <View>
+          <View style={{backgroundColor: '#19BAB9', padding: 5, marginTop: 10, marginHorizontal: 20, borderRadius: 15}}>
             <RadioButtons_MultipleSelect options={this.state.option[this.state.optionIndex].days} />
           </View>
         </View>
@@ -111,7 +111,7 @@ class Dynamic_Input extends Component {
       timeInput.push(
         <View key={timeInputID.toString()} style={signupStyles.forms_time_container}>
           <View style={signupStyles.forms_time_scaffold}>
-            <View style={signupStyles.forms_timeinput_container}>
+            <View style={profileStyles.forms_timeinput_container}>
               <TextInput
                 placeholder=''
                 keyboardType='numeric'
@@ -130,9 +130,9 @@ class Dynamic_Input extends Component {
               />
             </View>
             <View style={signupStyles.forms_timeinput_divider}>
-              <Text style={signupStyles.forms_text_bold}>to</Text>
+              <Text style={profileStyles.forms_text_bold}>to</Text>
             </View>
-            <View style={signupStyles.forms_timeinput_container}>
+            <View style={profileStyles.forms_timeinput_container}>
               <TextInput
                 placeholder=''
                 keyboardType='numeric'
@@ -151,7 +151,7 @@ class Dynamic_Input extends Component {
               />
             </View>
           </View>
-          <View>
+          <View style={{backgroundColor: '#19BAB9', padding: 5, marginTop: 10, marginHorizontal: 20, borderRadius: 15}}>
             <RadioButtons_MultipleSelect options={this.state.option[this.state.optionIndex].days} />
           </View>
         </View>
@@ -193,31 +193,31 @@ class Dynamic_Input extends Component {
     return (
       <View>
         <View style={signupStyles.forms_dynamicinput_margin}>
-          <ScrollView contentContainerStyle={{flexGrow: 1}}>  
+          <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             {this.state.timeInput.map((value) => {
               return value;
             })}
-          </ScrollView>  
+          </ScrollView>
         </View>
         <View style={signupStyles.forms_add_textinput_container}>
           <TouchableOpacity
             activeOpacity={0.6}
-            style={signupStyles.forms_add_textinput_button_container}
+            style={profileStyles.forms_add_textinput_button_container_2}
             onPress={() => this.addHours()}
           >
             <View style={signupStyles.forms_add_textinput_text_container}>
               <Icon style={globalStyles.icon_global} name="plus" size={14} />
-              <Text style={signupStyles.forms_add_textinput_text} > ADD HOURS  </Text>
+              <Text style={profileStyles.forms_add_textinput_text_2} > ADD HOURS  </Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.6}
-            style={signupStyles.forms_add_textinput_button_container}
+            style={profileStyles.forms_add_textinput_button_container_2}
             onPress={() => this.removeHours()}
           >
             <View style={signupStyles.forms_add_textinput_text_container}>
               <Icon style={globalStyles.icon_global} name="plus" size={14} />
-              <Text style={signupStyles.forms_add_textinput_text} > REMOVE HOURS </Text>
+              <Text style={profileStyles.forms_add_textinput_text_2} > REMOVE HOURS </Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -231,28 +231,39 @@ const EditProfile_2 = ({ navigation }) => {
     navigation.goBack();
   }
 
+  const Cancel = () => {
+    navigation.goBack();
+  }
+
   return (
-    <View style={signupStyles.container}>
-      <LinearGradient
-        colors={['rgba(239,239,239,0.5)', 'transparent']}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 0, y: 1 }}
-        style={globalStyles.gradient}
-      >
-        <View style={signupStyles.forms_container}>
-          <View style={signupStyles.forms_label_small_container}>
-            <Text style={signupStyles.forms_label_small}>Office Hours: -Location-</Text>
+    <View style={profileStyles.container}>
+      <View style={profileStyles.header_container}>
+        <View style={profileStyles.header_text_container}>
+          <Text style={profileStyles.header_text_bold}>EDIT PROFILE: Go</Text>
+        </View>
+      </View>
+      <View style={profileStyles.scaffold}>
+        <View style={profileStyles.forms_container}>
+          <View style={profileStyles.forms_label_small_container_2}>
+            <Text style={profileStyles.forms_label_small_2}>Office Hours:</Text>
           </View>
           <Dynamic_Input />
           <TouchableOpacity
             activeOpacity={0.6}
-            style={signupStyles.forms_button}
+            style={profileStyles.forms_button_edit}
             onPress={Confirm}
           >
-            <Text style={signupStyles.forms_button_label}>CONFIRM</Text>
+            <Text style={profileStyles.forms_button_label_edit}>CONFIRM</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.6}
+            style={profileStyles.forms_button_edit}
+            onPress={Cancel}
+          >
+            <Text style={profileStyles.forms_button_label_edit}>CANCEL</Text>
           </TouchableOpacity>
         </View>
-      </LinearGradient>
+      </View>
     </View>
   );
 }
