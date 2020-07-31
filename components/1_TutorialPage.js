@@ -30,13 +30,13 @@ const Tutorial = ({ navigation }) => {
 
     return (
         <View style={homeStyles.container}>
-            <View style={{ flex: 1, marginTop: 40 }}>
+            <View style={{ flex: 1, marginTop: 90, marginBottom: 40 }}>
                 <BackgroundCarousel images={images} />
             </View>
             <TouchableOpacity
                 activeOpacity={0.6}
                 onPress={Skip}
-                style={{height: 40, width: 110, marginTop: 10, marginBottom: 18, borderRadius: 15, backgroundColor: '#19BAB9', justifyContent: 'center'}}
+                style={{height: 40, width: 110, marginBottom: 38, borderRadius: 15, backgroundColor: '#19BAB9', justifyContent: 'center'}}
             >
                 <Text style={{textAlign: 'center', color: '#fff'}}>Got it!</Text>
             </TouchableOpacity>
