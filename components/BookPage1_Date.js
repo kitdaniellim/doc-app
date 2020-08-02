@@ -9,10 +9,10 @@ const Book1_Date = ({ navigation }) => {
   //Highlighted dates 
   const markedDates={
     //Available Dates
-    '2020-06-10': {selected: true, selectedColor: '#56EC65'},
-    '2020-06-11': {selected: true, selectedColor: '#56EC65'},
-    '2020-06-12': {selected: true, selectedColor: '#56EC65'},
-    '2020-06-13': {selected: true, selectedColor: '#56EC65'},
+    '2020-08-10': {selected: true, selectedColor: '#56EC65'},
+    '2020-08-11': {selected: true, selectedColor: '#56EC65'},
+    '2020-08-12': {selected: true, selectedColor: '#56EC65'},
+    '2020-08-13': {selected: true, selectedColor: '#56EC65'},
   }
 
   const Appointment = () => {
@@ -64,7 +64,7 @@ const Book1_Date = ({ navigation }) => {
           <Text style={calendarStyles.calendar_legend_label}>Legend:</Text>
           <View style={calendarStyles.calendar_legend_text_container}>
             <View style={calendarStyles.calendar_legend_finished_hue}></View>
-            <Text style={calendarStyles.calendar_legend_text}> - Available Date</Text>
+            <Text style={calendarStyles.calendar_legend_text}> - Available Dates</Text>
           </View>
         </View>
       </View>

@@ -60,9 +60,10 @@ class BackgroundCarousel extends React.Component {
                     {images.map((image) => (
                         <Image
                             key={image.key}
-                            source={image.img}
+                            source={{ uri: image.img.toString() }}
                             style={styles.backgroundImage}
                         />
+                        
                     ))}
                 </ScrollView>
                 <View style={styles.circleDiv}>

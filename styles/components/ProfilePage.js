@@ -20,7 +20,7 @@ const Profile = {
   header_text_bold: {
     paddingLeft: 10,
     fontSize: 12,
-    fontWeight: '500',
+    fontWeight: '700',
     color: '#8B8787',
     justifyContent: 'center',
   },

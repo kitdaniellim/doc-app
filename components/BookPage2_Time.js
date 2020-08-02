@@ -44,7 +44,7 @@ const Book2_Time = ({ navigation }) => {
     <View style={calendarStyles.container}>
       <View style={calendarStyles.header_container}>
         <View style={calendarStyles.header_text_container}>
-          <Text style={calendarStyles.header_text_bold}>AVAILABLE DATES</Text>
+          <Text style={calendarStyles.header_text_bold}>AVAILABLE TIME SLOTS</Text>
         </View>
         <TouchableOpacity
           activeOpacity={0.6}

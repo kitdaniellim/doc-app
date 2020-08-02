@@ -37,7 +37,7 @@ const Search = {
   header_text_bold: {
     paddingLeft: 10,
     fontSize: 12,
-    fontWeight: '500',
+    fontWeight: '700',
     color: '#8B8787',
     justifyContent: 'center',
   },
@@ -60,8 +60,8 @@ const Search = {
   },
 
   filter_label_container: {
-    flexDirection: 'row',
     width: 80,
+    justifyContent: 'center'
   },
 
   filter_label: {
@@ -109,18 +109,6 @@ const Search = {
     justifyContent: 'center',
     marginRight: 8,
     marginBottom: 4
-  },
-
-  filter_options_button_label: {
-    fontSize: 11,
-    color: '#8B8787',
-    justifyContent: 'center',
-  },
-
-  filter_options_button_label_lit: {
-    fontSize: 11,
-    color: '#fff',
-    justifyContent: 'center',
   },
 
   scaffold_list_container: {

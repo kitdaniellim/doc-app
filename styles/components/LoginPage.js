@@ -48,7 +48,8 @@ const Login = {
         fontSize: 14,
         paddingHorizontal: 5,
         marginHorizontal: 5,
-        borderRadius: 20,      
+        borderRadius: 20,    
+        letterSpacing: 1  
     },
 
     forms_button_container: {

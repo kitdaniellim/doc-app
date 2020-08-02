@@ -8,19 +8,19 @@ const Tutorial = ({ navigation }) => {
     const images = [
         {
             key: 1,
-            img: require("../assets/tutorial_home.jpg"),
+            img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/homepage%2Fassets_carousel_sample1.png?alt=media&token=b84c2e8e-c810-41ba-99aa-74655ee4cac6',
         },
         {
             key: 2,
-            img: require("../assets/tutorial_schedule.jpg"),
+            img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/homepage%2Fassets_carousel_sample1.png?alt=media&token=b84c2e8e-c810-41ba-99aa-74655ee4cac6',
         },
         {
             key: 3,
-            img: require("../assets/tutorial_search.jpg"),
+            img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/homepage%2Fassets_carousel_sample1.png?alt=media&token=b84c2e8e-c810-41ba-99aa-74655ee4cac6',
         },
         {
             key: 4,
-            img: require("../assets/tutorial_profile.jpg"),
+            img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/homepage%2Fassets_carousel_sample1.png?alt=media&token=b84c2e8e-c810-41ba-99aa-74655ee4cac6',
         },
     ];
 

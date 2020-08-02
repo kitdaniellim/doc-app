@@ -362,7 +362,7 @@ const consultantTabNavigator = createMaterialBottomTabNavigator(
 )
 
 function getTabs() {
-    let isClient = false;
+    let isClient = true;
     return (isClient) ? clientTabNavigator : consultantTabNavigator
 }
 
@@ -415,12 +415,12 @@ const appScreens = {
     Home: {
         screen: getTabs(),
         navigationOptions: ({ navigation }) => ({
-            headerTitle: () => <Header/>,
+            headerTitle: () => <Header />,
             headerLeft: () => null,
             headerRight: () => {
                 return (
                     <View style={{ flexDirection: 'row' }}>
-                        <Menu onSelect={() => {navigation.navigate('Calendar1')}}>
+                        <Menu onSelect={() => { navigation.navigate('Calendar1') }}>
                             <MenuTrigger
                                 style={{ marginRight: 25, padding: 10, }}
                             >
@@ -436,9 +436,9 @@ const appScreens = {
                                         data={notifs}
                                         showsVerticalScrollIndicator={false}
                                         keyExtractor={(item) => item.key.toString()}
-                                        ItemSeparatorComponent={()=>{
-                                            return(
-                                                <View style={{borderBottomColor: '#00000080', borderBottomWidth: 1,  alignSelf: 'stretch'}}/>
+                                        ItemSeparatorComponent={() => {
+                                            return (
+                                                <View style={{ borderBottomColor: '#00000080', borderBottomWidth: 1, alignSelf: 'stretch' }} />
                                             );
                                         }}
                                         renderItem={({ item }) => (
