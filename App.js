@@ -15,6 +15,9 @@ import Routes from './routes/Routes.js';
 import firebase from "firebase"
 // import MenuButton from 'react-native-menu-button'
 import { MenuProvider } from 'react-native-popup-menu';
+import configureStore from './store/configureStore';
+import { Provider } from 'react-redux';
+
 require("firebase/firestore");
 
 const firebaseConfig = {
@@ -40,6 +43,7 @@ const db = firebase.firestore();
 
 //Update Firestore Settings
 //db.settings( {timestampsInSnapshots: true} )
+const store = configureStore();
 
 export default class App extends Component {
   constructor(props) {
@@ -61,9 +65,12 @@ export default class App extends Component {
 
   render() {
     return (
-      <MenuProvider>
-        <Routes />
-      </MenuProvider>
+      <Provider store={store}>
+        <MenuProvider>
+          <Routes />
+        </MenuProvider>
+      </Provider>
+
 
       // <View style={{flex: 1, backgroundColor: '#fff', justifyContent: 'space-around', alignItems: 'center', marginVertical: 50}}>
       //   {/* FontAwesome */}
