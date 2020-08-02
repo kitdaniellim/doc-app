@@ -13,6 +13,7 @@ import { globalStyles } from './styles/styles';
 import { Constants } from 'expo';
 import Routes from './routes/Routes.js';
 import firebase from "firebase"
+import Icon from 'react-native-vector-icons/FontAwesome';
 // import MenuButton from 'react-native-menu-button'
 import { MenuProvider } from 'react-native-popup-menu';
 require("firebase/firestore");
@@ -65,64 +66,9 @@ export default class App extends Component {
         <Routes />
       </MenuProvider>
 
-      // <View style={{flex: 1, backgroundColor: '#fff', justifyContent: 'space-around', alignItems: 'center', marginVertical: 50}}>
-      //   {/* FontAwesome */}
-      //   <View style={{flexDirection: 'row', backgroundColor: '#19BAB9', padding: 15}}>
-      //     <Icon1 style={globalStyles.icon_global} name="home" size={20} />
-      //     <Icon1 style={globalStyles.icon_global} name="calendar" size={20} />
-      //     <Icon1 style={globalStyles.icon_global} name="search" size={20} />
-      //     <Icon1 style={globalStyles.icon_global} name="pencil" size={20} />
-      //     <Icon1 style={globalStyles.icon_global} name="user" size={20} />
-      //   </View>
-
-      //   {/* AntDesign */}
-      //   <View style={{flexDirection: 'row', backgroundColor: '#19BAB9', padding: 15}}>
-      //     <Icon2 style={globalStyles.icon_global} name="home" size={18} />
-      //     <Icon2 style={globalStyles.icon_global} name="calendar" size={18} />
-      //     <Icon2 style={globalStyles.icon_global} name="search1" size={18} />
-      //     <Icon2 style={globalStyles.icon_global} name="edit" size={18} />
-      //     <Icon2 style={globalStyles.icon_global} name="user" size={18} />
-      //   </View>
-
-      //   {/* Evilicons */}
-      //   {/* <View style={{flexDirection: 'row', backgroundColor: '#19BAB9', padding: 15}}>
-      //     <Icon3 style={globalStyles.icon_global} name="home" size={18} />
-      //     <Icon3 style={globalStyles.icon_global} name="calendar" size={25} />
-      //     <Icon3 style={globalStyles.icon_global} name="search" size={25} />
-      //     <Icon3 style={globalStyles.icon_global} name="pencil" size={25} />
-      //     <Icon3 style={globalStyles.icon_global} name="user" size={25} />
-      //   </View> */}
-
-      //   {/* MaterialCommunityIcons */}
-      //   <View style={{flexDirection: 'row', backgroundColor: '#19BAB9', padding: 15}}>
-      //     <Icon4 style={globalStyles.icon_global} name="home" size={18} />
-      //     <Icon4 style={globalStyles.icon_global} name="calendar" size={18} />
-      //     <Icon4 style={globalStyles.icon_global} name="magnify" size={18} />
-      //     <Icon4 style={globalStyles.icon_global} name="pencil" size={18} />
-      //     <Icon4 style={globalStyles.icon_global} name="account" size={18} />
-      //   </View>
-
-      //   {/* Octicons */}
-      //   <View style={{flexDirection: 'row', backgroundColor: '#19BAB9', padding: 15}}>
-      //     <Icon5 style={globalStyles.icon_global} name="home" size={20} />
-      //     <Icon5 style={globalStyles.icon_global} name="calendar" size={20} />
-      //     <Icon5 style={globalStyles.icon_global} name="search" size={20} />
-      //     <Icon5 style={globalStyles.icon_global} name="pencil" size={20} />
-      //     <Icon5 style={globalStyles.icon_global} name="person" size={20} />
-      //   </View>
-
-      //   {/* Feather */}
-      //   <View style={{flexDirection: 'row', backgroundColor: '#19BAB9', padding: 15}}>
-      //     <Icon6 style={globalStyles.icon_global} name="home" size={18} />
-      //     <Icon6 style={globalStyles.icon_global} name="calendar" size={18} />
-      //     <Icon6 style={globalStyles.icon_global} name="search" size={18} />
-      //     <Icon6 style={globalStyles.icon_global} name="edit" size={18} />
-      //     <Icon6 style={globalStyles.icon_global} name="user" size={18} />
-      //   </View>
-
+      // <View style={{flex: 1, backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center'}}>
+      //   <Icon color="#19BAB9" name="ellipsis-v" size={170}/>
       // </View>
-
-
 
     );
   }

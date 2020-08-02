@@ -25,7 +25,7 @@ class Dynamic_Input extends Component {
       <View key={key.toString()} style={signupStyles.forms_textinput_container}>
         <Icon style={globalStyles.icon_global} name="briefcase" size={18} />
         <TextInput
-          placeholder="Sub-specialty"
+          placeholder="Sub-profession"
           placeholderTextColor="#8B8787"
           style={signupStyles.forms_textinput}
         />
@@ -56,8 +56,11 @@ class Dynamic_Input extends Component {
   render() {
     return (
       <View>
-        <View style={signupStyles.forms_dynamicinput_margin, { height: 100 }}>
-          <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <View style={{height: 95}}>
+          <ScrollView 
+            contentContainerStyle={{ flexGrow: 1 }}
+            showsVerticalScrollIndicator={false}
+          >
             {this.state.textInput.map((value) => {
               return value
             })}
@@ -69,16 +72,16 @@ class Dynamic_Input extends Component {
             style={signupStyles.forms_add_textinput_button_container}
             onPress={() => this.addField()}
           >
-            <Icon style={globalStyles.icon_global} name="plus" size={14} />
-            <Text style={signupStyles.forms_add_textinput_text} > ADD SUB-SPECIALTY </Text>
+            <Icon style={globalStyles.icon_global} name="plus" size={16} />
+            <Text style={signupStyles.forms_add_textinput_text}>ADD{"\n"}SUB-PROFESSION</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.6}
             style={signupStyles.forms_add_textinput_button_container}
             onPress={() => this.removeField()}
           >
-            <Icon style={globalStyles.icon_global} name="times" size={14} />
-            <Text style={signupStyles.forms_add_textinput_text} > REMOVE SUB-SPECIALTY </Text>
+            <Icon style={globalStyles.icon_global} name="times" size={16} />
+            <Text style={signupStyles.forms_add_textinput_text}>REMOVE{"\n"}SUB-PROFESSION</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -87,10 +90,9 @@ class Dynamic_Input extends Component {
 }
 
 const SignupConsultant2 = ({ navigation }) => {
-  const [fname, setName] = useState('');
-  const [specialty, setSpec] = useState('');
-  const [lic, setLic] = useState('');
-  const [message, setMessage] = useState('Seems like you missed one. Please fill in all the required fields before proceeding.');
+  const [fname, setName] = useState('Troy Austin Go');
+  const [profession, setProf] = useState('Doctor');
+  const [lic, setLic] = useState('111010-101');
   const [isModalVisible, toggleModal] = useState(false);
 
   function Close() {
@@ -98,7 +100,7 @@ const SignupConsultant2 = ({ navigation }) => {
   }
 
   const Next = () => {
-    if ((fname !== '' && specialty !== '' && lic !== '')) {
+    if ((fname !== '' && profession !== '' && lic !== '')) {
       navigation.navigate('SignupConsultant3_1');
     } else {
       toggleModal(true)
@@ -115,8 +117,8 @@ const SignupConsultant2 = ({ navigation }) => {
       >
         <Modal 
           isVisible={isModalVisible} 
-          animationIn='bounceInDown'
-          animationOut='bounceOutUp'
+          animationIn='slideInDown'
+          animationOut='slideOutUp'
           animationInTiming={1100}
           animationOutTiming={900}
         >
@@ -137,9 +139,9 @@ const SignupConsultant2 = ({ navigation }) => {
             </View>
           </View>
         </Modal>
-        <View style={signupStyles.forms_container}>
+        <View style={signupStyles.forms_container_2}>
           <Text style={signupStyles.forms_label}>CONSULTANT SIGN UP</Text>
-          <View style={signupStyles.forms_label_small_container}>
+          <View style={signupStyles.forms_label_small_container_2}>
             <Text style={signupStyles.forms_label_small}>Professional Details:</Text>
           </View>
           <View style={signupStyles.forms_textinput_container}>
@@ -155,24 +157,24 @@ const SignupConsultant2 = ({ navigation }) => {
           <View style={signupStyles.forms_textinput_container}>
             <Icon style={globalStyles.icon_global} name="briefcase" size={18} />
             <TextInput
-              placeholder="Specialty"
+              placeholder="Profession"
               placeholderTextColor="#8B8787"
               style={signupStyles.forms_textinput}
-              onChangeText={text => setSpec(text)}
-              value={specialty}
+              onChangeText={text => setProf(text)}
+              value={profession}
             />
           </View>
           <View style={signupStyles.forms_textinput_container}>
             <Icon style={globalStyles.icon_global} name="id-card" size={15} />
             <TextInput
-              placeholder="LIC Number"
+              placeholder="PRC ID Number/Certification ID Number"
               placeholderTextColor="#8B8787"
               style={signupStyles.forms_textinput}
               onChangeText={text => setLic(text)}
               value={lic}
             />
           </View>
-          <Dynamic_Input />
+          <Dynamic_Input/>
           <Text style={signupStyles.forms_text}>2/4</Text>
           <TouchableOpacity
             activeOpacity={0.6}

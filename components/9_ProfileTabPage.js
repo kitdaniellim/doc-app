@@ -36,6 +36,12 @@ const ProfileTab = ({ navigation }) => {
       rating: 5,
       text: 'Andouille pork belly ribeye kevin swine. Jerky ham hock ground round venison, porchetta capicola prosciutto ham cupim buffalo beef ribs andouille landjaeger. Venison pork belly sausage kielbasa frankfurter pork chop beef ribs short ribs jowl t-bone capicola. Swine shoulder meatball meatloaf ham hock. Porchetta leberkas frankfurter, prosciutto alcatra meatloaf sausage beef cow bresaola tenderloin buffalo. Rump pork bacon fatback chicken. Burgdoggen bresaola bacon pork chop beef jerky.here'
     },
+    {
+      key: 4,
+      name: 'Linkin Park',
+      rating: 5,
+      text: 'Andouille pork belly ribeye kevin swine. Jerky ham hock ground round venison, porchetta capicola prosciutto ham cupim buffalo beef ribs andouille landjaeger. Venison pork belly sausage kielbasa frankfurter pork chop beef ribs short ribs jowl t-bone capicola. Swine shoulder meatball meatloaf ham hock. Porchetta leberkas frankfurter, prosciutto alcatra meatloaf sausage beef cow bresaola tenderloin buffalo. Rump pork bacon fatback chicken. Burgdoggen bresaola bacon pork chop beef jerky.here'
+    },
   ]
 
   return (
@@ -130,15 +136,6 @@ const ProfileTab = ({ navigation }) => {
             </TouchableOpacity>
             <View style={profileStyles.review_container}>
               <Text style={profileStyles.review_header}>Reviews</Text>
-              {/* <FlatList
-                data={review_list}
-                scrollEnabled={false}
-                showsVerticalScrollIndicator={false}
-                keyExtractor={(item) => item.key.toString()}
-                renderItem={({ item }) => {
-                  return <ToggleButton {...item} />
-                }}
-              /> */}
               {review_list.map((item)=>{
                 return <ToggleButton {...item} />
               })}

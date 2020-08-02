@@ -36,7 +36,8 @@ const Search = {
 
   header_text_bold: {
     paddingLeft: 10,
-    fontSize: 11,
+    fontSize: 12,
+    fontWeight: '500',
     color: '#8B8787',
     justifyContent: 'center',
   },
@@ -61,12 +62,12 @@ const Search = {
   filter_label_container: {
     flexDirection: 'row',
     width: 80,
-
   },
 
   filter_label: {
     paddingLeft: 10,
-    fontSize: 11,
+    fontSize: 12,
+    fontWeight: '500',
     color: '#8B8787',
     justifyContent: 'center',
     marginTop: 5,
@@ -144,9 +145,16 @@ const Search = {
   },
   
   scaffold_list_item_data: {
-    fontSize: 13,
-    marginVertical: 5,
+    fontSize: 15,
+    margin: 8,
     color: '#8B8787',
+    justifyContent: 'center'
+  },
+
+  scaffold_list_item_img: {
+    height: 75,
+    width: 75,
+    marginRight: 5,
   },
 
   scaffold_list_item_data_container: {

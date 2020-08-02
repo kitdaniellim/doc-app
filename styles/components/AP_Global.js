@@ -33,13 +33,11 @@ const Global = {
     alignSelf: 'center',
   },
 
-  // //temp for showing icons
-  // icon_global: {
-  //   color: '#fff',
-  //   justifyContent: 'center',
-  //   alignSelf: 'center',
-  //   marginHorizontal: 20,
-  // },
+  icon_global_i: {
+    color: '#fff',
+    justifyContent: 'center',
+    alignSelf: 'center',
+  },
 
   modal_icon: {
     color: '#fff',
@@ -87,14 +85,14 @@ const Global = {
 
   modal_notif: {
     color: '#8B8787',
-    fontSize: 12,
+    fontSize: 15,
     fontWeight: '300',
     textAlign: 'center',
   },
 
   modal_notif_bold: {
     color: '#8B8787',
-    fontSize: 17,
+    fontSize: 19,
     fontWeight: '900',
     textAlign: 'center',
   },
@@ -105,7 +103,7 @@ const Global = {
     backgroundColor: '#FFAD3A',
     borderRadius: 15,
     marginTop: 7,
-    marginBottom: 10,
+    marginBottom: 20,
     padding: 5,
     justifyContent: 'center',
     alignSelf: 'center'
@@ -117,7 +115,7 @@ const Global = {
     backgroundColor: '#56D74F',
     borderRadius: 15,
     marginTop: 7,
-    marginBottom: 10,
+    marginBottom: 20,
     padding: 5,
     justifyContent: 'center',
     alignSelf: 'center'
@@ -125,7 +123,7 @@ const Global = {
 
   modal_button_label: {
     color: '#fff',
-    fontSize: 10,
+    fontSize: 15,
     fontWeight: '600', 
     letterSpacing: 1, 
     textAlign: 'center',

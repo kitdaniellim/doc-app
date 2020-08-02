@@ -37,7 +37,7 @@ import EditProfile_2 from '../components/EditProfilePage_2.js';
 import Paypal from '../components/PaypalPage.js';
 
 import React from 'react';
-import { View, ScrollView, FlatList, Text, TouchableOpacity } from 'react-native';
+import { View, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Header from '../components/custom/Header.js';
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, FlatList, TouchableOpacity } from 'react-native';
+import { Text, Image, View, FlatList, TouchableOpacity } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { searchStyles } from '../styles/styles';
@@ -7,7 +7,7 @@ import { searchStyles } from '../styles/styles';
 
 const Search = ({ navigation }) => {
   const [search, setSearch] = useState('');
-  const filter_temp = (navigation.getParam('userSpecialty') !== null) ? true : false;
+  const filter_temp = (navigation.getParam('userSpecialty') !== null) ? false : true;
   const [isFilterVisible, toggleFilter] = useState(filter_temp);
   let button_temp = (navigation.getParam('userSpecialty') === 'ENGINEERS') ?
     1
@@ -49,15 +49,33 @@ const Search = ({ navigation }) => {
       data: [
         {
           id: 1,
-          name: 'Go'
+          name: 'Go',
+          img: require("../assets/pp_sample1.png"),
         },
         {
           id: 2,
-          name: 'Helsinki'
+          name: 'Helsinki',
+          img: require("../assets/pp_sample2.png"),
         },
         {
           id: 3,
-          name: 'Berlin'
+          name: 'Berlin',
+          img: require("../assets/pp_sample3.png"),
+        },
+        {
+          id: 4,
+          name: 'Troy',
+          img: require("../assets/pp_sample4.png"),
+        },
+        {
+          id: 5,
+          name: 'Troy',
+          img: require("../assets/pp_sample5.png"),
+        },
+        {
+          id: 6,
+          name: 'Troy',
+          img: require("../assets/pp_sample6.png"),
         },
       ],
       key: 1,
@@ -68,15 +86,18 @@ const Search = ({ navigation }) => {
       data: [
         {
           id: 1,
-          name: 'Tokyo'
+          name: 'Tokyo',
+          img: require("../assets/pp_sample1.png"),
         },
         {
           id: 2,
-          name: 'Denver'
+          name: 'Denver',
+          img: require("../assets/pp_sample1.png"),
         },
         {
           id: 3,
-          name: 'Rio'
+          name: 'Rio',
+          img: require("../assets/pp_sample1.png"),
         },
       ],
       key: 2,
@@ -87,15 +108,18 @@ const Search = ({ navigation }) => {
       data: [
         {
           id: 1,
-          name: 'Arnoco'
+          name: 'Arnoco',
+          img: require("../assets/pp_sample1.png"),
         },
         {
           id: 2,
-          name: 'Bermuda'
+          name: 'Bermuda',
+          img: require("../assets/pp_sample1.png"),
         },
         {
           id: 3,
-          name: 'Rosotto'
+          name: 'Rosotto',
+          img: require("../assets/pp_sample1.png"),
         },
       ],
       key: 3,
@@ -106,15 +130,18 @@ const Search = ({ navigation }) => {
       data: [
         {
           id: 1,
-          name: 'Madeyo'
+          name: 'Madeyo',
+          img: require("../assets/pp_sample1.png"),
         },
         {
           id: 2,
-          name: 'Blanca'
+          name: 'Blanca',
+          img: require("../assets/pp_sample1.png"),
         },
         {
           id: 3,
-          name: 'Joseph'
+          name: 'Joseph',
+          img: require("../assets/pp_sample1.png"),
         },
       ],
       key: 4,
@@ -125,15 +152,18 @@ const Search = ({ navigation }) => {
       data: [
         {
           id: 1,
-          name: 'Shelby'
+          name: 'Shelby',
+          img: require("../assets/pp_sample1.png"),
         },
         {
           id: 2,
-          name: 'Oquias'
+          name: 'Oquias',
+          img: require("../assets/pp_sample1.png"),
         },
         {
           id: 3,
-          name: 'Chengretto'
+          name: 'Chengretto',
+          img: require("../assets/pp_sample1.png"),
         },
       ],
       key: 5,
@@ -144,15 +174,18 @@ const Search = ({ navigation }) => {
       data: [
         {
           id: 1,
-          name: 'Steffan'
+          name: 'Steffan',
+          img: require("../assets/pp_sample1.png"),
         },
         {
           id: 2,
-          name: 'Gabriel'
+          name: 'Gabriel',
+          img: require("../assets/pp_sample1.png"),
         },
         {
           id: 3,
-          name: 'Theadosia'
+          name: 'Theadosia',
+          img: require("../assets/pp_sample1.png"),
         },
       ],
       key: 6,
@@ -163,15 +196,18 @@ const Search = ({ navigation }) => {
       data: [
         {
           id: 1,
-          name: 'Dell'
+          name: 'Dell',
+          img: require("../assets/pp_sample1.png"),
         },
         {
           id: 2,
-          name: 'Mozart'
+          name: 'Mozart',
+          img: require("../assets/pp_sample1.png"),
         },
         {
           id: 3,
-          name: 'Franklin'
+          name: 'Franklin',
+          img: require("../assets/pp_sample1.png"),
         },
       ],
       key: 7,
@@ -194,13 +230,11 @@ const Search = ({ navigation }) => {
             searchIcon={{ size: 16 }}
             clearIcon={{ size: 16 }}
             cancelIcon={{ size: 16 }}
-            placeholder="Click here to start searching!"
+            placeholder="Enter Professional's Name Here"
             containerStyle={{
               height: 40,
               justifyContent: 'center',
               marginTop: 2,
-              // borderBottomColor: '#8B8787',
-              // borderBottomWidth: 1
             }}
             inputStyle={{
               justifyContent: 'center',
@@ -226,8 +260,8 @@ const Search = ({ navigation }) => {
           <View style={searchStyles.filter_options_container}>
             <TouchableOpacity
               activeOpacity={0.6}
-              onPress={() => { 
-                toggleButton1(!button1) 
+              onPress={() => {
+                toggleButton1(!button1)
                 button_temp = 0
               }}
               style={((button_temp === 1) ? () => { toggleButton1(!button1) } : button1) ?
@@ -384,7 +418,17 @@ const Search = ({ navigation }) => {
                         onPress={Profile}
                         style={searchStyles.scaffold_list_container}
                       >
-                        <Text style={searchStyles.scaffold_list_item_data}>Dr. {value.name}</Text>
+                        <View style={{ flexDirection: 'row' }}>
+                          <View>
+                            <Image
+                              source={value.img}
+                              style={searchStyles.scaffold_list_item_img}
+                            />
+                          </View>
+                          <View style={{ justifyContent: 'center'}}>
+                            <Text style={searchStyles.scaffold_list_item_data}>Dr. {value.name}</Text>
+                          </View>
+                        </View>
                       </TouchableOpacity>
                     )
                   })}

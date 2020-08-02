@@ -24,7 +24,8 @@ const Calendar = {
 
   header_text_bold: {
     paddingLeft: 10,
-    fontSize: 11,
+    fontSize: 12,
+    fontWeight: '500',
     color: '#8B8787',
     justifyContent: 'center',
   },
@@ -83,8 +84,8 @@ const Calendar = {
   },
 
   calendar_legend_label: {
-    fontSize: 11,
-    fontWeight: '300',
+    fontSize: 15,
+    fontWeight: '500',
     color: '#8B8787'
   },
 
@@ -94,7 +95,7 @@ const Calendar = {
   },
 
   calendar_legend_text: {
-    fontSize: 11,
+    fontSize: 15,
     color: '#8B8787',
     marginLeft: 8,
   },

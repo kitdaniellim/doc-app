@@ -243,12 +243,12 @@ const SignupConsultant3_2 = ({ navigation }) => {
         end={{ x: 0, y: 1 }}
         style={globalStyles.gradient}
       >
-        <View style={signupStyles.forms_container}>
+        <View style={signupStyles.forms_container_2}>
           <View style={signupStyles.forms_label_container}>
             <Text style={signupStyles.forms_label}>CONSULTANT SIGN UP</Text>
           </View>
-          <View style={signupStyles.forms_label_small_container}>
-            <Text style={signupStyles.forms_label_small}>Office Hours: -Location-</Text>
+          <View style={signupStyles.forms_label_small_container_2}>
+            <Text style={signupStyles.forms_label_small}>Office Hours:</Text>
           </View>
           <Dynamic_Input />
           <TouchableOpacity

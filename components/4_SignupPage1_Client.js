@@ -7,10 +7,10 @@ import Modal from 'react-native-modal';
 
 
 const SignupClient1 = ({ navigation }) => {
-  const [username, setUser] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPass] = useState('');
-  const [cpassword, setCpass] = useState('');
+  const [username, setUser] = useState('username');
+  const [email, setEmail] = useState('troygo@gmail.com');
+  const [password, setPass] = useState('password');
+  const [cpassword, setCpass] = useState('password');
   const [message, setMessage] = useState('Seems like you missed one. Please fill in all the required fields before proceeding.');
   const [isModalVisible, toggleModal] = useState(false);
 
@@ -57,7 +57,7 @@ const SignupClient1 = ({ navigation }) => {
       >
         <Modal
           isVisible={isModalVisible}
-          animationIn='bounceInDown'
+          animationIn='slideInDown'
           animationOut='slideOutUp'
           animationInTiming={1100}
           animationOutTiming={900}

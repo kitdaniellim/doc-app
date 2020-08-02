@@ -15,9 +15,9 @@ export default class SignupConsultant3_1 extends Component {
       isModalVisible: false
     }
   }
-  
+
   toggleModal(visible) {
-    this.setState({isModalVisible: visible})
+    this.setState({ isModalVisible: visible })
   }
 
   Next = () => {
@@ -48,7 +48,7 @@ export default class SignupConsultant3_1 extends Component {
             placeholder="Location"
             placeholderTextColor="#8B8787"
             style={signupStyles.forms_textinput}
-            onChangeText={text => this.setState({text})}
+            onChangeText={text => this.setState({ text })}
           />
         </View>
         <View style={signupStyles.forms_add_textinput_container}>
@@ -96,14 +96,14 @@ export default class SignupConsultant3_1 extends Component {
     return (
       <View style={signupStyles.container}>
         <LinearGradient
-          colors={['rgba(243,243,243,0.4)', 'transparent']}
-          start={{ x: 0, y: 1 }}
-          end={{ x: 0, y: 0 }}
+          colors={['rgba(239,239,239,0.5)', 'transparent']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 0, y: 1 }}
           style={globalStyles.gradient}
         >
           <Modal
             isVisible={this.state.isModalVisible}
-            animationIn='bounceInDown'
+            animationIn='slideInDown'
             animationOut='bounceOutUp'
             animationInTiming={1100}
             animationOutTiming={900}
@@ -117,7 +117,7 @@ export default class SignupConsultant3_1 extends Component {
                 <Text style={globalStyles.modal_notif}>Seems like you missed one. Please fill in all required fields before proceeding.</Text>
                 <TouchableOpacity
                   activeOpacity={0.6}
-                  onPress={() => {this.toggleModal(!this.state.isModalVisible)}}
+                  onPress={() => { this.toggleModal(!this.state.isModalVisible) }}
                   style={globalStyles.modal_button_container}
                 >
                   <Text style={globalStyles.modal_button_label}>Close</Text>
@@ -125,11 +125,11 @@ export default class SignupConsultant3_1 extends Component {
               </View>
             </View>
           </Modal>
-          <View style={signupStyles.forms_container}>
+          <View style={signupStyles.forms_container_2}>
             <View style={signupStyles.forms_label_container}>
-              <Text style={signupStyles.forms_label}> CONSULTANT SIGN UP </Text>
+              <Text style={signupStyles.forms_label}>CONSULTANT SIGN UP</Text>
             </View>
-            <View style={signupStyles.forms_label_small_container}>
+            <View style={signupStyles.forms_label_small_container_2}>
               <Text style={signupStyles.forms_label_small}>Office Details:</Text>
             </View>
             <View>

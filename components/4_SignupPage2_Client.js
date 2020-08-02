@@ -18,11 +18,11 @@ const SignupClient2 = ({ navigation }) => {
     }
   }
 
-  const [fname, setName] = useState('');
-  const [month, setMonth] = useState('');
-  const [day, setDay] = useState('');
-  const [year, setYear] = useState('');
-  const [num, setNum] = useState('');
+  const [fname, setName] = useState('username');
+  const [month, setMonth] = useState('January');
+  const [day, setDay] = useState('21');
+  const [year, setYear] = useState('1999');
+  const [num, setNum] = useState('09526346229');
 
   const [isModalVisible, toggleModal] = useState(false);
 
@@ -54,7 +54,7 @@ const SignupClient2 = ({ navigation }) => {
       >
         <Modal
           isVisible={isModalVisible}
-          animationIn='bounceInDown'
+          animationIn='slideInDown'
           animationOut='slideOutUp'
           animationInTiming={1100}
           animationOutTiming={900}
@@ -92,12 +92,12 @@ const SignupClient2 = ({ navigation }) => {
             />
           </View>
           <View style={signupStyles.forms_bday_label_container}>
-            <Icon style={globalStyles.icon_global} name="birthday-cake" size={18} />
+            <Icon style={globalStyles.icon_global_i} name="birthday-cake" size={18} />
             <TextInput
               editable={false}
               selectTextOnFocus={false}
               placeholder="Birthday"
-              placeholderTextColor="#8B8787"
+              placeholderTextColor="#fff"
               style={signupStyles.forms_bday_label}
             />
           </View>

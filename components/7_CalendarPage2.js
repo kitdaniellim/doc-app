@@ -102,7 +102,7 @@ const CalendarPage2 = ({ navigation }) => {
     <View style={calendarStyles.container}>
       <Modal
         isVisible={isConfirmModalVisible}
-        animationIn='bounceInDown'
+        animationIn='slideInDown'
         animationOut='slideOutUp'
         animationInTiming={1100}
         animationOutTiming={900}

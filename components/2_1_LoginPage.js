@@ -6,8 +6,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Modal from 'react-native-modal';
 
 const Login = ({ navigation }) => {
-  const [username, setUser] = useState('a');
-  const [password, setPass] = useState('b');
+  const [username, setUser] = useState('username');
+  const [password, setPass] = useState('password');
   const [isModalVisible, toggleModal] = useState(false);
 
   function Close() {
@@ -40,8 +40,8 @@ const Login = ({ navigation }) => {
       >
         <Modal 
           isVisible={isModalVisible} 
-          animationIn='bounceInDown'
-          animationOut='bounceOutUp'
+          animationIn='slideInDown'
+          animationOut='slideOutUp'
           animationInTiming={1100}
           animationOutTiming={900}
         >

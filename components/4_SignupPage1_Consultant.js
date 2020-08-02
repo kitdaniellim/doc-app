@@ -7,10 +7,10 @@ import Modal from 'react-native-modal';
 
 
 const SignupConsultant1 = ({ navigation }) => {
-  const [username, setUser] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPass] = useState('');
-  const [cpassword, setCpass] = useState('');
+  const [username, setUser] = useState('username');
+  const [email, setEmail] = useState('troygo@gmail.com');
+  const [password, setPass] = useState('password');
+  const [cpassword, setCpass] = useState('password');
   const [message, setMessage] = useState('Seems like you missed one. Please fill in all the required fields before proceeding.');
   const [isModalVisible, toggleModal] = useState(false);
 
@@ -57,7 +57,7 @@ const SignupConsultant1 = ({ navigation }) => {
       >
         <Modal
           isVisible={isModalVisible}
-          animationIn='bounceInDown'
+          animationIn='slideInDown'
           animationOut='slideOutUp'
           animationInTiming={1100}
           animationOutTiming={900}
@@ -80,7 +80,7 @@ const SignupConsultant1 = ({ navigation }) => {
           </View>
         </Modal>
         <View style={signupStyles.forms_container}>
-          <Text style={signupStyles.forms_label}> CONSULTANT SIGN UP </Text>
+          <Text style={signupStyles.forms_label}>CONSULTANT SIGN UP</Text>
           <Icon style={globalStyles.icon_client} name="user-md" size={55} />
           <View style={signupStyles.forms_textinput_container}>
             <Icon style={globalStyles.icon_global} name="user-circle" size={18} />

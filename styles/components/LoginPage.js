@@ -72,7 +72,7 @@ const Login = {
 
     forms_button_label: {
         color: '#8B8787',
-        fontSize: 14,
+        fontSize: 15,
         fontWeight: '600', 
         letterSpacing: 1,  
         textAlign: 'center',
