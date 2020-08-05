@@ -240,13 +240,13 @@ const Search = ({ navigation }) => {
         <View style={searchStyles.filter_label_container}>
           <Text style={searchStyles.filter_label}>FILTER</Text>
         </View>
-        <View style={{ width: 150, height: 50, justifyContent: 'center' }}>
+        <View style={{ width: 150, height: 50, justifyContent: 'center'}}>
           <RNPickerSelect
             placeholder={{
-              label: 'NONE',
-              value: 'NONE',
+              label: 'None',
+              value: 'None',
+              color: '#8B8787'
             }}
-            placeholderTextColor='blue'
             style={{
               viewContainer: {
                 alignSelf: 'stretch',
@@ -259,7 +259,6 @@ const Search = ({ navigation }) => {
                 color: '#8B8787',
               },
             }}
-            itemTextStyle={{fontSize: 15}}
 
             onValueChange={value => setFilter(value)}
             value={filter_var}

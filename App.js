@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Alert, Text, AppRegistry, Button, TextInput, View, StyleSheet } from 'react-native';
-
+import Temp from './components/1_A_Temp.js'
 //temp
 import Icon1 from 'react-native-vector-icons/FontAwesome';
 import Icon2 from 'react-native-vector-icons/AntDesign';
@@ -60,19 +60,23 @@ export default class App extends Component {
     auth.createUserWithEmailAndPassword(username, password);
   }
 
+
+
+
+
+
   render() {
     return (
       <MenuProvider>
         <Routes />
       </MenuProvider>
-
-      // <View style={{flex: 1, backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center'}}>
-      //   <Icon color="#19BAB9" name="ellipsis-v" size={170}/>
-      // </View>
-
+      // <Temp />
     );
   }
 }
+
+
+
 
 const styles = StyleSheet.create({
   container: {

@@ -36,7 +36,7 @@ const Book3_Form = ({ navigation }) => {
       </View>
       <View style={calendarStyles.scaffold}>
         <View style={calendarStyles.forms_container}>
-          <View>
+          <View style={{marginTop: 10}}>
             <Text style={calendarStyles.forms_options_header}>Do you have any of the following?</Text>
             <View style={calendarStyles.forms_options_container}>
               <View style={calendarStyles.forms_options_col}>

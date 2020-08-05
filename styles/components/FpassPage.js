@@ -36,11 +36,12 @@ const ForgotPassword = {
     },
 
     scaffold_textinput: {
-        fontSize: 15,
+        width: '100%',
+        fontSize: 14,
         paddingHorizontal: 5,
-        marginHorizontal: 10,
-        borderRadius: 20,
-        backgroundColor: '#fff',  
+        marginHorizontal: 5,
+        borderRadius: 20,    
+        letterSpacing: 1 
     },
 
     button: {

@@ -128,12 +128,12 @@ const SignUp = {
     },
 
     forms_textinput: {
-        width: '90%',
-        fontSize: 15,
+        width: '100%',
+        fontSize: 14,
         paddingHorizontal: 5,
         marginHorizontal: 5,
-        borderRadius: 20,
-        backgroundColor: '#fff',
+        borderRadius: 20,    
+        letterSpacing: 1 
     },
 
     forms_bday_container: {

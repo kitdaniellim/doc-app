@@ -18,7 +18,7 @@ const Search = {
   },
   
   header_text_container: {
-    width: 50,
+    width: 60,
     justifyContent: 'center',
   },
 
@@ -60,14 +60,14 @@ const Search = {
   },
 
   filter_label_container: {
-    width: 80,
+    width: 70,
     justifyContent: 'center'
   },
 
   filter_label: {
     paddingLeft: 10,
     fontSize: 12,
-    fontWeight: '500',
+    fontWeight: '700',
     color: '#8B8787',
     justifyContent: 'center',
     marginTop: 5,
