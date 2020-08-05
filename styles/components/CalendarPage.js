@@ -178,7 +178,7 @@ const Calendar = {
   },
 
   date_details_button_download_icon: {
-    
+
   },
 
   date_details_button_download_label: {
@@ -206,6 +206,18 @@ const Calendar = {
   date_details_button_review: {
     height: 30,
     backgroundColor: '#56EC65',
+    borderRadius: 15,
+    padding: 5,
+    justifyContent: 'center',
+    alignSelf: 'stretch',
+    marginHorizontal: 9,
+  },
+
+  date_details_button_cancel: {
+    marginTop: 2,
+    marginBottom: 2,
+    height: 30,
+    backgroundColor: '#d9534f',
     borderRadius: 15,
     padding: 5,
     justifyContent: 'center',
@@ -328,7 +340,7 @@ const Calendar = {
     borderRadius: 20,
     height: '100%',
     textAlignVertical: 'top'
-    
+
   },
 
   modal_container: {

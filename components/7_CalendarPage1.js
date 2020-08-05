@@ -3,7 +3,8 @@ import { Text, View } from 'react-native';
 import { connect } from "react-redux";
 import { Calendar } from 'react-native-calendars';
 import { calendarStyles } from '../styles/styles';
-import { getAppointments } from "../actions/appointments";
+import { getUserAppointments } from "../actions/appointments";
+import AsyncStorage from '@react-native-community/async-storage';
 
 class CalendarPage extends React.Component {
   constructor(props) {
@@ -16,9 +17,8 @@ class CalendarPage extends React.Component {
   }
   async componentDidMount() {
     let upcoming_dates = [], finished_dates = [];
-    await this.props.getAppointments(1, null);
+    await this.props.getUserAppointments(1);
     if (this.props.appointments.length > 0) {
-      console.log(this.props.appointments);
       this.props.appointments.map((appointment) => {
         if (appointment.status == "Pending" || appointment.status == "Approved") {
           upcoming_dates.push(appointment.date);
@@ -51,10 +51,16 @@ class CalendarPage extends React.Component {
     });
     this.setState(() => ({ occupied_dates_obj }));
   }
-  onDayPress = (date) => {
-    this.props.navigation.navigate('Calendar2', {
-      date
-    });
+  onDayPress = async (date) => {
+    try {
+      const appointments = this.props.appointments.filter(appointment => appointment.date == date);
+      await AsyncStorage.setItem('appointments', JSON.stringify(appointments));
+      this.props.navigation.navigate('Calendar2', {
+        date
+      });
+    } catch (e) {
+      console.log(`Error! Details: ${e}`);
+    }
   }
   render() {
     return (
@@ -130,8 +136,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getAppointments: (client_id, consultant_id) =>
-    dispatch(getAppointments(client_id, consultant_id)),
+  getUserAppointments: (client_id) =>
+    dispatch(getUserAppointments(client_id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CalendarPage);

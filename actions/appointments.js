@@ -2,6 +2,29 @@ import { db, storage } from "../config/Firebase";
 import uuid from "react-native-uuid";
 import _ from "lodash";
 
+export const getUserAppointments = (client_id) => {
+  return async (dispatch) => {
+    try {
+      dispatch(loadBegin());
+      db.collection("appointments")
+        .where("client_id", "==", client_id)
+        .onSnapshot((querySnapShot) => {
+          let results = [];
+          querySnapShot.forEach((doc) => {
+            let ref = storage.ref().child(`appointments/${doc.id}`);
+            ref.listAll().then((res) => {
+              console.log(res.prefixes);
+            });
+            results.push(doc.data());
+          });
+          dispatch(getAppointmentsSuccess(results));
+        });
+    } catch (error) {
+      dispatch(getAppointmentsFailure(error));
+    }
+  };
+};
+
 export const getAppointments = (client_id, consultant_id = null) => {
   return async (dispatch) => {
     try {
