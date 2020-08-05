@@ -250,6 +250,7 @@ const clientTabScreens = {
 
     Search: {
         screen: Search,
+        params: { userSpecialty: "None" },
         navigationOptions: {
             title: 'Search',
             tabBarIcon: ({ tintColor }) => (

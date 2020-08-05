@@ -134,7 +134,8 @@ const Search = {
   
   scaffold_list_item_data: {
     fontSize: 15,
-    margin: 8,
+    marginHorizontal: 8,
+    marginVertical: 2,
     color: '#8B8787',
     justifyContent: 'center'
   },

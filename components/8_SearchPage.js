@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, Image, View, FlatList, TouchableOpacity } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -9,28 +9,21 @@ import { searchStyles, signupStyles } from '../styles/styles';
 const Search = ({ navigation }) => {
   const [search, setSearch] = useState('');
   const [filter_var, setFilter] = useState('None');
-  // let button_temp = (navigation.getParam('userSpecialty') === 'ENGINEERS') ?
-  //   1
-  //   :
-  //   (navigation.getParam('userSpecialty') === 'DOCTORS') ?
-  //     2
-  //     :
-  //     (navigation.getParam('userSpecialty') === 'ARCHITECTS') ?
-  //       3
-  //       :
-  //       (navigation.getParam('userSpecialty') === 'LAWYERS') ?
-  //         4
-  //         :
-  //         (navigation.getParam('userSpecialty') === 'BUSINESSMEN') ?
-  //           5
-  //           :
-  //           (navigation.getParam('userSpecialty') === 'THERAPISTS') ?
-  //             6
-  //             :
-  //             (navigation.getParam('userSpecialty') === 'TEACHERS') ?
-  //               7
-  //               :
-  //               0
+
+  useEffect(() => {
+    switch (navigation.getParam('userSpecialty')) {
+      case 'None': setFilter('None');
+        break;
+      case 'ENGINEERS': setFilter('ENGINEERS');
+        break;
+      case 'DOCTORS': setFilter('DOCTORS');
+        break;
+      case 'ARCHITECTS': setFilter('ARCHITECTS');
+        break;
+      case 'LAWYERS': setFilter('LAWYERS');
+        break;
+    }
+  }, [navigation.getParam('userSpecialty')]);
 
   const Profile = () => {
     navigation.navigate('Profile');
@@ -139,72 +132,6 @@ const Search = ({ navigation }) => {
       ],
       key: 4,
     },
-
-    {
-      field: "BUSINESSMEN",
-      data: [
-        {
-          id: 1,
-          name: 'Shelby',
-          img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
-        },
-        {
-          id: 2,
-          name: 'Oquias',
-          img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
-        },
-        {
-          id: 3,
-          name: 'Chengretto',
-          img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
-        },
-      ],
-      key: 5,
-    },
-
-    {
-      field: "THERAPISTS",
-      data: [
-        {
-          id: 1,
-          name: 'Steffan',
-          img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
-        },
-        {
-          id: 2,
-          name: 'Gabriel',
-          img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
-        },
-        {
-          id: 3,
-          name: 'Theadosia',
-          img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
-        },
-      ],
-      key: 6,
-    },
-
-    {
-      field: "TEACHERS",
-      data: [
-        {
-          id: 1,
-          name: 'Dell',
-          img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
-        },
-        {
-          id: 2,
-          name: 'Mozart',
-          img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
-        },
-        {
-          id: 3,
-          name: 'Franklin',
-          img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
-        },
-      ],
-      key: 7,
-    },
   ];
 
   return (
@@ -240,7 +167,7 @@ const Search = ({ navigation }) => {
         <View style={searchStyles.filter_label_container}>
           <Text style={searchStyles.filter_label}>FILTER</Text>
         </View>
-        <View style={{ width: 150, height: 50, justifyContent: 'center'}}>
+        <View style={{ width: 150, height: 50, justifyContent: 'center' }}>
           <RNPickerSelect
             placeholder={{
               label: 'None',
@@ -272,41 +199,73 @@ const Search = ({ navigation }) => {
         </View>
       </View>
       <View style={searchStyles.scaffold}>
-        {/* <Text>{navigation.getParam('userSpecialty')}</Text> */}
         <FlatList
           data={list}
           showsVerticalScrollIndicator={false}
           keyExtractor={(item) => item.key.toString()}
           renderItem={({ item }) => (
             <View>
-              <View style={searchStyles.scaffold_list_container}>
-                <View style={searchStyles.scaffold_list_item_container}>
-                  <Text style={searchStyles.scaffold_list_item_header}>{item.field}</Text>
-                  {item.data.map((value) => {
-                    return (
-                      <TouchableOpacity
-                        key={value.id}
-                        activeOpacity={0.6}
-                        onPress={Profile}
-                        style={searchStyles.scaffold_list_container}
-                      >
-                        <View style={{ flexDirection: 'row' }}>
-                          <View>
-                            <Image
-                              source={{uri: value.img}}
-                              style={searchStyles.scaffold_list_item_img}
-                            />
+              {(filter_var === 'None') ?
+                <View style={searchStyles.scaffold_list_container}>
+                  <View style={searchStyles.scaffold_list_item_container}>
+                    <Text style={searchStyles.scaffold_list_item_header}>{item.field}</Text>
+                    {item.data.map((value) => {
+                      return (
+                        <TouchableOpacity
+                          key={value.id}
+                          activeOpacity={0.6}
+                          onPress={Profile}
+                          style={searchStyles.scaffold_list_container}
+                        >
+                          <View style={{ flexDirection: 'row' }}>
+                            <View>
+                              <Image
+                                source={{ uri: value.img }}
+                                style={searchStyles.scaffold_list_item_img}
+                              />
+                            </View>
+                            <View style={{ justifyContent: 'center' }}>
+                              <Text style={searchStyles.scaffold_list_item_data}>Dr. {value.name}</Text>
+                              <Text style={searchStyles.scaffold_list_item_data}>Opthalmology</Text>
+                            </View>
                           </View>
-                          <View style={{ justifyContent: 'center'}}>
-                            <Text style={searchStyles.scaffold_list_item_data}>Dr. {value.name}</Text>
-                            <Text style={searchStyles.scaffold_list_item_data}>Opthalmology</Text>
-                          </View>
-                        </View>
-                      </TouchableOpacity>
-                    )
-                  })}
+                        </TouchableOpacity>
+                      )
+                    })}
+                  </View>
                 </View>
-              </View>
+                :
+                (item.field === filter_var) ?
+                  <View style={searchStyles.scaffold_list_container}>
+                    <View style={searchStyles.scaffold_list_item_container}>
+                      <Text style={searchStyles.scaffold_list_item_header}>{item.field}</Text>
+                      {item.data.map((value) => {
+                        return (
+                          <TouchableOpacity
+                            key={value.id}
+                            activeOpacity={0.6}
+                            onPress={Profile}
+                            style={searchStyles.scaffold_list_container}
+                          >
+                            <View style={{ flexDirection: 'row' }}>
+                              <View>
+                                <Image
+                                  source={{ uri: value.img }}
+                                  style={searchStyles.scaffold_list_item_img}
+                                />
+                              </View>
+                              <View style={{ justifyContent: 'center' }}>
+                                <Text style={searchStyles.scaffold_list_item_data}>Dr. {value.name}</Text>
+                                <Text style={searchStyles.scaffold_list_item_data}>Opthalmology</Text>
+                              </View>
+                            </View>
+                          </TouchableOpacity>
+                        )
+                      })}
+                    </View>
+                  </View>
+                  :
+                  null}
             </View>
           )}
         />
