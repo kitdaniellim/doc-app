@@ -25,7 +25,7 @@ class BookPage extends React.Component {
       occupied_dates_obj: {},
       consultant_id: this.props.navigation.state.params.consultant_id,
       symptoms: [],
-      files: [],
+      files: []
     };
   }
   async componentDidMount() {
@@ -148,6 +148,8 @@ class BookPage extends React.Component {
       symptoms: this.state.symptoms,
       files,
       status: "Pending",
+      isCancelled: false,
+      created_at: moment().format('YYYY-MM-DD HH:mm:ss').toString()
     };
     await this.props.bookAppointment(appointment);
     if (this.props.error) {
