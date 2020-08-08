@@ -10,8 +10,9 @@ import { connect } from "react-redux";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { calendarStyles, globalStyles } from "../styles/styles";
 import Modal from "react-native-modal";
-import { getUserAppointments } from "../actions/appointments";
+import { getUserAppointments, getFiles } from "../actions/appointments";
 import AsyncStorage from "@react-native-community/async-storage";
+import FilesModal from "./7_FilesModal.js";
 import moment from "moment";
 
 class CalendarPage2 extends React.Component {
@@ -19,66 +20,12 @@ class CalendarPage2 extends React.Component {
     super(props);
     this.state = {
       isClient: true,
-      selected: [
-        {
-          key: 1,
-          name: "Dr. Jesus",
-          location: "333 St., aaa Bldg, Lapu-lapu, Philippines",
-          time: "7:00 PM - 11:00 PM",
-
-          //if client
-          status: "pending", // <-- change status here
-          // status: 'pending' <-- disabled/unclickable yellow button
-          // status: 'review' <-- bright green button
-          // status: 'reviewed' <-- disabled/unclickable low opacity green button
-
-          //if consultant
-          isConfirmed: false,
-        },
-        {
-          key: 2,
-          name: "Dr. Jose",
-          location: "333 St., aaa Bldg, Lapu-lapu, Philippines",
-          time: "3:00 PM - 5:00 PM",
-          status: "review", // <-- change status here
-          // status: 'pending' <-- disabled yellow button
-          // status: 'review' <-- bright green button
-          // status: 'reviewed' <-- disabled low opacity green button
-
-          //if consultant
-          isConfirmed: true,
-        },
-        {
-          key: 3,
-          name: "Dr. Romero",
-          location: "333 St., aaa Bldg, Lapu-lapu, Philippines",
-          time: "7:30 AM - 8:30 AM",
-          status: "reviewed", // <-- change status here
-          // status: 'pending' <-- disabled yellow button
-          // status: 'review' <-- bright green button
-          // status: 'reviewed' <-- disabled low opacity green button
-
-          //if consultant
-          isConfirmed: true,
-        },
-        {
-          key: 4,
-          name: "Dr. Juan",
-          location: "333 St., aaa Bldg, Lapu-lapu, Philippines",
-          time: "8:30 PM - 10:00 AM",
-          status: "reviewed", // <-- change status here
-          // status: 'pending' <-- disabled yellow button
-          // status: 'review' <-- bright green button
-          // status: 'reviewed' <-- disabled low opacity green button
-
-          //if consultant
-          isConfirmed: false,
-        },
-      ],
       isNotifyModalVisible: false,
       isConfirmModalVisible: false,
+      isFilesModalVisible: false,
       text: "",
       appointments: [],
+      files: [],
     };
   }
   async componentDidMount() {
@@ -86,38 +33,52 @@ class CalendarPage2 extends React.Component {
       const appointments = JSON.parse(
         await AsyncStorage.getItem("appointments")
       );
-      this.setState(() => ({ appointments }));
+      await this.setState(() => ({ appointments }));
     } catch (e) {
       console.log(`Error! Details: ${e}`);
     }
   }
   Okay = () => {
     this.setState(() => ({ isConfirmModalVisible: false }));
-  }
+  };
   ConfirmAll = () => {
     this.setState(() => ({ isConfirmModalVisible: true }));
-  }
+  };
   Cancel = () => {
     this.setState(() => ({ isNotifyModalVisible: false }));
-  }
+  };
   Notify_2 = () => {
     this.setState(() => ({ isNotifyModalVisible: false }));
-  }
+  };
   Notify = () => {
     this.setState(() => ({ isNotifyModalVisible: true }));
-  }
+  };
   Close = () => {
     this.props.navigation.goBack();
-  }
+  };
   Review = () => {
     this.props.navigation.navigate("Calendar3_Review");
-  }
+  };
   setText = (text) => {
     this.setState(() => ({ text }));
-  }
+  };
+  onViewFiles = async (id) => {
+    await this.props.getFiles(id);
+    await this.setState(() => ({ files: this.props.files }));
+    this.state.files.length > 0 && this.setState(() => ({ isFilesModalVisible: true }));
+  };
+  onCloseFilesModal = async () => {
+    await this.setState(() => ({ isFilesModalVisible: false }));
+    this.setState(() => ({ files: [] }));
+  };
   render() {
     return (
       <View style={calendarStyles.container}>
+        <FilesModal
+          isFilesModalVisible={this.state.isFilesModalVisible}
+          onCloseFilesModal={this.onCloseFilesModal}
+          files={this.state.files}
+        />
         <Modal
           isVisible={this.state.isConfirmModalVisible}
           animationIn="bounceInDown"
@@ -261,22 +222,33 @@ class CalendarPage2 extends React.Component {
                           )} - {moment(item.time_end, "HH:mm").format("h:mm A")}
                         </Text>
                       </View>
-                      <View style={{ flexDirection: "row" }}>
-                        <TouchableOpacity
-                          activeOpacity={0.6}
-                          style={
-                            calendarStyles.date_details_button_download_container
-                          }
-                        >
-                          <Text
+                      {item.files.length > 0 ? (
+                        <View style={{ flexDirection: "row" }}>
+                          <TouchableOpacity
+                            activeOpacity={0.6}
+                            onPress={() => {
+                              this.onViewFiles(item.uid);
+                            }}
                             style={
-                              calendarStyles.date_details_button_download_label
+                              calendarStyles.date_details_button_download_container
                             }
                           >
-                            View Files
+                            <Text
+                              style={
+                                calendarStyles.date_details_button_download_label
+                              }
+                            >
+                              View Files
+                            </Text>
+                          </TouchableOpacity>
+                        </View>
+                      ) : (
+                        <View style={{ flexDirection: "row" }}>
+                          <Text style={calendarStyles.date_details_no_files}>
+                            No Files Attached
                           </Text>
-                        </TouchableOpacity>
-                      </View>
+                        </View>
+                      )}
                     </View>
                     <View style={calendarStyles.date_details_button_container}>
                       {/* if user is a client then button displays, else null and does not display */}
@@ -428,11 +400,13 @@ class CalendarPage2 extends React.Component {
 const mapStateToProps = (state) => ({
   loading: state.appointments.loading,
   appointments: state.appointments.items,
+  files: state.appointments.files,
   error: state.appointments.error,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getUserAppointments: (client_id) => dispatch(getUserAppointments(client_id)),
+  getFiles: (appointment_id) => dispatch(getFiles(appointment_id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CalendarPage2);

@@ -2,6 +2,35 @@ import { db, storage } from "../config/Firebase";
 import uuid from "react-native-uuid";
 import _ from "lodash";
 
+export const getFiles = (appointment_id) => {
+  return async (dispatch) => {
+    dispatch(loadBegin());
+    console.log(`Fetching files from ${appointment_id} folder...`);
+    var results = [];
+    let ref = storage.ref().child(`appointments/${appointment_id}`);
+    ref
+      .listAll()
+      .then((res) => {
+        res.items.forEach((itemRef) => {
+          itemRef.getDownloadURL().then((url) => {
+            results.push({
+              name: itemRef.name,
+              file_url: url
+            });
+          });
+        });
+      })
+      .then(() => {
+        console.log(results.length);
+        dispatch(getFilesSuccess(results));
+      })
+      .catch((error) => {
+        console.log(error);
+        dispatch(getFilesFailure(error));
+      });
+  };
+};
+
 export const getUserAppointments = (client_id) => {
   return async (dispatch) => {
     try {
@@ -11,10 +40,6 @@ export const getUserAppointments = (client_id) => {
         .onSnapshot((querySnapShot) => {
           let results = [];
           querySnapShot.forEach((doc) => {
-            let ref = storage.ref().child(`appointments/${doc.id}`);
-            ref.listAll().then((res) => {
-              console.log(res.prefixes);
-            });
             results.push(doc.data());
           });
           dispatch(getAppointmentsSuccess(results));
@@ -37,16 +62,18 @@ export const getAppointments = (client_id, consultant_id = null) => {
           querySnapShot.forEach((doc) => {
             results.push(doc.data());
           });
-          consultant_id && db.collection("appointments")
-            .where("consultant_id", "==", consultant_id)
-            .where("status", "in", ["Pending", "Approved"])
-            .onSnapshot((querySnapShot2) => {
-              querySnapShot2.forEach((doc) => {
-                results.push(doc.data());
+          consultant_id &&
+            db
+              .collection("appointments")
+              .where("consultant_id", "==", consultant_id)
+              .where("status", "in", ["Pending", "Approved"])
+              .onSnapshot((querySnapShot2) => {
+                querySnapShot2.forEach((doc) => {
+                  results.push(doc.data());
+                });
+                results = _.uniqBy(results, "uid");
               });
-              results = _.uniqBy(results, "uid");
-            });
-            dispatch(getAppointmentsSuccess(results));
+          dispatch(getAppointmentsSuccess(results));
         });
     } catch (error) {
       dispatch(getAppointmentsFailure(error));
@@ -89,6 +116,17 @@ export const bookAppointment = (data) => {
 //CALL BEFORE EVERY OPERATION
 export const loadBegin = () => ({
   type: "LOAD_BEGIN",
+});
+
+//GET FILES STATUS
+export const getFilesSuccess = (results) => ({
+  type: "GET_FILES_SUCCESS",
+  payload: { results },
+});
+
+export const getFilesFailure = (error) => ({
+  type: "GET_FILES_FAILURE",
+  payload: { error },
 });
 
 //GET APPOINTMENT STATUS

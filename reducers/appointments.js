@@ -2,7 +2,8 @@ const reducerDefaultState = {
     loading: false,
     error: null,
     items: [],
-    item: {}
+    item: {},
+    files: []
 }
 
 export default (state = reducerDefaultState, action) => {
@@ -33,6 +34,18 @@ export default (state = reducerDefaultState, action) => {
                 item: action.payload.result
             };
         case 'BOOK_APPOINTMENT_FAILURE':
+            return {
+                ...state,
+                loading: false,
+                error: action.payload.error
+            };
+        case 'GET_FILES_SUCCESS':
+            return {
+                ...state,
+                loading: false,
+                files: action.payload.results
+            };
+        case 'GET_FILES_FAILURE':
             return {
                 ...state,
                 loading: false,

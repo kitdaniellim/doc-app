@@ -15,10 +15,11 @@ class CalendarPage extends React.Component {
       occupied_dates_obj: {}
     }
   }
-  async componentDidMount() {
+  async componentWillMount() {
     let upcoming_dates = [], finished_dates = [];
     await this.props.getUserAppointments(1);
     if (this.props.appointments.length > 0) {
+      this.props.appointments.sort((a, b) => a.created_at - b.created_at)
       this.props.appointments.map((appointment) => {
         if (appointment.status == "Pending" || appointment.status == "Approved") {
           upcoming_dates.push(appointment.date);
@@ -35,21 +36,21 @@ class CalendarPage extends React.Component {
       this.showOccupiedDates();
     }
   }
-  showOccupiedDates = () => {
+  showOccupiedDates = async () => {
     let occupied_dates_obj = {};
-    this.state.upcoming_dates.forEach((val) => {
+    await this.state.upcoming_dates.forEach((val) => {
       occupied_dates_obj[val] = {
         selected: true,
         selectedColor: "#FCD034"
       };
     });
-    this.state.finished_dates.forEach((val) => {
+    await this.state.finished_dates.forEach((val) => {
       occupied_dates_obj[val] = {
         selected: true,
         selectedColor: "#56EC65"
       }
     });
-    this.setState(() => ({ occupied_dates_obj }));
+    await this.setState(() => ({ occupied_dates_obj }));
   }
   onDayPress = async (date) => {
     try {

@@ -186,6 +186,16 @@ const Calendar = {
     textDecorationLine: 'underline'
   },
 
+  date_details_button_download_label_right: {
+    color: '#12345690',
+    textDecorationLine: 'underline',
+    alignSelf: 'flex-end'
+  },
+
+  date_details_no_files: {
+    color: '#12345690'
+  },
+
   date_details_button_container: {
     flex: 0.4,
     justifyContent: 'center',
@@ -439,6 +449,10 @@ const Calendar = {
     fontWeight: '900',
     letterSpacing: 1,
     textAlign: 'center',
+  },
+
+  modal_list: {
+    padding: 5,
   },
 
   forms_container: {
