@@ -7,6 +7,7 @@ import BookPage3_Form from "./BookPage3_Form";
 import BookPage4_Confirmation from "./BookPage4_Confirmation";
 import { calendarStyles, globalStyles } from "../styles/styles";
 import { bookAppointment, getAppointments } from "../actions/appointments";
+import moment from "moment";
 
 class BookPage extends React.Component {
   constructor(props) {
