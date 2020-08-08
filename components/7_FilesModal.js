@@ -9,6 +9,7 @@ import {
   ScrollView,
   View,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import Modal from "react-native-modal";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -17,6 +18,23 @@ import { calendarStyles, globalStyles } from "../styles/styles";
 class FilesModal extends React.Component {
   constructor(props) {
     super(props);
+  }
+  openFile = (itemRef) => {
+    itemRef.getDownloadURL().then((url) => {
+      Linking.openURL(url);
+    }).catch((error) => {
+      Alert.alert(
+        'Oops!',
+        `There was a problem in viewing the file. \n Details: ${error}`,
+        [
+          {
+            text: 'OK',
+            style: 'cancel'
+          }
+        ],
+        { cancelable: true }
+      );
+    });
   }
   render() {
     return (
@@ -32,23 +50,17 @@ class FilesModal extends React.Component {
             <FlatList
               data={this.props.files}
               renderItem={({ item }) => (
-                <View>
-
+                <View style={calendarStyles.files_flatlist}>
                   <TouchableOpacity
                     onPress={() => {
-                      Linking.openURL(item.file_url);
+                      this.openFile(item.itemRef)
                     }}
                   >
-                    {/* <Text
-                      style={calendarStyles.date_details_button_download_label_right}
-                    >
-                      Open
-                    </Text> */}
                     <Text style={calendarStyles.date_details_button_download_label}>{item.name}</Text>
                   </TouchableOpacity>
                 </View>
               )}
-              keyExtractor={(item) => item.file_url}
+              keyExtractor={(item) => item.name}
             />
           </SafeAreaView>
           <View style={calendarStyles.modal_container_bottom}>

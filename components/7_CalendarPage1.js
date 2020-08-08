@@ -15,7 +15,7 @@ class CalendarPage extends React.Component {
       occupied_dates_obj: {}
     }
   }
-  async componentWillMount() {
+  async componentDidMount() {
     let upcoming_dates = [], finished_dates = [];
     await this.props.getUserAppointments(1);
     if (this.props.appointments.length > 0) {
@@ -31,8 +31,8 @@ class CalendarPage extends React.Component {
       finished_dates = Array.from(new Set(finished_dates));
       upcoming_dates.sort((a, b) => a - b);
       finished_dates.sort((a, b) => a - b);
-      this.setState(() => ({ upcoming_dates }));
-      this.setState(() => ({ finished_dates }));
+      await this.setState(() => ({ upcoming_dates }));
+      await this.setState(() => ({ finished_dates }));
       this.showOccupiedDates();
     }
   }

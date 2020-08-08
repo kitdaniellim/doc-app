@@ -6,22 +6,17 @@ export const getFiles = (appointment_id) => {
   return async (dispatch) => {
     dispatch(loadBegin());
     console.log(`Fetching files from ${appointment_id} folder...`);
-    var results = [];
     let ref = storage.ref().child(`appointments/${appointment_id}`);
-    ref
+    await ref
       .listAll()
       .then((res) => {
+        let results = [];
         res.items.forEach((itemRef) => {
-          itemRef.getDownloadURL().then((url) => {
-            results.push({
-              name: itemRef.name,
-              file_url: url
-            });
+          results.push({
+            name: itemRef.name,
+            itemRef
           });
         });
-      })
-      .then(() => {
-        console.log(results.length);
         dispatch(getFilesSuccess(results));
       })
       .catch((error) => {
@@ -35,7 +30,7 @@ export const getUserAppointments = (client_id) => {
   return async (dispatch) => {
     try {
       dispatch(loadBegin());
-      db.collection("appointments")
+      await db.collection("appointments")
         .where("client_id", "==", client_id)
         .onSnapshot((querySnapShot) => {
           let results = [];

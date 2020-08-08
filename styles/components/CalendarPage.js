@@ -560,6 +560,10 @@ const Calendar = {
     marginRight: 5,
   },
 
+  files_flatlist: {
+    marginTop: 5,
+  }
+
 }
 
 export default Calendar;
