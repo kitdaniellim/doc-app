@@ -1,19 +1,19 @@
-import Global from './components/AP_Global';
-import Nav from './components/AP_Nav';
+import Global from "./components/AP_Global";
+import Nav from "./components/AP_Nav";
 
-import Login from './components/LoginPage';
-import ForgotPassword from './components/FpassPage';
-import Selection from './components/SelectionPage';
-import SignUp from './components/SignupPage';
+import Login from "./components/LoginPage";
+import ForgotPassword from "./components/FpassPage";
+import Selection from "./components/SelectionPage";
+import SignUp from "./components/SignupPage";
 
-import Home from './components/HomePage';
-import Calendar from './components/CalendarPage';
-import Search from './components/SearchPage';
-import Review from './components/ReviewPage';
-import Profile from './components/ProfilePage';
-import Paypal from './components/PaypalPage';
+import Home from "./components/HomePage";
+import Calendar from "./components/CalendarPage";
+import Search from "./components/SearchPage";
+import Review from "./components/ReviewPage";
+import Profile from "./components/ProfilePage";
+import Paypal from "./components/PaypalPage";
 
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 export const globalStyles = StyleSheet.create(Global);
 export const selectionStyles = StyleSheet.create(Selection);
@@ -28,3 +28,5 @@ export const profileStyles = StyleSheet.create(Profile);
 export const paypalStyles = StyleSheet.create(Paypal);
 
 export const navStyles = StyleSheet.create(Nav);
+
+

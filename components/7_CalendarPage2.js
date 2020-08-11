@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { calendarStyles, globalStyles } from "../styles/styles";
 import Modal from "react-native-modal";
-import { getUserAppointments, getFiles } from "../actions/appointments";
+import { getFiles } from "../actions/appointments";
 import AsyncStorage from "@react-native-community/async-storage";
 import FilesModal from "./7_FilesModal.js";
 import moment from "moment";
@@ -54,7 +54,7 @@ class CalendarPage2 extends React.Component {
     this.setState(() => ({ isNotifyModalVisible: true }));
   };
   Close = () => {
-    this.props.navigation.goBack();
+    this.props.navigation.navigate('Calendar1');
   };
   Review = () => {
     this.props.navigation.navigate("Calendar3_Review");
@@ -64,12 +64,27 @@ class CalendarPage2 extends React.Component {
   };
   onViewFiles = async (id) => {
     await this.props.getFiles(id);
-    await this.setState(() => ({ files: this.props.files }));
-    this.state.files.length > 0 && this.setState(() => ({ isFilesModalVisible: true }));
+    if (!this.props.loading) {
+      if (!this.props.error) {
+        this.props.files.length > 0 && this.setState(() => ({ isFilesModalVisible: true }));
+      } else {
+        Alert.alert(
+          'Oops!',
+          `There was an error in fetching data. \n Details: ${this.props.error}`,
+          [
+            {
+              text: 'OK',
+              style: 'cancel'
+            }
+          ],
+          { cancelable: true }
+        );
+      }
+
+    }
   };
   onCloseFilesModal = async () => {
-    await this.setState(() => ({ isFilesModalVisible: false }));
-    this.setState(() => ({ files: [] }));
+    this.setState(() => ({ isFilesModalVisible: false }));
   };
   render() {
     return (
@@ -77,7 +92,7 @@ class CalendarPage2 extends React.Component {
         <FilesModal
           isFilesModalVisible={this.state.isFilesModalVisible}
           onCloseFilesModal={this.onCloseFilesModal}
-          files={this.state.files}
+          files={this.props.files}
         />
         <Modal
           isVisible={this.state.isConfirmModalVisible}
@@ -399,13 +414,11 @@ class CalendarPage2 extends React.Component {
 
 const mapStateToProps = (state) => ({
   loading: state.appointments.loading,
-  appointments: state.appointments.items,
   files: state.appointments.files,
   error: state.appointments.error,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getUserAppointments: (client_id) => dispatch(getUserAppointments(client_id)),
   getFiles: (appointment_id) => dispatch(getFiles(appointment_id)),
 });
 

@@ -29,18 +29,18 @@ export const getFiles = (appointment_id) => {
 export const getUserAppointments = (client_id) => {
   return async (dispatch) => {
     try {
-      dispatch(loadBegin());
-      await db.collection("appointments")
+      await dispatch(loadBegin());
+      db.collection("appointments")
         .where("client_id", "==", client_id)
-        .onSnapshot((querySnapShot) => {
+        .onSnapshot(async (querySnapShot) => {
           let results = [];
           querySnapShot.forEach((doc) => {
             results.push(doc.data());
           });
-          dispatch(getAppointmentsSuccess(results));
+          await dispatch(getAppointmentsSuccess(results));
         });
     } catch (error) {
-      dispatch(getAppointmentsFailure(error));
+      await dispatch(getAppointmentsFailure(error));
     }
   };
 };

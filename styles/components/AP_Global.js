@@ -13,7 +13,7 @@ const Global = {
     fontSize: 30,
     fontWeight: '100',
   },
-  
+
   gradient: {
     flex: 1,
     alignSelf: 'stretch',
@@ -126,10 +126,21 @@ const Global = {
   modal_button_label: {
     color: '#fff',
     fontSize: 10,
-    fontWeight: '600', 
-    letterSpacing: 1, 
+    fontWeight: '600',
+    letterSpacing: 1,
     textAlign: 'center',
   },
+
+  loading_container: {
+    flex: 1,
+    justifyContent: "center"
+  },
+
+  loading_horizontal: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    padding: 10
+  }
 
 }
 
