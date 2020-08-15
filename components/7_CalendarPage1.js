@@ -42,7 +42,7 @@ class CalendarPage extends React.Component {
         this.setState(() => ({ finished_dates }));
         this.showOccupiedDates();
       }
-    }, 1000);
+    }, 2000);
   }
   showOccupiedDates = async () => {
     let occupied_dates_obj = {};
