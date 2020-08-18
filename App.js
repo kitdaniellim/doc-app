@@ -1,13 +1,7 @@
 import React, { Component } from 'react';
 import { Alert, Text, AppRegistry, Button, TextInput, View, StyleSheet } from 'react-native';
 import Temp from './components/1_A_Temp.js'
-//temp
-import Icon1 from 'react-native-vector-icons/FontAwesome';
-import Icon2 from 'react-native-vector-icons/AntDesign';
-import Icon3 from 'react-native-vector-icons/EvilIcons';
-import Icon4 from 'react-native-vector-icons/MaterialCommunityIcons';
-import Icon5 from 'react-native-vector-icons/Octicons';
-import Icon6 from 'react-native-vector-icons/Feather';
+
 import { globalStyles } from './styles/styles';
 
 import { Constants } from 'expo';
@@ -32,7 +26,6 @@ const firebaseConfig = {
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
-
 
 // Make Auth and Firestore References
 //const auth = firebase.auth();
@@ -60,23 +53,14 @@ export default class App extends Component {
     auth.createUserWithEmailAndPassword(username, password);
   }
 
-
-
-
-
-
   render() {
     return (
       <MenuProvider>
         <Routes />
       </MenuProvider>
-      // <Temp />
     );
   }
 }
-
-
-
 
 const styles = StyleSheet.create({
   container: {
