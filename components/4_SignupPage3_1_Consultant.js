@@ -1,5 +1,5 @@
-import React, { useState, Component } from 'react';
-import { Text, TextInput, ScrollView, View, TouchableOpacity } from 'react-native';
+import React, { Component } from 'react';
+import { Text, TextInput, ScrollView, View, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { signupStyles, globalStyles } from '../styles/styles';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -94,7 +94,10 @@ export default class SignupConsultant3_1 extends Component {
 
   render() {
     return (
-      <View style={signupStyles.container}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS == "ios" ? "padding" : "height"}
+        style={signupStyles.container}
+      >
         <LinearGradient
           colors={['rgba(239,239,239,0.5)', 'transparent']}
           start={{ x: 0, y: 0 }}
@@ -171,7 +174,7 @@ export default class SignupConsultant3_1 extends Component {
             </TouchableOpacity>
           </View>
         </LinearGradient>
-      </View>
+      </KeyboardAvoidingView>
     )
   }
 }

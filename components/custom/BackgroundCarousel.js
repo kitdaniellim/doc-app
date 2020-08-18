@@ -16,7 +16,6 @@ class BackgroundCarousel extends React.Component {
     // for carousel auto interval, works but throws warning
     componentDidMount = () => {
         this.interValID = setInterval(() => {
-            console.log('interval')
             this.setState(prev => ({
                 selectedIndex: prev.selectedIndex === this.props.images.length - 1
                     ? 0

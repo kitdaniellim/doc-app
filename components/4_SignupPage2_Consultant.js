@@ -1,5 +1,5 @@
 import React, { useState, Component } from 'react';
-import { Text, TextInput, Button, ScrollView, View, FlatList, TouchableOpacity, TouchableHighlight, StyleSheet } from 'react-native';
+import { Text, TextInput, KeyboardAvoidingView, ScrollView, View, FlatList, TouchableOpacity, TouchableHighlight, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { signupStyles, globalStyles } from '../styles/styles';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -56,8 +56,8 @@ class Dynamic_Input extends Component {
   render() {
     return (
       <View>
-        <View style={{height: 95}}>
-          <ScrollView 
+        <View style={{ height: 95 }}>
+          <ScrollView
             contentContainerStyle={{ flexGrow: 1 }}
             showsVerticalScrollIndicator={false}
           >
@@ -108,15 +108,18 @@ const SignupConsultant2 = ({ navigation }) => {
   }
 
   return (
-    <View style={signupStyles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS == "ios" ? "padding" : "height"}
+      style={signupStyles.container}
+    >
       <LinearGradient
         colors={['rgba(239,239,239,0.5)', 'transparent']}
         start={{ x: 0, y: 0 }}
         end={{ x: 0, y: 1 }}
         style={globalStyles.gradient}
       >
-        <Modal 
-          isVisible={isModalVisible} 
+        <Modal
+          isVisible={isModalVisible}
           animationIn='slideInDown'
           animationOut='slideOutUp'
           animationInTiming={1100}
@@ -174,7 +177,7 @@ const SignupConsultant2 = ({ navigation }) => {
               value={lic}
             />
           </View>
-          <Dynamic_Input/>
+          <Dynamic_Input />
           <Text style={signupStyles.forms_text}>2/4</Text>
           <TouchableOpacity
             activeOpacity={0.6}
@@ -185,7 +188,7 @@ const SignupConsultant2 = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </LinearGradient>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 

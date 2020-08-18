@@ -4,6 +4,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 
 //Auth Screens
+import Landing from '../components/1_LandingPage.js';
 import Login from '../components/2_1_LoginPage.js';
 import ForgotPassword from '../components/2_2_FpassPage.js';
 import Selection from '../components/3_SelectionPage.js';
@@ -82,6 +83,12 @@ const optionsStyles = {
 };
 
 const authScreens = {
+    Landing: {
+        screen: Landing,
+        navigationOptions: () => ({
+            headerShown: false
+        }),
+    },
     Login: {
         screen: Login,
         navigationOptions: () => ({
