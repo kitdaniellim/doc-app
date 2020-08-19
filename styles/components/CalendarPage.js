@@ -160,6 +160,19 @@ const Calendar = {
     padding: 5,
   },
 
+  no_appointments_scaffold: {
+    flexDirection: 'column',
+    borderRadius: 5,
+    backgroundColor: '#ECECEC',
+    marginHorizontal: 5,
+    marginBottom: 15,
+    marginTop: 5,
+    padding: 5,
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
   date_details_text_container: {
     flex: 0.6,
     padding: 5,
@@ -169,6 +182,13 @@ const Calendar = {
     flexWrap: 'wrap',
     fontSize: 13,
     lineHeight: 28,
+    color: 'black'
+  },
+
+  no_appointments_text: {
+    textAlign: 'center',
+    alignSelf: 'center',
+    fontSize: 13,
     color: 'black'
   },
 

@@ -222,7 +222,7 @@ class CalendarPage2 extends React.Component {
                       .toUpperCase()}
                 </Text>
               </View>
-              {this.state.appointments.map((item) => {
+              {this.state.appointments.length > 0 ? this.state.appointments.map((item) => {
                 return (
                   <View
                     key={item.uid.toString()}
@@ -403,7 +403,13 @@ class CalendarPage2 extends React.Component {
                     </View>
                   </View>
                 );
-              })}
+              }) : (
+                <View style={calendarStyles.no_appointments_scaffold}>
+                  <View style={calendarStyles.date_details_button_container}>
+                    <Text style={calendarStyles.no_appointments_text}>You have no appointments on this date</Text>
+                  </View>
+                </View>
+              )}
             </ScrollView>
           </View>
         </View>
