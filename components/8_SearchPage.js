@@ -1,43 +1,29 @@
-import React, { useState } from 'react';
-import { Text, View, FlatList, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Text, Image, View, FlatList, TouchableOpacity } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { searchStyles } from '../styles/styles';
+import RNPickerSelect from 'react-native-picker-select';
+import { searchStyles, signupStyles } from '../styles/styles';
 
 
 const Search = ({ navigation }) => {
   const [search, setSearch] = useState('');
-  const filter_temp = (navigation.getParam('userSpecialty') !== null) ? true : false;
-  const [isFilterVisible, toggleFilter] = useState(filter_temp);
-  let button_temp = (navigation.getParam('userSpecialty') === 'ENGINEERS') ?
-    1
-    :
-    (navigation.getParam('userSpecialty') === 'DOCTORS') ?
-      2
-      :
-      (navigation.getParam('userSpecialty') === 'ARCHITECTS') ?
-        3
-        :
-        (navigation.getParam('userSpecialty') === 'LAWYERS') ?
-          4
-          :
-          (navigation.getParam('userSpecialty') === 'BUSINESSMEN') ?
-            5
-            :
-            (navigation.getParam('userSpecialty') === 'THERAPISTS') ?
-              6
-              :
-              (navigation.getParam('userSpecialty') === 'TEACHERS') ?
-                7
-                :
-                0
-  const [button1, toggleButton1] = useState(false);
-  const [button2, toggleButton2] = useState(false);
-  const [button3, toggleButton3] = useState(false);
-  const [button4, toggleButton4] = useState(false);
-  const [button5, toggleButton5] = useState(false);
-  const [button6, toggleButton6] = useState(false);
-  const [button7, toggleButton7] = useState(false);
+  const [filter_var, setFilter] = useState('None');
+
+  useEffect(() => {
+    switch (navigation.getParam('userSpecialty')) {
+      case 'None': setFilter('None');
+        break;
+      case 'ENGINEERS': setFilter('ENGINEERS');
+        break;
+      case 'DOCTORS': setFilter('DOCTORS');
+        break;
+      case 'ARCHITECTS': setFilter('ARCHITECTS');
+        break;
+      case 'LAWYERS': setFilter('LAWYERS');
+        break;
+    }
+  }, [navigation.getParam('userSpecialty')]);
 
   const Profile = () => {
     navigation.navigate('Profile');
@@ -49,15 +35,33 @@ const Search = ({ navigation }) => {
       data: [
         {
           id: 1,
-          name: 'Go'
+          name: 'Go',
+          img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
         },
         {
           id: 2,
-          name: 'Helsinki'
+          name: 'Helsinki',
+          img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
         },
         {
           id: 3,
-          name: 'Berlin'
+          name: 'Berlin',
+          img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
+        },
+        {
+          id: 4,
+          name: 'Troy',
+          img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
+        },
+        {
+          id: 5,
+          name: 'Troy',
+          img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
+        },
+        {
+          id: 6,
+          name: 'Troy',
+          img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
         },
       ],
       key: 1,
@@ -68,15 +72,18 @@ const Search = ({ navigation }) => {
       data: [
         {
           id: 1,
-          name: 'Tokyo'
+          name: 'Tokyo',
+          img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
         },
         {
           id: 2,
-          name: 'Denver'
+          name: 'Denver',
+          img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
         },
         {
           id: 3,
-          name: 'Rio'
+          name: 'Rio',
+          img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
         },
       ],
       key: 2,
@@ -87,15 +94,18 @@ const Search = ({ navigation }) => {
       data: [
         {
           id: 1,
-          name: 'Arnoco'
+          name: 'Arnoco',
+          img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
         },
         {
           id: 2,
-          name: 'Bermuda'
+          name: 'Bermuda',
+          img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
         },
         {
           id: 3,
-          name: 'Rosotto'
+          name: 'Rosotto',
+          img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
         },
       ],
       key: 3,
@@ -106,75 +116,21 @@ const Search = ({ navigation }) => {
       data: [
         {
           id: 1,
-          name: 'Madeyo'
+          name: 'Madeyo',
+          img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
         },
         {
           id: 2,
-          name: 'Blanca'
+          name: 'Blanca',
+          img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621'
         },
         {
           id: 3,
-          name: 'Joseph'
+          name: 'Joseph',
+          img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
         },
       ],
       key: 4,
-    },
-
-    {
-      field: "BUSINESSMEN",
-      data: [
-        {
-          id: 1,
-          name: 'Shelby'
-        },
-        {
-          id: 2,
-          name: 'Oquias'
-        },
-        {
-          id: 3,
-          name: 'Chengretto'
-        },
-      ],
-      key: 5,
-    },
-
-    {
-      field: "THERAPISTS",
-      data: [
-        {
-          id: 1,
-          name: 'Steffan'
-        },
-        {
-          id: 2,
-          name: 'Gabriel'
-        },
-        {
-          id: 3,
-          name: 'Theadosia'
-        },
-      ],
-      key: 6,
-    },
-
-    {
-      field: "TEACHERS",
-      data: [
-        {
-          id: 1,
-          name: 'Dell'
-        },
-        {
-          id: 2,
-          name: 'Mozart'
-        },
-        {
-          id: 3,
-          name: 'Franklin'
-        },
-      ],
-      key: 7,
     },
   ];
 
@@ -194,13 +150,11 @@ const Search = ({ navigation }) => {
             searchIcon={{ size: 16 }}
             clearIcon={{ size: 16 }}
             cancelIcon={{ size: 16 }}
-            placeholder="Click here to start searching!"
+            placeholder="Enter Professional's Name Here"
             containerStyle={{
               height: 40,
               justifyContent: 'center',
               marginTop: 2,
-              // borderBottomColor: '#8B8787',
-              // borderBottomWidth: 1
             }}
             inputStyle={{
               justifyContent: 'center',
@@ -210,186 +164,108 @@ const Search = ({ navigation }) => {
         </View>
       </View>
       <View style={searchStyles.filter_container}>
-        <TouchableOpacity
-          activeOpacity={0.6}
-          onPress={() => { toggleFilter(!isFilterVisible) }}
-          style={searchStyles.filter_label_container}
-        >
+        <View style={searchStyles.filter_label_container}>
           <Text style={searchStyles.filter_label}>FILTER</Text>
-          <Icon
-            style={searchStyles.filter_icon}
-            name={(isFilterVisible) ? "caret-up" : "caret-down"}
-            size={16}
+        </View>
+        <View style={{ width: 150, height: 50, justifyContent: 'center' }}>
+          <RNPickerSelect
+            placeholder={{
+              label: 'None',
+              value: 'None',
+              color: '#8B8787'
+            }}
+            style={{
+              viewContainer: {
+                alignSelf: 'stretch',
+                backgroundColor: '#fff',
+              },
+              inputIOS: {
+                color: '#8B8787',
+              },
+              inputAndroid: {
+                color: '#8B8787',
+              },
+            }}
+
+            onValueChange={value => setFilter(value)}
+            value={filter_var}
+            items={[
+              { label: 'ENGINEERS', value: 'ENGINEERS' },
+              { label: 'DOCTORS', value: 'DOCTORS' },
+              { label: 'ARCHITECTS', value: 'ARCHITECTS' },
+              { label: 'LAWYERS', value: 'LAWYERS' },
+            ]}
           />
-        </TouchableOpacity>
-        {(isFilterVisible) ?
-          <View style={searchStyles.filter_options_container}>
-            <TouchableOpacity
-              activeOpacity={0.6}
-              onPress={() => { 
-                toggleButton1(!button1) 
-                button_temp = 0
-              }}
-              style={((button_temp === 1) ? () => { toggleButton1(!button1) } : button1) ?
-                searchStyles.filter_options_button_lit
-                :
-                searchStyles.filter_options_button
-              }
-            >
-              <Text
-                style={((button_temp === 1) ? () => { toggleButton1(!button1) } : button1) ?
-                  searchStyles.filter_options_button_label_lit
-                  :
-                  searchStyles.filter_options_button_label
-                }
-              >
-                ENGINEERS
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.6}
-              onPress={() => { toggleButton2(!button2) }}
-              style={((button_temp === 2) ? () => { toggleButton2(!button2) } : button2) ?
-                searchStyles.filter_options_button_lit
-                :
-                searchStyles.filter_options_button
-              }
-            >
-              <Text
-                style={((button_temp === 2) ? () => { toggleButton2(!button2) } : button2) ?
-                  searchStyles.filter_options_button_label_lit
-                  :
-                  searchStyles.filter_options_button_label
-                }
-              >
-                DOCTORS
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.6}
-              onPress={() => { toggleButton3(!button3) }}
-              style={((button_temp === 3) ? () => { toggleButton3(!button3) } : button3) ?
-                searchStyles.filter_options_button_lit
-                :
-                searchStyles.filter_options_button
-              }
-            >
-              <Text
-                style={((button_temp === 3) ? () => { toggleButton3(!button3) } : button3) ?
-                  searchStyles.filter_options_button_label_lit
-                  :
-                  searchStyles.filter_options_button_label
-                }
-              >
-                ARCHITECTS
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.6}
-              onPress={() => { toggleButton4(!button4) }}
-              style={((button_temp === 4) ? () => { toggleButton4(!button4) } : button4) ?
-                searchStyles.filter_options_button_lit
-                :
-                searchStyles.filter_options_button
-              }
-            >
-              <Text
-                style={((button_temp === 4) ? () => { toggleButton4(!button4) } : button4) ?
-                  searchStyles.filter_options_button_label_lit
-                  :
-                  searchStyles.filter_options_button_label
-                }
-              >
-                LAWYERS
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.6}
-              onPress={() => { toggleButton5(!button5) }}
-              style={((button_temp === 5) ? () => { toggleButton5(!button5) } : button5) ?
-                searchStyles.filter_options_button_lit
-                :
-                searchStyles.filter_options_button
-              }
-            >
-              <Text
-                style={((button_temp === 5) ? () => { toggleButton5(!button5) } : button5) ?
-                  searchStyles.filter_options_button_label_lit
-                  :
-                  searchStyles.filter_options_button_label
-                }
-              >
-                BUSINESSMEN
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.6}
-              onPress={() => { toggleButton6(!button6) }}
-              style={((button_temp === 6) ? () => { toggleButton6(!button6) } : button6) ?
-                searchStyles.filter_options_button_lit
-                :
-                searchStyles.filter_options_button
-              }
-            >
-              <Text
-                style={((button_temp === 6) ? () => { toggleButton6(!button6) } : button6) ?
-                  searchStyles.filter_options_button_label_lit
-                  :
-                  searchStyles.filter_options_button_label
-                }
-              >
-                THERAPISTS
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.6}
-              onPress={() => { toggleButton7(!button7) }}
-              style={((button_temp === 7) ? () => { toggleButton7(!button7) } : button7) ?
-                searchStyles.filter_options_button_lit
-                :
-                searchStyles.filter_options_button
-              }
-            >
-              <Text
-                style={((button_temp === 7) ? () => { toggleButton7(!button7) } : button7) ?
-                  searchStyles.filter_options_button_label_lit
-                  :
-                  searchStyles.filter_options_button_label
-                }
-              >
-                TEACHERS
-              </Text>
-            </TouchableOpacity>
-          </View>
-          :
-          null
-        }
+        </View>
       </View>
       <View style={searchStyles.scaffold}>
-        {/* <Text>{navigation.getParam('userSpecialty')}</Text> */}
         <FlatList
           data={list}
           showsVerticalScrollIndicator={false}
           keyExtractor={(item) => item.key.toString()}
           renderItem={({ item }) => (
             <View>
-              <View style={searchStyles.scaffold_list_container}>
-                <View style={searchStyles.scaffold_list_item_container}>
-                  <Text style={searchStyles.scaffold_list_item_header}>{item.field}</Text>
-                  {item.data.map((value) => {
-                    return (
-                      <TouchableOpacity
-                        key={value.id}
-                        activeOpacity={0.6}
-                        onPress={Profile}
-                        style={searchStyles.scaffold_list_container}
-                      >
-                        <Text style={searchStyles.scaffold_list_item_data}>Dr. {value.name}</Text>
-                      </TouchableOpacity>
-                    )
-                  })}
+              {(filter_var === 'None') ?
+                <View style={searchStyles.scaffold_list_container}>
+                  <View style={searchStyles.scaffold_list_item_container}>
+                    <Text style={searchStyles.scaffold_list_item_header}>{item.field}</Text>
+                    {item.data.map((value) => {
+                      return (
+                        <TouchableOpacity
+                          key={value.id}
+                          activeOpacity={0.6}
+                          onPress={Profile}
+                          style={searchStyles.scaffold_list_container}
+                        >
+                          <View style={{ flexDirection: 'row' }}>
+                            <View>
+                              <Image
+                                source={{ uri: value.img }}
+                                style={searchStyles.scaffold_list_item_img}
+                              />
+                            </View>
+                            <View style={{ justifyContent: 'center' }}>
+                              <Text style={searchStyles.scaffold_list_item_data}>Dr. {value.name}</Text>
+                              <Text style={searchStyles.scaffold_list_item_data}>Opthalmology</Text>
+                            </View>
+                          </View>
+                        </TouchableOpacity>
+                      )
+                    })}
+                  </View>
                 </View>
-              </View>
+                :
+                (item.field === filter_var) ?
+                  <View style={searchStyles.scaffold_list_container}>
+                    <View style={searchStyles.scaffold_list_item_container}>
+                      <Text style={searchStyles.scaffold_list_item_header}>{item.field}</Text>
+                      {item.data.map((value) => {
+                        return (
+                          <TouchableOpacity
+                            key={value.id}
+                            activeOpacity={0.6}
+                            onPress={Profile}
+                            style={searchStyles.scaffold_list_container}
+                          >
+                            <View style={{ flexDirection: 'row' }}>
+                              <View>
+                                <Image
+                                  source={{ uri: value.img }}
+                                  style={searchStyles.scaffold_list_item_img}
+                                />
+                              </View>
+                              <View style={{ justifyContent: 'center' }}>
+                                <Text style={searchStyles.scaffold_list_item_data}>Dr. {value.name}</Text>
+                                <Text style={searchStyles.scaffold_list_item_data}>Opthalmology</Text>
+                              </View>
+                            </View>
+                          </TouchableOpacity>
+                        )
+                      })}
+                    </View>
+                  </View>
+                  :
+                  null}
             </View>
           )}
         />

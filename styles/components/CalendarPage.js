@@ -27,7 +27,8 @@ const Calendar = {
 
   header_text_bold: {
     paddingLeft: 10,
-    fontSize: 11,
+    fontSize: 12,
+    fontWeight: '700',
     color: '#8B8787',
     justifyContent: 'center',
   },
@@ -124,8 +125,8 @@ const Calendar = {
   },
 
   calendar_legend_label: {
-    fontSize: 11,
-    fontWeight: '300',
+    fontSize: 15,
+    fontWeight: '500',
     color: '#8B8787'
   },
 
@@ -135,7 +136,7 @@ const Calendar = {
   },
 
   calendar_legend_text: {
-    fontSize: 11,
+    fontSize: 15,
     color: '#8B8787',
     marginLeft: 8,
   },
@@ -182,8 +183,9 @@ const Calendar = {
 
   date_details_container: {
     backgroundColor: '#fff',
-    borderRadius: 15,
+    // borderRadius: 10,
     marginTop: 8,
+    paddingBottom: 10,
     paddingHorizontal: 8,
     justifyContent: 'center',
     alignSelf: 'stretch',
@@ -191,9 +193,20 @@ const Calendar = {
 
   date_details_header: {
     color: '#8B8787',
-    fontSize: 12,
+    fontSize: 13,
+    fontWeight: '500',
     letterSpacing: 1,
     margin: 2,
+    justifyContent: 'center',
+  },
+
+  date_details_text_header: {
+    color: '#8B8787',
+    fontSize: 13,
+    fontWeight: '500',
+    letterSpacing: 1,
+    margin: 2,
+    paddingLeft: 15,
     justifyContent: 'center',
   },
 
@@ -201,15 +214,24 @@ const Calendar = {
     flexDirection: 'row',
     borderRadius: 5,
     backgroundColor: '#ECECEC',
-    marginHorizontal: 5,
-    marginBottom: 15,
-    marginTop: -5,
+    marginHorizontal: 16,
+    marginVertical: 8,
     padding: 5,
   },
 
   date_details_text_container: {
     flex: 0.6,
     padding: 5,
+  },
+
+  date_details_text_item_container: {
+    margin: 5
+  },
+
+  date_details_label: {
+    fontSize: 15,
+    fontWeight: '500',
+    color: '#000',
   },
 
   date_details_text: {
@@ -300,7 +322,17 @@ const Calendar = {
     color: '#fff',
     fontSize: 16,
     justifyContent: 'center',
-    alignSelf: 'center'
+    alignSelf: 'center',
+  },
+  
+  date_details_button_choose: {
+    height: 30,
+    backgroundColor: '#56EC65',
+    borderRadius: 15,
+    padding: 5,
+    justifyContent: 'center',
+    alignSelf: 'stretch',
+    marginHorizontal: 9,
   },
 
   date_details_button_icon: {
@@ -525,7 +557,7 @@ const Calendar = {
     justifyContent: 'center',
     alignSelf: 'stretch',
     marginHorizontal: 12,
-    marginTop: 15,
+    marginBottom: 15,
   },
 
   forms_button_submit_label: {
@@ -583,15 +615,15 @@ const Calendar = {
   },
 
   forms_disclaimer: {
-    fontSize: 12,
+    fontSize: 14,
     color: '#8B8787',
-    lineHeight: 20,
+    lineHeight: 25,
     marginHorizontal: 10,
     marginBottom: 10,
   },
 
   forms_options_header: {
-    fontSize: 12,
+    fontSize: 14,
     color: '#8B8787',
     marginBottom: 10,
     marginHorizontal: 10,
@@ -638,6 +670,27 @@ const Calendar = {
     marginRight: 5,
   },
 
+  conf_container: {
+    flex: 1,
+    marginVertical: 15,
+    justifyContent: 'space-between'
+  },
+
+  conf_item: {
+    marginLeft: 20,
+  },
+
+  conf_label: {
+    fontSize: 17,
+    fontWeight: '600',
+    color: '#000',
+    marginVertical: 5,
+  },
+
+  conf_data: {
+    fontSize: 15,
+    color: '#8B8787'
+  },
 }
 
 export default Calendar;

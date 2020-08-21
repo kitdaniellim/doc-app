@@ -8,35 +8,32 @@ class Book2_Time extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: [
-        {
-          key: 1,
-          location: "333 St., aaa Bldg, Lapu-lapu, Philippines",
-          time_start: "7:00",
-          time_end: "11:00",
-        },
-        {
-          key: 2,
-          location: "Gen Maxilom Avenue, Kamputhaw",
-          time_start: "15:00",
-          time_end: "17:00",
-        },
-        {
-          key: 3,
-          location: "Nasipit, Talamban",
-          time_start: "7:30",
-          time_end: "8:00",
-        },
-        {
-          key: 4,
-          location: "IT Park, Apas",
-          time_start: "20:30",
-          time_end: "22:30",
-        },
-      ],
+      selected: [],
       current_date: moment().format("YYYY-MM-DD"),
       current_time: moment().format("HH:mm").toString(),
+      //static consultant data
+      consultant: {
+        location: "IT Park, Apas",
+        time_start: moment("07:30", "HH:mm"),
+        time_end: moment("22:30", "HH:mm"),
+      }
     };
+  }
+  componentDidMount() {
+    let selected = [], count = 1;
+    //consultant time_start and time_end is set here
+    let time_start = this.state.consultant.time_start;
+    let time_end = this.state.consultant.time_end;
+    while (time_start.isBefore(time_end)) {
+      let schedule = {
+        key: count,
+        time_start: time_start.format("HH:mm").toString(),
+        time_end: time_start.add('15', 'minutes').format("HH:mm").toString(),
+      }
+      selected.push(schedule);
+      count++;
+    }
+    this.setState(() => ({ selected }));
   }
   getUTCValue = (time) => {
     return moment.utc(time, "hh:mm").format("HH:mm").toString();
@@ -143,7 +140,7 @@ class Book2_Time extends React.Component {
                           <View>
                             <Text style={calendarStyles.date_details_text}>
                               Location: {"\n"}
-                              {item.location} {"\n"}
+                              {this.state.consultant.location} {"\n"}
                               Time: {"\n"}
                               {moment(item.time_start, "HH:mm").format(
                                 "h:mm A"
@@ -162,7 +159,7 @@ class Book2_Time extends React.Component {
                               this.props.onStep2Submit(item);
                             }}
                             style={
-                              this.props.location == item.location &&
+                              this.props.location == this.state.consultant.location &&
                                 this.props.time_start == item.time_start &&
                                 this.props.time_end == item.time_end
                                 ? calendarStyles.date_details_button_review_active
@@ -171,7 +168,7 @@ class Book2_Time extends React.Component {
                           >
                             <Text
                               style={
-                                this.props.location == item.location &&
+                                this.props.location == this.state.consultant.location &&
                                   this.props.time_start == item.time_start &&
                                   this.props.time_end == item.time_end
                                   ? calendarStyles.date_details_button_label_active
@@ -196,7 +193,7 @@ class Book2_Time extends React.Component {
                           <View>
                             <Text style={calendarStyles.date_details_text}>
                               Location: {"\n"}
-                              {item.location} {"\n"}
+                              {this.state.consultant.location} {"\n"}
                               Time: {"\n"}
                               {moment(item.time_start, "HH:mm").format(
                                 "h:mm A"
@@ -215,7 +212,7 @@ class Book2_Time extends React.Component {
                               this.props.onStep2Submit(item);
                             }}
                             style={
-                              this.props.location == item.location &&
+                              this.props.location == this.state.consultant.location &&
                                 this.props.time_start == item.time_start &&
                                 this.props.time_end == item.time_end
                                 ? calendarStyles.date_details_button_review_active
@@ -224,7 +221,7 @@ class Book2_Time extends React.Component {
                           >
                             <Text
                               style={
-                                this.props.location == item.location &&
+                                this.props.location == this.state.consultant.location &&
                                   this.props.time_start == item.time_start &&
                                   this.props.time_end == item.time_end
                                   ? calendarStyles.date_details_button_label_active

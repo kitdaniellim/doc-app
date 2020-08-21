@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, TextInput, View, TouchableOpacity } from 'react-native';
+import { Text, TextInput, View, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { signupStyles, globalStyles } from '../styles/styles';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -7,10 +7,10 @@ import Modal from 'react-native-modal';
 
 
 const SignupClient1 = ({ navigation }) => {
-  const [username, setUser] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPass] = useState('');
-  const [cpassword, setCpass] = useState('');
+  const [username, setUser] = useState('username');
+  const [email, setEmail] = useState('troygo@gmail.com');
+  const [password, setPass] = useState('password');
+  const [cpassword, setCpass] = useState('password');
   const [message, setMessage] = useState('Seems like you missed one. Please fill in all the required fields before proceeding.');
   const [isModalVisible, toggleModal] = useState(false);
 
@@ -48,7 +48,10 @@ const SignupClient1 = ({ navigation }) => {
   }
 
   return (
-    <View style={signupStyles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS == "ios" ? "padding" : "height"}
+      style={signupStyles.container}
+    >
       <LinearGradient
         colors={['rgba(239,239,239,0.5)', 'transparent']}
         start={{ x: 0, y: 0 }}
@@ -57,7 +60,7 @@ const SignupClient1 = ({ navigation }) => {
       >
         <Modal
           isVisible={isModalVisible}
-          animationIn='bounceInDown'
+          animationIn='slideInDown'
           animationOut='slideOutUp'
           animationInTiming={1100}
           animationOutTiming={900}
@@ -134,7 +137,7 @@ const SignupClient1 = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </LinearGradient>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 

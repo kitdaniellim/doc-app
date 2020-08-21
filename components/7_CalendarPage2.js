@@ -6,7 +6,7 @@ import Modal from 'react-native-modal';
 
 const CalendarPage2 = ({ navigation }) => {
   //sample userType
-  const isClient = false // <-- switch between true or false
+  const isClient = true // <-- switch between true or false
   //sample data
   const selected = [
     {
@@ -102,7 +102,7 @@ const CalendarPage2 = ({ navigation }) => {
     <View style={calendarStyles.container}>
       <Modal
         isVisible={isConfirmModalVisible}
-        animationIn='bounceInDown'
+        animationIn='slideInDown'
         animationOut='slideOutUp'
         animationInTiming={1100}
         animationOutTiming={900}

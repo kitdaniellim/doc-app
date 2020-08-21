@@ -42,7 +42,7 @@ const ForgotPassword = ({ navigation }) => {
       >
         <Modal
           isVisible={isModalVisible}
-          animationIn='bounceInDown'
+          animationIn='slideInDown'
           animationOut='slideOutUp'
           animationInTiming={1100}
           animationOutTiming={900}

@@ -4,6 +4,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 
 //Auth Screens
+import Landing from '../components/1_LandingPage.js';
 import Login from '../components/2_1_LoginPage.js';
 import ForgotPassword from '../components/2_2_FpassPage.js';
 import Selection from '../components/3_SelectionPage.js';
@@ -38,7 +39,7 @@ import EditProfile_2 from '../components/EditProfilePage_2.js';
 import Paypal from '../components/PaypalPage.js';
 
 import React from 'react';
-import { View, ScrollView, FlatList, Text, TouchableOpacity } from 'react-native';
+import { View, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Header from '../components/custom/Header.js';
 
@@ -83,6 +84,12 @@ const optionsStyles = {
 };
 
 const authScreens = {
+    Landing: {
+        screen: Landing,
+        navigationOptions: () => ({
+            headerShown: false
+        }),
+    },
     Login: {
         screen: Login,
         navigationOptions: () => ({
@@ -250,6 +257,7 @@ const clientTabScreens = {
 
     Search: {
         screen: Search,
+        params: { userSpecialty: "None" },
         navigationOptions: {
             title: 'Search',
             tabBarIcon: ({ tintColor }) => (
@@ -362,7 +370,7 @@ const consultantTabNavigator = createMaterialBottomTabNavigator(
 )
 
 function getTabs() {
-    let isClient = false;
+    let isClient = true;
     return (isClient) ? clientTabNavigator : consultantTabNavigator
 }
 
@@ -415,12 +423,12 @@ const appScreens = {
     Home: {
         screen: getTabs(),
         navigationOptions: ({ navigation }) => ({
-            headerTitle: () => <Header/>,
+            headerTitle: () => <Header />,
             headerLeft: () => null,
             headerRight: () => {
                 return (
                     <View style={{ flexDirection: 'row' }}>
-                        <Menu onSelect={() => {navigation.navigate('Calendar1')}}>
+                        <Menu onSelect={() => { navigation.navigate('Calendar1') }}>
                             <MenuTrigger
                                 style={{ marginRight: 25, padding: 10, }}
                             >
@@ -436,9 +444,9 @@ const appScreens = {
                                         data={notifs}
                                         showsVerticalScrollIndicator={false}
                                         keyExtractor={(item) => item.key.toString()}
-                                        ItemSeparatorComponent={()=>{
-                                            return(
-                                                <View style={{borderBottomColor: '#00000080', borderBottomWidth: 1,  alignSelf: 'stretch'}}/>
+                                        ItemSeparatorComponent={() => {
+                                            return (
+                                                <View style={{ borderBottomColor: '#00000080', borderBottomWidth: 1, alignSelf: 'stretch' }} />
                                             );
                                         }}
                                         renderItem={({ item }) => (

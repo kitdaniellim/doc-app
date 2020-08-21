@@ -45,7 +45,7 @@ class BookPage extends React.Component {
     let temp,
       count = 0,
       occupied_dates_obj = {};
-    //Assuming date is unavailable when 3 appointments are already booked on the same said date
+    //Assuming date is unavailable when 8 appointments are already booked on the same said date
     this.state.occupied_dates.forEach((val) => {
       if (!temp) {
         temp = val;
@@ -55,7 +55,7 @@ class BookPage extends React.Component {
       } else {
         count = 1;
       }
-      if (count == 3) {
+      if (count == 8) {
         occupied_dates_obj[val] = {
           selected: true,
           disableTouchEvent: true,

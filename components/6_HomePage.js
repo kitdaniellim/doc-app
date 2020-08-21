@@ -50,136 +50,136 @@ const Home = ({ navigation }) => {
       key: 1,
       userSpecialty: "DOCTORS",
       fullName: "Dr. Seuss",
-      img: require("../assets/pp_sample1.png"),
+      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
     },
     {
       key: 2,
       userSpecialty: "ARCHITECTS",
       fullName: "Dr. Pepito",
-      img: require("../assets/pp_sample3.png"),
+      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
     },
     {
       key: 3,
       userSpecialty: "LAWYERS",
       fullName: "Dr. Berlin",
-      img: require("../assets/pp_sample2.png"),
+      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
     },
     {
       key: 4,
       userSpecialty: "ENGINEERS",
       fullName: "Dr. Helsinki",
-      img: require("../assets/pp_sample6.png"),
+      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
     },
     {
       key: 5,
       userSpecialty: "DOCTORS",
       fullName: "Dr. James",
-      img: require("../assets/pp_sample3.png"),
+      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
     },
     {
       key: 6,
       userSpecialty: "DOCTORS",
       fullName: "Dr. James",
-      img: require("../assets/pp_sample8.png"),
+      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
     },
     {
       key: 7,
       userSpecialty: "DOCTORS",
       fullName: "Dr. James",
-      img: require("../assets/pp_sample5.png"),
+      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
     },
     {
       key: 8,
       userSpecialty: "DOCTORS",
       fullName: "Dr. James",
-      img: require("../assets/pp_sample3.png"),
+      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
     },
     {
       key: 9,
       userSpecialty: "ARCHITECTS",
       fullName: "Dr. James",
-      img: require("../assets/pp_sample2.png"),
+      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
     },
     {
       key: 10,
       userSpecialty: "LAWYERS",
       fullName: "Dr. John",
-      img: require("../assets/pp_sample5.png"),
+      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
     },
     {
       key: 11,
       userSpecialty: "ENGINEERS",
       fullName: "Dr. James",
-      img: require("../assets/pp_sample1.png"),
+      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
     },
     {
       key: 12,
       userSpecialty: "ENGINEERS",
       fullName: "Dr. James",
-      img: require("../assets/pp_sample7.png"),
+      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
     },
     {
       key: 13,
       userSpecialty: "ENGINEERS",
       fullName: "Dr. James",
-      img: require("../assets/pp_sample5.png"),
+      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
     },
     {
       key: 14,
       userSpecialty: "ENGINEERS",
       fullName: "Dr. James",
-      img: require("../assets/pp_sample8.png"),
+      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
     },
     {
       key: 15,
       userSpecialty: "LAWYERS",
       fullName: "Dr. James",
-      img: require("../assets/pp_sample5.png"),
+      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
     },
     {
       key: 16,
       userSpecialty: "ARCHITECTS",
       fullName: "Dr. Jose",
-      img: require("../assets/pp_sample8.png"),
+      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
     },
     {
       key: 17,
       userSpecialty: "ARCHITECTS",
       fullName: "Dr. John",
-      img: require("../assets/pp_sample5.png"),
+      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
     },
     {
       key: 18,
       userSpecialty: "ARCHITECTS",
       fullName: "Dr. Jacob",
-      img: require("../assets/pp_sample8.png"),
+      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
     },
     {
       key: 19,
       userSpecialty: "LAWYERS",
       fullName: "Dr. Jose",
-      img: require("../assets/pp_sample8.png"),
+      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
     },
     {
       key: 20,
       userSpecialty: "LAWYERS",
       fullName: "Dr. Jacob",
-      img: require("../assets/pp_sample8.png"),
+      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
     },
   ];
 
   const images = [
     {
       key: 1,
-      img: require("../assets/carousel_sample1.png"),
+      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/homepage%2Fassets_carousel_sample1.png?alt=media&token=b84c2e8e-c810-41ba-99aa-74655ee4cac6',
     },
     {
       key: 2,
-      img: require("../assets/carousel_sample2.png"),
+      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/homepage%2Fassets_carousel_sample2.png?alt=media&token=02db3f2f-a342-454b-8ae1-ecc32543a769',
     },
     {
       key: 3,
-      img: require("../assets/carousel_sample3.png"),
+      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/homepage%2Fassets_carousel_sample3.png?alt=media&token=60635cf7-dc00-4685-b379-731d722673b9',
     },
   ];
 
@@ -239,7 +239,7 @@ const Home = ({ navigation }) => {
                                     style={homeStyles.scaffold_hlist_item_box_image_container}
                                   >
                                     <Image
-                                      source={data.img}
+                                      source={{ uri: data.img }}
                                       style={homeStyles.scaffold_hlist_item_box_image}
                                     />
                                   </TouchableOpacity>

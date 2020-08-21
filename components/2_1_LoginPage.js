@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { Image, Text, TextInput, View, TouchableOpacity } from 'react-native';
+import { Image, Text, KeyboardAvoidingView, TextInput, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { loginStyles, globalStyles } from '../styles/styles';
 import { LinearGradient } from 'expo-linear-gradient';
 import Modal from 'react-native-modal';
 
 const Login = ({ navigation }) => {
-  const [username, setUser] = useState('a');
-  const [password, setPass] = useState('b');
+  const [username, setUser] = useState('username');
+  const [password, setPass] = useState('password');
   const [isModalVisible, toggleModal] = useState(false);
 
   function Close() {
@@ -31,17 +31,20 @@ const Login = ({ navigation }) => {
   }
 
   return (
-    <View style={loginStyles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS == "ios" ? "padding" : "height"}
+      style={loginStyles.container}
+    >
       <LinearGradient
         colors={['rgba(239,239,239,0.5)', 'transparent']}
         start={{ x: 0, y: 0 }}
         end={{ x: 0, y: 1 }}
         style={globalStyles.gradient}
       >
-        <Modal 
-          isVisible={isModalVisible} 
-          animationIn='bounceInDown'
-          animationOut='bounceOutUp'
+        <Modal
+          isVisible={isModalVisible}
+          animationIn='slideInDown'
+          animationOut='slideOutUp'
           animationInTiming={1100}
           animationOutTiming={900}
         >
@@ -64,15 +67,13 @@ const Login = ({ navigation }) => {
         </Modal>
         <View style={loginStyles.forms_container}>
           <View style={loginStyles.forms_header_container}>
-            {/* <Icon style={globalStyles.icon_client} name="user" size={42} />
-            <Text style={loginStyles.forms_label}>JOIN A MEETING</Text> */}
             <Image
               source={require("../assets/app_logo.png")}
-              style={{height: 110, width: 110}}
+              style={{ height: 110, width: 110 }}
             />
             <Image
               source={require("../assets/app_name_1.png")}
-              style={{height: 50, width: 120,}}
+              style={{ height: 50, width: 120, }}
             />
           </View>
           <View style={loginStyles.forms_textinput_container}>
@@ -128,7 +129,7 @@ const Login = ({ navigation }) => {
           </View>
         </View>
       </LinearGradient>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 

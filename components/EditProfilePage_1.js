@@ -120,7 +120,7 @@ export default class EditProfile_1 extends Component {
         <View style={profileStyles.scaffold}>
           <Modal
             isVisible={this.state.isModalVisible}
-            animationIn='bounceInDown'
+            animationIn='slideInDown'
             animationOut='bounceOutUp'
             animationInTiming={1100}
             animationOutTiming={900}
