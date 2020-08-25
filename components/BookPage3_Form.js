@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import { FlatList, Text, View, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { Alert, FlatList, Text, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { calendarStyles, globalStyles } from '../styles/styles';
-import CheckBox from '@react-native-community/checkbox';
 import * as DocumentPicker from 'expo-document-picker';
 
 class Book3_Form extends React.Component {
@@ -23,9 +22,22 @@ class Book3_Form extends React.Component {
     });
     if (!result.cancelled) {
       let check = this.state.files.filter(file => result.name == file.name).length;
+      const allowed = ["doc", "docx", "xlsx", "csv", "jpg", "png", "svg", "pdf", "txt"];
       if (check != 0) {
         alert("File name already attached");
-      } else {
+      } else if (!allowed.includes(result.name.substring(result.name.lastIndexOf(".") + 1))) {
+        Alert.alert(
+          'Error!',
+          `Invalid file format: ${result.name.substring(result.name.lastIndexOf(".") + 1)}`,
+          [
+            {
+              text: 'OK',
+              style: 'cancel'
+            }
+          ],
+          { cancelable: true }
+        );
+      }else {
         files.push(result);
         this.setState(() => ({ files }));
         this.props.onStep3FilesChange(this.state.files);
