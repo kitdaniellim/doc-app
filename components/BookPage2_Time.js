@@ -53,9 +53,7 @@ class Book2_Time extends React.Component {
         <React.Fragment>
           <View style={calendarStyles.header_container}>
             <View style={calendarStyles.header_text_container}>
-              <Text style={calendarStyles.header_text_bold}>
-                AVAILABLE TIME
-              </Text>
+              <Text style={calendarStyles.header_text_bold}>AVAILABLE TIME SLOTS</Text>
             </View>
             <TouchableOpacity
               activeOpacity={0.6}
@@ -64,7 +62,6 @@ class Book2_Time extends React.Component {
             >
               <Icon style={globalStyles.icon_global} name="times" size={18} />
             </TouchableOpacity>
-
           </View>
           <View style={calendarStyles.scaffold}>
             <View style={calendarStyles.date_container}>
@@ -73,15 +70,16 @@ class Book2_Time extends React.Component {
                 contentContainerStyle={calendarStyles.date_details_container}
               >
                 <View style={calendarStyles.date_header_container}>
-                  <Text style={calendarStyles.date_details_header}>
-                    {this.props.date
-                      ? moment(this.props.date).format("dddd").toUpperCase() +
-                      ", " +
-                      moment(this.props.date)
-                        .format("MMMM DD YYYY")
-                        .toUpperCase()
-                      : "No Date Selected"}
-                  </Text>
+                  <Text style={calendarStyles.date_details_header}>{this.props.date
+                    ? moment(this.props.date).format("dddd").toUpperCase() +
+                    ", " +
+                    moment(this.props.date)
+                      .format("MMMM DD YYYY")
+                      .toUpperCase()
+                    : "No Date Selected"}</Text>
+                </View>
+                <View style={calendarStyles.date_header_container}>
+                  <Text style={calendarStyles.date_details_header}>LOCATION: {this.state.consultant.location}</Text>
                 </View>
                 {this.state.selected.map((item) => {
                   let canReturn = true;
@@ -139,9 +137,7 @@ class Book2_Time extends React.Component {
                         >
                           <View>
                             <Text style={calendarStyles.date_details_text}>
-                              Location: {"\n"}
-                              {this.state.consultant.location} {"\n"}
-                              Time: {"\n"}
+                              SLOT {"\n"}
                               {moment(item.time_start, "HH:mm").format(
                                 "h:mm A"
                               )}{" "}
@@ -192,9 +188,7 @@ class Book2_Time extends React.Component {
                         >
                           <View>
                             <Text style={calendarStyles.date_details_text}>
-                              Location: {"\n"}
-                              {this.state.consultant.location} {"\n"}
-                              Time: {"\n"}
+                              SLOT {"\n"}
                               {moment(item.time_start, "HH:mm").format(
                                 "h:mm A"
                               )}{" "}
@@ -246,3 +240,4 @@ class Book2_Time extends React.Component {
 }
 
 export default Book2_Time;
+
