@@ -39,7 +39,7 @@ const SignupClient3 = ({ navigation }) => {
       >
         <Modal
           isVisible={isModalVisible}
-          animationIn='bounceInDown'
+          animationIn='slideInDown'
           animationOut='slideOutUp'
           animationInTiming={1100}
           animationOutTiming={900}
@@ -77,7 +77,7 @@ const SignupClient3 = ({ navigation }) => {
                 tintColor='red'
                 style={signupStyles.forms_scaffold_checkbox}
               />
-              <Text style={signupStyles.forms_scaffold_checkbox_label}>Do you agree? Dapat yes</Text>
+              <Text style={signupStyles.forms_scaffold_checkbox_label}>Do you agree with the{"\n"}Terms and Conditions?</Text>
             </View>
           </View>
           <Text style={signupStyles.forms_text}>3/3</Text>

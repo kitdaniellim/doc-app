@@ -29,16 +29,16 @@ class Selection extends Component{
         style={selectionStyles.left_scaffold}
         onPress={SignUpClient}>
         <LinearGradient
-          colors={['rgba(243,243,243,0.4)', 'transparent']}
-          start={{ x: 0, y: 1 }}
-          end={{ x: 0, y: 0 }}
+          colors={['rgba(239,239,239,0.5)', 'transparent']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 0, y: 1 }}
           style={globalStyles.gradient}
         >
           <View style={selectionStyles.left_icon_container}>
             <Text style={selectionStyles.left_icon_text}>
               CLIENT
             </Text>
-            <Icon style={globalStyles.icon_client} name="wheelchair-alt" size={42} />
+            <Icon style={globalStyles.icon_client} name="wheelchair-alt" size={80} />
           </View>
         </LinearGradient>
       </TouchableOpacity>
@@ -47,16 +47,16 @@ class Selection extends Component{
         style={selectionStyles.right_scaffold}
         onPress={SignUpConsultant}>
         <LinearGradient
-          colors={['rgba(243,243,243,0.4)', 'transparent']}
-          start={{ x: 0, y: 1 }}
-          end={{ x: 0, y: 0 }}
+          colors={['rgba(239,239,239,0.5)', 'transparent']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 0, y: 1 }}
           style={globalStyles.gradient}
         >
           <View style={selectionStyles.right_icon_container}>
             <Text style={selectionStyles.right_icon_text}>
               CONSULTANT
             </Text>
-            <Icon style={globalStyles.icon_client} name="user-md" size={42} />
+            <Icon style={globalStyles.icon_client} name="user-md" size={80} />
           </View>
         </LinearGradient>
       </TouchableOpacity>

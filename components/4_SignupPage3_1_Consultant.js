@@ -110,7 +110,7 @@ class SignupConsultant3_1 extends Component {
         >
           <Modal
             isVisible={this.state.isModalVisible}
-            animationIn='bounceInDown'
+            animationIn='slideInDown'
             animationOut='bounceOutUp'
             animationInTiming={1100}
             animationOutTiming={900}
@@ -132,11 +132,11 @@ class SignupConsultant3_1 extends Component {
               </View>
             </View>
           </Modal>
-          <View style={signupStyles.forms_container}>
+          <View style={signupStyles.forms_container_2}>
             <View style={signupStyles.forms_label_container}>
-              <Text style={signupStyles.forms_label}> CONSULTANT SIGN UP </Text>
+              <Text style={signupStyles.forms_label}>CONSULTANT SIGN UP</Text>
             </View>
-            <View style={signupStyles.forms_label_small_container}>
+            <View style={signupStyles.forms_label_small_container_2}>
               <Text style={signupStyles.forms_label_small}>Office Details:</Text>
             </View>
             <View>
