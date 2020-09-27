@@ -18,7 +18,7 @@ const Search = {
   },
   
   header_text_container: {
-    width: 60,
+    width: 50,
     justifyContent: 'center',
   },
 
@@ -36,8 +36,7 @@ const Search = {
 
   header_text_bold: {
     paddingLeft: 10,
-    fontSize: 12,
-    fontWeight: '700',
+    fontSize: 11,
     color: '#8B8787',
     justifyContent: 'center',
   },
@@ -60,14 +59,14 @@ const Search = {
   },
 
   filter_label_container: {
-    width: 70,
-    justifyContent: 'center'
+    flexDirection: 'row',
+    width: 80,
+
   },
 
   filter_label: {
     paddingLeft: 10,
-    fontSize: 12,
-    fontWeight: '700',
+    fontSize: 11,
     color: '#8B8787',
     justifyContent: 'center',
     marginTop: 5,
@@ -111,6 +110,18 @@ const Search = {
     marginBottom: 4
   },
 
+  filter_options_button_label: {
+    fontSize: 11,
+    color: '#8B8787',
+    justifyContent: 'center',
+  },
+
+  filter_options_button_label_lit: {
+    fontSize: 11,
+    color: '#fff',
+    justifyContent: 'center',
+  },
+
   scaffold_list_container: {
     backgroundColor: '#fff',
     padding: 10,
@@ -133,17 +144,9 @@ const Search = {
   },
   
   scaffold_list_item_data: {
-    fontSize: 15,
-    marginHorizontal: 8,
-    marginVertical: 2,
+    fontSize: 13,
+    marginVertical: 5,
     color: '#8B8787',
-    justifyContent: 'center'
-  },
-
-  scaffold_list_item_img: {
-    height: 75,
-    width: 75,
-    marginRight: 5,
   },
 
   scaffold_list_item_data_container: {

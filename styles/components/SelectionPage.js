@@ -40,15 +40,15 @@ const Selection = {
     left_icon_text: {
         color: '#fff',
         letterSpacing: 1,
-        fontWeight: '700',
-        fontSize: 19,
+        fontWeight: '500',
+        fontSize: 11,
     },
 
     right_icon_text: {
         color: '#fff',
         letterSpacing: 1,
-        fontWeight: '700',
-        fontSize: 19,
+        fontWeight: '500',
+        fontSize: 11,
     },
 
   }

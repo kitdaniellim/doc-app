@@ -14,10 +14,8 @@ const Login = {
     },
 
     forms_header_container: {
-        marginVertical: 20,
+        marginVertical: 30,
         marginTop: 50,
-        justifyContent: 'center',
-        alignItems: 'center'
     },
 
     forms_label: {
@@ -48,8 +46,7 @@ const Login = {
         fontSize: 14,
         paddingHorizontal: 5,
         marginHorizontal: 5,
-        borderRadius: 20,    
-        letterSpacing: 1  
+        borderRadius: 20,      
     },
 
     forms_button_container: {
@@ -73,7 +70,7 @@ const Login = {
 
     forms_button_label: {
         color: '#8B8787',
-        fontSize: 15,
+        fontSize: 14,
         fontWeight: '600', 
         letterSpacing: 1,  
         textAlign: 'center',
