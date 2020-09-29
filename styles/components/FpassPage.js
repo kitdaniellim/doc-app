@@ -9,12 +9,12 @@ const ForgotPassword = {
         justifyContent: 'center',
         alignItems: 'stretch',
         marginHorizontal: 70,
-        marginBottom: 70
+        marginVertical: 40,
     },
 
     scaffold_text: {
         color: '#fff',
-        fontSize: 15,
+        fontSize: 11,
         lineHeight: 25,
         fontWeight: '500',
         textAlign: 'center',
@@ -36,16 +36,15 @@ const ForgotPassword = {
     },
 
     scaffold_textinput: {
-        width: '100%',
-        fontSize: 14,
+        fontSize: 11,
         paddingHorizontal: 5,
-        marginHorizontal: 5,
-        borderRadius: 20,    
-        letterSpacing: 1 
+        marginHorizontal: 10,
+        borderRadius: 20,
+        backgroundColor: '#fff',  
     },
 
     button: {
-        width: 140,
+        width: 130,
         height: 30,
         marginVertical: 20,
         backgroundColor: '#fff',
@@ -59,9 +58,9 @@ const ForgotPassword = {
 
     button_label: {
         color: '#8B8787',
-        fontSize: 14,
+        fontSize: 9,
         fontWeight: '600', 
-        letterSpacing: 0.5, 
+        letterSpacing: 1, 
         textAlign: 'center',
     },
 

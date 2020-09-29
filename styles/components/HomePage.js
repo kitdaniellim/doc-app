@@ -16,6 +16,18 @@ const Home = {
     borderBottomWidth: 1
   },
 
+  header_text_bold: {
+    paddingLeft: 10,
+    fontSize: 11,
+    color: '#8B8787',
+  },
+
+  header_text: {
+    paddingLeft: 10,
+    fontSize: 10,
+    color: '#8B8787',
+  },
+
   scaffold: {
     flex: 10,
     margin: 0,

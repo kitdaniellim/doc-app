@@ -1,173 +1,107 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { Text, Image, View, FlatList, RefreshControl, TouchableOpacity, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {BackgroundCarousel} from './custom/BackgroundCarousel'
+import {BackgroundCarousel} from './BackgroundCarousel'
 import { homeStyles } from '../styles/styles';
+import {  getAllConsultant, getConsultant, getReviews} from '../actions/consultant';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
-function wait(timeout) {
-  return new Promise(resolve => {
-    setTimeout(resolve, timeout);
-  });
-}
 
-const Home = ({ navigation }) => {
-  const [refreshing, setRefreshing] = React.useState(false);
-
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    wait(1000).then(() => setRefreshing(false));
-  }, [refreshing]);
-
-  const Field = () => {
-    navigation.navigate('Search');
+class Home extends Component{
+  _isMounted = false;
+  constructor(props)
+  {
+    super(props);
+    //this.Profile = this.Profile.bind(this);
+    // this.ref = firebase.firestore().collection
+    //  this.state = {
+    //    imgUrl =  ''
+    //  }
+    console.log("puta")
   }
 
-  const Profile = () => {
-    navigation.navigate('Profile');
+  componentDidMount() {
+    console.log(this.props)
+    //this.props.getReviews(this.props.user.uid);
+    //alert("HELLOP PO")
+    this._isMounted = true;
+  //  Firebase.storage().ref('users/default/default.jpg').getDownloadURL().then(imgUrl => {
+      
+  // const default_img = imgUrl;
+  //  console.log(imgUrl)})
+
+   //console.log(img.src);
+   //this.props.getUser(this.props.user.uid);
+   if(this._isMounted){
+    this.props.getAllConsultant();
+   }
+
+
+    // Firebase.auth().onAuthStateChanged(user => {
+    //   //  var userzz = firebase.auth().currentUser;
+    //   //  console.log("zz");
+    //   //  console.log(userzz);
+
+    //     if (user) {  
+          
+    //         this.props.getUser(user.uid);
+    //         if (this.props.user == null) {
+    //           this.props.navigation.navigate('Login');
+    //         }else{
+    //           console.log("enk");
+    //           //console.log(this.props.user)
+              
+    //         }
+    //     }else{
+    //       console.log("waaaaaaaaaaaaaaaaaaaaaaaaa");
+    //     }
+    // })
+ 
+  }
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+  wait(timeout) {
+    return new Promise(resolve => {
+      setTimeout(resolve, timeout);
+    });
+  }
+  
+  SeeAll(){
+    this.props.navigation.navigate('Search');
   }
 
-  const userSpecialty_list = [
-    {
-      key: 1,
-      userSpecialty: "ENGINEERS",
-    },
-    {
-      key: 2,
-      userSpecialty: "DOCTORS",
-    },
-    {
-      key: 3,
-      userSpecialty: "ARCHITECTS",
-    },
-    {
-      key: 4,
-      userSpecialty: "LAWYERS",
-    },
-  ]
+  Field () {
+    this.props.navigation.navigate('Search');
+  }
 
-  const user_list = [
-    {
-      key: 1,
-      userSpecialty: "DOCTORS",
-      fullName: "Dr. Seuss",
-      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
-    },
-    {
-      key: 2,
-      userSpecialty: "ARCHITECTS",
-      fullName: "Dr. Pepito",
-      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
-    },
-    {
-      key: 3,
-      userSpecialty: "LAWYERS",
-      fullName: "Dr. Berlin",
-      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
-    },
-    {
-      key: 4,
-      userSpecialty: "ENGINEERS",
-      fullName: "Dr. Helsinki",
-      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
-    },
-    {
-      key: 5,
-      userSpecialty: "DOCTORS",
-      fullName: "Dr. James",
-      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
-    },
-    {
-      key: 6,
-      userSpecialty: "DOCTORS",
-      fullName: "Dr. James",
-      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
-    },
-    {
-      key: 7,
-      userSpecialty: "DOCTORS",
-      fullName: "Dr. James",
-      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
-    },
-    {
-      key: 8,
-      userSpecialty: "DOCTORS",
-      fullName: "Dr. James",
-      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
-    },
-    {
-      key: 9,
-      userSpecialty: "ARCHITECTS",
-      fullName: "Dr. James",
-      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
-    },
-    {
-      key: 10,
-      userSpecialty: "LAWYERS",
-      fullName: "Dr. John",
-      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
-    },
-    {
-      key: 11,
-      userSpecialty: "ENGINEERS",
-      fullName: "Dr. James",
-      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
-    },
-    {
-      key: 12,
-      userSpecialty: "ENGINEERS",
-      fullName: "Dr. James",
-      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
-    },
-    {
-      key: 13,
-      userSpecialty: "ENGINEERS",
-      fullName: "Dr. James",
-      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
-    },
-    {
-      key: 14,
-      userSpecialty: "ENGINEERS",
-      fullName: "Dr. James",
-      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
-    },
-    {
-      key: 15,
-      userSpecialty: "LAWYERS",
-      fullName: "Dr. James",
-      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
-    },
-    {
-      key: 16,
-      userSpecialty: "ARCHITECTS",
-      fullName: "Dr. Jose",
-      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
-    },
-    {
-      key: 17,
-      userSpecialty: "ARCHITECTS",
-      fullName: "Dr. John",
-      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
-    },
-    {
-      key: 18,
-      userSpecialty: "ARCHITECTS",
-      fullName: "Dr. Jacob",
-      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
-    },
-    {
-      key: 19,
-      userSpecialty: "LAWYERS",
-      fullName: "Dr. Jose",
-      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
-    },
-    {
-      key: 20,
-      userSpecialty: "LAWYERS",
-      fullName: "Dr. Jacob",
-      img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/users%2Fdefault%2Fdefault.jpg?alt=media&token=738d276c-9c6e-4691-b029-95fddecad621',
-    },
-  ];
+  Profile = (uid) => {
+    //const navigation = this.props.navigation;
+    //console.log("SA PRPFILE NIII POTANG INA")
+    //console.log(uid);
+    this.props.getConsultant(uid);
+    if(this.props.singleConsultant.office_details != null && this.props.singleConsultant.userReviews!= null){
+      //alert("FUCKING SHIT")
+     //alert(this.props.singleConsultant)
+      this.props.navigation.navigate('ProfileTab')
+//navigation.navigate('ProfileTab');
+    }
+  }
 
+
+  
+  render(){
+    
+    // onRefresh = React.useCallback(() => {
+    //   setRefreshing(true);
+    //   wait(1000).then(() => setRefreshing(false));
+    // }, [refreshing]);
+
+    
+    // const { refreshing, setRefreshing } = React.useState(false);
+
+    
   const images = [
     {
       key: 1,
@@ -183,21 +117,48 @@ const Home = ({ navigation }) => {
     },
   ];
 
-  return (
-    <View style={homeStyles.container}>
-      <View style={{height: 200}}>
-        <BackgroundCarousel images={images} />
+    
+  const userSpecialty_list = [
+    {
+      key: 1,
+      userSpecialty: "Engineer",
+    },
+    {
+      key: 2,
+      userSpecialty: "ARCHITECTS",
+    },
+    {
+      key: 3,
+      userSpecialty: "Doctor",
+    },
+    {
+      key: 4,
+      userSpecialty: "LAWYERS",
+    },
+  ]
+
+
+
+       
+       
+    const users = Array.from(this.props.consultant);
+    return(
+      <View style={homeStyles.container}>
+         <View style={{height: 200}}>
+        {/* <BackgroundCarousel images={images} /> */}
       </View> 
+
+      {/* <Text >Email is : {this.props.user.email}</Text> */}
       <View style={homeStyles.scaffold}>  
         <FlatList
           data={userSpecialty_list}
           showsVerticalScrollIndicator={false}
-          refreshControl={
-            <RefreshControl 
-              refreshing={refreshing} 
-              onRefresh={onRefresh} 
-            />
-          }
+          // refreshControl={
+          //   <RefreshControl 
+          //     refreshing={refreshing} 
+          //     onRefresh={onRefresh} 
+          //   />
+          // }
           keyExtractor = { (item) => item.key.toString() }
           renderItem={({ item }) => (
             <View key={item.key.toString()}>
@@ -206,16 +167,14 @@ const Home = ({ navigation }) => {
                   <View style={{flexDirection: 'row'}}>
                     <TouchableOpacity
                       activeOpacity={0.6}
-                      onPress={Field}
+                      onPress={this.Field}
                       style={homeStyles.scaffold_vlist_item_header_container}
                     >
                       <Text style={homeStyles.scaffold_vlist_item_header}>{item.userSpecialty}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                       activeOpacity={0.6}
-                      onPress={()=>{
-                        navigation.navigate('Search', item)
-                      }}
+                      onPress={this.SeeAll}
                       style={homeStyles.scaffold_vlist_item_header_container_2}
                     >
                       <Text style={homeStyles.scaffold_vlist_item_header_2}>See All</Text>
@@ -227,23 +186,24 @@ const Home = ({ navigation }) => {
                       showsHorizontalScrollIndicator={false}
                       contentContainerStyle={{}}
                     >
-                      {user_list.map((data) => {
+                      {users.map((data) => {
+                  
                         if(item.userSpecialty === data.userSpecialty){
                           return (
-                            <View style={homeStyles.scaffold_hlist_item_container} key={data.key.toString()}>
+                            <View style={homeStyles.scaffold_hlist_item_container} key={data.uid}>
                               <View style={homeStyles.scaffold_hlist_item_box_container}>
                                 <View style={homeStyles.scaffold_hlist_item_box_content}>
                                   <TouchableOpacity
                                     activeOpacity={0.6}
-                                    onPress={Profile}
+                                    onPress={() => this.Profile(data.uid)}
                                     style={homeStyles.scaffold_hlist_item_box_image_container}
                                   >
                                     <Image
-                                      source={{ uri: data.img }}
+                                      source={{uri:data.profilePicture}}
                                       style={homeStyles.scaffold_hlist_item_box_image}
                                     />
                                   </TouchableOpacity>
-                                  <Text style={homeStyles.scaffold_hlist_item_box_name}>{data.fullName}</Text>
+                                  <Text style={homeStyles.scaffold_hlist_item_box_name}>{data.userSpecialty} {data.fullName}</Text>
                                 </View>
                               </View>                         
                            </View>
@@ -260,7 +220,22 @@ const Home = ({ navigation }) => {
         />
       </View>
     </View>
-  );
+   );
+  }
 }
 
-export default Home;
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ getAllConsultant, getConsultant, getReviews}, dispatch)
+}
+
+const mapStateToProps = state => {
+  return {
+    user: state.user,
+    consultant : state.consultant,
+    
+    singleConsultant: state.singleConsultant
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
+
+  

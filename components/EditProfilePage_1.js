@@ -4,71 +4,121 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { signupStyles, profileStyles, globalStyles } from '../styles/styles';
 import { LinearGradient } from 'expo-linear-gradient';
 import Modal from 'react-native-modal';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import {  getConsultant,  updateProfileImage, updateOfficeImage, editProfile, updateLocation} from '../actions/consultant';
+  
+import * as ImagePicker from 'expo-image-picker';
+import * as Permissions from 'expo-permissions';
+//import Firebase, { db } from '../config/Firebase'
+// import { nanoid } from "nanoid";
 
-export default class EditProfile_1 extends Component {
+class EditProfile_1 extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      photo: null,
+    }
     this.state = {
       key: 0,
       count: 0,
       locationInput: [],
       text: '',
       isModalVisible: false,
-      name: "Dr. Go",
-      bio: 'Dr. Go\nOpthalmology\ntroygo@gmail.com\n09324758192',
-      office_img: require("../assets/office.jpg"),
-      profile_img: require("../assets/troy.png"),
+      locArray: [ ],
+      office_details: [ {
+        id: 0,
+        location: '',
+        hours: [],
+        days: [],
+        to_hour: '',
+        from_hour:'',
+        
+      }],
+      detailKey: 0,
+      detailLocation: ''
+      //name: "Dr. Go",
+      //bio: 'Dr. Go\n Opthalmology\n troygo@gmail.com\n 09324758192',
+      //office_img: require("../assets/office.jpg"),
+      //profile_img: require("../assets/troy.png"),
     }
+    console.log(this.props);
   }
+    
+  // toggleModal(visible) {
+  //   this.setState({ isModalVisible: visible })
+  // }
 
-  toggleModal(visible) {
-    this.setState({ isModalVisible: visible })
-  }
+  // Confirm = () => {
+  //   let text = this.state.text
+  //   const navigation = this.props.navigation;
+  //   if (text === '') {
+  //     this.toggleModal(true)
+  //   } else {
+  //     navigation.goBack();
+  //   }
+  // }
 
-  Confirm = () => {
-    let text = this.state.text
+  addOfficeHours = (location, count) => {
     const navigation = this.props.navigation;
-    if (text === '') {
-      this.toggleModal(true)
-    } else {
-      navigation.goBack();
+    console.log("Sa add office hours ni")
+    console.log(count);
+    navigation.navigate('EditProfile_2',{
+      location: location,
+      count: count
+    });
+  }
+
+  updateLocationArray = (location, count) => {
+
+    let updateLocArray = [];
+    var data = {location, count};
+
+    // updateLocArray.push(data);  
+    
+    // console.log("Sa array na ni");
+    // console.log(location, count);
+  }
+
+  updateLocation = (location, key) => {    
+    // Add location
+    const user_location ={
+      id: key,
+      location: location
     }
+    this.props.updateLocation(user_location);
+    //console.log("Update location ni boi")
+    console.log(this.props.updateLocation);
   }
-
-  Close = () => {
-    const navigation = this.props.navigation;
-    navigation.goBack()
+  updateHours = (hours, key) => {
+    
   }
-
-  addOfficeHours = (e) => {
-    const navigation = this.props.navigation;
-    navigation.navigate('EditProfile_2');
-  }
-
   addLocation = () => {
     let locationInput = this.state.locationInput;
     let key = this.state.key;
     let count = this.state.count;
 
     locationInput.push(
-      <View key={key.toString()}>
-        <View style={profileStyles.forms_textinput_container_3}>
+      < View key={key.toString()}>
+        <View style={signupStyles.forms_textinput_container}>
           <Icon style={globalStyles.icon_global} name="map-marker" size={18} />
           <TextInput
-            placeholder="Input Location"
-            placeholderTextColor="#000"
-            style={profileStyles.forms_textinput_3}
-            onChangeText={text => this.setState({ text })}
+            placeholder="Location"
+            placeholderTextColor="#8B8787"
+            style={signupStyles.forms_textinput}
+            onChangeText={ text => this.updateLocation( text , key)}
+            //onChangeText = { text => this.props.update_location( text, key )}
+            //onChangeText={text => this.setState({ text })}
           />
         </View>
-        <View style={profileStyles.forms_add_textinput_container_2}>
+        <View style={signupStyles.forms_add_textinput_container}>
           <TouchableOpacity
-            activeOpacity={0.6}
-            style={profileStyles.forms_add_textinput_button_container_2}
-            onPress={() => this.addOfficeHours(count)}
+            activeOpacity={0.6}   
+            style={signupStyles.forms_add_textinput_button_container}
+            onPress={() => this.addOfficeHours(this.state.text, this.state.count)}
           >
             <Icon style={globalStyles.icon_global} name="plus" size={14} />
-            <Text style={profileStyles.forms_add_textinput_text_2} > ADD OFFICE HOURS </Text>
+            <Text style={signupStyles.forms_add_textinput_text} > ADD OFFICE HOURS </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -81,6 +131,9 @@ export default class EditProfile_1 extends Component {
       count: count,
       locationInput: locationInput,
     })
+    console.log("edit loc")
+    console.log(count);
+    //console.log(text);
   }
 
   removeLocation = () => {
@@ -97,30 +150,118 @@ export default class EditProfile_1 extends Component {
       locationInput
     });
   }
-
-  componentDidMount() {
-    this.addLocation();
+  
+  async checkCameraRollPermission() {
+    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL)
+    if (status !== 'granted') {
+      Alert.alert(
+        'Hey',
+        'Hey! You might want to enable notifications for my app, they are good.',
+        [
+          { text: 'Settings', onPress: () => Linking.openURL('app-settings:') },
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel'
+          }
+        ]
+      )
+      this.setState({
+        hasCameraRollPermissions: false
+      })
+      return false
+    }
+    this.setState({
+      hasCameraRollPermissions: true
+    })
+    return true
   }
 
+  _pickImage = async (text) => {
+
+    const checkPermissions = await this.checkCameraRollPermission()
+    console.log(checkPermissions, '--what is returned here determins the permissions');
+     if (!checkPermissions) return
+ 
+     let result = await ImagePicker.launchImageLibraryAsync({
+       allowsEditing: true,
+       aspect: [4, 3],
+     });
+ 
+     console.log(result);
+ 
+     if (!result.cancelled) {
+       //this.setState({ photo: result.uri })
+       //this.props.singleConsultant.profilePicture = result.uri;
+       if(text === 'Profile'){
+        this.props.updateProfileImage(result.uri);
+       }else{
+        this.props.updateOfficeImage(result.uri);
+       }
+       
+       
+      // alert(this.props.singleConsultant.profilePicture)
+     }
+   };
+
+  // onChooseImagePress = async () => {
+  //   //let result = await ImagePicker.launchCameraAsync();
+  //   let result = await ImagePicker.launchImageLibraryAsync();
+
+  //   if(!result.cancelled){
+  //     this.uploadImage(result.uri);
+  //   }
+  // }
+
+  // uploadImage = async (uri, imageName) => {
+  //   const response = await fetch(uri);
+  //   const blob = await response.blob();
+
+  //   var ref = Firebase.storage().ref().child("users/" + imageName );
+  //   this.props.updateProfileImage(this.props.singleConsultant.uid,ref);
+  //   return ref.put(blob);
+  // }
+
+  // uploadOfficeImage = async (uri, imageName) => {
+  //   const response = await fetch(uri);
+  //   const blob = await response.blob();
+
+  //   var ref = Firebase.storage().ref().child("users/" + imageName );
+  //   this.props.updateOfficeImage(this.props.singleConsultant.uid,ref);
+  //   return ref.put(blob);
+  // }
+
+  confirmEdit = (navigation) => {
+    console.log("wa diay no sud diri")
+    //alert("BULLSHIT")
+    
+      this.props.editProfile();
+      //this.props.navigation.navigate("ProfileTab");
+      navigation.navigate('ProfileTab');
+    
+  }
+ 
+
   render() {
+    const office_details = {
+      key: '',
+      location: '',
+      office_day: [],
+      office_hour_from: '',
+      office_hour_to: ''
+    }
+
     return (
       <View style={profileStyles.container}>
-        <View style={profileStyles.header_container}>
-          <View style={profileStyles.header_text_container}>
-            <Text style={profileStyles.header_text_bold}>EDIT PROFILE: Go</Text>
-          </View>
-          <TouchableOpacity
-            activeOpacity={0.6}
-            onPress={this.Close}
-            style={profileStyles.header_icon_container}
-          >
-            <Icon style={globalStyles.icon_global} name="times" size={18} />
-          </TouchableOpacity>
-        </View>
-        <View style={profileStyles.scaffold}>
-          <Modal
+        <LinearGradient
+          colors={['rgba(243,243,243,0.4)', 'transparent']}
+          start={{ x: 0, y: 1 }}
+          end={{ x: 0, y: 0 }}
+          style={globalStyles.gradient}
+        >
+          {/* <Modal
             isVisible={this.state.isModalVisible}
-            animationIn='slideInDown'
+            animationIn='bounceInDown'
             animationOut='bounceOutUp'
             animationInTiming={1100}
             animationOutTiming={900}
@@ -141,101 +282,126 @@ export default class EditProfile_1 extends Component {
                 </TouchableOpacity>
               </View>
             </View>
-          </Modal>
-          <View style={{marginVertical: -15,}}>
+          </Modal> */}
+          <View style={profileStyles.forms_container}>
             <ScrollView
               showsVerticalScrollIndicator={false}
-              contentContainerStyle={{
-                flexGrow: 1,
+              contentContainerStyle={{ 
+                flexGrow: 1, 
                 justifyContent: 'space-around',
-                backgroundColor: '#fff',
-                borderRadius: 15,
-                padding: 15,
-                marginVertical: 10
+                marginVertical: 10,
+                paddingBottom: 20
               }}
             >
               <View>
+                <View style={profileStyles.forms_label_small_container}>
+                  <Text style={profileStyles.forms_label_small}>Profile Details:</Text>
+                </View>
                 <View style={profileStyles.profile_officeimg_container}>
                   <Image
-                    source={this.state.office_img}
+                    source={{uri:this.props.singleConsultant.officeImage}}
                     style={profileStyles.profile_officeimg}
                   />
                 </View>
                 <TouchableOpacity
                   activeOpacity={0.6}
-                  style={profileStyles.forms_chooseimg_button_container_edit}
-                  onPress={() => { }}
+                  style={profileStyles.forms_chooseimg_button_container}
+                  onPress={() => this._pickImage('office')}
                 >
-                  <Text style={profileStyles.forms_chooseimg_button_text_edit} > CHOOSE OFFICE IMAGE </Text>
+                  <Text style={profileStyles.forms_chooseimg_button_text} > CHOOSE OFFICE IMAGE </Text>
                 </TouchableOpacity>
                 <View style={profileStyles.forms_editbio_container}>
-                  <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-around'}}>
                     <View style={profileStyles.profile_b_info_profileimg_container}>
                       <Image
-                        source={this.state.profile_img}
+                        source={{uri:this.props.singleConsultant.profilePicture}}
                         style={profileStyles.profile_b_info_profileimg}
                       />
                     </View>
-                    <View style={profileStyles.forms_textinput_container_4}>
+                    <View style={profileStyles.forms_textinput_container}>
                       <TextInput
                         multiline
-                        // style={profileStyles.forms_textinput_3}
+                        style={profileStyles.forms_textinput}
                         onChangeText={text => this.setState({ bio: text })}
-                        value={this.state.bio}
+                        // value={this.state.bio}
                       />
                     </View>
                   </View>
                 </View>
                 <TouchableOpacity
                   activeOpacity={0.6}
-                  style={profileStyles.forms_chooseimg_button_container_edit}
-                  onPress={() => { }}
+                  style={profileStyles.forms_chooseimg_button_container}
+                  onPress={ () => this._pickImage('Profile') }
                 >
-                  <Text style={profileStyles.forms_chooseimg_button_text_edit} > CHOOSE PROFILE IMAGE </Text>
+                  <Text style={profileStyles.forms_chooseimg_button_text} > CHOOSE PROFILE IMAGE </Text>
                 </TouchableOpacity>
-              </View>
+               </View>
               <View>
-                <View style={profileStyles.forms_label_small_container_edit}>
-                  <Text style={profileStyles.forms_label_small_edit}>Office Details:</Text>
+                <View style={profileStyles.forms_label_small_container}>
+                  <Text style={profileStyles.forms_label_small}>Office Details:</Text>
                 </View>
                 <View style={profileStyles.forms_dynamicinput_margin}>
 
                   {this.state.locationInput.map((value) => {
                     return value;
                   })}
+                  {/* {
+                    this.props.singleConsultant.officeLocation.map((data) => {
+                      return (
+                        <View>
+                         <Text>{data}</Text>
+                        </View>
+                      )
+                    })
+                  } */}
 
                 </View>
                 <View style={profileStyles.forms_add_textinput_container}>
                   <TouchableOpacity
                     activeOpacity={0.6}
-                    style={profileStyles.forms_add_textinput_button_container_2}
+                    style={profileStyles.forms_add_textinput_button_container}
                     onPress={() => this.addLocation()}
                   >
                     <Icon style={globalStyles.icon_global} name="plus" size={14} />
-                    <Text style={profileStyles.forms_add_textinput_text_2} > ADD LOCATION </Text>
+                    <Text style={profileStyles.forms_add_textinput_text} > ADD LOCATION </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     activeOpacity={0.6}
-                    style={profileStyles.forms_add_textinput_button_container_2}
+                    style={signupStyles.forms_add_textinput_button_container}
                     onPress={() => this.removeLocation()}
                   >
                     <Icon style={globalStyles.icon_global} name="times" size={14} />
-                    <Text style={profileStyles.forms_add_textinput_text_2} > REMOVE LOCATION </Text>
+                    <Text style={profileStyles.forms_add_textinput_text} > REMOVE LOCATION </Text>
                   </TouchableOpacity>
                 </View>
 
               </View>
               <TouchableOpacity
                 activeOpacity={0.6}
-                style={profileStyles.forms_button_edit}
-                onPress={this.Confirm}
+                style={profileStyles.forms_button}
+                onPress={ this.confirmEdit }
               >
-                <Text style={profileStyles.forms_button_label_edit}>CONFIRM</Text>
+                <Text style={profileStyles.forms_button_label}>CONFIRMZ</Text>
               </TouchableOpacity>
             </ScrollView>
           </View>
-        </View>
+        </LinearGradient>
       </View>
     )
   }
 }
+
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ getConsultant, updateProfileImage, editProfile, updateOfficeImage, updateLocation}, dispatch)
+}
+const mapStateToProps = state => {
+	return {
+    user : state.user,
+    consultant: state.consultant,
+    singleConsultant: state.singleConsultant,
+    locArray: state.locArray
+  	}
+}
+export default connect(mapStateToProps, mapDispatchToProps)(EditProfile_1);
+//export default HomeClient;

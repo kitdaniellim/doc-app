@@ -21,17 +21,10 @@ const Review = {
       flex: 5,
       justifyContent: 'center',
     },
-
-    header_icon_container: {
-      flex: 1,
-      alignItems: 'flex-end',
-      justifyContent: 'center',
-    },
   
     header_text_bold: {
       paddingLeft: 10,
-      fontSize: 12,
-      fontWeight: '700',
+      fontSize: 11,
       color: '#8B8787',
       justifyContent: 'center',
     },

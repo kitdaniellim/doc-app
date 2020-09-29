@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { Text, View, ScrollView, Image, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import StarRating from 'react-native-star-rating';
@@ -6,24 +6,25 @@ import { profileStyles, globalStyles } from '../styles/styles';
 
 
 
-const Profile = ({ navigation }) => {
-  const isUserClient = true
-  const selected = {
-    name: "Dr. Go",
-    office_img: require("../assets/office.jpg"),
-    profile_img: require("../assets/troy.png"),
-  }
 
-  const Close = () => {
-    navigation.pop()
-  }
-
-  const Paypal = () => {
-    navigation.navigate('Paypal')
-  }
-
-  return (
-    <View style={profileStyles.container}>
+class Profile extends Component{
+  render(){
+    const isUserClient = true
+    const selected = {
+      name: "Dr. Go",
+      office_img: require("../assets/office.jpg"),
+      profile_img: require("../assets/troy.png"),
+    }
+  
+    const Close = () => {
+      navigation.goBack()
+    }
+  
+    const Paypal = () => {
+      navigation.navigate('Paypal')
+    }
+    return(
+      <View style={profileStyles.container}>
       <View style={profileStyles.header_container}>
         <View style={profileStyles.header_text_container}>
           <Text style={profileStyles.header_text_bold}>PROFILE: Go</Text>
@@ -73,7 +74,7 @@ const Profile = ({ navigation }) => {
               </View>
             </View>
             <View style={profileStyles.profile_rating_container}>
-              <Text style={profileStyles.profile_rating_header}>Overall Rating</Text>
+              <Text style={profileStyles.profile_rating_header}>Overall sRating</Text>
               <View style={profileStyles.profile_rating_details}>
                 <StarRating
                   disabled={true}
@@ -185,7 +186,10 @@ const Profile = ({ navigation }) => {
         </View>
       </View>
     </View>
-  );
-}
+    )
+    
+    
+  }
 
+}
 export default Profile;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, TextInput, View, KeyboardAvoidingView, TouchableOpacity, ScrollView } from 'react-native';
+import { Text, TextInput, View, FlatList, TouchableOpacity, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import StarRating from 'react-native-star-rating';
 import { calendarStyles, globalStyles } from '../styles/styles';
@@ -48,10 +48,8 @@ const CalendarPage3_Review = ({ navigation }) => {
                     <Icon style={globalStyles.icon_global} name="times" size={18} />
                 </TouchableOpacity>
             </View>
-            <KeyboardAvoidingView
-                behavior={Platform.OS == "ios" ? "padding" : "height"}
-                style={calendarStyles.scaffold}
-            >
+
+            <View style={calendarStyles.scaffold}>
                 <View style={calendarStyles.date_container}>
                     <View style={calendarStyles.date_details_container}>
                         <View style={calendarStyles.date_header_container}>
@@ -99,10 +97,14 @@ const CalendarPage3_Review = ({ navigation }) => {
                             style={calendarStyles.review_textinput}
                             onChangeText={text => setReview(text)}
                             value={review}
+                            
                         />
                     </View>
                 </View>
-            </KeyboardAvoidingView>
+
+
+            </View>
+
         </View>
     );
 }

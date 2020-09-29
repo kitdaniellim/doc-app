@@ -4,7 +4,6 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 
 //Auth Screens
-import Landing from '../components/1_LandingPage.js';
 import Login from '../components/2_1_LoginPage.js';
 import ForgotPassword from '../components/2_2_FpassPage.js';
 import Selection from '../components/3_SelectionPage.js';
@@ -18,30 +17,25 @@ import SignupConsultant3_2 from '../components/4_SignupPage3_2_Consultant.js';
 import SignupConsultant4 from '../components/4_SignupPage4_Consultant.js';
 
 //App Screens
-import Tutorial from '../components/1_TutorialPage.js';
 import Home from '../components/6_HomePage.js';
-import Calendar1 from '../components/7_CalendarPage1.js';
+//import Calendar1 from '../components/7_CalendarPage1.js';
 import Calendar2 from '../components/7_CalendarPage2.js';
 import Calendar3_Notify from '../components/7_CalendarPage3_Notify.js';
 import Calendar3_Review from '../components/7_CalendarPage3_Review.js';
 import Search from '../components/8_SearchPage.js';
 import Review from '../components/9_ReviewPage.js';
-import EditReview from '../components/EditReview.js';
 import Profile from '../components/9_ProfilePage.js';
 import Book1_Date from '../components/BookPage1_Date.js';
 import Book2_Time from '../components/BookPage2_Time.js';
 import Book3_Form from '../components/BookPage3_Form.js';
-import Book4_Confirmation from '../components/BookPage4_Confirmation.js';
 import ProfileTab from '../components/9_ProfileTabPage.js';
 import EditProfile_1 from '../components/EditProfilePage_1.js';
 import EditProfile_2 from '../components/EditProfilePage_2.js';
 import Paypal from '../components/PaypalPage.js';
 
 import React from 'react';
-import { View, FlatList } from 'react-native';
+import { View, ScrollView, FlatList, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Header from '../components/custom/Header.js';
-
 import {
     Menu,
     MenuOptions,
@@ -65,30 +59,26 @@ const optionsStyles = {
     optionWrapper: {
         //   backgroundColor: 'yellow',
         // marginRight: 50,
-        height: 45,
+        height: 50,
         justifyContent: 'center',
-        marginVertical: 11,
+        marginVertical: 10,
     },
     optionTouchable: {
         //   underlayColor: 'gold',
         activeOpacity: 70,
         padding: 15,
         margin: 10,
-
+        
     },
     optionText: {
         color: 'black',
         marginHorizontal: 10,
+        
     },
 };
 
+
 const authScreens = {
-    Landing: {
-        screen: Landing,
-        navigationOptions: () => ({
-            headerShown: false
-        }),
-    },
     Login: {
         screen: Login,
         navigationOptions: () => ({
@@ -135,6 +125,9 @@ const homeScreens = {
     Profile: {
         screen: Profile,
     },
+    ProfileTab: {
+        screen: ProfileTab,
+    },
     Book1_Date: {
         screen: Book1_Date,
     },
@@ -144,16 +137,13 @@ const homeScreens = {
     Book3_Form: {
         screen: Book3_Form,
     },
-    Book4_Confirmation: {
-        screen: Book4_Confirmation,
-    },
 
 }
 
 const calendarScreens = {
-    Calendar1: {
-        screen: Calendar1,
-    },
+    // Calendar1: {
+    //     screen: Calendar1,
+    // },
     Calendar2: {
         screen: Calendar2,
     },
@@ -163,15 +153,6 @@ const calendarScreens = {
     Calendar3_Review: {
         screen: Calendar3_Review,
     },
-}
-
-const reviewScreens = {
-    Review: {
-        screen: Review,
-    },
-    EditReview: {
-        screen: EditReview,
-    }
 }
 
 const profileScreens = {
@@ -197,15 +178,6 @@ const HomeStack = createStackNavigator(
 
 const CalendarStack = createStackNavigator(
     calendarScreens,
-    {
-        defaultNavigationOptions: {
-            headerShown: false
-        }
-    }
-);
-
-const ReviewStack = createStackNavigator(
-    reviewScreens,
     {
         defaultNavigationOptions: {
             headerShown: false
@@ -257,7 +229,6 @@ const clientTabScreens = {
 
     Search: {
         screen: Search,
-        params: { userSpecialty: "None" },
         navigationOptions: {
             title: 'Search',
             tabBarIcon: ({ tintColor }) => (
@@ -272,7 +243,7 @@ const clientTabScreens = {
     },
 
     Review: {
-        screen: ReviewStack,
+        screen: Review,
         navigationOptions: {
             title: 'Review',
             tabBarIcon: ({ tintColor }) => (
@@ -366,12 +337,20 @@ const consultantTabNavigator = createMaterialBottomTabNavigator(
         initialRouteName: 'Home',
         activeColor: '#19BAB9',
         inactiveColor: '#CFCFCF',
+        // tabBarOptions: {
+        //     activeBackgroundColor: '#19BAB9',
+        //     inactiveBackgroundColor: '#0FA8A7',
+        //     activeTintColor: '#fff',
+        //     inactiveTintColor: '#CFCFCF',
+        //     showLabel: false,
+        // }
     }
 )
 
 function getTabs() {
-    let isClient = false;
-    return (isClient) ? clientTabNavigator : consultantTabNavigator
+    //temporary identifier, switch between true or false to change tab display <--insert here
+    let client = false ;
+    return (client) ? clientTabNavigator : consultantTabNavigator
 }
 
 const notifs = [
@@ -414,21 +393,15 @@ const notifs = [
 ]
 
 const appScreens = {
-    Tutorial: {
-        screen: Tutorial,
-        navigationOptions: () => ({
-            headerShown: false
-        }),
-    },
     Home: {
         screen: getTabs(),
         navigationOptions: ({ navigation }) => ({
-            headerTitle: () => <Header />,
-            headerLeft: () => null,
+            title: `insert logo`,
+            
             headerRight: () => {
                 return (
                     <View style={{ flexDirection: 'row' }}>
-                        <Menu onSelect={() => { navigation.navigate('Calendar1') }}>
+                        <Menu onSelect={() => { }}>
                             <MenuTrigger
                                 style={{ marginRight: 25, padding: 10, }}
                             >
@@ -444,9 +417,9 @@ const appScreens = {
                                         data={notifs}
                                         showsVerticalScrollIndicator={false}
                                         keyExtractor={(item) => item.key.toString()}
-                                        ItemSeparatorComponent={() => {
-                                            return (
-                                                <View style={{ borderBottomColor: '#00000080', borderBottomWidth: 1, alignSelf: 'stretch' }} />
+                                        ItemSeparatorComponent={()=>{
+                                            return(
+                                                <View style={{borderBottomColor: '#00000080', borderBottomWidth: 1,  alignSelf: 'stretch'}}/>
                                             );
                                         }}
                                         renderItem={({ item }) => (
@@ -459,6 +432,7 @@ const appScreens = {
                         <Menu onSelect={
                             value => {
                                 if (value === 1) {
+                                    //alert(value);
                                     navigation.navigate('Login')
                                 }
                             }
@@ -496,8 +470,8 @@ const AuthStack = createStackNavigator(
     {
         defaultNavigationOptions: {
             headerStyle: {
-                backgroundColor: '#7DD3D2',
-                borderBottomColor: '#7DD3D2',
+                backgroundColor: '#19BAB9',
+                borderBottomColor: '#19BAB9',
                 shadowOpacity: 0,
                 shadowOffset: {
                     height: 0,
@@ -534,4 +508,3 @@ const SwitchStack = createSwitchNavigator({
 )
 
 export default createAppContainer(SwitchStack);
-
