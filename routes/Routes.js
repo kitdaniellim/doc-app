@@ -370,7 +370,7 @@ const consultantTabNavigator = createMaterialBottomTabNavigator(
 )
 
 function getTabs() {
-    let isClient = true;
+    let isClient = false;
     return (isClient) ? clientTabNavigator : consultantTabNavigator
 }
 
