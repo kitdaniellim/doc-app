@@ -35,11 +35,11 @@ class Login extends Component  {
                 this.props.navigation.navigate('Home');
             }else{
               console.log("enk");
-              console.log(this.props.user)
+              //console.log(this.props.user)
               this.props.navigation.navigate('Login');
             }
         }else{
-          console.log("waaaaaaaaaaaaaaaaaaaaaaaaa");
+          //console.log("waaaaaaaaaaaaaaaaaaaaaaaaa");
         }
     })
         

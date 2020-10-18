@@ -1,63 +1,86 @@
 import React, { Component } from 'react';
-import { Alert, Text, AppRegistry, Button, TextInput, View, StyleSheet } from 'react-native';
-import Temp from './components/1_A_Temp.js'
-
-import { globalStyles } from './styles/styles';
-
+import { Alert, AppRegistry, Button, TextInput, View, StyleSheet } from 'react-native';
+// import Selection from './components/2_SelectionPage.js';
+// import { LinearGradient } from  'expo-linear-gradient';
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import thunkMiddleware from 'redux-thunk';
 import { Constants } from 'expo';
 import Routes from './routes/Routes.js';
-import firebase from "firebase"
-import Icon from 'react-native-vector-icons/FontAwesome';
-// import MenuButton from 'react-native-menu-button'
+import reducer from './reducers';
+import {decode, encode} from 'base-64'
+import { CommonActions } from '@react-navigation/native';
 import { MenuProvider } from 'react-native-popup-menu';
+import firebase from "firebase"
 require("firebase/firestore");
 
+import { API_KEY, 
+         AUTH_DOMAIN, 
+         DATABASE_URL,
+         PROJECT_ID, 
+         STORAGE_BUCKET, 
+         MESSAGING_SENDER_ID, 
+         APP_ID, 
+         MEASUREMENT_ID } 
+from 'react-native-dotenv';
+import 'firebase/firestore';
+
+const middleware = applyMiddleware(thunkMiddleware);
+const store = createStore(reducer, middleware);
+
 const firebaseConfig = {
-  apiKey: "AIzaSyAc9jbCdsAr25GlhpcLMWap-XBJy60Z2uE",
-  authDomain: "appointmentapp-d867d.firebaseapp.com",
-  databaseURL: "https://appointmentapp-d867d.firebaseio.com",
-  projectId: "appointmentapp-d867d",
-  storageBucket: "appointmentapp-d867d.appspot.com",
-  messagingSenderId: "346336386740",
-  appId: "1:346336386740:web:7f7788d6882e9b8c8d41e1",
-  measurementId: "G-32FB2FHN7B"
+  apiKey: API_KEY,
+  authDomain: AUTH_DOMAIN,
+  databaseURL: DATABASE_URL,
+  projectId: PROJECT_ID,
+  storageBucket: STORAGE_BUCKET,
+  messagingSenderId: MESSAGING_SENDER_ID,
+  appId: APP_ID,
+  measurementId: MEASUREMENT_ID
 };
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
 
-// Make Auth and Firestore References
-//const auth = firebase.auth();
-const auth = firebase.auth();
-const db = firebase.firestore();
+if (!global.btoa) {  global.btoa = encode }
 
-//Update Firestore Settings
-//db.settings( {timestampsInSnapshots: true} )
+if (!global.atob) { global.atob = decode }
+
+
 
 export default class App extends Component {
-  constructor(props) {
-    super(props);
 
-    this.state = {  //DONT REMOVE -Eldrin
-      username: '',
-      password: '',
-    };
-
+  Home = ( navigation ) => {
+    //console.log("WEW MGA DUES")
+    navigation.navigate("Home");
   }
 
-  onLogin() {
-    const { username, password } = this.state;
+  componentDidMount(){
+    //alert("PUTANGNGNGGNGNNG")
 
-    Alert.alert('Credentials', `${username} + ${password}`);
-    auth.createUserWithEmailAndPassword(username, password);
+  
+    
+  
+    //firebase.initializeApp(firebaseConfig);
+        
+ 
+  
+  
+  // const Firebase = ({navigation}) => {}
+  
   }
-
+  
   render() {
+    
+    //console.log("PUTANG INA NIYO PO")
+ 
+    
+    
     return (
-      <MenuProvider>
-        <Routes />
-      </MenuProvider>
+      <Provider store = {store}>
+           <MenuProvider>
+          <Routes />
+        </MenuProvider>
+
+      </Provider>  
     );
   }
 }
@@ -78,3 +101,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 });
+
+export const db = firebase.firestore();
+
+
+  

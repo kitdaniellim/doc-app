@@ -31,15 +31,15 @@ const SignupConsultant4 = ({ navigation }) => {
 
   return (
     <View style={signupStyles.container}>
-      <LinearGradient x
-        colors={['rgba(243,243,243,0.4)', 'transparent']}
-        start={{ x: 0, y: 1 }}
-        end={{ x: 0, y: 0 }}
+      <LinearGradient
+        colors={['rgba(239,239,239,0.5)', 'transparent']}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 0, y: 1 }}
         style={globalStyles.gradient}
       >
         <Modal
           isVisible={isModalVisible}
-          animationIn='bounceInDown'
+          animationIn='slideInDown'
           animationOut='slideOutUp'
           animationInTiming={1100}
           animationOutTiming={900}
@@ -77,7 +77,7 @@ const SignupConsultant4 = ({ navigation }) => {
                 tintColor='red'
                 style={signupStyles.forms_scaffold_checkbox}
               />
-              <Text style={signupStyles.forms_scaffold_checkbox_label}>Do you agree? Dapat yes</Text>
+              <Text style={signupStyles.forms_scaffold_checkbox_label}>Do you agree with the{"\n"}Terms and Conditions?</Text>
             </View>
           </View>
           <Text style={signupStyles.forms_text}>4/4</Text>

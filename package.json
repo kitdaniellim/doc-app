@@ -9,10 +9,14 @@
   },
   "dependencies": {
     "@react-native-community/masked-view": "0.1.6",
+    "base-64": "^0.1.0",
+    "buffer": "^5.6.0",
     "core-js": "^3.6.5",
     "expo": "^37.0.12",
-    "firebase": "^7.15.5",
-    "moment": "^2.27.0",
+    "expo-image-picker": "^8.4.0",
+    "firebase": "^7.9.0",
+    "lodash": "^4.17.20",
+    "moment": "^2.29.0",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-37.0.1.tar.gz",
@@ -34,19 +38,23 @@
     "react-native-screens": "~2.2.0",
     "react-native-selectmultiple-button": "^0.1.105",
     "react-native-star-rating": "^1.1.0",
+    "react-native-uuid": "^1.4.9",
     "react-native-vector-icons": "^6.6.0",
     "react-native-web": "~0.11.7",
     "react-native-webview": "8.1.1",
     "react-navigation": "^4.3.9",
     "react-navigation-material-bottom-tabs": "^2.2.12",
     "react-navigation-stack": "^2.5.0",
-    "react-navigation-tabs": "^2.8.13",
+    "react-redux": "^7.2.0",
     "react-router-native": "^5.1.2",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
     "yarn": "^1.22.4"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
-    "babel-preset-expo": "~8.1.0"
+    "babel-preset-expo": "~8.1.0",
+    "react-native-dotenv": "^0.2.0"
   },
   "private": true
 }

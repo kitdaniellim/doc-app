@@ -19,7 +19,8 @@ const Profile = {
 
   header_text_bold: {
     paddingLeft: 10,
-    fontSize: 11,
+    fontSize: 12,
+    fontWeight: '700',
     color: '#8B8787',
     justifyContent: 'center',
   },
@@ -177,9 +178,10 @@ const Profile = {
   },
 
   review_details_header: {
+    flexDirection: 'row',
     height: 35,
     marginVertical: 5,
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     alignSelf: 'stretch'
   },
 
@@ -203,7 +205,9 @@ const Profile = {
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'stretch',
-    marginHorizontal: 30,
+    borderRadius: 15,
+    marginHorizontal: 6,
+    backgroundColor: '#fff'
   },
 
   forms_label_small_container: {
@@ -211,7 +215,16 @@ const Profile = {
     padding: 4,
     alignSelf: 'stretch',
     justifyContent: 'center',
-    borderBottomColor: '#fff',
+    borderBottomColor: '#000',
+    borderBottomWidth: 1,
+  },
+
+  forms_label_small_container_edit: {
+    marginHorizontal: 8,
+    padding: 4,
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+    borderBottomColor: '#000',
     borderBottomWidth: 1,
   },
 
@@ -224,6 +237,58 @@ const Profile = {
     marginTop: 15,
     marginBottom: 5,
   },
+
+  forms_label_small_edit: {
+    color: '#000',
+    justifyContent: 'flex-end',
+    fontWeight: '400',
+    fontSize: 12,
+    letterSpacing: 1,
+    marginTop: 15,
+    marginBottom: 5,
+  },
+
+  forms_label_small_2: {
+    color: '#000',
+    justifyContent: 'flex-end',
+    fontWeight: '400',
+    fontSize: 12,
+    letterSpacing: 1,
+    marginTop: 15,
+    marginBottom: 5,
+},
+
+  forms_label_small_container_2: {
+    marginTop: 8,
+    marginBottom: 3,
+    marginHorizontal: 12,
+    padding: 4,
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+    borderBottomColor: '#000',
+    borderBottomWidth: 1,
+  },
+
+  forms_text_bold: {
+    color: '#000',
+    fontSize: 12,
+    fontWeight: '600',
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
+},
+
+forms_timeinput_container: {
+  flex: 3,
+  flexDirection: 'row',
+  borderRadius: 15,
+  backgroundColor: '#ECECEC',
+  justifyContent: 'center',
+  alignSelf: 'center',
+  shadowOffset: { width: 0, height: 2, },
+  shadowColor: 'black',
+  shadowOpacity: 0.1,
+},
 
   forms_dynamicinput_margin: {
     flex: 1
@@ -260,11 +325,38 @@ const Profile = {
     shadowOpacity: 0.1,
   },
 
+  forms_chooseimg_button_container_edit: {
+    flex: 1,
+    flexDirection: 'row',
+    backgroundColor: '#ECECEC',
+    borderRadius: 15,
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    marginHorizontal: 8,
+    marginVertical: 8,
+    height: 25,
+    justifyContent: 'center',
+    alignSelf: 'stretch',
+    shadowOffset: { width: 0, height: 2, },
+    shadowColor: 'black',
+    shadowOpacity: 0.1,
+  },
+
   forms_chooseimg_button_text: {
     fontSize: 10,
     fontWeight: '600',
     textAlign: 'center',
     color: '#8B8787',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    letterSpacing: 1,
+  },
+
+  forms_chooseimg_button_text_edit: {
+    fontSize: 10,
+    fontWeight: '600',
+    textAlign: 'center',
+    color: '#000',
     justifyContent: 'center',
     alignSelf: 'center',
     letterSpacing: 1,
@@ -286,11 +378,37 @@ const Profile = {
     shadowOpacity: 0.1,
   },
 
+  forms_add_textinput_button_container_edit: {
+    flex: 1,
+    flexDirection: 'row',
+    backgroundColor: '#ECECEC',
+    borderRadius: 15,
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    marginHorizontal: 8,
+    marginVertical: 4,
+    justifyContent: 'center',
+    alignSelf: 'stretch',
+    shadowOffset: { width: 0, height: 2, },
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+  },
+
   forms_add_textinput_text: {
     fontSize: 7,
     fontWeight: '600',
     textAlign: 'center',
     color: '#8B8787',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    letterSpacing: 1,
+  },
+
+  forms_add_textinput_text_edit: {
+    fontSize: 7,
+    fontWeight: '600',
+    textAlign: 'center',
+    color: '#000',
     justifyContent: 'center',
     alignSelf: 'center',
     letterSpacing: 1,
@@ -308,6 +426,94 @@ const Profile = {
     borderRadius: 20,
   },
 
+  forms_textinput_container_2: {
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    borderRadius: 15,
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    marginHorizontal: 5,
+    marginVertical: 10,
+    justifyContent: 'flex-start',
+    alignSelf: 'stretch',
+    shadowOffset: { width: 0, height: 2, },
+    shadowColor: 'black',
+    shadowOpacity: 0.1,
+  },
+
+  forms_textinput_container_4: {
+    flex: 1,
+    backgroundColor: '#ECECEC',
+    padding: 5,
+  },
+
+  forms_textinput_2: {
+    width: '90%',
+    fontSize: 11,
+    paddingHorizontal: 5,
+    marginHorizontal: 5,
+    borderRadius: 20,
+    backgroundColor: '#fff',
+  },
+
+  forms_textinput_container_3: {
+    flexDirection: 'row',
+    backgroundColor: '#ECECEC',
+    borderRadius: 15,
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    marginHorizontal: 5,
+    marginVertical: 10,
+    justifyContent: 'flex-start',
+    alignSelf: 'stretch',
+    shadowOffset: { width: 0, height: 2, },
+    shadowColor: 'black',
+    shadowOpacity: 0.1,
+  },
+
+  forms_textinput_3: {
+    width: '90%',
+    fontSize: 11,
+    paddingHorizontal: 5,
+    marginHorizontal: 5,
+    borderRadius: 20,
+    backgroundColor: '#ECECEC',
+  },
+
+  forms_add_textinput_container_2: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 13,
+    marginHorizontal: 15,
+  },
+
+  forms_add_textinput_button_container_2: {
+    flex: 1,
+    flexDirection: 'row',
+    backgroundColor: '#ECECEC',
+    borderRadius: 15,
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    marginHorizontal: 8,
+    marginVertical: 4,
+    height: 30,
+    justifyContent: 'center',
+    alignSelf: 'stretch',
+    shadowOffset: { width: 0, height: 2, },
+    shadowColor: 'black',
+    shadowOpacity: 0.1,
+  },
+
+  forms_add_textinput_text_2: {
+    fontSize: 7,
+    fontWeight: '600',
+    textAlign: 'center',
+    color: '#000',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    letterSpacing: 1,
+  },
+
   forms_button: {
     width: 130,
     height: 30,
@@ -321,6 +527,19 @@ const Profile = {
     alignSelf: 'center',
   },
 
+  forms_button_edit: {
+    width: 130,
+    height: 30,
+    marginTop: 20,
+    backgroundColor: '#ECECEC',
+    borderRadius: 15,
+    shadowOffset: { width: 0, height: 2, },
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    justifyContent: 'center',
+    alignSelf: 'center',
+  },
+
   forms_button_label: {
     color: '#8B8787',
     fontSize: 9,
@@ -329,13 +548,24 @@ const Profile = {
     textAlign: 'center',
   },
 
+  forms_button_label_edit: {
+    color: '#000',
+    fontSize: 9,
+    fontWeight: '600',
+    letterSpacing: 1,
+    textAlign: 'center',
+  },
 
+  hide_button: {
+    justifyContent: 'center',
+    alignSelf: 'center'
+  },
 
-
-
-
-
-
+  hide_button_label: {
+    justifyContent: 'center',
+    textDecorationLine: 'underline',
+    marginRight: 8,
+  },
 
 }
 

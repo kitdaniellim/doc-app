@@ -9,66 +9,28 @@ import { connect } from 'react-redux'
 import { updateEmail, updatePassword, login, getUser  } from '../actions/user'
 import Firebase, { db } from '../config/Firebase'
 class Login extends Component  {
-  //const [isModalVisible, toggleModal] = useState(false);
+
   constructor(props){
     super(props);
     this.state = {
       isModalVisible : false,
       toggleModal : false
     };
-    //this.Close = this.Close.bind(this);
     this.Home = this.Home.bind(this);
   }
   
   componentDidMount = () => {
-    console.log("tae");
     Firebase.auth().onAuthStateChanged(user => {
-      //  var userzz = firebase.auth().currentUser;
-      //  console.log("zz");
-      //  console.log(userzz);
-
         if (user) {  
-          
             this.props.getUser(user.uid);
             if (this.props.user != null) {
-              console.log("nisud diri sa navigate sa home");
-                this.props.navigation.navigate('Home');
+              this.props.navigation.navigate('Home');
             }else{
-              console.log("enk");
-              console.log(this.props.user)
               this.props.navigation.navigate('Login');
             }
-        }else{
-          console.log("waaaaaaaaaaaaaaaaaaaaaaaaa");
         }
     })
         
-  // Firebase.auth().onAuthStateChanged(user => {
-
-  //   if (user) {  
-       
-  //       //dispatch(getUser(user.uid))
-        
-  //       this.props.getUser(user.uid)
-  //       if(this.props.user){
-  //         //console.log("nisud diri sa navigate sa home");
-  //         //alert(user.uid);
-  //         this.props.navigation.navigate("Home")
-  //       }
-        
-  //       // if(this.props.user){
-  //       //   this.props.navigation.navigate("Home")
-  //       // }else{
-  //       // console.log("waaaaaaaaaaaaaaaaaaaaaaaaa");
-  //       // }
-  //   }  
-        
-    
-  // })  
-   
-   
-    
-    // }
     
   }
   Home(){
@@ -228,7 +190,6 @@ Login = ({navigation}) => {
     }
   }
  
-  //export const LoginPage = new Login()
   export default connect(
     mapStateToProps,
     mapDispatchToProps

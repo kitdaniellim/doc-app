@@ -5,6 +5,7 @@ import { calendarStyles, globalStyles } from '../styles/styles';
 import Modal from 'react-native-modal';
 
 const CalendarPage2 = ({ navigation }) => {
+   const isClient = true;
   //sample userType
   const userType = 'consultant' // <-- switch between 'client' or 'consultant'
   //sample data
@@ -29,7 +30,7 @@ const CalendarPage2 = ({ navigation }) => {
       name: 'Dr. Jose',
       location: '333 St., aaa Bldg, Lapu-lapu, Philippines',
       time: '3:00 PM - 5:00 PM',
-      status: 'review', // <-- change status here
+      status: 'confirmed', // <-- change status here
       // status: 'pending' <-- disabled yellow button
       // status: 'review' <-- bright green button
       // status: 'reviewed' <-- disabled low opacity green button
@@ -42,7 +43,7 @@ const CalendarPage2 = ({ navigation }) => {
       name: 'Dr. Romero',
       location: '333 St., aaa Bldg, Lapu-lapu, Philippines',
       time: '7:30 AM - 8:30 AM',
-      status: 'reviewed', // <-- change status here
+      status: 'review', // <-- change status here
       // status: 'pending' <-- disabled yellow button
       // status: 'review' <-- bright green button
       // status: 'reviewed' <-- disabled low opacity green button
@@ -52,6 +53,19 @@ const CalendarPage2 = ({ navigation }) => {
     },
     {
       key: 4,
+      name: 'Dr. Juan',
+      location: '333 St., aaa Bldg, Lapu-lapu, Philippines',
+      time: '8:30 PM - 10:00 AM',
+      status: 'reviewed', // <-- change status here
+      // status: 'pending' <-- disabled yellow button
+      // status: 'review' <-- bright green button
+      // status: 'reviewed' <-- disabled low opacity green button
+
+      //if consultant
+      isConfirmed: false,
+    },
+    {
+      key: 5,
       name: 'Dr. Juan',
       location: '333 St., aaa Bldg, Lapu-lapu, Philippines',
       time: '8:30 PM - 10:00 AM',
@@ -102,7 +116,7 @@ const CalendarPage2 = ({ navigation }) => {
     <View style={calendarStyles.container}>
       <Modal
         isVisible={isConfirmModalVisible}
-        animationIn='bounceInDown'
+        animationIn='slideInDown'
         animationOut='slideOutUp'
         animationInTiming={1100}
         animationOutTiming={900}
@@ -168,7 +182,7 @@ const CalendarPage2 = ({ navigation }) => {
           <Text style={calendarStyles.header_text_bold}>APPOINTMENT</Text>
         </View>
         {/* if consultant then show button, else not */}
-        {(userType === 'consultant' && selected.length !== 0) ?
+        {(isClient === false && selected.length !== 0) ?
           <View style={{ flexDirection: 'row', flex: 3 }}>
             <TouchableOpacity
               activeOpacity={0.6}
@@ -216,25 +230,30 @@ const CalendarPage2 = ({ navigation }) => {
                         {item.time}
                       </Text>
                     </View>
-                    <View style={{ flexDirection: 'row' }}>
-                      <TouchableOpacity
-                        activeOpacity={0.6}
-                        style={calendarStyles.date_details_button_download_container}
-                      >
-                        <Text style={calendarStyles.date_details_button_download_label}>Download PDF</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        activeOpacity={0.6}
-                        style={calendarStyles.date_details_button_download_container}
-                      >
-                        <Text style={calendarStyles.date_details_button_download_label}>Download Form</Text>
-                      </TouchableOpacity>
-                    </View>
+                    { (!isClient)? 
+                      <View style={{ flexDirection: 'row' }}>
+                        <TouchableOpacity
+                          activeOpacity={0.6}
+                          style={calendarStyles.date_details_button_download_container}
+                        >
+                          <Text style={calendarStyles.date_details_button_download_label}>Download PDF</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          activeOpacity={0.6}
+                          style={calendarStyles.date_details_button_download_container}
+                        >
+                          <Text style={calendarStyles.date_details_button_download_label}>Download Form</Text>
+                        </TouchableOpacity>
+                      </View> 
+                    : 
+                    null
+                    }
                   </View>
                   <View style={calendarStyles.date_details_button_container}>
                     {/* if user is a client then button displays, else null and does not display */}
-                    {(userType === 'client') ?
+                    {(isClient === true) ?
                       (item.status === 'pending') ?
+                      <View>
                         <TouchableOpacity
                           activeOpacity={0.6}
                           disabled
@@ -242,6 +261,14 @@ const CalendarPage2 = ({ navigation }) => {
                         >
                           <Text style={calendarStyles.date_details_button_label}>Pending</Text>
                         </TouchableOpacity>
+                        <TouchableOpacity
+                          activeOpacity={0.6}
+                          onPress={()=>{}}
+                          style={calendarStyles.date_details_button_cancel}
+                        >
+                          <Text style={calendarStyles.date_details_button_label}>Cancel</Text>
+                        </TouchableOpacity>
+                        </View>
                         :
                         (item.status === 'review') ?
                           <TouchableOpacity
@@ -252,6 +279,24 @@ const CalendarPage2 = ({ navigation }) => {
                             <Text style={calendarStyles.date_details_button_label}>Review</Text>
                           </TouchableOpacity>
                           :
+                          (item.status === 'confirmed') ? 
+                          <View>
+                        <TouchableOpacity
+                          activeOpacity={0.6}
+                          disabled
+                          style={calendarStyles.date_details_button_pendingconf}
+                        >
+                          <Text style={calendarStyles.date_details_button_label}>Confirmed</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          activeOpacity={0.6}
+                          onPress={()=>{}}
+                          style={calendarStyles.date_details_button_cancel}
+                        >
+                          <Text style={calendarStyles.date_details_button_label}>Cancel</Text>
+                        </TouchableOpacity>
+                        </View> 
+                          : 
                           <TouchableOpacity
                             activeOpacity={0.6}
                             disabled

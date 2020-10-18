@@ -53,49 +53,18 @@ class ProfileTab extends Component {
   }
   render(){
     const consultant = this.props.singleConsultant;
-    //alert("office detailz02")
-    //alert(consultant);
-    var office_details = _.keyBy(this.props.singleConsultant.office_details,'id');
-    //console.log("Profile tab")
-    //console.log(consultant)
-    //var office = Array.from(consultant.office_details);
-    //console.log(office);  
-    var office = _.values(office_details);
-    
-    var reviews_details = _.keyBy(this.props.singleConsultant.userReviews,'id');
-    var reviews = _.values(reviews_details);
 
-    //var reviews = Array.from(consultant.userReviews);
-    console.log("reviews detailz01");
-    // if(this.props.singleConsultant){
-    //   var user = this.props.singleConsultant;
-    //   if(user.office_details){
-    //     var office_details = user.office_details;
-    //   }
-    // }
+    // DOES NOT WORK IN MOBILE BUT WORKS IN WEB
+    // var office_details = _.keyBy(this.props.singleConsultant.office_details,'id');
+    // var office = _.values(office_details);
+    // var reviews_details = _.keyBy(this.props.singleConsultant.userReviews,'id');
+    // var reviews = _.values(reviews_details);
+
+    //START OF CHANGES - October 3 - 2020
+    var office = Array.from(consultant.office_details);
+    var reviews = consultant.userReviews;
+    //END OF CHANGES - October 3 - 2020
   
-  //const user = Array.from(this.props.singleConsultant)
-    
-    //console.log(reviews);
-    // console.log("Profile ab na ni");
-    // console.log(consultant);
-    // console.log("Profile ni");
-    // console.log(this.props.user);
-    //user.office_details = [];
-    
-    //const user = ([])
-    
-    //const officeDetails = user.office_details;
-   
-    //console.log(this.props.singleConsultant);
-    //console.log(user);
-    
-    //console.log(this.props.singleConsultant);
-    //console.log(user.office_details);
-    
-    // const office = Array.from(user.office_details);
-    //console.log(user.data());
-    
     return (
       
     <View style={profileStyles.container}>
@@ -267,4 +236,3 @@ const mapStateToProps = state => {
   	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileTab);
-//export default HomeClient;

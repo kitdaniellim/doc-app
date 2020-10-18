@@ -16,6 +16,10 @@ const Book3_Form = ({ navigation }) => {
     navigation.goBack()
   }
 
+  const Submit = () => {
+    navigation.navigate('Book4_Confirmation');
+  }
+
   return (
     <View style={calendarStyles.container}>
       <View style={calendarStyles.header_container}>
@@ -32,19 +36,7 @@ const Book3_Form = ({ navigation }) => {
       </View>
       <View style={calendarStyles.scaffold}>
         <View style={calendarStyles.forms_container}>
-          {(isFormSent) ?
-            true
-            :
-            <TouchableOpacity
-              activeOpacity={0.6}
-              onPress={() => { }}
-              style={calendarStyles.forms_button_submit}
-            >
-              <Text style={calendarStyles.forms_button_submit_label}>SUBMIT</Text>
-            </TouchableOpacity>
-          }
-
-          <View>
+          <View style={{marginTop: 10}}>
             <Text style={calendarStyles.forms_options_header}>Do you have any of the following?</Text>
             <View style={calendarStyles.forms_options_container}>
               <View style={calendarStyles.forms_options_col}>
@@ -138,6 +130,17 @@ const Book3_Form = ({ navigation }) => {
               (Medical Records for Doctor)
             </Text>
           </TouchableOpacity>
+          {(isFormSent) ?
+            true
+            :
+            <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={Submit}
+              style={calendarStyles.forms_button_submit}
+            >
+              <Text style={calendarStyles.forms_button_submit_label}>SUBMIT</Text>
+            </TouchableOpacity>
+          }
         </View>
       </View>
     </View>

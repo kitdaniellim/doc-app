@@ -6,7 +6,7 @@ import { homeStyles } from '../styles/styles';
 import {  getAllConsultant, getConsultant, getReviews} from '../actions/consultant';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
+import Firebase, { db } from '../config/Firebase';
 
 class Home extends Component{
   _isMounted = false;
@@ -18,45 +18,14 @@ class Home extends Component{
     //  this.state = {
     //    imgUrl =  ''
     //  }
-    console.log("puta")
   }
 
   componentDidMount() {
     console.log(this.props)
-    //this.props.getReviews(this.props.user.uid);
-    //alert("HELLOP PO")
     this._isMounted = true;
-  //  Firebase.storage().ref('users/default/default.jpg').getDownloadURL().then(imgUrl => {
-      
-  // const default_img = imgUrl;
-  //  console.log(imgUrl)})
-
-   //console.log(img.src);
-   //this.props.getUser(this.props.user.uid);
-   if(this._isMounted){
-    this.props.getAllConsultant();
-   }
-
-
-    // Firebase.auth().onAuthStateChanged(user => {
-    //   //  var userzz = firebase.auth().currentUser;
-    //   //  console.log("zz");
-    //   //  console.log(userzz);
-
-    //     if (user) {  
-          
-    //         this.props.getUser(user.uid);
-    //         if (this.props.user == null) {
-    //           this.props.navigation.navigate('Login');
-    //         }else{
-    //           console.log("enk");
-    //           //console.log(this.props.user)
-              
-    //         }
-    //     }else{
-    //       console.log("waaaaaaaaaaaaaaaaaaaaaaaaa");
-    //     }
-    // })
+    if(this._isMounted){
+      this.props.getAllConsultant();
+    }
  
   }
   componentWillUnmount() {
@@ -77,31 +46,22 @@ class Home extends Component{
   }
 
   Profile = (uid) => {
-    //const navigation = this.props.navigation;
-    //console.log("SA PRPFILE NIII POTANG INA")
-    //console.log(uid);
+
     this.props.getConsultant(uid);
     if(this.props.singleConsultant.office_details != null && this.props.singleConsultant.userReviews!= null){
-      //alert("FUCKING SHIT")
-     //alert(this.props.singleConsultant)
       this.props.navigation.navigate('ProfileTab')
-//navigation.navigate('ProfileTab');
     }
   }
 
 
   
   render(){
-    
-    // onRefresh = React.useCallback(() => {
-    //   setRefreshing(true);
-    //   wait(1000).then(() => setRefreshing(false));
-    // }, [refreshing]);
-
-    
-    // const { refreshing, setRefreshing } = React.useState(false);
-
-    
+    // alert(this.props.navigation.)
+    // if(this.props.navigation.state.params){
+    //   alert("test")
+    //   alert(this.props.navigation.state.params);
+    // }
+ 
   const images = [
     {
       key: 1,
@@ -142,6 +102,14 @@ class Home extends Component{
        
        
     const users = Array.from(this.props.consultant);
+         if( this.props.navigation.state){
+    if(this.props.navigation.state.params ){
+      Firebase.auth().signOut()
+      this.props.navigation.navigate('Login')
+    }
+  }
+  
+
     return(
       <View style={homeStyles.container}>
          <View style={{height: 200}}>

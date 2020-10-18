@@ -242,8 +242,6 @@ class SignupConsultant3_2 extends Component {
       navigation.navigate('SignupConsultant3_1');
     }
     
-    console.log("sa signup3 ni");
-    console.log(this.props.userOfficeHours);
     return(
       <View style={signupStyles.container}>
       <LinearGradient

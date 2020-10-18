@@ -11,7 +11,7 @@ import { updateEmail, updatePassword, updateFullName, updateMobileNumber, update
 
 const Submit = () => {
   navigation.navigate('LoginClient');
-  /*DEV: Dan - Please use Redux Variables */
+  /*DEV: Dan -  */
   // if ((fname !== '' && month !== '' && day !== '' && year !== '' && num !== '')) {
   //   // let isValid = validate() 
   //   verify(true)
@@ -36,7 +36,7 @@ const Submit = () => {
      startYear--
    }
  }
- /* Dan - Please use REDUX variables 
+ /* Dan -  
  const [fname, setName] = useState('');
  const [month, setMonth] = useState('');
  const [day, setDay] = useState('');

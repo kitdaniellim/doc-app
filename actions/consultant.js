@@ -52,9 +52,7 @@ export const getAllConsultant = () => {
                  data.rating = i;
                  return data;
              })
-            //console.log("consultant.js")
-            // console.log("conz1");
-            // console.log(consultant)
+
             consultant.sort(function(a,b){
                 return parseInt(b.rating) - parseInt(a.rating);
             })
@@ -138,7 +136,6 @@ return date+month+year+hours+min+sec;
 export const profileImage = async (uid, profilePicture) => {
     try{
         var uuid_profile = uuid.v1();
-        console.log("Nisulod sa profile Image");
         const response = await fetch(profilePicture);
         const blob = await response.blob();
         const ref = Firebase.storage().ref().child("users/" + uuid_profile );
@@ -148,7 +145,7 @@ export const profileImage = async (uid, profilePicture) => {
 
         const url = await snapshot.ref.getDownloadURL();
         //return url;
-        console.log(url);
+        //console.log(url);
         db.collection("users").doc(uid).update({profilePicture: url});
     }catch(e){
         alert("error prof image")
@@ -161,19 +158,13 @@ export const officePicture = async (uid, officeImage) => {
         var uuid_office = uuid.v1();
         const response_office = await fetch(officeImage);
         const blob_office = await response_office.blob();
-        console.log("test");
-        console.log(uuid_office);
+
         const ref_office  = Firebase.storage().ref().child("users/" + uuid_office );
         const snapshot_office = await ref_office.put(blob_office);
 
         blob_office.close();
 
         const url_office = await snapshot_office.ref.getDownloadURL();
-        //return url;
-        console.log("ni sud sa office");
-        //alert(url);
-        
-        console.log(url_office);
         db.collection("users").doc(uid).update({officeImage: url_office});
     }catch(e){
         alert(e)
@@ -216,22 +207,9 @@ export const editProfile = () => {
             // const url = await snapshot.ref.getDownloadURL();
     //  
 
-   // console.log(ref)
-    //console.log(blob)
-    //var downloadUrl = ref.downloadUrl
-    // ref.snapshot.ref.getDownloadURL().then(function(downloadUrl){
-    //     var url = downloadUrl;
-    //     console.log("prof piz");
-    // console.log(url);
-    // })
-        //     console.log("URLLLL BRU");
-        //     console.log(url);
-        //     db.collection("users").doc(uid).update({profilePicture: url});
-        //    dispatch(getAllConsultant());
-            //getAllConsultant();
+
         }catch(e){
-            //alert("eror sa edit prof bobo")
-            //alert(e);
+            alert(e);
         }
        
     }
@@ -295,24 +273,19 @@ export const getReviews = uid => {
                 .collection('reviews')
                 .where("reviewer_id", "==",uid)
 				.get().then(function(querySnapshot){
-                    console.log(querySnapshot)
+                    //console.log(querySnapshot)
                 })
 
             const user = await db.collection('users').doc(uid).get();
-            console.log("get reviews");
-            console.log(user.data());
-            console.log(reviews.data());
-            console.log("aw")
+            // console.log("get reviews");
+            // console.log(user.data());
+            // console.log(reviews.data());
+            // console.log("aw")
             const reviews_users = {
                 user: user.data(),
                 reviews: reviews.data(),
             }
-                //console.log("sa get user ni")
-                //console.log(user.data());
-                //console.log(uid);
-            
-            // console.log(reviews_users.data())
-            // console.log("puta");
+
 			dispatch({ type: GET_REVIEWS, payload: reviews_users })
 		} catch (e) {
 			alert(e)

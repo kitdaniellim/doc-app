@@ -11,7 +11,7 @@ const goToAbout = () => {
   Actions.about()
 }
 
-class HomePage extends Component{
+class HomePage extends React.Component {
   state = {
     showModal: false,
     status: "Pending"
