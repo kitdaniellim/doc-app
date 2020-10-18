@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import { Text, View, FlatList, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import React from 'react';
+import {View, Image, TouchableOpacity } from 'react-native';
 import { selectionStyles, globalStyles } from '../styles/styles';
 import { LinearGradient } from 'expo-linear-gradient';
 import { bindActionCreators } from 'redux';
@@ -35,10 +34,10 @@ class Selection extends Component{
           style={globalStyles.gradient}
         >
           <View style={selectionStyles.left_icon_container}>
-            <Text style={selectionStyles.left_icon_text}>
-              CLIENT
-            </Text>
-            <Icon style={globalStyles.icon_client} name="wheelchair-alt" size={80} />
+            <Image 
+              style={{ width: 140, height: 140 }}
+              source={require('../assets/client.png')} 
+            />
           </View>
         </LinearGradient>
       </TouchableOpacity>
@@ -53,10 +52,10 @@ class Selection extends Component{
           style={globalStyles.gradient}
         >
           <View style={selectionStyles.right_icon_container}>
-            <Text style={selectionStyles.right_icon_text}>
-              CONSULTANT
-            </Text>
-            <Icon style={globalStyles.icon_client} name="user-md" size={80} />
+            <Image 
+              style={{ width: 140, height: 140 }}
+              source={require('../assets/consultant.png')} 
+            />
           </View>
         </LinearGradient>
       </TouchableOpacity>

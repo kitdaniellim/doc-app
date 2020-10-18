@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react';
-import { Text, TextInput, View, TouchableOpacity } from 'react-native';
+import { Text, TextInput, Image, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { signupStyles, globalStyles } from '../styles/styles';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -99,8 +99,11 @@ class SignupConsultant1 extends Component {
           </Modal> */}
           <View style={signupStyles.forms_container}>
             <Text style={signupStyles.forms_label}> CONSULTANT SIGN UP </Text>
-            <Icon style={globalStyles.icon_client} name="user-md" size={55} />
-           
+            <Image
+              style={{ width: 80, height: 80, alignSelf: 'center' }}
+              source={require('../assets/consultant.png')}
+            />
+
             <View style={signupStyles.forms_textinput_container}>
               <Icon style={globalStyles.icon_global} name="envelope" size={18} />
               <TextInput

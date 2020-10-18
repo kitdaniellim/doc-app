@@ -1,8 +1,8 @@
 import React, { Component, useState } from 'react';
-import { Text, TextInput, View, TouchableOpacity } from 'react-native';
+import { Text, TextInput, Image, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { signupStyles, globalStyles } from '../styles/styles';
-import { LinearGradient } from  'expo-linear-gradient';
+import { LinearGradient } from 'expo-linear-gradient';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { updateEmail, updatePassword } from '../actions/user';
@@ -32,8 +32,8 @@ const SignupClient1 = ({ navigation }) => {
 // }
 
 
-class SignupClient1 extends Component{
-  
+class SignupClient1 extends Component {
+
   // constructor(props){
   //   // this.setState = ({
   //   //   isModalVisible : false,
@@ -45,18 +45,18 @@ class SignupClient1 extends Component{
       toggleModal: false
     });
   }
-  
+
   validate = () => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    return (reg.test(this.props.user.email) === true)? true : false
+    return (reg.test(this.props.user.email) === true) ? true : false
   }
   Next = () => {
     const navigation = this.props.navigation;
     if ((this.props.user.email !== '' && this.props.user.password !== '' && cpassword !== '')) {
-      if(this.props.user.password >= 6) {
+      if (this.props.user.password >= 6) {
         if (this.props.user.password === cpassword) {
           let isValid = validate()
-          if(isValid === true){
+          if (isValid === true) {
             navigation.navigate('SignupClient2');
           } else {
             setMessage(this.props.user.email.toString() + ' is not a valid email address.')
@@ -74,19 +74,19 @@ class SignupClient1 extends Component{
       toggleModal(true)
     }
   }
-    render(){
-      // console.log(this.props.userType);
-      return (
-    
-        <View style={signupStyles.container}>
-          <LinearGradient 
-              colors={['rgba(243,243,243,0.4)', 'transparent']}
-              start={{x : 0, y : 1}}
-              end={{x : 0, y : 0}}
-              style={globalStyles.gradient}
-          >
-            
-             {/*DEV: Dan
+  render() {
+    // console.log(this.props.userType);
+    return (
+
+      <View style={signupStyles.container}>
+        <LinearGradient
+          colors={['rgba(243,243,243,0.4)', 'transparent']}
+          start={{ x: 0, y: 1 }}
+          end={{ x: 0, y: 0 }}
+          style={globalStyles.gradient}
+        >
+
+          {/*DEV: Dan
              
              <Modal
           isVisible={isModalVisible}
@@ -113,59 +113,59 @@ class SignupClient1 extends Component{
           </View>
         </Modal> */}
           <View style={signupStyles.forms_container}>
-                  <Text style={signupStyles.forms_label}> CLIENT SIGN UP </Text>
-                  <Icon style={globalStyles.icon_client} name="wheelchair-alt" size={55} />
-                  <View style={signupStyles.forms_textinput_container}>
-                    <Icon style={globalStyles.icon_global} name="envelope" size={18} />
-                    <TextInput 
-                        placeholder="Email" 
-                        placeholderTextColor = "#8B8787"
-                        style={signupStyles.forms_textinput}
-                        value = {this.props.user.email}
-                        onChangeText={email => this.props.updateEmail(email)}
-                    />
-                  </View>
-                  <View style={signupStyles.forms_textinput_container}>
-                    <Icon style={globalStyles.icon_global} name="lock" size={18} />
-                    <TextInput 
-                         secureTextEntry={true}
-                        placeholder="Password" 
-                        placeholderTextColor = "#8B8787"
-                        style={signupStyles.forms_textinput}
-                        value = {this.props.user.password}
-                        onChangeText={password => this.props.updatePassword(password)}
-                    />
-                  </View>
-                  <View style={signupStyles.forms_textinput_container}>
-                    <Icon style={globalStyles.icon_global} name="lock" size={18} />
-                    <TextInput
-                        secureTextEntry={true}
-                        placeholder="Confirm Password" 
-                        placeholderTextColor = "#8B8787"
-                        style={signupStyles.forms_textinput}
-                    />
-                  </View>
-                  <Text style={signupStyles.forms_text}>1/2</Text>
-                  <TouchableOpacity
-                    activeOpacity={0.6}
-                    style={signupStyles.forms_button}
-                    onPress={ () => this.props.navigation.navigate('SignupClient2')}
-                  >
-                    <Text style={signupStyles.forms_button_label}>NEXT</Text>
-                  </TouchableOpacity>
-              
+            <Text style={signupStyles.forms_label}> CLIENT SIGN UP </Text>
+            <Image
+              style={{ width: 80, height: 80, alignSelf: 'center' }}
+              source={require('../assets/client.png')}
+            />
+            <View style={signupStyles.forms_textinput_container}>
+              <Icon style={globalStyles.icon_global} name="envelope" size={18} />
+              <TextInput
+                placeholder="Email"
+                placeholderTextColor="#8B8787"
+                style={signupStyles.forms_textinput}
+                value={this.props.user.email}
+                onChangeText={email => this.props.updateEmail(email)}
+              />
+            </View>
+            <View style={signupStyles.forms_textinput_container}>
+              <Icon style={globalStyles.icon_global} name="lock" size={18} />
+              <TextInput
+                secureTextEntry={true}
+                placeholder="Password"
+                placeholderTextColor="#8B8787"
+                style={signupStyles.forms_textinput}
+                value={this.props.user.password}
+                onChangeText={password => this.props.updatePassword(password)}
+              />
+            </View>
+            <View style={signupStyles.forms_textinput_container}>
+              <Icon style={globalStyles.icon_global} name="lock" size={18} />
+              <TextInput
+                secureTextEntry={true}
+                placeholder="Confirm Password"
+                placeholderTextColor="#8B8787"
+                style={signupStyles.forms_textinput}
+              />
+            </View>
+            <Text style={signupStyles.forms_text}>1/2</Text>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              style={signupStyles.forms_button}
+              onPress={() => this.props.navigation.navigate('SignupClient2')}
+            >
+              <Text style={signupStyles.forms_button_label}>NEXT</Text>
+            </TouchableOpacity>
           </View>
-      
-          </LinearGradient>
-          
-        </View> 
-        
-  );
-}
+        </LinearGradient>
+      </View>
+
+    );
+  }
 };
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ updateEmail, updatePassword }, dispatch )
+  return bindActionCreators({ updateEmail, updatePassword }, dispatch)
 }
 
 const mapStateToProps = state => {
