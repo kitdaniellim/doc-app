@@ -1,11 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Text, TextInput, Picker, Button, ScrollView, View, FlatList, TouchableOpacity, TouchableHighlight, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { signupStyles, globalStyles } from '../styles/styles';
 import { LinearGradient } from 'expo-linear-gradient';
-import RadioButtons_MultipleSelect from '../assets/RadioButtons_MultipleSelect.js';
+import RadioButtons_MultipleSelect from './RadioButtons_MultipleSelect.js';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import {  updateOfficeHours } from '../actions/user';
 
-class Dynamic_Input extends Component {
+class Dynamic_Input extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -65,15 +68,18 @@ class Dynamic_Input extends Component {
             <View style={signupStyles.forms_timeinput_container}>
               <TextInput
                 defaultValue='7'
+                keyboardType='numeric'
                 style={signupStyles.forms_timeinput_textinput}
               />
               <Text style={signupStyles.forms_text_bold_alt}>{" "} : {" "}</Text>
               <TextInput
                 defaultValue='30'
+                keyboardType='numeric'
                 style={signupStyles.forms_timeinput_textinput}
               />
               <TextInput
                 defaultValue='AM'
+                keyboardType='numeric'
                 style={signupStyles.forms_time_label}
               />
             </View>
@@ -83,15 +89,20 @@ class Dynamic_Input extends Component {
             <View style={signupStyles.forms_timeinput_container}>
               <TextInput
                 defaultValue='4'
+                keyboardType='numeric'
                 style={signupStyles.forms_timeinput_textinput}
+                value = {this.props.user.officeHours}
+                onChangeText={officeHours => this.props.updateOfficeHours(officeHours)}
               />
               <Text style={signupStyles.forms_text_bold_alt}>{" "} : {" "}</Text>
               <TextInput
                 defaultValue='30'
+                keyboardType='numeric'
                 style={signupStyles.forms_timeinput_textinput}
               />
               <TextInput
                 defaultValue='PM'
+                keyboardType='numeric'
                 style={signupStyles.forms_time_label}
               />
             </View>
@@ -108,15 +119,18 @@ class Dynamic_Input extends Component {
             <View style={signupStyles.forms_timeinput_container}>
               <TextInput
                 placeholder=''
+                keyboardType='numeric'
                 style={signupStyles.forms_timeinput_textinput}
               />
               <Text style={signupStyles.forms_text_bold_alt}>{" "} : {" "}</Text>
               <TextInput
                 placeholder=''
+                keyboardType='numeric'
                 style={signupStyles.forms_timeinput_textinput}
               />
               <TextInput
                 defaultValue='AM'
+                keyboardType='numeric'
                 style={signupStyles.forms_time_label}
               />
             </View>
@@ -126,15 +140,18 @@ class Dynamic_Input extends Component {
             <View style={signupStyles.forms_timeinput_container}>
               <TextInput
                 placeholder=''
+                keyboardType='numeric'
                 style={signupStyles.forms_timeinput_textinput}
               />
               <Text style={signupStyles.forms_text_bold_alt}>{" "} : {" "}</Text>
               <TextInput
                 placeholder=''
+                keyboardType='numeric'
                 style={signupStyles.forms_timeinput_textinput}
               />
               <TextInput
                 defaultValue='PM'
+                keyboardType='numeric'
                 style={signupStyles.forms_time_label}
               />
             </View>
@@ -178,6 +195,7 @@ class Dynamic_Input extends Component {
   }
 
   render() {
+   
     return (
       <View>
         <View style={signupStyles.forms_dynamicinput_margin}>
@@ -214,17 +232,18 @@ class Dynamic_Input extends Component {
   }
 }
 
-const SignupConsultant3_2 = ({ navigation }) => {
-  const Cancel = () => {
-    navigation.navigate('SignupConsultant3_1');
-  }
-
-  const Confirm = () => {
-    navigation.navigate('SignupConsultant3_1');
-  }
-
-  return (
-    <View style={signupStyles.container}>
+class SignupConsultant3_2 extends React.Component {
+  render() {
+    const Cancel = () => {
+      navigation.navigate('SignupConsultant3_1');
+    }
+  
+    const Confirm = () => {
+      navigation.navigate('SignupConsultant3_1');
+    }
+    
+    return(
+      <View style={signupStyles.container}>
       <LinearGradient
         colors={['rgba(243,243,243,0.4)', 'transparent']}
         start={{ x: 0, y: 1 }}
@@ -249,7 +268,22 @@ const SignupConsultant3_2 = ({ navigation }) => {
         </View>
       </LinearGradient>
     </View>
-  );
+    )
+  }
 }
 
-export default SignupConsultant3_2;
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ updateOfficeHours }, dispatch )
+}
+
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Dynamic_Input, SignupConsultant3_2 )

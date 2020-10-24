@@ -5,13 +5,13 @@ import { searchStyles, navbarStyles } from '../styles/styles';
 
 
 
-const Profile = () => {
+// const Profile = () => {
 
-  return (
-    <View>  
-      <Text>Profile Page</Text>
-    </View> 
-  );
-}
+//   return (
+//     <View>  
+//       <Text>Profile Page</Text>
+//     </View> 
+//   );
+// }
 
-export default Profile;
+// export default Profile;

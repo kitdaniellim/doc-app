@@ -8,34 +8,63 @@ const SignUp = {
         flex: 1,
         justifyContent: 'space-between',
         alignItems: 'stretch',
-        marginHorizontal: 45,
+        marginHorizontal: 30,
         marginTop: 20,
         marginBottom: 60,
     },
 
-    forms_scaffold: {
+    forms_container_2: {
         flex: 1,
         justifyContent: 'space-between',
         alignItems: 'stretch',
+        marginHorizontal: 30,
+        marginBottom: 180,
+        paddingBottom: 80
+    },
+
+    forms_scaffold: {
+        flex: 1,
+        flexWrap: 'wrap',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
         marginHorizontal: 10,
         marginVertical: 5,
-        padding: 14,
+        paddingTop: 14,
+        paddingHorizontal: 18,
         backgroundColor: '#fff',
         borderRadius: 15,
     },
 
     forms_scaffold_text: {
-        justifyContent: 'flex-start',
-        fontSize: 8,
+        fontSize: 9,
         color: '#8B8787',
     },
 
     forms_scaffold_text_bold: {
         marginBottom: 10,
-        justifyContent: 'flex-start',
-        fontSize: 60,
+        fontSize: 48,
         fontWeight: '600',
         color: '#8B8787',
+    },
+
+    forms_scaffold_checkbox_container: {
+        flexDirection: "row",
+        marginBottom: 20,
+        justifyContent: 'center',
+        alignSelf: 'center'
+    },
+
+    forms_scaffold_checkbox: {
+        alignSelf: "center",
+    },
+
+    forms_scaffold_checkbox_label: {
+        margin: 4,
+        fontSize: 11,
+        color: '#8B8787',
+        textAlign: 'center',
+        alignSelf: "center",
+        justifyContent: 'center'
     },
 
     forms_label_container: {
@@ -45,7 +74,8 @@ const SignUp = {
     forms_label: {
         color: '#fff',
         alignSelf: 'center',
-        fontWeight: '500',
+        fontWeight: '700',
+        fontSize: 40,
         letterSpacing: 1,
         marginBottom: 10,
     },
@@ -59,13 +89,24 @@ const SignUp = {
         justifyContent: 'center',
         borderBottomColor: '#fff',
         borderBottomWidth: 1,
-},
+    },
+
+    forms_label_small_container_2: {
+        marginTop: -20,
+        marginBottom: 3,
+        marginHorizontal: 12,
+        padding: 4,
+        alignSelf: 'stretch',
+        justifyContent: 'center',
+        borderBottomColor: '#fff',
+        borderBottomWidth: 1,
+    },
 
     forms_label_small: {
         color: '#fff',
         justifyContent: 'flex-end',
         fontWeight: '400',
-        fontSize: 12,
+        fontSize: 15,
         letterSpacing: 1,
         marginTop: 15,
         marginBottom: 5,
@@ -81,73 +122,57 @@ const SignUp = {
         marginVertical: 10,
         justifyContent: 'flex-start',
         alignSelf: 'stretch',
-        shadowOffset:{  width: 0,  height: 2,  },
+        shadowOffset: { width: 0, height: 2, },
         shadowColor: 'black',
         shadowOpacity: 0.1,
     },
 
     forms_textinput: {
-        fontSize: 11,
+        width: '100%',
+        fontSize: 14,
         paddingHorizontal: 5,
         marginHorizontal: 5,
-        borderRadius: 20,
-        backgroundColor: '#fff',  
+        borderRadius: 20,    
+        letterSpacing: 1 
     },
 
     forms_bday_container: {
-        flexDirection: 'row',
-        margin: 8,
+        height: 150,
+        flexDirection: 'column',
+        margin: 6,
         alignSelf: 'stretch',
-        
+        justifyContent: 'space-around'
     },
 
     forms_bday_label_container: {
-        flex: 3,
         flexDirection: 'row',
-        backgroundColor: '#fff',
-        borderRadius: 15,
-        paddingHorizontal: 7,
+        paddingHorizontal: 10,
+        paddingVertical: 3,
+        marginHorizontal: 5,
+        marginTop: 10,
+        marginBottom: 2,
+        justifyContent: 'flex-start',
         alignSelf: 'stretch',
-        shadowOffset:{  width: 0,  height: 2,  },
-        shadowColor: 'black',
-        shadowOpacity: 0.1,
+        borderBottomColor: '#fff',
+        borderBottomWidth: 1
     },
 
     forms_bday_label: {
-        fontSize: 9,
-        width: '100%',
-        paddingHorizontal: 10,
-        borderRadius: 15,
-        color: '#8B8787',
-        alignSelf: 'center',
-        justifyContent: 'flex-start',
+        width: '90%',
+        fontSize: 15,
+        paddingHorizontal: 5,
+        marginHorizontal: 5,
     },
 
     forms_bday_item_container: {
-        flex: 2,
         borderRadius: 15,
         paddingHorizontal: 6,
-        paddingVertical: 3,
-        marginHorizontal: 3,
-        width: '100%',
+        marginHorizontal: 15,
+        marginVertical: 5,
         backgroundColor: '#fff',
-        shadowOffset:{  width: 0,  height: 2,  },
+        shadowOffset: { width: 0, height: 2, },
         shadowColor: 'black',
         shadowOpacity: 0.1,
-    },
-
-    forms_bday_item_divider: {
-        color: '#fff',
-        fontWeight: '500', 
-    },
-
-    forms_bday_textinput: {
-        fontSize: 10,
-        width: '100%',
-        paddingHorizontal: 3,
-        marginHorizontal: 5,
-        borderRadius: 15,
-        backgroundColor: '#fff', 
     },
 
     forms_button_container: {
@@ -161,7 +186,7 @@ const SignUp = {
         marginTop: 20,
         backgroundColor: '#fff',
         borderRadius: 15,
-        shadowOffset:{  width: 0,  height: 2,  },
+        shadowOffset: { width: 0, height: 2, },
         shadowColor: 'black',
         shadowOpacity: 0.1,
         justifyContent: 'center',
@@ -170,36 +195,15 @@ const SignUp = {
 
     forms_button_label: {
         color: '#8B8787',
-        fontSize: 9,
-        fontWeight: '600', 
-        letterSpacing: 1, 
-        textAlign: 'center',
-    },
-
-    forms_paybutton: {
-        width: '100%',
-        height: 30,
-        marginTop: 20,
-        backgroundColor: '#FFAD3A',
-        borderRadius: 15,
-        shadowOffset:{  width: 0,  height: 2,  },
-        shadowColor: 'black',
-        shadowOpacity: 0.1,
-        justifyContent: 'center',
-        alignSelf: 'center',
-    },
-
-    forms_paybutton_label: {
-        color: '#fff',
-        fontSize: 10,
-        fontWeight: '600', 
-        letterSpacing: 1, 
+        fontSize: 15,
+        fontWeight: '600',
+        letterSpacing: 1,
         textAlign: 'center',
     },
 
     forms_text: {
         color: '#fff',
-        fontSize: 11,
+        fontSize: 15,
         fontWeight: '500',
         textAlign: 'center',
         marginTop: 20,
@@ -207,7 +211,7 @@ const SignUp = {
 
     forms_text_underline: {
         color: '#fff',
-        fontSize: 11,
+        fontSize: 15,
         fontWeight: '500',
         textDecorationLine: "underline",
         textDecorationStyle: "solid",
@@ -216,7 +220,7 @@ const SignUp = {
 
     forms_text_bold: {
         color: '#fff',
-        fontSize: 12,
+        fontSize: 15,
         fontWeight: '600',
         textAlign: 'center',
         justifyContent: 'center',
@@ -227,21 +231,22 @@ const SignUp = {
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginVertical: 13,
-        marginHorizontal: 15,
+        marginHorizontal: 13,
     },
 
     forms_add_textinput_button_container: {
         flex: 1,
         flexDirection: 'row',
+        height: 40,
         backgroundColor: '#fff',
         borderRadius: 15,
         paddingHorizontal: 10,
         paddingVertical: 3,
-        marginHorizontal: 8,
+        marginHorizontal: 10,
         marginVertical: 4,
         justifyContent: 'center',
         alignSelf: 'stretch',
-        shadowOffset:{  width: 0,  height: 2,  },
+        shadowOffset: { width: 0, height: 2, },
         shadowColor: 'black',
         shadowOpacity: 0.1,
     },
@@ -252,17 +257,18 @@ const SignUp = {
     },
 
     forms_add_textinput_text: {
-        fontSize: 7,
+        fontSize: 12,
+        marginLeft: 6,
         fontWeight: '600',
         textAlign: 'center',
-        color: '#8B8787',  
+        color: '#8B8787',
         justifyContent: 'center',
         alignSelf: 'center',
-        letterSpacing: 1, 
+        letterSpacing: 0.5,
     },
 
     forms_time_container: {
-        flex: 1, 
+        flex: 1,
         flexDirection: 'column',
         marginVertical: 2,
     },
@@ -281,7 +287,7 @@ const SignUp = {
         backgroundColor: '#fff',
         justifyContent: 'center',
         alignSelf: 'center',
-        shadowOffset:{  width: 0,  height: 2,  },
+        shadowOffset: { width: 0, height: 2, },
         shadowColor: 'black',
         shadowOpacity: 0.1,
     },
@@ -289,7 +295,7 @@ const SignUp = {
     forms_timeinput_textinput: {
         width: 30,
         textAlign: 'center',
-        fontSize: 11,
+        fontSize: 15,
         paddingVertical: 1,
         paddingHorizontal: 1,
         marginVertical: 5,
@@ -315,16 +321,16 @@ const SignUp = {
     forms_time_label: {
         color: 'black',
         fontWeight: '600',
-        fontSize: 9,
+        fontSize: 15,
         paddingRight: 2,
-        textAlign:'center',
+        textAlign: 'center',
         marginVertical: 5,
         marginRight: 5,
     },
 
     forms_text_bold_alt: {
         color: 'black',
-        fontSize: 11,
+        fontSize: 15,
         fontWeight: '500',
         textAlign: 'center',
         justifyContent: 'center',
@@ -336,6 +342,6 @@ const SignUp = {
         marginTop: 8,
         height: 220
     }
-  }
-  
-  export default SignUp;
+}
+
+export default SignUp;

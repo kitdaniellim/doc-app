@@ -1,15 +1,49 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import {  updateDayLocation} from '../actions/consultant';
 
-export default class RadioButtons_MultipleSelect extends Component {
+class RadioButtons_MultipleSelect extends React.Component {
+    constructor(props){
+        super();
+        // this.day = this.day.bind(this);
+    }
     state = {
         values: [],
     };
+    // day(e)
+    updateTime(item){
+        const { values } = this.state;
+        const temp = values;
+        item.Checked = item.Checked === false ? true : false;
+        if (item.Checked) {
+            temp.push(item.key);
+        } else {
+            const index = temp.indexOf(item.key);
+            if (index > -1) {
+                temp.splice(index, 1);
+            }
+        }
+        this.setState({
+            values: temp,
+        });
+        console.log("shet")
+        this.props.updateDayLocation(this.state.values);
+        console.log(this.props)
+    }
 
     render() {
         const { options } = this.props;
-        const { values } = this.state;
+      
+        //const { days } = this.props.values;
+        //  this.props.day(values);
+        console.log("radiobutton");
+       
+        console.log(this.props );
+        //console.log(days);
         return (
+         
             <View style={styles.container}>
                 {options.map((item) => {
                     return (
@@ -17,21 +51,7 @@ export default class RadioButtons_MultipleSelect extends Component {
                             <Text style={styles.text}>{item.text}</Text>
                             <TouchableOpacity
                                 style={styles.circle}
-                                onPress={() => {
-                                    const temp = values;
-                                    item.Checked = item.Checked === false ? true : false;
-                                    if (item.Checked) {
-                                        temp.push(item.key);
-                                    } else {
-                                        const index = temp.indexOf(item.key);
-                                        if (index > -1) {
-                                            temp.splice(index, 1);
-                                        }
-                                    }
-                                    this.setState({
-                                        values: temp,
-                                    });
-                                }}>
+                                onPress={() => this.updateTime(item) }>
                                 {item.Checked === true && <View style={styles.checkedCircle} />}
                             </TouchableOpacity>
                         </View>
@@ -86,3 +106,15 @@ const styles = StyleSheet.create({
     },
 
 });
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ updateDayLocation}, dispatch)
+  }
+  const mapStateToProps = state => {
+      return {
+      user : state.user,
+      consultant: state.consultant,
+      singleConsultant: state.singleConsultant,
+      locArray: state.locArray
+        }
+  }
+  export default connect(mapStateToProps, mapDispatchToProps)(RadioButtons_MultipleSelect );
