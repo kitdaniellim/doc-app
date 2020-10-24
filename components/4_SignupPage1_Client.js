@@ -32,7 +32,7 @@ const SignupClient1 = ({ navigation }) => {
 // }
 
 
-class SignupClient1 extends Component {
+class SignupClient1 extends React.Component {
 
   // constructor(props){
   //   // this.setState = ({

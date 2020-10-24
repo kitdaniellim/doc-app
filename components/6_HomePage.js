@@ -8,7 +8,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Firebase, { db } from '../config/Firebase';
 
-class Home extends Component{
+class Home extends React.Component{
   _isMounted = false;
   constructor(props)
   {

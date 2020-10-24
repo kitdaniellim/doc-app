@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Alert, AppRegistry, Button, TextInput, View, StyleSheet } from 'react-native';
 // import Selection from './components/2_SelectionPage.js';
 // import { LinearGradient } from  'expo-linear-gradient';
@@ -46,7 +46,7 @@ if (!global.atob) { global.atob = decode }
 
 
 
-export default class App extends Component {
+export default class App extends React.Component {
 
   Home = ( navigation ) => {
     //console.log("WEW MGA DUES")

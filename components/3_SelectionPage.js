@@ -9,7 +9,7 @@ import { updateUserType } from '../actions/user';
 const CLIENT = 'CLIENT';
 const CONSULTANT = 'CONSULTANT';
 
-class Selection extends Component{
+class Selection extends React.Component{
   render(){
     
     const SignUpClient = () => {

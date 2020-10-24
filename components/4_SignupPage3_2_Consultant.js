@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Text, TextInput, Picker, Button, ScrollView, View, FlatList, TouchableOpacity, TouchableHighlight, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { signupStyles, globalStyles } from '../styles/styles';
@@ -8,7 +8,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {  updateOfficeHours } from '../actions/user';
 
-class Dynamic_Input extends Component {
+class Dynamic_Input extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -232,7 +232,7 @@ class Dynamic_Input extends Component {
   }
 }
 
-class SignupConsultant3_2 extends Component {
+class SignupConsultant3_2 extends React.Component {
   render() {
     const Cancel = () => {
       navigation.navigate('SignupConsultant3_1');

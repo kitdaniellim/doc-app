@@ -1,4 +1,4 @@
-import React, { useState, Component } from 'react';
+import React, { useState } from 'react';
 import { Image, Text, TextInput, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { loginStyles, globalStyles } from '../styles/styles';
@@ -8,7 +8,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { updateEmail, updatePassword, login, getUser  } from '../actions/user'
 import Firebase, { db } from '../config/Firebase'
-class Login extends Component  {
+class Login extends React.Component  {
   //const [isModalVisible, toggleModal] = useState(false);
   constructor(props){
     super(props);

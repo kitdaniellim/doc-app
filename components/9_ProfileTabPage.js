@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {  getConsultant } from '../actions/consultant';
 
-class ProfileTab extends Component {
+class ProfileTab extends React.Component {
   
   constructor(props){
     super(props);

@@ -1,4 +1,4 @@
-import React, { useState, Component } from 'react';
+import React, { useState } from 'react';
 import { Text, TextInput, ScrollView, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { signupStyles, globalStyles } from '../styles/styles';
@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { updateUserOfficeLocation, updateUserOfficeHours } from '../actions/user';
 
 
-class SignupConsultant3_1 extends Component {
+class SignupConsultant3_1 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

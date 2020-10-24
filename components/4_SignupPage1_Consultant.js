@@ -8,7 +8,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { updateEmail, updatePassword } from '../actions/user';
 
-class SignupConsultant1 extends Component {
+class SignupConsultant1 extends React.Component {
   // const [username, setUser] = useState('');
   // const [email, setEmail] = useState('');
   // const [password, setPass] = useState('');

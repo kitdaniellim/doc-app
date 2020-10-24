@@ -66,7 +66,7 @@ function Close() {
     return (reg.test(num) === true)? true : false
   }
 */
-class SignupClient2 extends Component{
+class SignupClient2 extends React.Component{
 
     state = {
       month: '',

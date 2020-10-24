@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Text, TextInput, Image, ScrollView, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { signupStyles, profileStyles, globalStyles } from '../styles/styles';
@@ -13,7 +13,7 @@ import * as Permissions from 'expo-permissions';
 //import Firebase, { db } from '../config/Firebase'
 // import { nanoid } from "nanoid";
 
-class EditProfile_1 extends Component {
+class EditProfile_1 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {  updateDayLocation} from '../actions/consultant';
 
-class RadioButtons_MultipleSelect extends Component {
+class RadioButtons_MultipleSelect extends React.Component {
     constructor(props){
         super();
         // this.day = this.day.bind(this);

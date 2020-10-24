@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { calendarStyles } from '../../styles/styles';
 import { withNavigation } from 'react-navigation';
 
 //accepts time_start, time_end and booked_list as parameters and returns display of 15 minute interval
-class TimeSlot extends Component {
+class TimeSlot extends React.Component {
     state = {
         slots: [],
     };

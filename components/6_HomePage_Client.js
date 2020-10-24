@@ -12,7 +12,7 @@ function wait(timeout) {
   });
 }
 
-class HomeClient extends Component{
+class HomeClient extends React.Component{
   
   render(){
     
