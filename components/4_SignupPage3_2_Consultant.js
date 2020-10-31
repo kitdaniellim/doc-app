@@ -6,7 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import RadioButtons_MultipleSelect from './RadioButtons_MultipleSelect.js';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import {  updateOfficeHours } from '../actions/user';
+import {  updateOfficeHours } from '../actions/users';
 
 class Dynamic_Input extends React.Component {
   constructor() {
@@ -279,7 +279,7 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.users
   }
 }
 

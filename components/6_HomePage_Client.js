@@ -195,7 +195,7 @@ class HomeClient extends React.Component{
 }
 const mapStateToProps = state => {
 	return {
-		user: state.user
+		user: state.users
 	}
 }
 export default connect(mapStateToProps)(HomeClient);

@@ -4,7 +4,7 @@ import { selectionStyles, globalStyles } from '../styles/styles';
 import { LinearGradient } from 'expo-linear-gradient';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { updateUserType } from '../actions/user';
+import { updateUserType } from '../actions/users';
 
 const CLIENT = 'CLIENT';
 const CONSULTANT = 'CONSULTANT';
@@ -81,7 +81,7 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.users
   }
 }
 

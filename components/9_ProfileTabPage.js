@@ -5,7 +5,7 @@ import StarRating from 'react-native-star-rating';
 import { profileStyles, globalStyles } from '../styles/styles';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {  getConsultant } from '../actions/consultant';
+import {  getConsultant } from '../actions/users';
 
 class ProfileTab extends React.Component {
   
@@ -230,9 +230,9 @@ const mapDispatchToProps = dispatch => {
 }
 const mapStateToProps = state => {
 	return {
-    user : state.user,
-    consultant: state.consultant,
-    singleConsultant: state.singleConsultant
+    user : state.users,
+    consultant: state.users,
+    singleConsultant: state.users
   	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileTab);

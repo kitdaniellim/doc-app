@@ -6,7 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Modal from 'react-native-modal';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { updateEmail, updatePassword } from '../actions/user';
+import { updateEmail, updatePassword } from '../actions/users';
 
 class SignupConsultant1 extends React.Component {
   // const [username, setUser] = useState('');
@@ -159,7 +159,7 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.users
   }
 }
 

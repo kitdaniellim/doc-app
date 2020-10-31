@@ -5,7 +5,7 @@ import { signupStyles, globalStyles } from '../styles/styles';
 import { LinearGradient } from 'expo-linear-gradient';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { updateEmail, updatePassword } from '../actions/user';
+import { updateEmail, updatePassword } from '../actions/users';
 
 /*DEV: Dan - Please update code using redux
 const SignupClient1 = ({ navigation }) => {
@@ -170,7 +170,7 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.users
   }
 }
 

@@ -3,7 +3,7 @@ import { Text, Image, View, FlatList, RefreshControl, TouchableOpacity, ScrollVi
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {BackgroundCarousel} from './BackgroundCarousel'
 import { homeStyles } from '../styles/styles';
-import {  getAllConsultant, getConsultant, getReviews} from '../actions/consultant';
+import {  getAllConsultant, getConsultant, getReviewsConsultant} from '../actions/users';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Firebase, { db } from '../config/Firebase';
@@ -193,15 +193,15 @@ class Home extends React.Component{
 }
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ getAllConsultant, getConsultant, getReviews}, dispatch)
+  return bindActionCreators({ getAllConsultant, getConsultant, getReviewsConsultant}, dispatch)
 }
 
 const mapStateToProps = state => {
   return {
-    user: state.user,
-    consultant : state.consultant,
+    user: state.users,
+    consultant : state.users,
     
-    singleConsultant: state.singleConsultant
+    singleConsultant: state.users
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

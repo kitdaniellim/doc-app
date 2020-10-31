@@ -6,7 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Modal from 'react-native-modal';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { updateFullName, updateUserSpecialty, updateUserLIC, updateUserSubSpecialty } from '../actions/user';
+import { updateFullName, updateUserSpecialty, updateUserLIC, updateUserSubSpecialty } from '../actions/users';
 
 class Dynamic_Input extends React.Component {
   constructor() {
@@ -93,8 +93,8 @@ class Dynamic_Input extends React.Component {
 
 class SignupConsultant2 extends React.Component  {
     
-  Next = () => {
-    const navigation = this.props.navigation;
+  Next = (props) => {
+    const navigation = props.navigation;
       navigation.navigate('SignupConsultant3_1');
   }
 
@@ -204,7 +204,7 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.users
   }
 }
 

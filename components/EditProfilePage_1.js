@@ -6,7 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Modal from 'react-native-modal';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {  getConsultant,  updateProfileImage, updateOfficeImage, editProfile, updateLocation} from '../actions/consultant';
+import {  getConsultant,  updateProfileImage, updateOfficeImage, editProfile, updateLocation} from '../actions/users';
   
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
@@ -365,9 +365,9 @@ const mapDispatchToProps = dispatch => {
 }
 const mapStateToProps = state => {
 	return {
-    user : state.user,
-    consultant: state.consultant,
-    singleConsultant: state.singleConsultant,
+    user : state.users,
+    consultant: state.users,
+    singleConsultant: state.users,
     locArray: state.locArray
   	}
 }

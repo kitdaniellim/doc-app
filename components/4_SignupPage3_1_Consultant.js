@@ -6,7 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Modal from 'react-native-modal';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { updateUserOfficeLocation, updateUserOfficeHours } from '../actions/user';
+import { updateUserOfficeLocation, updateUserOfficeHours } from '../actions/users';
 
 
 class SignupConsultant3_1 extends React.Component {
@@ -190,7 +190,7 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.users
   }
 }
 

@@ -7,7 +7,7 @@ import { LinearGradient } from  'expo-linear-gradient';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import RNPickerSelect from 'react-native-picker-select';
-import { updateEmail, updatePassword, updateFullName, updateMobileNumber, updateBirthDay, signup } from '../actions/user';
+import { updateEmail, updatePassword, updateFullName, updateMobileNumber, updateBirthDay, signup } from '../actions/users';
 
 const Submit = () => {
   navigation.navigate('LoginClient');
@@ -397,7 +397,7 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.users
   }
 }
 
