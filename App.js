@@ -2,11 +2,8 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 // import Selection from './components/2_SelectionPage.js';
 // import { LinearGradient } from  'expo-linear-gradient';
-import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import thunkMiddleware from 'redux-thunk';
 import Routes from './routes/Routes.js';
-import reducer from './reducers';
 import {decode, encode} from 'base-64'
 import { MenuProvider } from 'react-native-popup-menu';
 import firebase from "firebase"

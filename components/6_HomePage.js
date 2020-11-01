@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Text, Image, View, FlatList, RefreshControl, TouchableOpacity, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { BackgroundCarousel } from './BackgroundCarousel'
@@ -7,13 +7,12 @@ import { getAllConsultant, getConsultant, getReviewsConsultant } from '../action
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Firebase, { db } from '../config/Firebase';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class Home extends React.Component {
+  _isMounted = false
   constructor(props) {
     super(props);
-    this.state = {
-      isComponentMounted: false
-    }
     //this.Profile = this.Profile.bind(this);
     // this.ref = firebase.firestore().collection
     //  this.state = {
@@ -21,21 +20,30 @@ class Home extends React.Component {
     //  }
   }
 
-  componentWillMount() {
-    this.setState(() => { isComponentMounted: true });
-    if (this.state.isComponentMounted) {
-      console.log('Getting consultants')
-      this.props.getAllConsultant();
+  async componentDidMount() {
+    try {
+      const user = JSON.parse(
+        await AsyncStorage.getItem("user")
+      );
+      if (!user) {
+        this.props.navigation.navigate('Login');
+      } else {
+        console.log(this.props)
+        this._isMounted = true;
+        if (this._isMounted) {
+          this.props.getAllConsultant();
+        }
+      }
+    } catch (e) {
+      console.log(`Error! Details: ${e}`);
+      this.props.navigation.navigate('Login');
     }
+
+
 
   }
   componentWillUnmount() {
-    this.setState(() => { isComponentMounted: false });
-  }
-  wait(timeout) {
-    return new Promise(resolve => {
-      setTimeout(resolve, timeout);
-    });
+    this._isMounted = false;
   }
 
   SeeAll() {
@@ -49,7 +57,7 @@ class Home extends React.Component {
   Profile = async (uid) => {
 
     await this.props.getConsultant(uid);
-    if (this.props.consultant.office_details != null && this.props.consultant.userReviews != null) {
+    if (this.props.singleConsultant.office_details != null) {
       this.props.navigation.navigate('ProfileTab')
     }
   }
@@ -102,7 +110,7 @@ class Home extends React.Component {
 
 
 
-    const users = Array.from(this.props.consultant);
+    //const users = Array.from(this.props.consultant);
     if (this.props.navigation.state) {
       if (this.props.navigation.state.params) {
         Firebase.auth().signOut()
@@ -155,7 +163,7 @@ class Home extends React.Component {
                         showsHorizontalScrollIndicator={false}
                         contentContainerStyle={{}}
                       >
-                        {this.state.isComponentMounted && users.map((data) => {
+                        {this.props.consultant && this.props.consultant.map((data) => {
 
                           if (item.userSpecialty === data.userSpecialty) {
                             return (
@@ -199,7 +207,8 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    consultant: state.users
+    consultant: state.users.consultant,
+    singleConsultant: state.users.singleConsultant
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

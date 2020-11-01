@@ -6,6 +6,7 @@ const reducerDefaultState = {
     error: null,
     items: [],
     item: {},
+    consultant: [],
     officeImage: {},
     add_office: [],
     location: {},
@@ -45,55 +46,55 @@ export default (state = reducerDefaultState, action) => {
                 error: action.payload.error
             };
         case GET_CONSULTANT:
-            return action.payload
+            return { ...state, singleConsultant: action.payload.singleConsultant }
         case GET_REVIEWS:
-            return { reviews_users: action.payload }
+            return { reviews_users: action.payload.reviews_users }
         case UPDATE_PROFILE_IMAGE:
             return state.map((value, i) => {
-                if (action.payload.index === i) {
+                if (action.payload.uri.index === i) {
                     return value
                 }
             })
         case UPDATE_OFFICE_IMAGE:
-            return { ...state, officeImage: action.payload }
+            return { ...state, officeImage: action.payload.uri }
         case UPDATE_OFFICE_DETAILS:
-            return { ...state, add_office: [...state.arr, action.payload] }
+            return { ...state, add_office: [...state.arr, action.payload.office_details] }
         case UPDATE_LOCATION_DETAIL:
-            return { ...state, location: action.payload }
+            return { ...state, location: action.payload.user_location }
         case UPDATE_TO_HOUR_DETAIL:
-            return { ...state, to_hour: action.payload }
+            return { ...state, to_hour: action.payload.date }
         case UPDATE_FROM_HOUR_DETAIL:
-            return { ...state, from_hour: action.payload }
+            return { ...state, from_hour: action.payload.date }
         case UPDATE_DAY_DETAIL:
-            return { ...state, day: action.payload }
+            return { ...state, day: action.payload.user_location }
         case GET_ALL_CONSULTANT:
-            return action.payload
+            return { ...state, consultant: action.payload.consultant }
         case LOGIN:
-            return action.payload
+            return { ...state, user: action.payload.user }
         case SIGNUP:
-            return action.payload
+            return { ...state, user: action.payload.user }
         case UPDATE_EMAIL:
-            return { ...state, email: action.payload }
+            return { ...state, email: action.payload.email }
         case UPDATE_PASSWORD:
-            return { ...state, password: action.payload }
+            return { ...state, password: action.payload.password }
         case UPDATE_FULL_NAME:
-            return { ...state, fullName: action.payload }
+            return { ...state, fullName: action.payload.fullName }
         case UPDATE_MOBILE_NUMBER:
-            return { ...state, mobileNumber: action.payload }
+            return { ...state, mobileNumber: action.payload.mobileNumber }
         case UPDATE_BIRTH_DAY:
-            return { ...state, birthDay: action.payload }
+            return { ...state, birthDay: action.payload.birthday }
         case UPDATE_USER_TYPE:
-            return { ...state, userType: action.payload }
+            return { ...state, userType: action.payload.userType }
         case UPDATE_USER_LIC:
-            return { ...state, userLIC: action.payload }
+            return { ...state, userLIC: action.payload.userLIC }
         case UPDATE_USER_SPECIALTY:
-            return { ...state, userSpecialty: action.payload }
+            return { ...state, userSpecialty: action.payload.userSpecialty }
         case UPDATE_USER_SUB_SPECIALTY:
-            return { ...state, userSubSpecialty: action.payload }
+            return { ...state, userSubSpecialty: action.payload.userSubSpecialty }
         case UPDATE_OFFICE_LOCATION:
             return { ...state, userOfficeLocation: action.payload }
         case UPDATE_OFFICE_HOURS:
-            return { ...state, officeHours: action.payload }
+            return { ...state, officeHours: action.payload.officeHours }
         default:
             return state;
     }

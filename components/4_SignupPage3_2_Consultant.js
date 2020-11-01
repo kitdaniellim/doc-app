@@ -91,7 +91,7 @@ class Dynamic_Input extends React.Component {
                 defaultValue='4'
                 keyboardType='numeric'
                 style={signupStyles.forms_timeinput_textinput}
-                value = {this.props.user.officeHours}
+                value = {this.props.officeHours}
                 onChangeText={officeHours => this.props.updateOfficeHours(officeHours)}
               />
               <Text style={signupStyles.forms_text_bold_alt}>{" "} : {" "}</Text>
@@ -279,7 +279,7 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    user: state.users
+    officeHours: state.users.officeHours
   }
 }
 

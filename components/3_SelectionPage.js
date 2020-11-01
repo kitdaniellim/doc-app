@@ -13,11 +13,11 @@ class Selection extends React.Component{
   render(){
     
     const SignUpClient = () => {
-      this.props.user.userType = CLIENT;
+      this.props.userType = CLIENT;
       this.props.navigation.navigate('SignupClient1');
     }
     const SignUpConsultant = () => {
-      this.props.user.userType = CONSULTANT;
+      this.props.userType = CONSULTANT;
       this.props.navigation.navigate('SignupConsultant1');
     }
     
@@ -81,7 +81,7 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    user: state.users
+    user: state.users.user
   }
 }
 

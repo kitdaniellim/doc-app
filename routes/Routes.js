@@ -474,7 +474,7 @@ const appScreens = {
                                 />
                             </MenuTrigger>
                             <MenuOptions customStyles={optionsStyles}>
-                                <MenuOption value={3} text='Sign Out' />
+                                <MenuOption value={1} text='Sign Out' />
                                 <MenuOption value={2} text='About Us' />
                             </MenuOptions>
                         </Menu>

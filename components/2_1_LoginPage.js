@@ -4,10 +4,11 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { loginStyles, globalStyles } from '../styles/styles';
 import { LinearGradient } from 'expo-linear-gradient';
 import Modal from 'react-native-modal';
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import { updateEmail, updatePassword, login, getUser } from '../actions/users'
-import Firebase, { db } from '../config/Firebase'
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { updateEmail, updatePassword, login, getUser } from '../actions/users';
+import Firebase, { db } from '../config/Firebase';
+import AsyncStorage from "@react-native-community/async-storage";
 class Login extends React.Component {
 
   constructor(props) {
@@ -19,17 +20,24 @@ class Login extends React.Component {
     this.Home = this.Home.bind(this);
   }
 
-  componentDidMount = () => {
-    Firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.props.getUser(user.uid);
-        if (this.props.user != null) {
-          this.props.navigation.navigate('Home');
-        } else {
-          this.props.navigation.navigate('Login');
-        }
-      }
-    })
+  async componentDidMount() {
+    // Firebase.auth().onAuthStateChanged(user => {
+    //   if (user) {
+    //     this.props.getUser(user.uid);
+    //     if (this.props.user != null) {
+    //       this.props.navigation.navigate('Home');
+    //     } else {
+    //       this.props.navigation.navigate('Login');
+    //     }
+    //   }
+    // })
+
+    try {
+      await AsyncStorage.removeItem('user');
+    }
+    catch (exception) {
+      alert('Error in removing session');
+    }
 
 
   }
@@ -50,15 +58,19 @@ class Login extends React.Component {
     const navigation = this.props.navigation;
     navigation.navigate('ForgotPassword');
   }
-  handleLogin = () => {
-    if (this.props.user.email === '' || this.props.user.password === '') {
-
+  handleLogin = async () => {
+    if (this.props.email === '' || this.props.password === '') {
       this.setstate({
         toggleModal: true
       })
     } else {
-      this.props.login();
-      this.props.navigation.navigate("Login");
+      console.log(`logging in...`)
+      await this.props.login();
+      if (this.props.user.email) {
+        console.log(`login successful`)
+        await AsyncStorage.setItem('user', JSON.stringify(this.props.user));
+        this.props.navigation.navigate("Home");
+      }
     }
   }
 
@@ -128,7 +140,7 @@ class Login extends React.Component {
                 placeholder="Username"
                 placeholderTextColor="#8B8787"
                 style={loginStyles.forms_textinput}
-                value={this.props.user.email}
+                value={this.props.email ? this.props.email : ""}
                 onChangeText={email => this.props.updateEmail(email)}
               />
             </View>
@@ -139,7 +151,7 @@ class Login extends React.Component {
                 placeholder="Password"
                 placeholderTextColor="#8B8787"
                 style={loginStyles.forms_textinput}
-                value={this.props.user.password}
+                value={this.props.password ? this.props.password : ""}
                 onChangeText={password => this.props.updatePassword(password)}
               />
             </View>
@@ -186,7 +198,9 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    user: state.users
+    user: state.users.user,
+    email: state.users.email,
+    password: state.users.password
   }
 }
 

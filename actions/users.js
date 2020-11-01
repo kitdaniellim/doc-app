@@ -68,7 +68,7 @@ export const recoverPassFailure = error => ({
 export const updateEmail = email => {
     return {
         type: UPDATE_EMAIL,
-        payload: email
+        payload: { email }
     }
 }
 
@@ -76,7 +76,7 @@ export const updateEmail = email => {
 export const updatePassword = password => {
     return {
         type: UPDATE_PASSWORD,
-        payload: password
+        payload: { password }
     }
 }
 
@@ -84,7 +84,7 @@ export const updatePassword = password => {
 export const updateFullName = fullName => {
     return {
         type: UPDATE_FULL_NAME,
-        payload: fullName
+        payload: { fullName }
     }
 }
 
@@ -92,7 +92,7 @@ export const updateFullName = fullName => {
 export const updateMobileNumber = mobileNumber => {
     return {
         type: UPDATE_MOBILE_NUMBER,
-        payload: mobileNumber
+        payload: { mobileNumber }
     }
 }
 
@@ -100,7 +100,7 @@ export const updateMobileNumber = mobileNumber => {
 export const updateBirthDay = birthday => {
     return {
         type: UPDATE_BIRTH_DAY,
-        payload: birthday
+        payload: { birthday }
     }
 }
 
@@ -108,7 +108,7 @@ export const updateBirthDay = birthday => {
 export const updateUserType = userType => {
     return {
         type: UPDATE_USER_TYPE,
-        payload: userType
+        payload: { userType }
     }
 }
 
@@ -116,7 +116,7 @@ export const updateUserType = userType => {
 export const updateUserSpecialty = userSpecialty => {
     return {
         type: UPDATE_USER_SPECIALTY,
-        payload: userSpecialty
+        payload: { userSpecialty }
     }
 }
 
@@ -124,7 +124,7 @@ export const updateUserSpecialty = userSpecialty => {
 export const updateUserSubSpecialty = userSubSpecialty => {
     return {
         type: UPDATE_USER_SUB_SPECIALTY,
-        payload: userSubSpecialty
+        payload: { userSubSpecialty }
     }
 }
 
@@ -133,15 +133,15 @@ export const updateUserSubSpecialty = userSubSpecialty => {
 export const updateUserLIC = userLIC => {
     return {
         type: UPDATE_USER_LIC,
-        payload: userLIC
+        payload: { userLIC }
     }
 }
 
 /* DEV: EJA - Event for updating consultant office location*/
 export const updateUserOfficeLocation = userOfficeLocation => {
     return {
-        type: UPDATE_USER_OFFICE_LOCATION,
-        payload: userOfficeLocation
+        type: UPDATE_OFFICE_LOCATION,
+        payload: { userOfficeLocation }
     }
 }
 
@@ -149,7 +149,7 @@ export const updateUserOfficeLocation = userOfficeLocation => {
 export const updateOfficeHours = officeHours => {
     return {
         type: UPDATE_OFFICE_HOURS,
-        payload: officeHours
+        payload: { officeHours }
     }
 }
 
@@ -165,47 +165,46 @@ export const login = () => {
             //console.log("response")
             //console.log(response.user.uid);
             dispatch(getUser(response.user.uid))
-          
+
         } catch (e) {
             Alert.alert(
                 'Error!',
                 `Invalid email or password`,
                 [
-                  {
-                    text: 'Close',
-                    style: 'cancel'
-                  }
+                    {
+                        text: 'Close',
+                        style: 'cancel'
+                    }
                 ],
                 { cancelable: true }
-              );
+            );
         }
     }
 }
 export const getUser = uid => {
-	return async (dispatch, getState) => {
-		try {
-			const user = await db
-				.collection('users')
-				.doc(uid)
-				.get()
+    return async (dispatch, getState) => {
+        try {
+            const user = await db
+                .collection('users')
+                .doc(uid)
+                .get()
 
-                //console.log("sa get user ni")
-                //console.log(user.data());
-                //console.log(uid);
-			dispatch({ type: LOGIN, payload: user.data() })
-		} catch (e) {
-			alert(e)
-		}
-	}
+            //console.log("sa get user ni")
+            //console.log(user.data());
+            //console.log(uid);
+            dispatch({ type: LOGIN, payload: { user: user.data() } })
+        } catch (e) {
+            alert(e)
+        }
+    }
 }
 
 
-export const getUrl = async () => 
-{
-    
-     const url = await Firebase.storage().ref('users/default/default.jpg').getDownloadURL().catch((error) => {alert("error sa geturl")})
-     //console.log("MAO NI SA GETURL");
-     //console.log(url);
+export const getUrl = async () => {
+
+    const url = await Firebase.storage().ref('users/default/default.jpg').getDownloadURL().catch((error) => { alert("error sa geturl") })
+    //console.log("MAO NI SA GETURL");
+    //console.log(url);
     return url;
 }
 /* DEV: EJA - Event for sign up*/
@@ -214,32 +213,32 @@ export const signup = () => {
     return async (dispatch, getState) => {
         try {
             const { email, password, fullName, mobileNumber, birthDay, userType } = getState().users
-                   
+
             const response = await Firebase.auth().createUserWithEmailAndPassword(email, password)
 
-            if (response.user.uid){
+            if (response.user.uid) {
                 const getUser = getState().users.userType;
                 // if (getUser === "CLIENT")
                 // {
-                    const user = {
-                        uid: response.user.uid,
-                        email: email,
-                        emailVerified: false,
-                        userType: userType,
-                        fullName: fullName,
-                        mobileNumber: mobileNumber,
-                        birthDay: birthDay,
-                        userType: userType,
-                        profilePicture: await Firebase.storage().ref('users/default/default.jpg').getDownloadURL().catch((error) => {alert("error sa geturl")}),
-                        officeImage: await Firebase.storage().ref('users/default/office.jpg').getDownloadURL().catch((error) => {alert("error sa geturl")})
-                    }
-                    db.collection('users').doc(response.user.uid).set(user);
-                    dispatch({ type: SIGNUP, payload: response.user })
+                const user = {
+                    uid: response.user.uid,
+                    email: email,
+                    emailVerified: false,
+                    userType: userType,
+                    fullName: fullName,
+                    mobileNumber: mobileNumber,
+                    birthDay: birthDay,
+                    userType: userType,
+                    profilePicture: await Firebase.storage().ref('users/default/default.jpg').getDownloadURL().catch((error) => { alert("error sa geturl") }),
+                    officeImage: await Firebase.storage().ref('users/default/office.jpg').getDownloadURL().catch((error) => { alert("error sa geturl") })
+                }
+                db.collection('users').doc(response.user.uid).set(user);
+                dispatch({ type: SIGNUP, payload: { user: response.user } })
                 // }
 
-          
+
             }
-            
+
         } catch (e) {
             alert(e)
         }
@@ -247,35 +246,34 @@ export const signup = () => {
 }
 
 /*Default profile pics */
-export const display_default_pic = () =>
-{
+export const display_default_pic = () => {
 
 }
 
 export const getReviewsConsultant = uid => {
-	return async (dispatch, getState) => {
-		try {
-			const user = await db
-				.collection('reviews')
-				.doc(uid)
-				.get()
+    return async (dispatch, getState) => {
+        try {
+            const user = await db
+                .collection('reviews')
+                .doc(uid)
+                .get()
 
-                //console.log("sa get user ni")
-                //console.log(user.data());
-                //console.log(uid);
-			dispatch({ type: LOGIN, payload: user.data() })
-		} catch (e) {
-			alert(e)
-		}
-	}
+            //console.log("sa get user ni")
+            //console.log(user.data());
+            //console.log(uid);
+            dispatch({ type: LOGIN, payload: { user: user.data() } })
+        } catch (e) {
+            alert(e)
+        }
+    }
 }
 
 /*DEV: EJA - get all CONSULTANT  */
 export const getAllConsultant = () => {
 
     return async (dispatch, getState) => {
-        try{
-            const snapshot = await db.collection('users').where("userType","==","CONSULTANT").get()
+        try {
+            const snapshot = await db.collection('users').where("userType", "==", "CONSULTANT").get()
             // const consultant = snapshot.docs.map( {
             //     if(  doc.data().profilePicture !== "DEFAULT" )
             //     {
@@ -285,35 +283,35 @@ export const getAllConsultant = () => {
             // reviews.map((data) => {
             //    console.log("Snapshot");
             //     console.log(snapshot);
-            const consultant = snapshot.docs.map( doc => 
-          
+            const consultant = snapshot.docs.map(doc =>
+
                 doc.data()
-            
-             )
+
+            )
             //  console.log("conz01");
             //  console.log(consultant);
-             consultant.map((data) => {
+            consultant.map((data) => {
                 //var reviews_details = _.keyBy(data.userReviews);
                 //var reviews = _.values(data.userReviews);
-          
+
                 var i = 0;
                 data.userReviews.map((data1) => {
                     i += data1.rating;
 
                 })
-                 data.rating = i;
-                 return data;
-             })
+                data.rating = i;
+                return data;
+            })
 
-            consultant.sort(function(a,b){
+            consultant.sort(function (a, b) {
                 return parseInt(b.rating) - parseInt(a.rating);
             })
             //Firebase.storage().ref('users/default/default.jpg').getDownloadURL().then((imgUrl) => { console.log(imgUrl)  })
             //console.log(consultant);
-            
-            dispatch({type: GET_ALL_CONSULTANT, payload: consultant})      
 
-        }catch(e){
+            dispatch({ type: GET_ALL_CONSULTANT, payload: { consultant } })
+
+        } catch (e) {
             alert("puta1")
             console.log("puta1")
             console.log(e);
@@ -323,12 +321,12 @@ export const getAllConsultant = () => {
 
 export const getDefaultImage = () => {
     return async (dispatch, getState) => {
-        try{
+        try {
             Firebase.storage().ref('users/default/default.jpg').getDownloadURL().then(imgUrl => {
-            const defaultImage = imgUrl
-            dispatch( {type: GET_DEFAULT_IMAGE, payload: defaultImage });
+                const defaultImage = imgUrl
+                dispatch({ type: GET_DEFAULT_IMAGE, payload: { defaultImage } });
             })
-        }catch(e){
+        } catch (e) {
             alert("puta2")
         }
     }
@@ -336,61 +334,61 @@ export const getDefaultImage = () => {
 
 export const getConsultant = uid => {
     return async (dispatch, getState) => {
-        try{
+        try {
 
-            const singleConsultant = await db 
+            const singleConsultant = await db
                 .collection('users')
                 .doc(uid)
                 .get()
-                console.log("get consultant");
-                console.log(uid);
-                //console.log(singleConsultant.data());
-             dispatch({ type: GET_CONSULTANT, payload: singleConsultant.data()})
-         
-        }catch(e){
+            console.log("get consultant");
+            console.log(uid);
+            //console.log(singleConsultant.data());
+            dispatch({ type: GET_CONSULTANT, payload: { singleConsultant: singleConsultant.data() } })
+
+        } catch (e) {
             alert("puta3");
         }
     }
 }
 
 /* DEV: EJA - Event for updating consultant profile picture*/
-export const updateProfileImage = uri  => {
+export const updateProfileImage = uri => {
     return {
         type: UPDATE_PROFILE_IMAGE,
-        payload: uri
+        payload: { uri }
     }
 }
 /* DEV: EJA - Event for updating consultant profile picture*/
-export const updateOfficeImage = uri  => {
+export const updateOfficeImage = uri => {
     return {
         type: UPDATE_OFFICE_IMAGE,
-        payload: uri
+        payload: { uri }
     }
 }
 /* DEV: EJA - Event for updating consultant profile picture*/
-export const updateOfficeDetails = office_details  => {
+export const updateOfficeDetails = office_details => {
     return {
         type: UPDATE_OFFICE_DETAILS,
-        payload: office_details
+        payload: { office_details }
     }
 }
 
 export const getCurrentDate = () => {
     var date = new Date().getDate(); //To get the Current Date
-var month = new Date().getMonth() + 1; //To get the Current Month
-var year = new Date().getFullYear(); //To get the Current Year
-var hours = new Date().getHours(); //To get the Current Hours
-var min = new Date().getMinutes(); //To get the Current Minutes
-var sec = new Date().getSeconds(); //To get the Current Seconds
-return date+month+year+hours+min+sec;
+    var month = new Date().getMonth() + 1; //To get the Current Month
+    var year = new Date().getFullYear(); //To get the Current Year
+    var hours = new Date().getHours(); //To get the Current Hours
+    var min = new Date().getMinutes(); //To get the Current Minutes
+    var sec = new Date().getSeconds(); //To get the Current Seconds
+    return date + month + year + hours + min + sec;
 }
 
 export const profileImage = async (uid, profilePicture) => {
-    try{
+    try {
         var uuid_profile = uuid.v1();
         const response = await fetch(profilePicture);
         const blob = await response.blob();
-        const ref = Firebase.storage().ref().child("users/" + uuid_profile );
+        const ref = Firebase.storage().ref().child("users/" + uuid_profile);
         const snapshot = await ref.put(blob);
 
         blob.close();
@@ -398,50 +396,50 @@ export const profileImage = async (uid, profilePicture) => {
         const url = await snapshot.ref.getDownloadURL();
         //return url;
         //console.log(url);
-        db.collection("users").doc(uid).update({profilePicture: url});
-    }catch(e){
+        db.collection("users").doc(uid).update({ profilePicture: url });
+    } catch (e) {
         alert("error prof image")
     }
-    
-    
+
+
 }
 export const officePicture = async (uid, officeImage) => {
-    try{
+    try {
         var uuid_office = uuid.v1();
         const response_office = await fetch(officeImage);
         const blob_office = await response_office.blob();
 
-        const ref_office  = Firebase.storage().ref().child("users/" + uuid_office );
+        const ref_office = Firebase.storage().ref().child("users/" + uuid_office);
         const snapshot_office = await ref_office.put(blob_office);
 
         blob_office.close();
 
         const url_office = await snapshot_office.ref.getDownloadURL();
-        db.collection("users").doc(uid).update({officeImage: url_office});
-    }catch(e){
+        db.collection("users").doc(uid).update({ officeImage: url_office });
+    } catch (e) {
         alert(e)
     }
-    
-    
+
+
 }
 /* DEV: EJA - Event for updating consultant profile picture*/
 export const editProfile = () => {
-    return async(dispatch, getState) => {
-        try{
+    return async (dispatch, getState) => {
+        try {
 
             const { uid, profilePicture, officeImage, day, from_hour, to_hour } = getState().singleConsultant
             //alert(officeImage)
-            
-            if(profilePicture){
+
+            if (profilePicture) {
                 profileImage(uid, profilePicture);
             }
-            if(officeImage){
+            if (officeImage) {
                 //alert("hi")
 
                 officePicture(uid, officeImage);
             }
-            
-            
+
+
             // //const{ arr } = getState().locArray;
             // console.log("sa edit prof ni nga consultant");
             // console.log(getState());
@@ -457,13 +455,13 @@ export const editProfile = () => {
             // blob.close();
 
             // const url = await snapshot.ref.getDownloadURL();
-    //  
+            //  
 
 
-        }catch(e){
+        } catch (e) {
             alert(e);
         }
-       
+
     }
 }
 
@@ -472,7 +470,7 @@ export const updateLocation = user_location => {
 
     return {
         type: UPDATE_LOCATION_DETAIL,
-        payload: user_location
+        payload: { user_location }
     }
 }
 
@@ -481,7 +479,7 @@ export const updateFromHourLocation = date => {
 
     return {
         type: UPDATE_FROM_HOUR_DETAIL,
-        payload: date
+        payload: { date }
     }
 }
 /* DEV: EJA - Event for updating email */
@@ -489,7 +487,7 @@ export const updateToHourLocation = date => {
 
     return {
         type: UPDATE_TO_HOUR_DETAIL,
-        payload: date
+        payload: { date }
     }
 }
 
@@ -498,33 +496,33 @@ export const updateDayLocation = user_location => {
 
     return {
         type: UPDATE_DAY_DETAIL,
-        payload: user_location
+        payload: { user_location }
     }
 }
 
 /* DEV: EJA - Event for updating email */
-export const detailKey = ( text, key ) => {
+export const detailKey = (text, key) => {
     const detail = {
         text: text,
         key: key
     }
     return {
         type: UPDATE_DETAIL_KEY,
-        payload: detail
+        payload: { detail }
     }
 }
 export const getReviews = uid => {
-	return async (dispatch, getState) => {
-		try {
-           // await db.collection('users').where("userType","==","CONSULTANT").get()
-        //    const singleConsultant = await db 
-        //    .collection('users')
-        //    .doc(uid)
-        //    .get()
-			const reviews = await db
+    return async (dispatch, getState) => {
+        try {
+            // await db.collection('users').where("userType","==","CONSULTANT").get()
+            //    const singleConsultant = await db 
+            //    .collection('users')
+            //    .doc(uid)
+            //    .get()
+            const reviews = await db
                 .collection('reviews')
-                .where("reviewer_id", "==",uid)
-				.get().then(function(querySnapshot){
+                .where("reviewer_id", "==", uid)
+                .get().then(function (querySnapshot) {
                     //console.log(querySnapshot)
                 })
 
@@ -538,9 +536,9 @@ export const getReviews = uid => {
                 reviews: reviews.data(),
             }
 
-			dispatch({ type: GET_REVIEWS, payload: reviews_users })
-		} catch (e) {
-			alert(e)
-		}
-	}
+            dispatch({ type: GET_REVIEWS, payload: { reviews_users } })
+        } catch (e) {
+            alert(e)
+        }
+    }
 }
