@@ -6,7 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Modal from 'react-native-modal';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { updateFullName, updateUserSpecialty, updateUserLIC, updateUserSubSpecialty } from '../actions/user';
+import { updateFullName, updateUserSpecialty, updateUserLIC, updateUserSubSpecialty } from '../actions/users';
 
 class Dynamic_Input extends React.Component {
   constructor() {
@@ -92,6 +92,10 @@ class Dynamic_Input extends React.Component {
 
 
 class SignupConsultant2 extends React.Component  {
+
+  constructor(props) {
+    super(props);
+  }
     
   Next = () => {
     const navigation = this.props.navigation;
@@ -145,7 +149,7 @@ class SignupConsultant2 extends React.Component  {
                 style={signupStyles.forms_textinput}
                 // onChangeText={text => setName(text)}
                 // value={fname}
-                value = {this.props.user.fullName}
+                value = {this.props.fullName}
                 onChangeText={fullName => this.props.updateFullName(fullName)}
               />
             </View>
@@ -157,7 +161,7 @@ class SignupConsultant2 extends React.Component  {
                 style={signupStyles.forms_textinput}
                 // onChangeText={text => setSpec(text)}
                 // value={specialty}
-                value = {this.props.user.userSpecialty}
+                value = {this.props.userSpecialty}
                 onChangeText={userSpecialty => this.props.updateUserSpecialty(userSpecialty)}
               />
             </View>
@@ -169,7 +173,7 @@ class SignupConsultant2 extends React.Component  {
                 style={signupStyles.forms_textinput}
                 // onChangeText={text => setLic(text)}
                 // value={lic}
-                value = {this.props.user.userLIC}
+                value = {this.props.userLIC}
                 onChangeText={ userLIC=> this.props.updateUserLIC(userLIC)}
               />
             </View>
@@ -204,7 +208,10 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    fullName: state.users.fullName,
+    userSpecialty: state.users.userSpecialty,
+    userLIC: state.users.userLIC,
+    userSubSpecialty: state.users.userSubSpecialty
   }
 }
 

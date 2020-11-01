@@ -4,7 +4,7 @@ import { selectionStyles, globalStyles } from '../styles/styles';
 import { LinearGradient } from 'expo-linear-gradient';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { updateUserType } from '../actions/user';
+import { updateUserType } from '../actions/users';
 
 const CLIENT = 'CLIENT';
 const CONSULTANT = 'CONSULTANT';
@@ -13,11 +13,11 @@ class Selection extends React.Component{
   render(){
     
     const SignUpClient = () => {
-      this.props.user.userType = CLIENT;
+      this.props.userType = CLIENT;
       this.props.navigation.navigate('SignupClient1');
     }
     const SignUpConsultant = () => {
-      this.props.user.userType = CONSULTANT;
+      this.props.userType = CONSULTANT;
       this.props.navigation.navigate('SignupConsultant1');
     }
     
@@ -81,7 +81,7 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.users.user
   }
 }
 

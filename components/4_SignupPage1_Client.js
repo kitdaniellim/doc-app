@@ -5,7 +5,7 @@ import { signupStyles, globalStyles } from '../styles/styles';
 import { LinearGradient } from 'expo-linear-gradient';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { updateEmail, updatePassword } from '../actions/user';
+import { updateEmail, updatePassword } from '../actions/users';
 
 /*DEV: Dan - Please update code using redux
 const SignupClient1 = ({ navigation }) => {
@@ -48,18 +48,18 @@ class SignupClient1 extends React.Component {
 
   validate = () => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    return (reg.test(this.props.user.email) === true) ? true : false
+    return (reg.test(this.props.email) === true) ? true : false
   }
   Next = () => {
     const navigation = this.props.navigation;
-    if ((this.props.user.email !== '' && this.props.user.password !== '' && cpassword !== '')) {
-      if (this.props.user.password >= 6) {
-        if (this.props.user.password === cpassword) {
+    if ((this.props.email !== '' && this.props.password !== '' && cpassword !== '')) {
+      if (this.props.password >= 6) {
+        if (this.props.password === cpassword) {
           let isValid = validate()
           if (isValid === true) {
             navigation.navigate('SignupClient2');
           } else {
-            setMessage(this.props.user.email.toString() + ' is not a valid email address.')
+            setMessage(this.props.email.toString() + ' is not a valid email address.')
             toggleModal(true)
           }
         } else {
@@ -124,7 +124,7 @@ class SignupClient1 extends React.Component {
                 placeholder="Email"
                 placeholderTextColor="#8B8787"
                 style={signupStyles.forms_textinput}
-                value={this.props.user.email}
+                value={this.props.email}
                 onChangeText={email => this.props.updateEmail(email)}
               />
             </View>
@@ -135,7 +135,7 @@ class SignupClient1 extends React.Component {
                 placeholder="Password"
                 placeholderTextColor="#8B8787"
                 style={signupStyles.forms_textinput}
-                value={this.props.user.password}
+                value={this.props.password}
                 onChangeText={password => this.props.updatePassword(password)}
               />
             </View>
@@ -170,7 +170,8 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    email: state.users.email,
+    password: state.users.password
   }
 }
 

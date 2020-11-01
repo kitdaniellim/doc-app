@@ -7,7 +7,7 @@ import { LinearGradient } from  'expo-linear-gradient';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import RNPickerSelect from 'react-native-picker-select';
-import { updateEmail, updatePassword, updateFullName, updateMobileNumber, updateBirthDay, signup } from '../actions/user';
+import { updateEmail, updatePassword, updateFullName, updateMobileNumber, updateBirthDay, signup } from '../actions/users';
 
 const Submit = () => {
   navigation.navigate('LoginClient');
@@ -110,10 +110,10 @@ class SignupClient2 extends React.Component{
     var year = this.state.year;
 
     var birthDay = `${ month + day + year }` ;
-    this.props.user.birthDay = birthDay;
+    this.props.birthDay = birthDay;
     //birthDay => this.props.updateBirthDay(birthDay);
     console.log("sa signup page2 ni");
-    console.log(this.props.user.email);
+    console.log(this.props.email);
     return (
       
       <View style={signupStyles.container}>
@@ -150,7 +150,7 @@ class SignupClient2 extends React.Component{
                       placeholder="Full Name" 
                       placeholderTextColor = "#8B8787"
                       style={signupStyles.forms_textinput}
-                      value = {this.props.user.fullName }
+                      value = {this.props.fullName }
                       onChangeText={fullName => this.props.updateFullName(fullName)}
                   />
                 </View>
@@ -353,7 +353,7 @@ class SignupClient2 extends React.Component{
                       placeholderTextColor = "#8B8787"
                       keyboardType='numeric'
                       style={signupStyles.forms_textinput}
-                      value = {this.props.user.mobileNumber }
+                      value = {this.props.mobileNumber }
                       onChangeText={mobileNumber => this.props.updateMobileNumber(mobileNumber)}                     
                   />
                 </View>
@@ -397,7 +397,11 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    email: state.users.email,
+    password: state.users.password,
+    fullName: state.users.fullName,
+    mobileNumber: state.users.mobileNumber,
+    birthDay: state.users.birthDay
   }
 }
 

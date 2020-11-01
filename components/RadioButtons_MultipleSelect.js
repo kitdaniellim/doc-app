@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {  updateDayLocation} from '../actions/consultant';
+import {  updateDayLocation} from '../actions/users';
 
 class RadioButtons_MultipleSelect extends React.Component {
     constructor(props){
@@ -111,9 +111,9 @@ const mapDispatchToProps = dispatch => {
   }
   const mapStateToProps = state => {
       return {
-      user : state.user,
-      consultant: state.consultant,
-      singleConsultant: state.singleConsultant,
+      user : state.users,
+      consultant: state.users,
+      singleConsultant: state.users,
       locArray: state.locArray
         }
   }

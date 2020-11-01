@@ -6,7 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Modal from 'react-native-modal';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { updateEmail, updatePassword, login, getUser  } from '../actions/user'
+import { updateEmail, updatePassword, login, getUser  } from '../actions/users'
 import Firebase, { db } from '../config/Firebase'
 class Login extends React.Component  {
   //const [isModalVisible, toggleModal] = useState(false);
@@ -224,7 +224,7 @@ Login = ({navigation}) => {
   
   const mapStateToProps = state => {
     return {
-        user: state.user
+        user: state.users
     }
   }
  

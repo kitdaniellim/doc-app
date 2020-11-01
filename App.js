@@ -1,44 +1,16 @@
 import React from 'react';
-import { Alert, AppRegistry, Button, TextInput, View, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 // import Selection from './components/2_SelectionPage.js';
 // import { LinearGradient } from  'expo-linear-gradient';
-import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import thunkMiddleware from 'redux-thunk';
-import { Constants } from 'expo';
 import Routes from './routes/Routes.js';
-import reducer from './reducers';
 import {decode, encode} from 'base-64'
-import { CommonActions } from '@react-navigation/native';
 import { MenuProvider } from 'react-native-popup-menu';
 import firebase from "firebase"
-require("firebase/firestore");
-
-import { API_KEY, 
-         AUTH_DOMAIN, 
-         DATABASE_URL,
-         PROJECT_ID, 
-         STORAGE_BUCKET, 
-         MESSAGING_SENDER_ID, 
-         APP_ID, 
-         MEASUREMENT_ID } 
-from 'react-native-dotenv';
+import configureStore from './store/configureStore';
 import 'firebase/firestore';
 
-const middleware = applyMiddleware(thunkMiddleware);
-const store = createStore(reducer, middleware);
-
-const firebaseConfig = {
-  apiKey: API_KEY,
-  authDomain: AUTH_DOMAIN,
-  databaseURL: DATABASE_URL,
-  projectId: PROJECT_ID,
-  storageBucket: STORAGE_BUCKET,
-  messagingSenderId: MESSAGING_SENDER_ID,
-  appId: APP_ID,
-  measurementId: MEASUREMENT_ID
-};
-
+const store = configureStore();
 
 if (!global.btoa) {  global.btoa = encode }
 
