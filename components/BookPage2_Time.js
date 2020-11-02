@@ -9,6 +9,7 @@ class Book2_Time extends React.Component {
     super(props);
     this.state = {
       selected: [],
+      availableSlots: [],
       current_date: moment().format("YYYY-MM-DD"),
       current_time: moment().format("HH:mm").toString(),
       locations: []
@@ -20,6 +21,81 @@ class Book2_Time extends React.Component {
       await this.setState(() => ({ locations: [], selected: [] }));
       this.setup();
     }
+  }
+  checkDisplayedSlots = (slotCount) => {
+    if (slotCount == 0) {
+      Alert.alert(
+        'Sorry!',
+        `No schedule is available on this day.`,
+        [
+          {
+            text: 'OK',
+            style: 'cancel',
+            onPress: () => this.props._prev()
+          }
+        ],
+        { cancelable: true }
+      );
+    }
+  }
+  checkAvailableSlots = async () => {
+    let slotCount = 0, availableSlots = [];
+    this.state.selected.map((item) => {
+      let canReturn = true;
+      if (
+        this.state.current_date.toString().trim() ==
+        this.props.date.toString().trim()
+      ) {
+        if (
+          this.isWithin(
+            this.state.current_time,
+            this.getUTCValue(item.time_start),
+            this.getUTCValue(item.time_end)
+          ) ||
+          this.state.current_time >=
+          this.getUTCValue(item.time_end) ||
+          moment(this.state.current_time, "HH:mm")
+            .add(30, "minutes")
+            .format("HH:mm")
+            .toString() > this.getUTCValue(item.time_start)
+        ) {
+          console.log(`Slot not available: ${moment(item.time_start, "HH:mm").format("h:mm A")}-${moment(item.time_end, "HH:mm").format("h:mm A")}`);
+        }
+      }
+      if (this.props.appointments_on_date.length > 0) {
+        this.props.appointments_on_date.map((appointment) => {
+          const time_start = this.getUTCValue(
+            appointment.time_start
+          );
+          const time_end = this.getUTCValue(appointment.time_end);
+          if (
+            this.isWithin(
+              this.getUTCValue(item.time_start),
+              time_start,
+              time_end
+            ) ||
+            this.isWithin(
+              this.getUTCValue(item.time_end),
+              time_start,
+              time_end
+            )
+          ) {
+            canReturn = false;
+          }
+        });
+        if (!canReturn) {
+          console.log(`Slot not available: ${moment(item.time_start, "HH:mm").format("h:mm A")}-${moment(item.time_end, "HH:mm").format("h:mm A")}`);
+        } else {
+          slotCount++;
+          availableSlots.push(item);
+        }
+      } else {
+        slotCount++;
+        availableSlots.push(item);
+      }
+    });
+    await this.setState(() => ({ availableSlots }));
+    this.checkDisplayedSlots(slotCount);
   }
   setup = async () => {
     let selected = [], locations_list = [], officeTime = [], count = 1;
@@ -76,8 +152,8 @@ class Book2_Time extends React.Component {
       });
       //console.log(selected);
       await this.setState(() => ({ selected }));
-
       console.log(this.state.selected.length);
+      this.checkAvailableSlots();
     } else {
       Alert.alert(
         'Sorry!',
@@ -145,160 +221,59 @@ class Book2_Time extends React.Component {
                         </View>
 
                         {
-                          this.state.selected.map((item) => {
-                            let canReturn = true;
-                            if (
-                              this.state.current_date.toString().trim() ==
-                              this.props.date.toString().trim()
-                            ) {
-                              if (
-                                this.isWithin(
-                                  this.state.current_time,
-                                  this.getUTCValue(item.time_start),
-                                  this.getUTCValue(item.time_end)
-                                ) ||
-                                this.state.current_time >=
-                                this.getUTCValue(item.time_end) ||
-                                moment(this.state.current_time, "HH:mm")
-                                  .add(30, "minutes")
-                                  .format("HH:mm")
-                                  .toString() > this.getUTCValue(item.time_start)
-                              ) {
-                                console.log(`Slot not available: ${moment(item.time_start, "HH:mm").format("h:mm A")}-${moment(item.time_end, "HH:mm").format("h:mm A")}`);
-                                return null;
-                              }
-                            }
-                            if (this.props.appointments_on_date.length > 0) {
-                              this.props.appointments_on_date.map((appointment) => {
-                                const time_start = this.getUTCValue(
-                                  appointment.time_start
-                                );
-                                const time_end = this.getUTCValue(appointment.time_end);
-                                if (
-                                  this.isWithin(
-                                    this.getUTCValue(item.time_start),
-                                    time_start,
-                                    time_end
-                                  ) ||
-                                  this.isWithin(
-                                    this.getUTCValue(item.time_end),
-                                    time_start,
-                                    time_end
-                                  )
-                                ) {
-                                  canReturn = false;
-                                }
-                              });
-                              if (!canReturn) {
-                                console.log(`Slot not available: ${moment(item.time_start, "HH:mm").format("h:mm A")}-${moment(item.time_end, "HH:mm").format("h:mm A")}`);
-                                return null;
-                              }
-                              if (item.location == ind_loc) {
-                                return (
+                          this.state.availableSlots.map((item) => {
+                            if (item.location == ind_loc) {
+                              return (
+                                <View
+                                  key={item.key.toString()}
+                                  style={calendarStyles.date_details_scaffold}
+                                >
                                   <View
-                                    key={item.key.toString()}
-                                    style={calendarStyles.date_details_scaffold}
+                                    style={calendarStyles.date_details_text_container}
                                   >
-                                    <View
-                                      style={calendarStyles.date_details_text_container}
-                                    >
-                                      <View>
-                                        <Text style={calendarStyles.date_details_text}>
-                                          SLOT {"\n"}
-                                          {moment(item.time_start, "HH:mm").format(
-                                            "h:mm A"
-                                          )}{" "}
-                                  -{" "}
-                                          {moment(item.time_end, "HH:mm").format("h:mm A")}
-                                        </Text>
-                                      </View>
-                                    </View>
-                                    <View
-                                      style={calendarStyles.date_details_button_container}
-                                    >
-                                      <TouchableOpacity
-                                        activeOpacity={0.6}
-                                        onPress={() => {
-                                          this.props.onStep2Submit(item);
-                                        }}
-                                        style={
-                                          this.props.location == ind_loc &&
-                                            this.props.time_start == item.time_start &&
-                                            this.props.time_end == item.time_end
-                                            ? calendarStyles.date_details_button_review_active
-                                            : calendarStyles.date_details_button_review
-                                        }
-                                      >
-                                        <Text
-                                          style={
-                                            this.props.location == ind_loc &&
-                                              this.props.time_start == item.time_start &&
-                                              this.props.time_end == item.time_end
-                                              ? calendarStyles.date_details_button_label_active
-                                              : calendarStyles.date_details_button_label
-                                          }
-                                        >
-                                          Choose
-                                </Text>
-                                      </TouchableOpacity>
-                                    </View>
-                                  </View>
-                                );
-                              }
-                            } else {
-                              if (item.location == ind_loc) {
-                                return (
-                                  <View
-                                    key={item.key.toString()}
-                                    style={calendarStyles.date_details_scaffold}
-                                  >
-                                    <View
-                                      style={calendarStyles.date_details_text_container}
-                                    >
-                                      <View>
-                                        <Text style={calendarStyles.date_details_text}>
-                                          SLOT {"\n"}
-                                          {moment(item.time_start, "HH:mm").format(
-                                            "h:mm A"
-                                          )}{" "}
+                                    <View>
+                                      <Text style={calendarStyles.date_details_text}>
+                                        SLOT {"\n"}
+                                        {moment(item.time_start, "HH:mm").format(
+                                          "h:mm A"
+                                        )}{" "}
                                 -{" "}
-                                          {moment(item.time_end, "HH:mm").format("h:mm A")}
-                                        </Text>
-                                      </View>
+                                        {moment(item.time_end, "HH:mm").format("h:mm A")}
+                                      </Text>
                                     </View>
-                                    <View
-                                      style={calendarStyles.date_details_button_container}
+                                  </View>
+                                  <View
+                                    style={calendarStyles.date_details_button_container}
+                                  >
+                                    <TouchableOpacity
+                                      activeOpacity={0.6}
+                                      onPress={() => {
+                                        this.props.onStep2Submit(item);
+                                      }}
+                                      style={
+                                        this.props.location == ind_loc &&
+                                          this.props.time_start == item.time_start &&
+                                          this.props.time_end == item.time_end
+                                          ? calendarStyles.date_details_button_review_active
+                                          : calendarStyles.date_details_button_review
+                                      }
                                     >
-                                      <TouchableOpacity
-                                        activeOpacity={0.6}
-                                        onPress={() => {
-                                          this.props.onStep2Submit(item);
-                                        }}
+                                      <Text
                                         style={
                                           this.props.location == ind_loc &&
                                             this.props.time_start == item.time_start &&
                                             this.props.time_end == item.time_end
-                                            ? calendarStyles.date_details_button_review_active
-                                            : calendarStyles.date_details_button_review
+                                            ? calendarStyles.date_details_button_label_active
+                                            : calendarStyles.date_details_button_label
                                         }
                                       >
-                                        <Text
-                                          style={
-                                            this.props.location == ind_loc &&
-                                              this.props.time_start == item.time_start &&
-                                              this.props.time_end == item.time_end
-                                              ? calendarStyles.date_details_button_label_active
-                                              : calendarStyles.date_details_button_label
-                                          }
-                                        >
-                                          Choose
+                                        Choose
                               </Text>
-                                      </TouchableOpacity>
-                                    </View>
+                                    </TouchableOpacity>
                                   </View>
-                                )
-                              };
-                            }
+                                </View>
+                              )
+                            };
                           })
                         }
                       </View>
