@@ -5,7 +5,7 @@ import { homeStyles } from '../styles/styles';
 
 const Tutorial = ({ navigation }) => {
     //if client shows images_1, if consultant shows images_2
-    let isClient = false;
+    let isClient = true;
 
     const images_1 = [
         {

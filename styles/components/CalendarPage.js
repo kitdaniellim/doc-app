@@ -267,6 +267,28 @@ const Calendar = {
     backgroundColor: '#FDBB3B80',
     borderRadius: 15,
     padding: 5,
+    marginBottom: 5,
+    justifyContent: 'center',
+    alignSelf: 'stretch',
+    marginHorizontal: 9,
+  },
+
+  date_details_button_pendingconf: {
+    height: 30,
+    backgroundColor: '#56EC6580',
+    borderRadius: 15,
+    padding: 5,
+    marginBottom: 5,
+    justifyContent: 'center',
+    alignSelf: 'stretch',
+    marginHorizontal: 9,
+  },
+
+  date_details_button_cancel: {
+    height: 30,
+    backgroundColor: '#de1a24',
+    borderRadius: 15,
+    padding: 5,
     justifyContent: 'center',
     alignSelf: 'stretch',
     marginHorizontal: 9,
@@ -299,6 +321,17 @@ const Calendar = {
     backgroundColor: '#56EC6580',
     borderRadius: 15,
     padding: 5,
+    justifyContent: 'center',
+    alignSelf: 'stretch',
+    marginHorizontal: 9,
+  },
+  
+  date_details_button_confirm: {
+    height: 30,
+    backgroundColor: '#56EC6580',
+    borderRadius: 15,
+    padding: 5,
+    marginBottom: 10,
     justifyContent: 'center',
     alignSelf: 'stretch',
     marginHorizontal: 9,
@@ -339,17 +372,6 @@ const Calendar = {
     color: '#fff',
     justifyContent: 'center',
     alignSelf: 'center',
-  },
-
-  date_details_button_confirm: {
-    height: 30,
-    width: 40,
-    backgroundColor: '#56EC65',
-    borderRadius: 15,
-    padding: 5,
-    justifyContent: 'center',
-    alignSelf: 'stretch',
-    marginHorizontal: 9,
   },
 
   date_details_button_decline: {
@@ -690,6 +712,10 @@ const Calendar = {
   conf_data: {
     fontSize: 15,
     color: '#8B8787'
+  },
+
+  slot_list_container: {
+    marginBottom: 5,
   },
 }
 

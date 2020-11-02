@@ -1,17 +1,26 @@
 import React from 'react';
-import { Text, View, FlatList, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import {View, Image, TouchableOpacity } from 'react-native';
 import { selectionStyles, globalStyles } from '../styles/styles';
 import { LinearGradient } from 'expo-linear-gradient';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { updateUserType } from '../actions/users';
 
-const Selection = ({ navigation }) => {
-  const SignUpClient = () => {
-    navigation.navigate('SignupClient1');
-  }
-  const SignUpConsultant = () => {
-    navigation.navigate('SignupConsultant1');
-  }
+const CLIENT = 'CLIENT';
+const CONSULTANT = 'CONSULTANT';
 
+class Selection extends React.Component{
+  render(){
+    
+    const SignUpClient = () => {
+      this.props.userType = CLIENT;
+      this.props.navigation.navigate('SignupClient1');
+    }
+    const SignUpConsultant = () => {
+      this.props.userType = CONSULTANT;
+      this.props.navigation.navigate('SignupConsultant1');
+    }
+    
   return (
     <View style={selectionStyles.container}>
       <TouchableOpacity
@@ -25,10 +34,10 @@ const Selection = ({ navigation }) => {
           style={globalStyles.gradient}
         >
           <View style={selectionStyles.left_icon_container}>
-            <Text style={selectionStyles.left_icon_text}>
-              CLIENT
-            </Text>
-            <Icon style={globalStyles.icon_client} name="wheelchair-alt" size={80} />
+            <Image 
+              style={{ width: 140, height: 140 }}
+              source={require('../assets/client.png')} 
+            />
           </View>
         </LinearGradient>
       </TouchableOpacity>
@@ -43,15 +52,44 @@ const Selection = ({ navigation }) => {
           style={globalStyles.gradient}
         >
           <View style={selectionStyles.right_icon_container}>
-            <Text style={selectionStyles.right_icon_text}>
-              CONSULTANT
-            </Text>
-            <Icon style={globalStyles.icon_client} name="user-md" size={80} />
+            <Image 
+              style={{ width: 140, height: 140 }}
+              source={require('../assets/consultant.png')} 
+            />
           </View>
         </LinearGradient>
       </TouchableOpacity>
     </View>
   );
+  }
+}
+// const Selection = ({ navigation }) => {
+//   const SignUpClient = () => {
+//     this.props.updateUserType('Client');
+//     navigation.navigate('SignupClient1',);
+//   }
+//   const SignUpConsultant = () => {
+//     navigation.navigate('SignupConsultant1');
+//   }
+
+ 
+// }
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ updateUserType }, dispatch )
 }
 
-export default Selection;
+const mapStateToProps = state => {
+  return {
+    user: state.users.user
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)( Selection )
+
+
+
+//export default Selection;

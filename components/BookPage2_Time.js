@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, ScrollView, TouchableOpacity } from "react-native";
+import { Alert, Text, View, ScrollView, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { calendarStyles, globalStyles } from "../styles/styles";
 import moment from "moment";
@@ -11,29 +11,87 @@ class Book2_Time extends React.Component {
       selected: [],
       current_date: moment().format("YYYY-MM-DD"),
       current_time: moment().format("HH:mm").toString(),
-      //static consultant data
-      consultant: {
-        location: "IT Park, Apas",
-        time_start: moment("07:30", "HH:mm"),
-        time_end: moment("22:30", "HH:mm"),
-      }
+      locations: []
     };
+    this.setup = this.setup.bind(this);
   }
-  componentDidMount() {
-    let selected = [], count = 1;
-    //consultant time_start and time_end is set here
-    let time_start = this.state.consultant.time_start;
-    let time_end = this.state.consultant.time_end;
-    while (time_start.isBefore(time_end)) {
-      let schedule = {
-        key: count,
-        time_start: time_start.format("HH:mm").toString(),
-        time_end: time_start.add('15', 'minutes').format("HH:mm").toString(),
-      }
-      selected.push(schedule);
-      count++;
+  async componentDidUpdate(prevProps, prevState) {
+    if (this.props.date != prevProps.date) {
+      await this.setState(() => ({ locations: [], selected: [] }));
+      this.setup();
     }
-    this.setState(() => ({ selected }));
+  }
+  setup = async () => {
+    let selected = [], locations_list = [], officeTime = [], count = 1;
+    //consultant time_start and time_end is set here
+    const day = moment(this.props.date).day();
+    let weekDay;
+    switch (day) {
+      case 0:
+        weekDay = "Sunday"; break;
+      case 1:
+        weekDay = "Monday"; break;
+      case 2:
+        weekDay = "Tuesday"; break;
+      case 3:
+        weekDay = "Wednesday"; break;
+      case 4:
+        weekDay = "Thursday"; break;
+      case 5:
+        weekDay = "Friday"; break;
+      case 6:
+        weekDay = "Saturday"; break;
+    }
+    console.log(`Weekday is ${weekDay}`)
+    this.props.consultant.office_details.map((ind_od) => {
+      ind_od.office_day.map((ind_day) => {
+        if (ind_day == weekDay) {
+          let timeDetails = {
+            time_start: moment(moment(ind_od.office_hour_from.toUpperCase(), "HH:mm A").format("HH:mm").toString(), "HH:mm"),
+            time_end: moment(moment(ind_od.office_hour_to.toUpperCase(), "HH:mm A").format("HH:mm").toString(), "HH:mm"),
+            location: ind_od.office_location
+          }
+          officeTime.push(timeDetails);
+          const index = this.state.locations.indexOf(ind_od.office_location);
+          index == -1 && locations_list.push(ind_od.office_location);
+        }
+      });
+    });
+    if (officeTime.length > 0) {
+      console.log(officeTime);
+      await this.setState(() => ({ locations: locations_list }));
+      console.log(this.state.locations);
+      officeTime.map((ind_ot) => {
+        console.log(`Start: ${ind_ot.time_start}, End: ${ind_ot.time_end}`);
+        while (ind_ot.time_start.isBefore(ind_ot.time_end)) {
+          let schedule = {
+            key: count,
+            time_start: ind_ot.time_start.format("HH:mm").toString(),
+            time_end: ind_ot.time_start.add('15', 'minutes').format("HH:mm").toString(),
+            location: ind_ot.location
+          }
+          selected.push(schedule);
+          count++;
+        }
+      });
+      //console.log(selected);
+      await this.setState(() => ({ selected }));
+
+      console.log(this.state.selected.length);
+    } else {
+      Alert.alert(
+        'Sorry!',
+        `No schedule is available on this day.`,
+        [
+          {
+            text: 'OK',
+            style: 'cancel'
+          }
+        ],
+        { cancelable: true }
+      );
+      this.props._prev;
+    }
   }
   getUTCValue = (time) => {
     return moment.utc(time, "hh:mm").format("HH:mm").toString();
@@ -78,158 +136,176 @@ class Book2_Time extends React.Component {
                       .toUpperCase()
                     : "No Date Selected"}</Text>
                 </View>
-                <View style={calendarStyles.date_header_container}>
-                  <Text style={calendarStyles.date_details_header}>LOCATION: {this.state.consultant.location}</Text>
-                </View>
-                {this.state.selected.map((item) => {
-                  let canReturn = true;
-                  if (
-                    this.state.current_date.toString().trim() ==
-                    this.props.date.toString().trim()
-                  ) {
-                    if (
-                      this.isWithin(
-                        this.state.current_time,
-                        this.getUTCValue(item.time_start),
-                        this.getUTCValue(item.time_end)
-                      ) ||
-                      this.state.current_time >=
-                      this.getUTCValue(item.time_end) ||
-                      moment(this.state.current_time, "HH:mm")
-                        .add(30, "minutes")
-                        .format("HH:mm")
-                        .toString() > this.getUTCValue(item.time_start)
-                    ) {
-                      return null;
-                    }
-                  }
-                  if (this.props.appointments_on_date.length > 0) {
-                    this.props.appointments_on_date.map((appointment) => {
-                      const time_start = this.getUTCValue(
-                        appointment.time_start
-                      );
-                      const time_end = this.getUTCValue(appointment.time_end);
-                      if (
-                        this.isWithin(
-                          this.getUTCValue(item.time_start),
-                          time_start,
-                          time_end
-                        ) ||
-                        this.isWithin(
-                          this.getUTCValue(item.time_end),
-                          time_start,
-                          time_end
-                        )
-                      ) {
-                        canReturn = false;
-                      }
-                    });
-                    if (!canReturn) {
-                      return null;
-                    }
+                {
+                  this.state.locations.map(ind_loc => {
                     return (
-                      <View
-                        key={item.key.toString()}
-                        style={calendarStyles.date_details_scaffold}
-                      >
-                        <View
-                          style={calendarStyles.date_details_text_container}
-                        >
-                          <View>
-                            <Text style={calendarStyles.date_details_text}>
-                              SLOT {"\n"}
-                              {moment(item.time_start, "HH:mm").format(
-                                "h:mm A"
-                              )}{" "}
-                              -{" "}
-                              {moment(item.time_end, "HH:mm").format("h:mm A")}
-                            </Text>
-                          </View>
+                      <View style={calendarStyles.slot_list_container}>
+                        <View style={calendarStyles.date_header_container}>
+                          <Text style={calendarStyles.date_details_header}>LOCATION: {ind_loc}</Text>
                         </View>
-                        <View
-                          style={calendarStyles.date_details_button_container}
-                        >
-                          <TouchableOpacity
-                            activeOpacity={0.6}
-                            onPress={() => {
-                              this.props.onStep2Submit(item);
-                            }}
-                            style={
-                              this.props.location == this.state.consultant.location &&
-                                this.props.time_start == item.time_start &&
-                                this.props.time_end == item.time_end
-                                ? calendarStyles.date_details_button_review_active
-                                : calendarStyles.date_details_button_review
-                            }
-                          >
-                            <Text
-                              style={
-                                this.props.location == this.state.consultant.location &&
-                                  this.props.time_start == item.time_start &&
-                                  this.props.time_end == item.time_end
-                                  ? calendarStyles.date_details_button_label_active
-                                  : calendarStyles.date_details_button_label
+
+                        {
+                          this.state.selected.map((item) => {
+                            let canReturn = true;
+                            if (
+                              this.state.current_date.toString().trim() ==
+                              this.props.date.toString().trim()
+                            ) {
+                              if (
+                                this.isWithin(
+                                  this.state.current_time,
+                                  this.getUTCValue(item.time_start),
+                                  this.getUTCValue(item.time_end)
+                                ) ||
+                                this.state.current_time >=
+                                this.getUTCValue(item.time_end) ||
+                                moment(this.state.current_time, "HH:mm")
+                                  .add(30, "minutes")
+                                  .format("HH:mm")
+                                  .toString() > this.getUTCValue(item.time_start)
+                              ) {
+                                console.log("cannot return");
+                                return null;
                               }
-                            >
-                              Choose
-                            </Text>
-                          </TouchableOpacity>
-                        </View>
-                      </View>
-                    );
-                  } else {
-                    return (
-                      <View
-                        key={item.key.toString()}
-                        style={calendarStyles.date_details_scaffold}
-                      >
-                        <View
-                          style={calendarStyles.date_details_text_container}
-                        >
-                          <View>
-                            <Text style={calendarStyles.date_details_text}>
-                              SLOT {"\n"}
-                              {moment(item.time_start, "HH:mm").format(
-                                "h:mm A"
-                              )}{" "}
-                              -{" "}
-                              {moment(item.time_end, "HH:mm").format("h:mm A")}
-                            </Text>
-                          </View>
-                        </View>
-                        <View
-                          style={calendarStyles.date_details_button_container}
-                        >
-                          <TouchableOpacity
-                            activeOpacity={0.6}
-                            onPress={() => {
-                              this.props.onStep2Submit(item);
-                            }}
-                            style={
-                              this.props.location == this.state.consultant.location &&
-                                this.props.time_start == item.time_start &&
-                                this.props.time_end == item.time_end
-                                ? calendarStyles.date_details_button_review_active
-                                : calendarStyles.date_details_button_review
                             }
-                          >
-                            <Text
-                              style={
-                                this.props.location == this.state.consultant.location &&
-                                  this.props.time_start == item.time_start &&
-                                  this.props.time_end == item.time_end
-                                  ? calendarStyles.date_details_button_label_active
-                                  : calendarStyles.date_details_button_label
+                            if (this.props.appointments_on_date.length > 0) {
+                              this.props.appointments_on_date.map((appointment) => {
+                                const time_start = this.getUTCValue(
+                                  appointment.time_start
+                                );
+                                const time_end = this.getUTCValue(appointment.time_end);
+                                if (
+                                  this.isWithin(
+                                    this.getUTCValue(item.time_start),
+                                    time_start,
+                                    time_end
+                                  ) ||
+                                  this.isWithin(
+                                    this.getUTCValue(item.time_end),
+                                    time_start,
+                                    time_end
+                                  )
+                                ) {
+                                  canReturn = false;
+                                }
+                              });
+                              if (!canReturn) {
+                                console.log("cannot return");
+                                return null;
                               }
-                            >
-                              Choose
-                            </Text>
-                          </TouchableOpacity>
-                        </View>
+                              if (item.location == ind_loc) {
+                                return (
+                                  <View
+                                    key={item.key.toString()}
+                                    style={calendarStyles.date_details_scaffold}
+                                  >
+                                    <View
+                                      style={calendarStyles.date_details_text_container}
+                                    >
+                                      <View>
+                                        <Text style={calendarStyles.date_details_text}>
+                                          SLOT {"\n"}
+                                          {moment(item.time_start, "HH:mm").format(
+                                            "h:mm A"
+                                          )}{" "}
+                                  -{" "}
+                                          {moment(item.time_end, "HH:mm").format("h:mm A")}
+                                        </Text>
+                                      </View>
+                                    </View>
+                                    <View
+                                      style={calendarStyles.date_details_button_container}
+                                    >
+                                      <TouchableOpacity
+                                        activeOpacity={0.6}
+                                        onPress={() => {
+                                          this.props.onStep2Submit(item);
+                                        }}
+                                        style={
+                                          this.props.location == ind_loc &&
+                                            this.props.time_start == item.time_start &&
+                                            this.props.time_end == item.time_end
+                                            ? calendarStyles.date_details_button_review_active
+                                            : calendarStyles.date_details_button_review
+                                        }
+                                      >
+                                        <Text
+                                          style={
+                                            this.props.location == ind_loc &&
+                                              this.props.time_start == item.time_start &&
+                                              this.props.time_end == item.time_end
+                                              ? calendarStyles.date_details_button_label_active
+                                              : calendarStyles.date_details_button_label
+                                          }
+                                        >
+                                          Choose
+                                </Text>
+                                      </TouchableOpacity>
+                                    </View>
+                                  </View>
+                                );
+                              }
+                            } else {
+                              if (item.location == ind_loc) {
+                                return (
+                                  <View
+                                    key={item.key.toString()}
+                                    style={calendarStyles.date_details_scaffold}
+                                  >
+                                    <View
+                                      style={calendarStyles.date_details_text_container}
+                                    >
+                                      <View>
+                                        <Text style={calendarStyles.date_details_text}>
+                                          SLOT {"\n"}
+                                          {moment(item.time_start, "HH:mm").format(
+                                            "h:mm A"
+                                          )}{" "}
+                                -{" "}
+                                          {moment(item.time_end, "HH:mm").format("h:mm A")}
+                                        </Text>
+                                      </View>
+                                    </View>
+                                    <View
+                                      style={calendarStyles.date_details_button_container}
+                                    >
+                                      <TouchableOpacity
+                                        activeOpacity={0.6}
+                                        onPress={() => {
+                                          this.props.onStep2Submit(item);
+                                        }}
+                                        style={
+                                          this.props.location == ind_loc &&
+                                            this.props.time_start == item.time_start &&
+                                            this.props.time_end == item.time_end
+                                            ? calendarStyles.date_details_button_review_active
+                                            : calendarStyles.date_details_button_review
+                                        }
+                                      >
+                                        <Text
+                                          style={
+                                            this.props.location == ind_loc &&
+                                              this.props.time_start == item.time_start &&
+                                              this.props.time_end == item.time_end
+                                              ? calendarStyles.date_details_button_label_active
+                                              : calendarStyles.date_details_button_label
+                                          }
+                                        >
+                                          Choose
+                              </Text>
+                                      </TouchableOpacity>
+                                    </View>
+                                  </View>
+                                )
+                              };
+                            }
+                          })
+                        }
                       </View>
-                    );
-                  }
-                })}
+                    )
+                  })
+
+                }
               </ScrollView>
             </View>
           </View>

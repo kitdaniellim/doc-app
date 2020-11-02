@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, FlatList, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import { calendarStyles, globalStyles } from '../styles/styles';
@@ -60,6 +60,13 @@ class BookPage1_Date extends React.Component {
                     }
                   }
                 }}
+              />
+            </View>
+            <View style={calendarStyles.calendar_legend_container}>
+              <Text style={calendarStyles.calendar_legend_label}>Available Days:</Text>
+              <FlatList
+                data={this.props.daysAvailable}
+              renderItem={({ item }) => <Text style={calendarStyles.calendar_legend_text}>{item.day} ({item.day.substr(0, 3)})</Text>}
               />
             </View>
             <View style={calendarStyles.calendar_legend_container}>

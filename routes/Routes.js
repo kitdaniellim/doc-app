@@ -75,7 +75,6 @@ const optionsStyles = {
         activeOpacity: 70,
         padding: 15,
         margin: 10,
-
     },
     optionText: {
         color: 'black',
@@ -370,7 +369,7 @@ const consultantTabNavigator = createMaterialBottomTabNavigator(
 )
 
 function getTabs() {
-    let isClient = true;
+    let isClient = false;
     return (isClient) ? clientTabNavigator : consultantTabNavigator
 }
 
@@ -460,6 +459,8 @@ const appScreens = {
                             value => {
                                 if (value === 1) {
                                     navigation.navigate('Login')
+                                }else{
+                                    navigation.navigate('Home', { action: -1 } )
                                 }
                             }
                         }>
@@ -534,4 +535,3 @@ const SwitchStack = createSwitchNavigator({
 )
 
 export default createAppContainer(SwitchStack);
-

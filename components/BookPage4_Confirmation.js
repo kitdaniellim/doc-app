@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { calendarStyles, globalStyles } from '../styles/styles';
 import Icon from "react-native-vector-icons/FontAwesome";
+import moment from 'moment';
 
 class BookPage4_Confirmation extends React.Component {
     constructor(props) {
@@ -40,7 +41,7 @@ class BookPage4_Confirmation extends React.Component {
                             </View>
                             <View style={calendarStyles.conf_item}>
                                 <Text style={calendarStyles.conf_label}>Time</Text>
-                                <Text style={calendarStyles.conf_data}>{this.props.time_start}-{this.props.time_end}</Text>
+                                <Text style={calendarStyles.conf_data}>{moment(this.props.time_start, "HH:mm").format("h:mm A")}-{moment(this.props.time_end, "HH:mm").format("h:mm A")}</Text>
                             </View>
                             <View style={calendarStyles.conf_item}>
                                 <Text style={calendarStyles.conf_label}>Symptoms</Text>

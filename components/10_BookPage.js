@@ -8,6 +8,8 @@ import BookPage4_Confirmation from "./BookPage4_Confirmation";
 import { calendarStyles, globalStyles } from "../styles/styles";
 import { bookAppointment, getAppointments } from "../actions/appointments";
 import moment from "moment";
+import AsyncStorage from '@react-native-community/async-storage';
+import { getConsultant } from "../actions/users";
 
 class BookPage extends React.Component {
   constructor(props) {
@@ -26,19 +28,37 @@ class BookPage extends React.Component {
       occupied_dates_obj: {},
       consultant_id: this.props.navigation.state.params.consultant_id,
       symptoms: [],
-      files: []
+      files: [],
+      user: {},
+      daysAvailable: []
     };
   }
   async componentDidMount() {
-    let occupied_dates = [];
-    await this.props.getAppointments(1, 1);
-    if (this.props.appointments.length > 0) {
-      this.props.appointments.map((appointment) => {
-        occupied_dates.push(appointment.date);
+    let occupied_dates = [], daysAvailable = [];
+    const user = await JSON.parse(
+      await AsyncStorage.getItem("user")
+    );
+    if (!user) {
+      navigation.navigate('Login');
+    } else {
+      this.setState(() => ({ user }));
+      await this.props.getConsultant(this.state.consultant_id);
+      await this.props.getAppointments(user.uid, this.state.consultant_id);
+      if (this.props.appointments.length > 0) {
+        this.props.appointments.map((appointment) => {
+          occupied_dates.push(appointment.date);
+        });
+        occupied_dates.sort((a, b) => a - b);
+        this.setState(() => ({ occupied_dates }));
+        this.showOccupiedDates();
+      }
+      this.props.singleConsultant.office_details.map(ind_od => {
+        ind_od.office_day.map(ind_day => {
+          const filter = daysAvailable.filter(item => item.day == ind_day);
+          filter.length == 0 && daysAvailable.push({ day: ind_day });
+        });
       });
-      occupied_dates.sort((a, b) => a - b);
-      this.setState(() => ({ occupied_dates }));
-      this.showOccupiedDates();
+      await this.setState(() => ({ daysAvailable }))
     }
   }
   showOccupiedDates = () => {
@@ -105,7 +125,7 @@ class BookPage extends React.Component {
         (appointment) => appointment.date.toString() == date.toString()
       ) || [];
     await this.setState(() => ({ appointments_on_date }));
-    this.setState(() => ({ currentStep: 2 }));
+    await this.setState(() => ({ currentStep: 2 }));
   };
   onStep2Submit = (item) => {
     this.setState(() => ({ location: item.location }));
@@ -144,7 +164,7 @@ class BookPage extends React.Component {
       time_start: this.state.time_start,
       time_end: this.state.time_end,
       location: this.state.location,
-      client_id: 1,
+      client_id: this.state.user.uid,
       consultant_id: this.state.consultant_id,
       symptoms: this.state.symptoms,
       files,
@@ -189,6 +209,8 @@ class BookPage extends React.Component {
           date={this.state.date}
           occupied_dates_obj={this.state.occupied_dates_obj}
           _prev={this._prev}
+          consultant={this.props.singleConsultant}
+          daysAvailable={this.state.daysAvailable}
         />
         <BookPage2_Time
           appointments_on_date={this.state.appointments_on_date}
@@ -199,6 +221,7 @@ class BookPage extends React.Component {
           time_start={this.state.time_start}
           time_end={this.state.time_end}
           _prev={this._prev}
+          consultant={this.props.singleConsultant}
         />
         <BookPage3_Form
           currentStep={this.state.currentStep}
@@ -207,6 +230,7 @@ class BookPage extends React.Component {
           onStep3Submit={this.onStep3Submit}
           symptoms={this.state.symptoms}
           _prev={this._prev}
+          consultant={this.props.singleConsultant}
         />
         <BookPage4_Confirmation
           currentStep={this.state.currentStep}
@@ -218,6 +242,7 @@ class BookPage extends React.Component {
           symptoms={this.state.symptoms}
           files={this.state.files}
           _prev={this._prev}
+          consultant={this.props.singleConsultant}
         />
       </View>
     );
@@ -229,12 +254,14 @@ const mapStateToProps = (state) => ({
   appointments: state.appointments.items,
   appointment: state.appointments.item,
   error: state.appointments.error,
+  singleConsultant: state.users.singleConsultant
 });
 
 const mapDispatchToProps = (dispatch) => ({
   bookAppointment: (data) => dispatch(bookAppointment(data)),
   getAppointments: (client_id, consultant_id) =>
     dispatch(getAppointments(client_id, consultant_id)),
+  getConsultant: (uid) => dispatch(getConsultant(uid))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BookPage);

@@ -1,10 +1,15 @@
-import React, { Component } from 'react';
-import { Text, TextInput, ScrollView, View, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { Text, TextInput, ScrollView, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { signupStyles, globalStyles } from '../styles/styles';
 import { LinearGradient } from 'expo-linear-gradient';
 import Modal from 'react-native-modal';
-export default class SignupConsultant3_1 extends Component {
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { updateUserOfficeLocation, updateUserOfficeHours } from '../actions/users';
+
+
+class SignupConsultant3_1 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,9 +20,9 @@ export default class SignupConsultant3_1 extends Component {
       isModalVisible: false
     }
   }
-
+  
   toggleModal(visible) {
-    this.setState({ isModalVisible: visible })
+    this.setState({isModalVisible: visible})
   }
 
   Next = () => {
@@ -48,7 +53,9 @@ export default class SignupConsultant3_1 extends Component {
             placeholder="Location"
             placeholderTextColor="#8B8787"
             style={signupStyles.forms_textinput}
-            onChangeText={text => this.setState({ text })}
+            // onChangeText={text => this.setState({text})}
+            value = {this.props.userOfficeLocation}
+            onChangeText={userOfficeLocation=> this.props.updateUserOfficeLocation(userOfficeLocation)}
           />
         </View>
         <View style={signupStyles.forms_add_textinput_container}>
@@ -94,14 +101,11 @@ export default class SignupConsultant3_1 extends Component {
 
   render() {
     return (
-      <KeyboardAvoidingView
-        behavior={Platform.OS == "ios" ? "padding" : "height"}
-        style={signupStyles.container}
-      >
+      <View style={signupStyles.container}>
         <LinearGradient
-          colors={['rgba(239,239,239,0.5)', 'transparent']}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 0, y: 1 }}
+          colors={['rgba(243,243,243,0.4)', 'transparent']}
+          start={{ x: 0, y: 1 }}
+          end={{ x: 0, y: 0 }}
           style={globalStyles.gradient}
         >
           <Modal
@@ -120,7 +124,7 @@ export default class SignupConsultant3_1 extends Component {
                 <Text style={globalStyles.modal_notif}>Seems like you missed one. Please fill in all required fields before proceeding.</Text>
                 <TouchableOpacity
                   activeOpacity={0.6}
-                  onPress={() => { this.toggleModal(!this.state.isModalVisible) }}
+                  onPress={() => {this.toggleModal(!this.state.isModalVisible)}}
                   style={globalStyles.modal_button_container}
                 >
                   <Text style={globalStyles.modal_button_label}>Close</Text>
@@ -139,9 +143,9 @@ export default class SignupConsultant3_1 extends Component {
               <View>
                 <View style={signupStyles.forms_dynamicinput_margin}>
                   <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-                    {this.state.locationInput.map((value) => {
+                    {/* {this.state.locationInput.map((value) => {
                       return value;
-                    })}
+                    })} */}
                   </ScrollView>
                 </View>
                 <View style={signupStyles.forms_add_textinput_container}>
@@ -174,7 +178,23 @@ export default class SignupConsultant3_1 extends Component {
             </TouchableOpacity>
           </View>
         </LinearGradient>
-      </KeyboardAvoidingView>
+      </View>
     )
   }
 }
+
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ updateUserOfficeLocation, updateUserOfficeHours }, dispatch )
+}
+
+const mapStateToProps = state => {
+  return {
+    userOfficeLocation: state.users.userOfficeLocation
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SignupConsultant3_1)
