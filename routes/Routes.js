@@ -28,6 +28,7 @@ import Search from '../components/8_SearchPage.js';
 import Review from '../components/9_ReviewPage.js';
 import EditReview from '../components/EditReview.js';
 import Profile from '../components/9_ProfilePage.js';
+import BookPage from '../components/10_BookPage.js';
 import Book1_Date from '../components/BookPage1_Date.js';
 import Book2_Time from '../components/BookPage2_Time.js';
 import Book3_Form from '../components/BookPage3_Form.js';
@@ -124,7 +125,7 @@ const authScreens = {
     },
     SignupConsultant4: {
         screen: SignupConsultant4
-    },
+    }
 }
 
 const homeScreens = {
@@ -133,6 +134,9 @@ const homeScreens = {
     },
     Profile: {
         screen: Profile,
+    },
+    BookPage: {
+        screen: BookPage,
     },
     Book1_Date: {
         screen: Book1_Date,
@@ -143,10 +147,6 @@ const homeScreens = {
     Book3_Form: {
         screen: Book3_Form,
     },
-    Book4_Confirmation: {
-        screen: Book4_Confirmation,
-    },
-
 }
 
 const calendarScreens = {

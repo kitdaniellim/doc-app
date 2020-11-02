@@ -35,14 +35,9 @@ const firebaseConfig = {
     
     Firebase.auth().onAuthStateChanged((user) => {
         if (user) {  
-          console.log("nisud diri sa navigate sa home");
-          //new Login.Home();
-         // alert(user.uid)
-          //alert("YES SIR");
-          console.log("enk");
+          console.log("Navigating Home");
         }else{
-          console.log("waaaaaaaaaaaaaaaaaaaaaaaaa");
-          //alert("fak u")
+          console.log("Error!");
         }
     })
   

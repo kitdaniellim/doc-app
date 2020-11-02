@@ -62,6 +62,15 @@ class ProfileTab extends React.Component {
       console.log(`Error! Details: ${e}`);
     }
   }
+
+  Paypal = (id) => {
+
+    this.props.navigation.navigate('Paypal', {
+      consultant_id: id
+    });
+
+  }
+
   render() {
     const consultant = this.props.singleConsultant;
 
@@ -190,7 +199,9 @@ class ProfileTab extends React.Component {
               </TouchableOpacity> : <TouchableOpacity
                 activeOpacity={0.6}
                 style={profileStyles.edit_button}
-              // onPress={}
+                onPress={() => {
+                  this.Paypal(this.props.singleConsultant.uid)
+                }}
               >
                   <Text style={profileStyles.edit_button_label}>BOOK</Text>
                 </TouchableOpacity>}

@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 // import { LinearGradient } from  'expo-linear-gradient';
 import { Provider } from 'react-redux';
 import Routes from './routes/Routes.js';
-import {decode, encode} from 'base-64'
+import { decode, encode } from 'base-64'
 import { MenuProvider } from 'react-native-popup-menu';
 import firebase from "firebase"
 import configureStore from './store/configureStore';
@@ -12,7 +12,7 @@ import 'firebase/firestore';
 
 const store = configureStore();
 
-if (!global.btoa) {  global.btoa = encode }
+if (!global.btoa) { global.btoa = encode }
 
 if (!global.atob) { global.atob = decode }
 
@@ -20,39 +20,39 @@ if (!global.atob) { global.atob = decode }
 
 export default class App extends React.Component {
 
-  Home = ( navigation ) => {
+  Home = (navigation) => {
     //console.log("WEW MGA DUES")
     navigation.navigate("Home");
   }
 
-  componentDidMount(){
+  componentDidMount() {
     //alert("PUTANGNGNGGNGNNG")
 
-  
-    
-  
+
+
+
     //firebase.initializeApp(firebaseConfig);
-        
- 
-  
-  
-  // const Firebase = ({navigation}) => {}
-  
+
+
+
+
+    // const Firebase = ({navigation}) => {}
+
   }
-  
+
   render() {
-    
+
     //console.log("PUTANG INA NIYO PO")
- 
-    
-    
+
+
+
     return (
-      <Provider store = {store}>
-           <MenuProvider>
+      <Provider store={store}>
+        <MenuProvider>
           <Routes />
         </MenuProvider>
 
-      </Provider>  
+      </Provider>
     );
   }
 }
@@ -77,4 +77,4 @@ const styles = StyleSheet.create({
 export const db = firebase.firestore();
 
 
-  
+
