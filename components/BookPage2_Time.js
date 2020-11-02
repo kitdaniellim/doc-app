@@ -85,12 +85,12 @@ class Book2_Time extends React.Component {
         [
           {
             text: 'OK',
-            style: 'cancel'
+            style: 'cancel',
+            onPress: () => this.props._prev()
           }
         ],
         { cancelable: true }
       );
-      this.props._prev;
     }
   }
   getUTCValue = (time) => {
@@ -139,7 +139,7 @@ class Book2_Time extends React.Component {
                 {
                   this.state.locations.map(ind_loc => {
                     return (
-                      <View style={calendarStyles.slot_list_container}>
+                      <View style={calendarStyles.slot_list_container} key={ind_loc}>
                         <View style={calendarStyles.date_header_container}>
                           <Text style={calendarStyles.date_details_header}>LOCATION: {ind_loc}</Text>
                         </View>
@@ -164,7 +164,7 @@ class Book2_Time extends React.Component {
                                   .format("HH:mm")
                                   .toString() > this.getUTCValue(item.time_start)
                               ) {
-                                console.log("cannot return");
+                                console.log(`Slot not available: ${moment(item.time_start, "HH:mm").format("h:mm A")}-${moment(item.time_end, "HH:mm").format("h:mm A")}`);
                                 return null;
                               }
                             }
@@ -190,7 +190,7 @@ class Book2_Time extends React.Component {
                                 }
                               });
                               if (!canReturn) {
-                                console.log("cannot return");
+                                console.log(`Slot not available: ${moment(item.time_start, "HH:mm").format("h:mm A")}-${moment(item.time_end, "HH:mm").format("h:mm A")}`);
                                 return null;
                               }
                               if (item.location == ind_loc) {

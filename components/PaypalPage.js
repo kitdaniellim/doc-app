@@ -58,7 +58,7 @@ const Paypal = ({ navigation }) => {
         </Modal>
         <View style={paypalStyles.scaffold}>
           <Text style={paypalStyles.scaffold_text}>
-            Hello, your account is currently limited. Before proceeding, you must etc.  {"\n"}
+            Hello, your account is currently limited. Before proceeding, you must choose between "Pay Through Paypal" or Press "Skip" if you want to pay with cash. {"\n"}
           </Text>
           <TouchableOpacity
             activeOpacity={0.6}
