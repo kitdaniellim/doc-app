@@ -1,75 +1,90 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, FlatList, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {Calendar, CalendarList} from 'react-native-calendars';
+import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import { calendarStyles, globalStyles } from '../styles/styles';
 
-
-const Book1_Date = ({ navigation }) => {
-  //Highlighted dates 
-  const markedDates={
-    //Available Dates
-    '2020-06-10': {selected: true, selectedColor: '#56EC65'},
-    '2020-06-11': {selected: true, selectedColor: '#56EC65'},
-    '2020-06-12': {selected: true, selectedColor: '#56EC65'},
-    '2020-06-13': {selected: true, selectedColor: '#56EC65'},
+class BookPage1_Date extends React.Component {
+  constructor(props) {
+    super(props);
   }
-
-  const Appointment = () => {
-    navigation.navigate('Book2_Time');
-  }
-
-  return (
-    <View style={calendarStyles.container}>
-      <View style={calendarStyles.header_container}>
-        <View style={calendarStyles.header_text_container}>
-          <Text style={calendarStyles.header_text_bold}>AVAILABLE DATES</Text>
-        </View>
-      </View>
-      <View style={calendarStyles.scaffold}>
-        <View style={calendarStyles.calendar_container}>
-          <Calendar
-            // disabledByDefault
-            onDayPress={Appointment}
-            markedDates={markedDates} 
-            //36 months
-            pastScrollRange={36}
-            //24 months
-            futureScrollRange={24}
-            style={{
-              borderRadius: 15,
-            }}
-
-            theme={{
-              backgroundColor: '#fff',
-              calendarBackground: '#fff',
-              textSectionTitleColor: '#8B8787',
-              todayTextColor: '#000',
-            //   dayTextColor: 'black',
-              textDayFontSize: 10,
-              textMonthFontSize: 14,
-              textDayHeaderFontSize: 12,
-              'stylesheet.day.basic':{
-                'base':{
-                  width: 25,
-                  height: 25,
-                  alignItems: 'center',
-                  borderRadius: 0,
-                }
-              }
-            }}
-          />
-        </View>
-        <View style={calendarStyles.calendar_legend_container}>
-          <Text style={calendarStyles.calendar_legend_label}>Legend:</Text>
-          <View style={calendarStyles.calendar_legend_text_container}>
-            <View style={calendarStyles.calendar_legend_finished_hue}></View>
-            <Text style={calendarStyles.calendar_legend_text}> - Available Date</Text>
+  render() {
+    if (this.props.currentStep !== 1) {
+      return null;
+    } else {
+      return (
+        <React.Fragment>
+          <View style={calendarStyles.header_container}>
+            <View style={calendarStyles.header_text_container}>
+              <Text style={calendarStyles.header_text_bold}>AVAILABLE DATES</Text>
+            </View>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={this.props._prev}
+              style={calendarStyles.header_icon_container}
+            >
+              <Icon style={globalStyles.icon_global} name="times" size={18} />
+            </TouchableOpacity>
           </View>
-        </View>
-      </View>
-    </View>
-  );
+          <View style={calendarStyles.scaffold}>
+            <View style={calendarStyles.calendar_container}>
+              <Calendar
+                current={new Date()}
+                minDate={new Date()}
+                // disabledByDefault
+                onDayPress={(day) => { this.props.onStep1Submit(day.dateString) }}
+                //36 months
+                pastScrollRange={36}
+                //24 months
+                futureScrollRange={24}
+                style={{
+                  borderRadius: 15,
+                }}
+                markedDates={this.props.occupied_dates_obj}
+                disableAllTouchEventsForDisabledDays={true}
+                theme={{
+                  backgroundColor: '#fff',
+                  calendarBackground: '#fff',
+                  textSectionTitleColor: '#8B8787',
+                  todayTextColor: '#000',
+                  //   dayTextColor: 'black',
+                  textDayFontSize: 10,
+                  textMonthFontSize: 14,
+                  textDayHeaderFontSize: 12,
+                  'stylesheet.day.basic': {
+                    'base': {
+                      width: 25,
+                      height: 25,
+                      alignItems: 'center',
+                      borderRadius: 0,
+                    }
+                  }
+                }}
+              />
+            </View>
+            <View style={calendarStyles.calendar_legend_container}>
+              <Text style={calendarStyles.calendar_legend_label}>Available Days:</Text>
+              <FlatList
+                data={this.props.daysAvailable}
+              renderItem={({ item }) => <Text style={calendarStyles.calendar_legend_text}>{item.day} ({item.day.substr(0, 3)})</Text>}
+              />
+            </View>
+            <View style={calendarStyles.calendar_legend_container}>
+              <Text style={calendarStyles.calendar_legend_label}>Legend:</Text>
+              <View style={calendarStyles.calendar_legend_text_container}>
+                <View style={calendarStyles.calendar_legend_finished_hue}></View>
+                <Text style={calendarStyles.calendar_legend_text}> - Selected Date</Text>
+              </View>
+              <View style={calendarStyles.calendar_legend_text_container}>
+                <View style={calendarStyles.calendar_legend_unavailable_hue}></View>
+                <Text style={calendarStyles.calendar_legend_text}> - Occupied Date</Text>
+              </View>
+            </View>
+          </View>
+        </React.Fragment>
+      );
+    }
+  }
 }
 
-export default Book1_Date;
+export default BookPage1_Date;

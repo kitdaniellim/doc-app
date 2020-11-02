@@ -6,13 +6,7 @@ import { homeStyles, globalStyles, navbarStyles } from '../styles/styles';
 
 import { connect } from 'react-redux';
 
-function wait(timeout) {
-  return new Promise(resolve => {
-    setTimeout(resolve, timeout);
-  });
-}
-
-class HomeClient extends Component{
+class HomeClient extends React.Component{
   
   render(){
     
@@ -126,7 +120,7 @@ class HomeClient extends Component{
     <View style={homeStyles.container}>
       <View style={homeStyles.header_container}>
   <Text style={homeStyles.header_text_bold}>HOME -- Hello </Text>
-  <Text style={homeStyles.header_text_bold}>{this.props.user.email} </Text>
+  <Text style={homeStyles.header_text_bold}>{this.props.email} </Text>
         <Text style={homeStyles.header_text}>Highest Rated by Profession</Text>
       </View>
       <View style={homeStyles.scaffold}>
@@ -195,7 +189,7 @@ class HomeClient extends Component{
 }
 const mapStateToProps = state => {
 	return {
-		user: state.user
+		email: state.users.email
 	}
 }
 export default connect(mapStateToProps)(HomeClient);

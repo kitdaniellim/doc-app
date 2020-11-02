@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Text, TextInput, Image, ScrollView, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { signupStyles, profileStyles, globalStyles } from '../styles/styles';
@@ -6,14 +6,14 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Modal from 'react-native-modal';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {  getConsultant,  updateProfileImage, updateOfficeImage, editProfile, updateLocation} from '../actions/consultant';
+import {  getConsultant,  updateProfileImage, updateOfficeImage, editProfile, updateLocation} from '../actions/users';
   
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 //import Firebase, { db } from '../config/Firebase'
 // import { nanoid } from "nanoid";
 
-class EditProfile_1 extends Component {
+class EditProfile_1 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -191,46 +191,14 @@ class EditProfile_1 extends Component {
      console.log(result);
  
      if (!result.cancelled) {
-       //this.setState({ photo: result.uri })
-       //this.props.singleConsultant.profilePicture = result.uri;
        if(text === 'Profile'){
         this.props.updateProfileImage(result.uri);
        }else{
         this.props.updateOfficeImage(result.uri);
        }
-       
-       
-      // alert(this.props.singleConsultant.profilePicture)
+
      }
    };
-
-  // onChooseImagePress = async () => {
-  //   //let result = await ImagePicker.launchCameraAsync();
-  //   let result = await ImagePicker.launchImageLibraryAsync();
-
-  //   if(!result.cancelled){
-  //     this.uploadImage(result.uri);
-  //   }
-  // }
-
-  // uploadImage = async (uri, imageName) => {
-  //   const response = await fetch(uri);
-  //   const blob = await response.blob();
-
-  //   var ref = Firebase.storage().ref().child("users/" + imageName );
-  //   this.props.updateProfileImage(this.props.singleConsultant.uid,ref);
-  //   return ref.put(blob);
-  // }
-
-  // uploadOfficeImage = async (uri, imageName) => {
-  //   const response = await fetch(uri);
-  //   const blob = await response.blob();
-
-  //   var ref = Firebase.storage().ref().child("users/" + imageName );
-  //   this.props.updateOfficeImage(this.props.singleConsultant.uid,ref);
-  //   return ref.put(blob);
-  // }
-
   confirmEdit = (navigation) => {
     console.log("wa diay no sud diri")
     //alert("BULLSHIT")
@@ -397,9 +365,9 @@ const mapDispatchToProps = dispatch => {
 }
 const mapStateToProps = state => {
 	return {
-    user : state.user,
-    consultant: state.consultant,
-    singleConsultant: state.singleConsultant,
+    user : state.users,
+    consultant: state.users,
+    singleConsultant: state.users,
     locArray: state.locArray
   	}
 }

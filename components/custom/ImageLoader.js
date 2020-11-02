@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Animated, Easing } from 'react-native';
 
-export default class ImageLoader extends Component {
+export default class ImageLoader extends React.Component {
     state = {
         opacity: new Animated.Value(0),
         yValue: new Animated.Value(0)

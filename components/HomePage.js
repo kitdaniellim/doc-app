@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Button, Text, View, TouchableOpacity, Modal } from 'react-native';
 import { homeStyles } from '../styles/styles';
 import { Actions } from 'react-native-router-flux';
@@ -11,7 +11,7 @@ const goToAbout = () => {
   Actions.about()
 }
 
-class HomePage extends Component{
+class HomePage extends React.Component {
   state = {
     showModal: false,
     status: "Pending"

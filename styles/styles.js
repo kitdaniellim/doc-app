@@ -9,6 +9,11 @@ import SignUp from './components/SignupPage';
 import Home from './components/HomePage';
 import Calendar from './components/CalendarPage';
 import Search from './components/SearchPage';
+
+import Appointment from './components/AppointmentPage';
+
+// import Review from './components/ReviewPage';
+
 import Review from './components/ReviewPage';
 import Profile from './components/ProfilePage';
 import Paypal from './components/PaypalPage';
@@ -23,6 +28,8 @@ export const fpassStyles = StyleSheet.create(ForgotPassword);
 export const homeStyles = StyleSheet.create(Home);
 export const calendarStyles = StyleSheet.create(Calendar);
 export const searchStyles = StyleSheet.create(Search);
+export const appointmentStyles = StyleSheet.create(Appointment);
+// export const reviewStyles = StyleSheet.create(Review);
 export const reviewStyles = StyleSheet.create(Review);
 export const profileStyles = StyleSheet.create(Profile);
 export const paypalStyles = StyleSheet.create(Paypal);

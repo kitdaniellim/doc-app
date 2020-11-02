@@ -1,4 +1,4 @@
-import React, { useState, Component } from 'react';
+import React, { useState } from 'react';
 import { Text, TextInput, ScrollView, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { signupStyles, globalStyles } from '../styles/styles';
@@ -6,10 +6,10 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Modal from 'react-native-modal';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { updateUserOfficeLocation, updateUserOfficeHours } from '../actions/user';
+import { updateUserOfficeLocation, updateUserOfficeHours } from '../actions/users';
 
 
-class SignupConsultant3_1 extends Component {
+class SignupConsultant3_1 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -54,7 +54,7 @@ class SignupConsultant3_1 extends Component {
             placeholderTextColor="#8B8787"
             style={signupStyles.forms_textinput}
             // onChangeText={text => this.setState({text})}
-            value = {this.props.user.userOfficeLocation}
+            value = {this.props.userOfficeLocation}
             onChangeText={userOfficeLocation=> this.props.updateUserOfficeLocation(userOfficeLocation)}
           />
         </View>
@@ -110,7 +110,7 @@ class SignupConsultant3_1 extends Component {
         >
           <Modal
             isVisible={this.state.isModalVisible}
-            animationIn='bounceInDown'
+            animationIn='slideInDown'
             animationOut='bounceOutUp'
             animationInTiming={1100}
             animationOutTiming={900}
@@ -132,11 +132,11 @@ class SignupConsultant3_1 extends Component {
               </View>
             </View>
           </Modal>
-          <View style={signupStyles.forms_container}>
+          <View style={signupStyles.forms_container_2}>
             <View style={signupStyles.forms_label_container}>
-              <Text style={signupStyles.forms_label}> CONSULTANT SIGN UP </Text>
+              <Text style={signupStyles.forms_label}>CONSULTANT SIGN UP</Text>
             </View>
-            <View style={signupStyles.forms_label_small_container}>
+            <View style={signupStyles.forms_label_small_container_2}>
               <Text style={signupStyles.forms_label_small}>Office Details:</Text>
             </View>
             <View>
@@ -190,7 +190,7 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    userOfficeLocation: state.users.userOfficeLocation
   }
 }
 

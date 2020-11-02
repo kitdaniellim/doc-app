@@ -6,9 +6,9 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Modal from 'react-native-modal';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { updateEmail, updatePassword } from '../actions/user';
+import { updateEmail, updatePassword } from '../actions/users';
 
-class SignupConsultant1 extends Component {
+class SignupConsultant1 extends React.Component {
   // const [username, setUser] = useState('');
   // const [email, setEmail] = useState('');
   // const [password, setPass] = useState('');
@@ -62,8 +62,8 @@ class SignupConsultant1 extends Component {
 
   render() {
     console.log("START SIGNUPPAGE1_CONSULTANT NI");
-    console.log(this.props.user.email);
-    console.log(this.props.user.password);
+    console.log(this.props.email);
+    console.log(this.props.password);
     console.log("END SA SIGNUPPAGE1_CONSULTANT");
     return (
       <View style={signupStyles.container}>
@@ -110,7 +110,7 @@ class SignupConsultant1 extends Component {
                 placeholder="Email"
                 placeholderTextColor="#8B8787"
                 style={signupStyles.forms_textinput}
-                value = {this.props.user.email}
+                value = {this.props.email}
                 onChangeText={email => this.props.updateEmail(email)}
               />
             </View>
@@ -121,7 +121,7 @@ class SignupConsultant1 extends Component {
                 placeholder="Password"
                 placeholderTextColor="#8B8787"
                 style={signupStyles.forms_textinput}
-                value = {this.props.user.password}
+                value = {this.props.password}
                 onChangeText={password => this.props.updatePassword(password)}
               />
             </View>
@@ -159,7 +159,8 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    email: state.users.email,
+    password: state.users.password
   }
 }
 
