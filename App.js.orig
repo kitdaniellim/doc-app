@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Alert, Text, AppRegistry, Button, TextInput, View, StyleSheet } from 'react-native';
 import Temp from './components/1_A_Temp.js'
 
@@ -35,7 +35,7 @@ const db = firebase.firestore();
 //Update Firestore Settings
 //db.settings( {timestampsInSnapshots: true} )
 
-export default class App extends Component {
+export default class App extends React.Component {
   constructor(props) {
     super(props);
 
