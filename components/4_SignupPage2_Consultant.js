@@ -1,10 +1,14 @@
-import React, { useState, Component } from 'react';
+import React, { useState } from 'react';
 import { Text, TextInput, Button, ScrollView, View, FlatList, TouchableOpacity, TouchableHighlight, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { signupStyles, globalStyles } from '../styles/styles';
 import { LinearGradient } from 'expo-linear-gradient';
 import Modal from 'react-native-modal';
-class Dynamic_Input extends Component {
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { updateFullName, updateUserSpecialty, updateUserLIC, updateUserSubSpecialty } from '../actions/users';
+
+class Dynamic_Input extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -69,16 +73,16 @@ class Dynamic_Input extends Component {
             style={signupStyles.forms_add_textinput_button_container}
             onPress={() => this.addField()}
           >
-            <Icon style={globalStyles.icon_global} name="plus" size={14} />
-            <Text style={signupStyles.forms_add_textinput_text} > ADD SUB-SPECIALTY </Text>
+            <Icon style={globalStyles.icon_global} name="plus" size={16} />
+            <Text style={signupStyles.forms_add_textinput_text}>ADD{"\n"}SUB-PROFESSION</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.6}
             style={signupStyles.forms_add_textinput_button_container}
             onPress={() => this.removeField()}
           >
-            <Icon style={globalStyles.icon_global} name="times" size={14} />
-            <Text style={signupStyles.forms_add_textinput_text} > REMOVE SUB-SPECIALTY </Text>
+            <Icon style={globalStyles.icon_global} name="times" size={16} />
+            <Text style={signupStyles.forms_add_textinput_text}>REMOVE{"\n"}SUB-PROFESSION</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -86,106 +90,133 @@ class Dynamic_Input extends Component {
   }
 }
 
-const SignupConsultant2 = ({ navigation }) => {
-  const [fname, setName] = useState('');
-  const [specialty, setSpec] = useState('');
-  const [lic, setLic] = useState('');
-  const [message, setMessage] = useState('Seems like you missed one. Please fill in all the required fields before proceeding.');
-  const [isModalVisible, toggleModal] = useState(false);
 
-  function Close() {
-    toggleModal(false)
+class SignupConsultant2 extends React.Component  {
+
+  constructor(props) {
+    super(props);
   }
-
-  const Next = () => {
-    if ((fname !== '' && specialty !== '' && lic !== '')) {
+    
+  Next = () => {
+    const navigation = this.props.navigation;
       navigation.navigate('SignupConsultant3_1');
-    } else {
-      toggleModal(true)
-    }
   }
 
-  return (
-    <View style={signupStyles.container}>
-      <LinearGradient
-        colors={['rgba(239,239,239,0.5)', 'transparent']}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 0, y: 1 }}
-        style={globalStyles.gradient}
-      >
-        <Modal 
-          isVisible={isModalVisible} 
-          animationIn='bounceInDown'
-          animationOut='bounceOutUp'
-          animationInTiming={1100}
-          animationOutTiming={900}
+  render(){
+
+    return (
+      <View style={signupStyles.container}>
+        <LinearGradient
+          colors={['rgba(243,243,243,0.4)', 'transparent']}
+          start={{ x: 0, y: 1 }}
+          end={{ x: 0, y: 0 }}
+          style={globalStyles.gradient}
         >
-          <View style={globalStyles.modal_container}>
-            <View style={globalStyles.modal_container_top}>
-              <Icon style={globalStyles.modal_icon} name="times-circle-o" size={29} />
-            </View>
-            <View style={globalStyles.modal_container_bottom}>
-              <Text style={globalStyles.modal_notif_bold}>Oops!</Text>
-              <Text style={globalStyles.modal_notif}>Seems like you missed one. Please fill in all required fields before proceeding.</Text>
-              <TouchableOpacity
-                activeOpacity={0.6}
-                onPress={Close}
-                style={globalStyles.modal_button_container}
-              >
-                <Text style={globalStyles.modal_button_label}>Close</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Modal>
-        <View style={signupStyles.forms_container}>
-          <Text style={signupStyles.forms_label}>CONSULTANT SIGN UP</Text>
-          <View style={signupStyles.forms_label_small_container}>
-            <Text style={signupStyles.forms_label_small}>Professional Details:</Text>
-          </View>
-          <View style={signupStyles.forms_textinput_container}>
-            <Icon style={globalStyles.icon_global} name="user-circle" size={18} />
-            <TextInput
-              placeholder="Full Name"
-              placeholderTextColor="#8B8787"
-              style={signupStyles.forms_textinput}
-              onChangeText={text => setName(text)}
-              value={fname}
-            />
-          </View>
-          <View style={signupStyles.forms_textinput_container}>
-            <Icon style={globalStyles.icon_global} name="briefcase" size={18} />
-            <TextInput
-              placeholder="Specialty"
-              placeholderTextColor="#8B8787"
-              style={signupStyles.forms_textinput}
-              onChangeText={text => setSpec(text)}
-              value={specialty}
-            />
-          </View>
-          <View style={signupStyles.forms_textinput_container}>
-            <Icon style={globalStyles.icon_global} name="id-card" size={15} />
-            <TextInput
-              placeholder="LIC Number"
-              placeholderTextColor="#8B8787"
-              style={signupStyles.forms_textinput}
-              onChangeText={text => setLic(text)}
-              value={lic}
-            />
-          </View>
-          <Dynamic_Input />
-          <Text style={signupStyles.forms_text}>2/4</Text>
-          <TouchableOpacity
-            activeOpacity={0.6}
-            style={signupStyles.forms_button}
-            onPress={Next}
+          {/* <Modal 
+            isVisible={isModalVisible} 
+            animationIn='bounceInDown'
+            animationOut='bounceOutUp'
+            animationInTiming={1100}
+            animationOutTiming={900}
           >
-            <Text style={signupStyles.forms_button_label}>NEXT</Text>
-          </TouchableOpacity>
-        </View>
-      </LinearGradient>
-    </View>
-  );
+            <View style={globalStyles.modal_container}>
+              <View style={globalStyles.modal_container_top}>
+                <Icon style={globalStyles.modal_icon} name="times-circle-o" size={29} />
+              </View>
+              <View style={globalStyles.modal_container_bottom}>
+                <Text style={globalStyles.modal_notif_bold}>Oops!</Text>
+                <Text style={globalStyles.modal_notif}>Seems like you missed one. Please fill in all required fields before proceeding.</Text>
+                <TouchableOpacity
+                  activeOpacity={0.6}
+                  onPress={Close}
+                  style={globalStyles.modal_button_container}
+                >
+                  <Text style={globalStyles.modal_button_label}>Close</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal> */}
+          <View style={signupStyles.forms_container}>
+            <Text style={signupStyles.forms_label}>CONSULTANT SIGN UP</Text>
+            <View style={signupStyles.forms_label_small_container}>
+              <Text style={signupStyles.forms_label_small}>Professional Details:</Text>
+            </View>
+            <View style={signupStyles.forms_textinput_container}>
+              <Icon style={globalStyles.icon_global} name="user-circle" size={18} />
+              <TextInput
+                placeholder="Full Name"
+                placeholderTextColor="#8B8787"
+                style={signupStyles.forms_textinput}
+                // onChangeText={text => setName(text)}
+                // value={fname}
+                value = {this.props.fullName}
+                onChangeText={fullName => this.props.updateFullName(fullName)}
+              />
+            </View>
+            <View style={signupStyles.forms_textinput_container}>
+              <Icon style={globalStyles.icon_global} name="briefcase" size={18} />
+              <TextInput
+                placeholder="Specialty"
+                placeholderTextColor="#8B8787"
+                style={signupStyles.forms_textinput}
+                // onChangeText={text => setSpec(text)}
+                // value={specialty}
+                value = {this.props.userSpecialty}
+                onChangeText={userSpecialty => this.props.updateUserSpecialty(userSpecialty)}
+              />
+            </View>
+            <View style={signupStyles.forms_textinput_container}>
+              <Icon style={globalStyles.icon_global} name="id-card" size={15} />
+              <TextInput
+                placeholder="LIC Number"
+                placeholderTextColor="#8B8787"
+                style={signupStyles.forms_textinput}
+                // onChangeText={text => setLic(text)}
+                // value={lic}
+                value = {this.props.userLIC}
+                onChangeText={ userLIC=> this.props.updateUserLIC(userLIC)}
+              />
+            </View>
+            <Dynamic_Input />
+            <TouchableOpacity
+              activeOpacity={0.6}
+              style={signupStyles.forms_paybutton}
+              onPress={() => { }}
+            >
+              <Text style={signupStyles.forms_paybutton_label}>Pay Through PayPal</Text>
+            </TouchableOpacity>
+            <Text style={signupStyles.forms_text}>2/4</Text>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              style={signupStyles.forms_button}
+              onPress={this.Next}
+            >
+              <Text style={signupStyles.forms_button_label}>NEXT</Text>
+            </TouchableOpacity>
+          </View>
+        </LinearGradient>
+      </View>
+    );
+  }
+  
 }
 
 
-export default SignupConsultant2;
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ updateFullName, updateUserSpecialty, updateUserLIC, updateUserSubSpecialty }, dispatch )
+}
+
+const mapStateToProps = state => {
+  return {
+    fullName: state.users.fullName,
+    userSpecialty: state.users.userSpecialty,
+    userLIC: state.users.userLIC,
+    userSubSpecialty: state.users.userSubSpecialty
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SignupConsultant2)
+

@@ -1,10 +1,15 @@
-import React, { useState, Component } from 'react';
+import React, { useState } from 'react';
 import { Text, TextInput, ScrollView, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { signupStyles, globalStyles } from '../styles/styles';
 import { LinearGradient } from 'expo-linear-gradient';
 import Modal from 'react-native-modal';
-export default class SignupConsultant3_1 extends Component {
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { updateUserOfficeLocation, updateUserOfficeHours } from '../actions/users';
+
+
+class SignupConsultant3_1 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -48,7 +53,9 @@ export default class SignupConsultant3_1 extends Component {
             placeholder="Location"
             placeholderTextColor="#8B8787"
             style={signupStyles.forms_textinput}
-            onChangeText={text => this.setState({text})}
+            // onChangeText={text => this.setState({text})}
+            value = {this.props.userOfficeLocation}
+            onChangeText={userOfficeLocation=> this.props.updateUserOfficeLocation(userOfficeLocation)}
           />
         </View>
         <View style={signupStyles.forms_add_textinput_container}>
@@ -103,7 +110,7 @@ export default class SignupConsultant3_1 extends Component {
         >
           <Modal
             isVisible={this.state.isModalVisible}
-            animationIn='bounceInDown'
+            animationIn='slideInDown'
             animationOut='bounceOutUp'
             animationInTiming={1100}
             animationOutTiming={900}
@@ -125,20 +132,20 @@ export default class SignupConsultant3_1 extends Component {
               </View>
             </View>
           </Modal>
-          <View style={signupStyles.forms_container}>
+          <View style={signupStyles.forms_container_2}>
             <View style={signupStyles.forms_label_container}>
-              <Text style={signupStyles.forms_label}> CONSULTANT SIGN UP </Text>
+              <Text style={signupStyles.forms_label}>CONSULTANT SIGN UP</Text>
             </View>
-            <View style={signupStyles.forms_label_small_container}>
+            <View style={signupStyles.forms_label_small_container_2}>
               <Text style={signupStyles.forms_label_small}>Office Details:</Text>
             </View>
             <View>
               <View>
                 <View style={signupStyles.forms_dynamicinput_margin}>
                   <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-                    {this.state.locationInput.map((value) => {
+                    {/* {this.state.locationInput.map((value) => {
                       return value;
-                    })}
+                    })} */}
                   </ScrollView>
                 </View>
                 <View style={signupStyles.forms_add_textinput_container}>
@@ -175,3 +182,19 @@ export default class SignupConsultant3_1 extends Component {
     )
   }
 }
+
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ updateUserOfficeLocation, updateUserOfficeHours }, dispatch )
+}
+
+const mapStateToProps = state => {
+  return {
+    userOfficeLocation: state.users.userOfficeLocation
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SignupConsultant3_1)

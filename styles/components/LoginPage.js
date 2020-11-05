@@ -48,7 +48,8 @@ const Login = {
         fontSize: 14,
         paddingHorizontal: 5,
         marginHorizontal: 5,
-        borderRadius: 20,      
+        borderRadius: 20,    
+        letterSpacing: 1  
     },
 
     forms_button_container: {
@@ -72,7 +73,7 @@ const Login = {
 
     forms_button_label: {
         color: '#8B8787',
-        fontSize: 14,
+        fontSize: 15,
         fontWeight: '600', 
         letterSpacing: 1,  
         textAlign: 'center',

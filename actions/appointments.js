@@ -57,18 +57,16 @@ export const getAppointments = (client_id, consultant_id = null) => {
           querySnapShot.forEach((doc) => {
             results.push(doc.data());
           });
-          consultant_id &&
-            db
-              .collection("appointments")
-              .where("consultant_id", "==", consultant_id)
-              .where("status", "in", ["Pending", "Approved"])
-              .onSnapshot((querySnapShot2) => {
-                querySnapShot2.forEach((doc) => {
-                  results.push(doc.data());
-                });
-                results = _.uniqBy(results, "uid");
+          db.collection("appointments")
+            .where("consultant_id", "==", consultant_id)
+            .where("status", "in", ["Pending", "Approved"])
+            .onSnapshot((querySnapShot2) => {
+              querySnapShot2.forEach((doc) => {
+                results.push(doc.data());
               });
-          dispatch(getAppointmentsSuccess(results));
+              results = _.uniqBy(results, "uid");
+              dispatch(getAppointmentsSuccess(results));
+            });
         });
     } catch (error) {
       dispatch(getAppointmentsFailure(error));

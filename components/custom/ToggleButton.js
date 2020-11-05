@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import StarRating from 'react-native-star-rating';
 import { profileStyles } from '../../styles/styles';
 
-export default class ToggleButton extends Component {
+export default class ToggleButton extends React.Component {
     state = {
         status: false
     }

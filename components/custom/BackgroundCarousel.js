@@ -1,46 +1,44 @@
 import * as React from 'react';
-import { StyleSheet, View, Text, ScrollView, Dimensions, Image } from 'react-native'
+import { StyleSheet, View, ScrollView, Dimensions, Image } from 'react-native'
 
 const DEVICE_WIDTH = Dimensions.get("window").width;
 
 class BackgroundCarousel extends React.Component {
     scrollRef = React.createRef();
-    _isMounted = false;
     constructor(props) {
         super(props);
         this.state = {
+            interValID: 0,
             selectedIndex: 0
         }
     }
 
-    //for carousel auto interval, works but throws warning
-    // componentDidMount = () => {
-    //     this._isMounted = true;
-    //     if(this._isMounted){
-    //         setInterval(() => {
-    //             this.setState(prev => ({ selectedIndex: prev.selectedIndex === this.props.images.length - 1
-    //                 ? 0 
-    //                 :  prev.selectedIndex + 1
-    //             }),
-    //             () => {
-    //                 this.scrollRef.current.scrollTo({
-    //                     animated: true,
-    //                     y: 0,
-    //                     x: DEVICE_WIDTH * this.state.selectedIndex
-    //                 })
-    //             })
-    //         }, 3000)
-    //     }
-    // }
+    // for carousel auto interval, works but throws warning
+    componentDidMount = () => {
+        this.interValID = setInterval(() => {
+            this.setState(prev => ({
+                selectedIndex: prev.selectedIndex === this.props.images.length - 1
+                    ? 0
+                    : prev.selectedIndex + 1
+            }),
+                () => {
+                    this.scrollRef.current.scrollTo({
+                        animated: true,
+                        y: 0,
+                        x: DEVICE_WIDTH * this.state.selectedIndex
+                    })
+                })
+        }, 3000)
+    }
 
-    // componentWillUnmount = () => {
-    //     this._isMounted = false;
-    // }
+    componentWillUnmount = () => {
+        clearInterval(this.interValID);
+    }
 
     setSelectedIndex = event => {
         const viewSize = event.nativeEvent.layoutMeasurement.width;
         const contentOffset = event.nativeEvent.contentOffset.x;
-        const selectedIndex = Math.floor(contentOffset/viewSize)
+        const selectedIndex = Math.floor(contentOffset / viewSize)
         this.setState({ selectedIndex });
     }
 
@@ -60,18 +58,19 @@ class BackgroundCarousel extends React.Component {
                     {images.map((image) => (
                         <Image
                             key={image.key}
-                            source={image.img}
+                            source={{ uri: image.img.toString() }}
                             style={styles.backgroundImage}
                         />
+
                     ))}
                 </ScrollView>
                 <View style={styles.circleDiv}>
                     {images.map((image, i) => (
-                        <View 
-                            key={image.key} 
+                        <View
+                            key={image.key}
                             style={[
-                                styles.whiteCircle, 
-                                {opacity: i === selectedIndex ? 0.5 : 1}
+                                styles.whiteCircle,
+                                { opacity: i === selectedIndex ? 0.5 : 1 }
                             ]}
                         />
                     ))}

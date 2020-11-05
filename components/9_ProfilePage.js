@@ -9,6 +9,7 @@ import { profileStyles, globalStyles } from '../styles/styles';
 const Profile = ({ navigation }) => {
   const isUserClient = true
   const selected = {
+    id: 1,
     name: "Dr. Go",
     office_img: require("../assets/office.jpg"),
     profile_img: require("../assets/troy.png"),
@@ -19,7 +20,9 @@ const Profile = ({ navigation }) => {
   }
 
   const Paypal = () => {
-    navigation.navigate('Paypal')
+    navigation.navigate('Paypal', {
+      consultant_id: selected.id
+    });
   }
 
   return (

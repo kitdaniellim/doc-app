@@ -8,9 +8,10 @@ import Modal from 'react-native-modal';
 
 const Paypal = ({ navigation }) => {
   const [isModalVisible, toggleModal] = useState(false);
+  const consultant_id = navigation.state.params.consultant_id;
 
   function Close() {
-    navigation.navigate('Book1_Date');
+    navigation.navigate('BookPage');
   }
 
   const Pay = () => {
@@ -18,7 +19,9 @@ const Paypal = ({ navigation }) => {
   }
 
   const Skip = () => {
-    navigation.navigate('Book1_Date');
+    navigation.navigate('BookPage', {
+      consultant_id
+    });
   }
 
   return (
@@ -31,7 +34,7 @@ const Paypal = ({ navigation }) => {
       >
         <Modal
           isVisible={isModalVisible}
-          animationIn='bounceInDown'
+          animationIn='slideInDown'
           animationOut='slideOutUp'
           animationInTiming={1100}
           animationOutTiming={900}
@@ -55,7 +58,7 @@ const Paypal = ({ navigation }) => {
         </Modal>
         <View style={paypalStyles.scaffold}>
           <Text style={paypalStyles.scaffold_text}>
-            Hello, your account is currently limited. Before proceeding, you have to etcetc.  {"\n"}
+            Hello, your account is currently limited. Before proceeding, you must choose between "Pay Through Paypal" or Press "Skip" if you want to pay with cash. {"\n"}
           </Text>
           <TouchableOpacity
             activeOpacity={0.6}
