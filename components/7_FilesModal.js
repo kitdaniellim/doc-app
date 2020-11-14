@@ -47,7 +47,7 @@ class FilesModal extends React.Component {
       >
         <View style={calendarStyles.modal_container}>
           <SafeAreaView style={calendarStyles.modal_list}>
-            <FlatList
+            {this.props.isFilesModalVisible && <FlatList
               data={this.props.files}
               renderItem={({ item }) => (
                 <View style={calendarStyles.files_flatlist}>
@@ -61,7 +61,7 @@ class FilesModal extends React.Component {
                 </View>
               )}
               keyExtractor={(item) => item.name}
-            />
+            />}
           </SafeAreaView>
           <View style={calendarStyles.modal_container_bottom}>
             <TouchableOpacity

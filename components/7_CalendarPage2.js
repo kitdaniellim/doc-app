@@ -26,6 +26,7 @@ class CalendarPage2 extends React.Component {
       text: "",
       appointments: [],
       files: [],
+      user: {}
     };
   }
   async componentDidMount() {
@@ -33,6 +34,10 @@ class CalendarPage2 extends React.Component {
       const appointments = JSON.parse(
         await AsyncStorage.getItem("appointments")
       );
+      const user = JSON.parse(
+        await AsyncStorage.getItem("user")
+      );
+      await this.setState(() => ({ user }));
       await this.setState(() => ({ appointments }));
     } catch (e) {
       console.log(`Error! Details: ${e}`);
@@ -63,6 +68,7 @@ class CalendarPage2 extends React.Component {
     this.setState(() => ({ text }));
   };
   onViewFiles = async (id) => {
+    console.log(`fetching files from appointment id: ${id}`)
     await this.props.getFiles(id);
     if (!this.props.loading) {
       if (!this.props.error) {
@@ -174,29 +180,29 @@ class CalendarPage2 extends React.Component {
             <Text style={calendarStyles.header_text_bold}>APPOINTMENT</Text>
           </View>
           {/* if consultant then show button, else not */}
-          {this.state.isClient === false &&
-          this.state.appointments.length !== 0 ? (
-            <View style={{ flexDirection: "row", flex: 3 }}>
-              <TouchableOpacity
-                activeOpacity={0.6}
-                onPress={this.Notify}
-                style={calendarStyles.header_confirmall_container}
-              >
-                <Text style={calendarStyles.header_confirmall_text}>
-                  Notify All
+          {this.state.user.userType === "CONSULTANT" &&
+            this.state.appointments.length !== 0 ? (
+              <View style={{ flexDirection: "row", flex: 3 }}>
+                <TouchableOpacity
+                  activeOpacity={0.6}
+                  onPress={this.Notify}
+                  style={calendarStyles.header_confirmall_container}
+                >
+                  <Text style={calendarStyles.header_confirmall_text}>
+                    Notify All
                 </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                activeOpacity={0.6}
-                onPress={this.ConfirmAll}
-                style={calendarStyles.header_confirmall_container}
-              >
-                <Text style={calendarStyles.header_confirmall_text}>
-                  Confirm All
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.6}
+                  onPress={this.ConfirmAll}
+                  style={calendarStyles.header_confirmall_container}
+                >
+                  <Text style={calendarStyles.header_confirmall_text}>
+                    Confirm All
                 </Text>
-              </TouchableOpacity>
-            </View>
-          ) : null}
+                </TouchableOpacity>
+              </View>
+            ) : null}
           <TouchableOpacity
             activeOpacity={0.6}
             onPress={this.Close}
@@ -258,28 +264,28 @@ class CalendarPage2 extends React.Component {
                           </TouchableOpacity>
                         </View>
                       ) : (
-                        <View style={{ flexDirection: "row" }}>
-                          <Text style={calendarStyles.date_details_no_files}>
-                            No Files Attached
+                          <View style={{ flexDirection: "row" }}>
+                            <Text style={calendarStyles.date_details_no_files}>
+                              No Files Attached
                           </Text>
-                        </View>
-                      )}
+                          </View>
+                        )}
                     </View>
                     <View style={calendarStyles.date_details_button_container}>
                       {/* if user is a client then button displays, else null and does not display */}
-                      {this.state.isClient === true ? (
+                      {this.state.user.userType === "CLIENT" ? (
                         item.status === "Pending" ? (
-                          <TouchableOpacity
-                            activeOpacity={0.6}
-                            disabled
-                            style={calendarStyles.date_details_button_pending}
-                          >
-                            <Text
-                              style={calendarStyles.date_details_button_label}
+                            <TouchableOpacity
+                              activeOpacity={0.6}
+                              disabled
+                              style={calendarStyles.date_details_button_pending}
                             >
-                              Pending
+                              <Text
+                                style={calendarStyles.date_details_button_label}
+                              >
+                                Pending
                             </Text>
-                          </TouchableOpacity>
+                            </TouchableOpacity>
                         ) : item.status === "Approved" ? (
                           <View>
                             <TouchableOpacity
@@ -293,17 +299,6 @@ class CalendarPage2 extends React.Component {
                                 style={calendarStyles.date_details_button_label}
                               >
                                 Approved
-                              </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                              activeOpacity={0.6}
-                              onPress={this.Review}
-                              style={calendarStyles.date_details_button_cancel}
-                            >
-                              <Text
-                                style={calendarStyles.date_details_button_label}
-                              >
-                                Cancel
                               </Text>
                             </TouchableOpacity>
                           </View>
@@ -320,18 +315,18 @@ class CalendarPage2 extends React.Component {
                             </Text>
                           </TouchableOpacity>
                         ) : (
-                          <TouchableOpacity
-                            activeOpacity={0.6}
-                            disabled
-                            style={calendarStyles.date_details_button_reviewed}
-                          >
-                            <Text
-                              style={calendarStyles.date_details_button_label}
-                            >
-                              Finished
+                                <TouchableOpacity
+                                  activeOpacity={0.6}
+                                  disabled
+                                  style={calendarStyles.date_details_button_reviewed}
+                                >
+                                  <Text
+                                    style={calendarStyles.date_details_button_label}
+                                  >
+                                    Finished
                             </Text>
-                          </TouchableOpacity>
-                        )
+                                </TouchableOpacity>
+                              )
                       ) : item.status === "Pending" ? (
                         <View>
                           <View
@@ -375,41 +370,55 @@ class CalendarPage2 extends React.Component {
                           </TouchableOpacity>
                         </View>
                       ) : (
-                        <View>
-                          <TouchableOpacity
-                            activeOpacity={0.6}
-                            disabled
-                            style={calendarStyles.date_details_button_confirmed}
-                          >
-                            <Text
-                              style={calendarStyles.date_details_button_label}
-                            >
-                              Confirmed
+                            <View>
+                              <TouchableOpacity
+                                activeOpacity={0.6}
+                                disabled
+                                style={calendarStyles.date_details_button_confirmed}
+                              >
+                                <Text
+                                  style={calendarStyles.date_details_button_label}
+                                >
+                                  Confirmed
                             </Text>
-                          </TouchableOpacity>
-                          <TouchableOpacity
-                            activeOpacity={0.6}
-                            style={calendarStyles.date_details_button_notify}
-                            onPress={this.Notify}
-                          >
-                            <Text
-                              style={calendarStyles.date_details_button_label}
-                            >
-                              Notify
+                              </TouchableOpacity>
+                              <TouchableOpacity
+                                activeOpacity={0.6}
+                                style={calendarStyles.date_details_button_notify}
+                                onPress={this.Notify}
+                              >
+                                <Text
+                                  style={calendarStyles.date_details_button_label}
+                                >
+                                  Notify
                             </Text>
-                          </TouchableOpacity>
-                        </View>
-                      )}
+                              </TouchableOpacity>
+                            </View>
+                          )}
+                      {
+                        item.status === "Pending" || item.status === "Approved" &&
+                        <TouchableOpacity
+                          activeOpacity={0.6}
+                          onPress={this.Review}
+                          style={calendarStyles.date_details_button_cancel}
+                        >
+                          <Text
+                            style={calendarStyles.date_details_button_label}
+                          >
+                            Cancel
+                              </Text>
+                        </TouchableOpacity>
+                      }
                     </View>
                   </View>
                 );
               }) : (
-                <View style={calendarStyles.no_appointments_scaffold}>
-                  <View style={calendarStyles.date_details_button_container}>
-                    <Text style={calendarStyles.no_appointments_text}>You have no appointments on this date</Text>
+                  <View style={calendarStyles.no_appointments_scaffold}>
+                    <View style={calendarStyles.date_details_button_container}>
+                      <Text style={calendarStyles.no_appointments_text}>You have no appointments on this date</Text>
+                    </View>
                   </View>
-                </View>
-              )}
+                )}
             </ScrollView>
           </View>
         </View>

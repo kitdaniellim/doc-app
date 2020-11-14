@@ -193,7 +193,7 @@ class BookPage extends React.Component {
         [
           {
             text: 'OK',
-            style: 'cancel'
+            onPress: () => this.props.navigation.navigate("Calendar1") 
           }
         ],
         { cancelable: true }
