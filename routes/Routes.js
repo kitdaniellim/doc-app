@@ -459,8 +459,8 @@ const appScreens = {
                             value => {
                                 if (value === 1) {
                                     navigation.navigate('Login')
-                                }else{
-                                    navigation.navigate('Home', { action: -1 } )
+                                } else {
+                                    navigation.navigate('Home', { action: -1 })
                                 }
                             }
                         }>

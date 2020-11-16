@@ -237,6 +237,8 @@ class CalendarPage2 extends React.Component {
                     <View style={calendarStyles.date_details_text_container}>
                       <View>
                         <Text style={calendarStyles.date_details_text}>
+                          Appointment with {" "}
+                          {this.state.user.userType == "CLIENT" ? item.consultant_name : item.client_name} {"\n"}
                           {item.location} {"\n"}
                           {moment(item.time_start, "HH:mm").format(
                             "h:mm A"

@@ -25,7 +25,7 @@ class CalendarPage extends React.Component {
       } else {
         let upcoming_dates = [],
           finished_dates = [];
-        await this.props.getUserAppointments(user.uid);
+        await this.props.getUserAppointments(user.uid, user.userType);
         setTimeout(async () => {
           if (!this.props.loading && this.props.appointments.length > 0) {
             console.log(this.props.appointments.length);
@@ -78,6 +78,7 @@ class CalendarPage extends React.Component {
       const appointments = this.props.appointments.filter(
         (appointment) => appointment.date == date
       );
+      await AsyncStorage.removeItem("appointments");
       await AsyncStorage.setItem("appointments", JSON.stringify(appointments));
       this.props.navigation.navigate("Calendar2", {
         date,
@@ -173,7 +174,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getUserAppointments: (client_id) => dispatch(getUserAppointments(client_id)),
+  getUserAppointments: (id, type) => dispatch(getUserAppointments(id, type)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CalendarPage);

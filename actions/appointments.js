@@ -26,12 +26,13 @@ export const getFiles = (appointment_id) => {
   };
 };
 
-export const getUserAppointments = (client_id) => {
+export const getUserAppointments = (id, type) => {
   return async (dispatch) => {
     try {
       await dispatch(loadBegin());
-      db.collection("appointments")
-        .where("client_id", "==", client_id)
+      if (type == "CLIENT") {
+        db.collection("appointments")
+        .where("client_id", "==", id)
         .onSnapshot(async (querySnapShot) => {
           let results = [];
           querySnapShot.forEach((doc) => {
@@ -39,6 +40,19 @@ export const getUserAppointments = (client_id) => {
           });
           await dispatch(getAppointmentsSuccess(results));
         });
+      } else if (type == "CONSULTANT") {
+        db.collection("appointments")
+        .where("consultant_id", "==", id)
+        .onSnapshot(async (querySnapShot) => {
+          let results = [];
+          querySnapShot.forEach((doc) => {
+            results.push(doc.data());
+          });
+          await dispatch(getAppointmentsSuccess(results));
+        });
+      } else {
+        alert("Unknown user type");
+      }
     } catch (error) {
       await dispatch(getAppointmentsFailure(error));
     }
@@ -142,4 +156,9 @@ export const bookAppointmentSuccess = (result) => ({
 export const bookAppointmentFailure = (error) => ({
   type: "BOOK_APPOINTMENT_FAILURE",
   payload: { error },
+});
+
+//RESET APPOINTMENTS ON LOGOUT
+export const resetAppointments = () => ({
+  type: "RESET_APPOINTMENTS"
 });

@@ -51,6 +51,10 @@ export default (state = reducerDefaultState, action) => {
                 loading: false,
                 error: action.payload.error
             };
+        case 'RESET_APPOINTMENTS': 
+            return {
+                state: reducerDefaultState
+            }
         default:
             return state;
     }
