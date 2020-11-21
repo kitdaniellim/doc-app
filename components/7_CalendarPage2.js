@@ -22,13 +22,16 @@ class CalendarPage2 extends React.Component {
       isClient: true,
       isNotifyModalVisible: false,
       isConfirmModalVisible: false,
+      isDeclineModalVisible: false,
       isFilesModalVisible: false,
+      isCancelAppointmentModalVisible: false,
       text: "",
       appointments: [],
       files: [],
       user: {}
     };
   }
+
   async componentDidMount() {
     try {
       const appointments = JSON.parse(
@@ -39,6 +42,11 @@ class CalendarPage2 extends React.Component {
       );
       await this.setState(() => ({ user }));
       await this.setState(() => ({ appointments }));
+
+      // console.log("START===================================================================")
+      // console.log(this.state.user)
+      // console.log("===================================================================")
+      // console.log(this.state.appointments)
     } catch (e) {
       console.log(`Error! Details: ${e}`);
     }
@@ -49,14 +57,26 @@ class CalendarPage2 extends React.Component {
   ConfirmAll = () => {
     this.setState(() => ({ isConfirmModalVisible: true }));
   };
-  Cancel = () => {
+  CancelNotify = () => {
     this.setState(() => ({ isNotifyModalVisible: false }));
+  };
+  CancelAppointment_2 = () => {
+    this.setState(() => ({ isCancelAppointmentModalVisible: false }));
+  };
+  CancelAppointment = () => {
+    this.setState(() => ({ isCancelAppointmentModalVisible: true }));
   };
   Notify_2 = () => {
     this.setState(() => ({ isNotifyModalVisible: false }));
   };
   Notify = () => {
     this.setState(() => ({ isNotifyModalVisible: true }));
+  };
+  Decline_2 = () => {
+    this.setState(() => ({ isDeclineModalVisible: false }));
+  };
+  Decline = () => {
+    this.setState(() => ({ isDeclineModalVisible: true }));
   };
   Close = () => {
     this.props.navigation.navigate('Calendar1');
@@ -92,6 +112,18 @@ class CalendarPage2 extends React.Component {
   onCloseFilesModal = async () => {
     this.setState(() => ({ isFilesModalVisible: false }));
   };
+
+  mayCancel = (date) => { //Checks if current date is equal to appointment date
+    let currentDate = moment().format("Y-M-D");
+    // console.log(date);
+    // console.log(currentDate)
+    let bool = true;
+    if (currentDate >= date) {
+      bool = false;
+    }
+    return bool;
+  };
+
   render() {
     return (
       <View style={calendarStyles.container}>
@@ -158,7 +190,7 @@ class CalendarPage2 extends React.Component {
             <View style={calendarStyles.modal_container_bottom}>
               <TouchableOpacity
                 activeOpacity={0.6}
-                onPress={this.Cancel}
+                onPress={this.CancelNotify}
                 style={calendarStyles.modal_button_container_cancel}
               >
                 <Text style={calendarStyles.modal_button_label}>Cancel</Text>
@@ -175,6 +207,74 @@ class CalendarPage2 extends React.Component {
             </View>
           </View>
         </Modal>
+        <Modal
+          isVisible={this.state.isDeclineModalVisible}
+          animationIn='bounceInDown'
+          animationOut='bounceOutUp'
+          animationInTiming={1100}
+          animationOutTiming={900}
+        >
+          <View style={globalStyles.modal_container}>
+            <View style={globalStyles.modal_container_top}>
+              <Icon style={globalStyles.modal_icon} name="times-circle-o" size={29} />
+            </View>
+            <View style={globalStyles.modal_container_bottom}>
+              <Text style={globalStyles.modal_notif_bold}>Woah there!</Text>
+              <Text style={globalStyles.modal_notif}>Are you sure you want to decline {'\n'} this client?</Text>
+              <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                <TouchableOpacity
+                  activeOpacity={0.6}
+                  onPress={this.Decline_2}
+                  style={globalStyles.modal_button_container_fade}
+                >
+                  <Text style={globalStyles.modal_button_label}>No</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.6}
+                  onPress={this.Decline_2}
+                  style={globalStyles.modal_button_container}
+                >
+                  <Text style={globalStyles.modal_button_label}>Yes</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
+        <Modal
+          isVisible={this.state.isCancelAppointmentModalVisible}
+          animationIn='bounceInDown'
+          animationOut='bounceOutUp'
+          animationInTiming={1100}
+          animationOutTiming={900}
+        >
+          <View style={globalStyles.modal_container}>
+            <View style={globalStyles.modal_container_top}>
+              <Icon style={globalStyles.modal_icon} name="times-circle-o" size={29} />
+            </View>
+            <View style={globalStyles.modal_container_bottom}>
+              <Text style={globalStyles.modal_notif_bold}>Woah there!</Text>
+              <Text style={globalStyles.modal_notif}>Are you sure you want to cancel your {'\n'} appointment with this client?</Text>
+              <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                <TouchableOpacity
+                  activeOpacity={0.6}
+                  onPress={this.CancelAppointment_2}
+                  style={globalStyles.modal_button_container_fade}
+                >
+                  <Text style={globalStyles.modal_button_label}>No</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.6}
+                  onPress={this.CancelAppointment_2}
+                  style={globalStyles.modal_button_container}
+                >
+                  <Text style={globalStyles.modal_button_label}>Yes</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
+
         <View style={calendarStyles.header_container}>
           <View style={calendarStyles.header_text_container}>
             <Text style={calendarStyles.header_text_bold}>APPOINTMENT</Text>
@@ -276,7 +376,8 @@ class CalendarPage2 extends React.Component {
                     <View style={calendarStyles.date_details_button_container}>
                       {/* if user is a client then button displays, else null and does not display */}
                       {this.state.user.userType === "CLIENT" ? (
-                        item.status === "Pending" ? (
+                        item.status === "Pending" ? ( //Appointment is Not Approved by Consultant and awaiting appointment date
+                          <View>
                             <TouchableOpacity
                               activeOpacity={0.6}
                               disabled
@@ -288,7 +389,34 @@ class CalendarPage2 extends React.Component {
                                 Pending
                             </Text>
                             </TouchableOpacity>
-                        ) : item.status === "Approved" ? (
+                            {this.mayCancel(item.date) ?
+                              (<TouchableOpacity
+                                activeOpacity={0.6}
+                                onPress={this.Review}
+                                style={calendarStyles.date_details_button_cancel}
+                              >
+                                <Text
+                                  style={calendarStyles.date_details_button_label}
+                                >
+                                  Cancel
+                                </Text>
+                              </TouchableOpacity>)
+                              :
+                              (<TouchableOpacity
+                                disabled
+                                activeOpacity={0.6}
+                                onPress={this.Review}
+                                style={calendarStyles.date_details_button_cancel_fade}
+                              >
+                                <Text
+                                  style={calendarStyles.date_details_button_label}
+                                >
+                                  Cancel
+                                </Text>
+                              </TouchableOpacity>)
+                            }
+                          </View>
+                        ) : item.status === "Approved" ? ( //Appointment is Approved by Consultant but awaiting appointment date
                           <View>
                             <TouchableOpacity
                               activeOpacity={0.6}
@@ -303,8 +431,34 @@ class CalendarPage2 extends React.Component {
                                 Approved
                               </Text>
                             </TouchableOpacity>
+                            {this.mayCancel(item.date) ? //Cancellation button will be disabled if current date is on or past appointment date
+                              (<TouchableOpacity
+                                activeOpacity={0.6}
+                                onPress={this.Review}
+                                style={calendarStyles.date_details_button_cancel}
+                              >
+                                <Text
+                                  style={calendarStyles.date_details_button_label}
+                                >
+                                  Cancel
+                                </Text>
+                              </TouchableOpacity>)
+                              :
+                              (<TouchableOpacity
+                                disabled
+                                activeOpacity={0.6}
+                                onPress={this.Review}
+                                style={calendarStyles.date_details_button_cancel_fade}
+                              >
+                                <Text
+                                  style={calendarStyles.date_details_button_label}
+                                >
+                                  Cancel
+                                </Text>
+                              </TouchableOpacity>)
+                            }
                           </View>
-                        ) : item.status === "Done" ? (
+                        ) : item.status === "Done" ? ( //Appointment is Done but awaiting Review
                           <TouchableOpacity
                             activeOpacity={0.6}
                             onPress={this.Review}
@@ -316,7 +470,7 @@ class CalendarPage2 extends React.Component {
                               Review
                             </Text>
                           </TouchableOpacity>
-                        ) : (
+                        ) : ( //Appointment is Done and Reviewed
                                 <TouchableOpacity
                                   activeOpacity={0.6}
                                   disabled
@@ -326,10 +480,11 @@ class CalendarPage2 extends React.Component {
                                     style={calendarStyles.date_details_button_label}
                                   >
                                     Finished
-                            </Text>
+                                  </Text>
                                 </TouchableOpacity>
                               )
-                      ) : item.status === "Pending" ? (
+                        //CONSULTANT
+                      ) : item.status === "Pending" ? ( //Appointment is pending approval
                         <View>
                           <View
                             style={{
@@ -351,6 +506,7 @@ class CalendarPage2 extends React.Component {
                             <TouchableOpacity
                               activeOpacity={0.6}
                               style={calendarStyles.date_details_button_decline}
+                              onPress={this.Decline}
                             >
                               <Icon
                                 style={calendarStyles.date_details_button_icon}
@@ -371,7 +527,7 @@ class CalendarPage2 extends React.Component {
                             </Text>
                           </TouchableOpacity>
                         </View>
-                      ) : (
+                      ) : ( //Appointment is approved
                             <View>
                               <TouchableOpacity
                                 activeOpacity={0.6}
@@ -393,31 +549,43 @@ class CalendarPage2 extends React.Component {
                                   style={calendarStyles.date_details_button_label}
                                 >
                                   Notify
-                            </Text>
+                                </Text>
                               </TouchableOpacity>
+                              {this.mayCancel(item.date) ? //Cancellation button will be disabled if current date is on or past appointment date
+                                (<TouchableOpacity
+                                  activeOpacity={0.6}
+                                  onPress={this.CancelAppointment}
+                                  style={calendarStyles.date_details_button_cancel}
+                                >
+                                  <Text
+                                    style={calendarStyles.date_details_button_label}
+                                  >
+                                    Cancel
+                                </Text>
+                                </TouchableOpacity>)
+                                :
+                                (<TouchableOpacity
+                                  disabled
+                                  activeOpacity={0.6}
+                                  onPress={this.CancelAppointment}
+                                  style={calendarStyles.date_details_button_cancel_fade}
+                                >
+                                  <Text
+                                    style={calendarStyles.date_details_button_label}
+                                  >
+                                    Cancel
+                                </Text>
+                                </TouchableOpacity>)
+                              }
                             </View>
                           )}
-                      {
-                        item.status === "Pending" || item.status === "Approved" &&
-                        <TouchableOpacity
-                          activeOpacity={0.6}
-                          onPress={this.Review}
-                          style={calendarStyles.date_details_button_cancel}
-                        >
-                          <Text
-                            style={calendarStyles.date_details_button_label}
-                          >
-                            Cancel
-                              </Text>
-                        </TouchableOpacity>
-                      }
                     </View>
                   </View>
                 );
               }) : (
                   <View style={calendarStyles.no_appointments_scaffold}>
                     <View style={calendarStyles.date_details_button_container}>
-                      <Text style={calendarStyles.no_appointments_text}>You have no appointments on this date</Text>
+                      <Text style={calendarStyles.no_appointments_text}>You have no appointments on this date.</Text>
                     </View>
                   </View>
                 )}
