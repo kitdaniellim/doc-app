@@ -16,7 +16,7 @@ const Landing = ({ navigation }) => {
             } else {
                 navigation.navigate('Home')
             }
-        }, 3000)
+        }, 2500)
     })
 
     return (

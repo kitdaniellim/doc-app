@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, TextInput, View, KeyboardAvoidingView, TouchableOpacity, ScrollView } from 'react-native';
+import { Text, TextInput, View, Keyboard, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import StarRating from 'react-native-star-rating';
 import { calendarStyles, globalStyles } from '../styles/styles';

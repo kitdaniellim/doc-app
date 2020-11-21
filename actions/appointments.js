@@ -2,7 +2,64 @@ import { db, storage } from "../config/Firebase";
 import uuid from "react-native-uuid";
 import _ from "lodash";
 
-export const getAppointments = (client_id, consultant_id) => {
+export const getFiles = (appointment_id) => {
+  return async (dispatch) => {
+    dispatch(loadBegin());
+    console.log(`Fetching files from ${appointment_id} folder...`);
+    let ref = storage.ref().child(`appointments/${appointment_id}`);
+    await ref
+      .listAll()
+      .then((res) => {
+        let results = [];
+        res.items.forEach((itemRef) => {
+          results.push({
+            name: itemRef.name,
+            itemRef
+          });
+        });
+        dispatch(getFilesSuccess(results));
+      })
+      .catch((error) => {
+        console.log(error);
+        dispatch(getFilesFailure(error));
+      });
+  };
+};
+
+export const getUserAppointments = (id, type) => {
+  return async (dispatch) => {
+    try {
+      await dispatch(loadBegin());
+      if (type == "CLIENT") {
+        db.collection("appointments")
+        .where("client_id", "==", id)
+        .onSnapshot(async (querySnapShot) => {
+          let results = [];
+          querySnapShot.forEach((doc) => {
+            results.push(doc.data());
+          });
+          await dispatch(getAppointmentsSuccess(results));
+        });
+      } else if (type == "CONSULTANT") {
+        db.collection("appointments")
+        .where("consultant_id", "==", id)
+        .onSnapshot(async (querySnapShot) => {
+          let results = [];
+          querySnapShot.forEach((doc) => {
+            results.push(doc.data());
+          });
+          await dispatch(getAppointmentsSuccess(results));
+        });
+      } else {
+        alert("Unknown user type");
+      }
+    } catch (error) {
+      await dispatch(getAppointmentsFailure(error));
+    }
+  };
+};
+
+export const getAppointments = (client_id, consultant_id = null) => {
   return async (dispatch) => {
     try {
       dispatch(loadBegin());
@@ -68,6 +125,17 @@ export const loadBegin = () => ({
   type: "LOAD_BEGIN",
 });
 
+//GET FILES STATUS
+export const getFilesSuccess = (results) => ({
+  type: "GET_FILES_SUCCESS",
+  payload: { results },
+});
+
+export const getFilesFailure = (error) => ({
+  type: "GET_FILES_FAILURE",
+  payload: { error },
+});
+
 //GET APPOINTMENT STATUS
 export const getAppointmentsSuccess = (results) => ({
   type: "GET_APPOINTMENTS_SUCCESS",
@@ -88,4 +156,9 @@ export const bookAppointmentSuccess = (result) => ({
 export const bookAppointmentFailure = (error) => ({
   type: "BOOK_APPOINTMENT_FAILURE",
   payload: { error },
+});
+
+//RESET APPOINTMENTS ON LOGOUT
+export const resetAppointments = () => ({
+  type: "RESET_APPOINTMENTS"
 });

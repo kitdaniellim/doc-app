@@ -165,7 +165,9 @@ class BookPage extends React.Component {
       time_end: this.state.time_end,
       location: this.state.location,
       client_id: this.state.user.uid,
+      client_name: this.state.user.fullName,
       consultant_id: this.state.consultant_id,
+      consultant_name: this.props.singleConsultant.fullName,
       symptoms: this.state.symptoms,
       files,
       status: "Pending",
@@ -193,7 +195,7 @@ class BookPage extends React.Component {
         [
           {
             text: 'OK',
-            style: 'cancel'
+            onPress: () => this.props.navigation.navigate("Calendar1") 
           }
         ],
         { cancelable: true }

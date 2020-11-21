@@ -6,7 +6,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Modal from 'react-native-modal';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { updateEmail, updatePassword, login, getUser } from '../actions/users';
+import { updateEmail, updatePassword, login, logout, getUser } from '../actions/users';
+import { resetAppointments } from '../actions/appointments';
 import Firebase, { db } from '../config/Firebase';
 import AsyncStorage from "@react-native-community/async-storage";
 class Login extends React.Component {
@@ -15,31 +16,23 @@ class Login extends React.Component {
     super(props);
     this.state = {
       isModalVisible: false,
-      toggleModal: false
+      toggleModal: false,
+      email: '',
+      password: ''
     };
     this.Home = this.Home.bind(this);
   }
 
   async componentDidMount() {
-    // Firebase.auth().onAuthStateChanged(user => {
-    //   if (user) {
-    //     this.props.getUser(user.uid);
-    //     if (this.props.user != null) {
-    //       this.props.navigation.navigate('Home');
-    //     } else {
-    //       this.props.navigation.navigate('Login');
-    //     }
-    //   }
-    // })
-
+    this.props.logout();
+    this.props.resetAppointments();
     try {
       await AsyncStorage.removeItem('user');
+      await AsyncStorage.removeItem('appointments');
     }
     catch (exception) {
       alert('Error in removing session');
     }
-
-
   }
   Home() {
     this.props.navigation.navigate('Home');
@@ -59,18 +52,23 @@ class Login extends React.Component {
     navigation.navigate('ForgotPassword');
   }
   handleLogin = async () => {
-    if (this.props.email === '' || this.props.password === '') {
+    if (this.state.email === '' || this.state.password === '') {
       this.setstate({
         toggleModal: true
       })
     } else {
-      console.log(`logging in...`)
-      await this.props.login();
+      await AsyncStorage.removeItem('user');
+      console.log(`logging in...`);
+      await this.props.login(this.state.email, this.state.password);
+
       if (this.props.user.email) {
         console.log(`login successful`)
-        await AsyncStorage.setItem('user', JSON.stringify(this.props.user));
+        AsyncStorage.setItem('user', JSON.stringify(this.props.user));
         this.props.navigation.navigate("Home");
+      } else {
+        alert("Error in logging in!");
       }
+
     }
   }
 
@@ -140,8 +138,8 @@ class Login extends React.Component {
                 placeholder="Username"
                 placeholderTextColor="#8B8787"
                 style={loginStyles.forms_textinput}
-                value={this.props.email ? this.props.email : ""}
-                onChangeText={email => this.props.updateEmail(email)}
+                value={this.state.email ? this.state.email : ""}
+                onChangeText={email => this.setState(() => ({ email }))}
               />
             </View>
             <View style={loginStyles.forms_textinput_container}>
@@ -151,8 +149,8 @@ class Login extends React.Component {
                 placeholder="Password"
                 placeholderTextColor="#8B8787"
                 style={loginStyles.forms_textinput}
-                value={this.props.password ? this.props.password : ""}
-                onChangeText={password => this.props.updatePassword(password)}
+                value={this.state.password ? this.state.password : ""}
+                onChangeText={password => this.setState(() => ({ password }))}
               />
             </View>
             <View style={loginStyles.forms_button_container}>
@@ -193,7 +191,7 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ updateEmail, updatePassword, login, getUser }, dispatch)
+  return bindActionCreators({ updateEmail, updatePassword, login, getUser, logout, resetAppointments }, dispatch)
 }
 
 const mapStateToProps = state => {

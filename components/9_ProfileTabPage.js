@@ -196,7 +196,7 @@ class ProfileTab extends React.Component {
                 onPress={() => this.Edit(consultant.uid)}
               >
                 <Text style={profileStyles.edit_button_label}>Edit Profile</Text>
-              </TouchableOpacity> : <TouchableOpacity
+              </TouchableOpacity> : this.state.user.userType === "CLIENT" && <TouchableOpacity
                 activeOpacity={0.6}
                 style={profileStyles.edit_button}
                 onPress={() => {
