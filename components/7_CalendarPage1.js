@@ -9,12 +9,12 @@ const CalendarPage = ({ navigation }) => {
   //Highlighted dates 
   const markedDates={
     //Finished Appointments
-    '2020-08-10': {selected: true, selectedColor: '#56EC65'},
-    '2020-08-11': {selected: true, selectedColor: '#56EC65'},
+    '2020-11-20': {selected: true, selectedColor: '#56EC65'},
+    '2020-11-24': {selected: true, selectedColor: '#56EC65'},
 
     //Upcoming Appointments
-    '2020-08-12': {selected: true, selectedColor: '#FCD034'},
-    '2020-08-13': {selected: true, selectedColor: '#FCD034'},
+    '2020-12-3': {selected: true, selectedColor: '#FCD034'},
+    '2020-11-30': {selected: true, selectedColor: '#FCD034'},
   }
 
   const Appointment = () => {
