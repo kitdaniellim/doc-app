@@ -11,6 +11,7 @@ const Calendar = {
   header_container: {
     flexDirection: 'row',
     height: 40,
+    backgroundColor: 'white',
     alignSelf: 'stretch',
     justifyContent: 'flex-start',
     borderBottomColor: '#8B8787',
@@ -335,10 +336,9 @@ const Calendar = {
 
   review_container: {
     flex: 2,
-    marginTop: 20,
+    marginTop: 40,
     marginHorizontal: 15,
     backgroundColor: '#fff',
-    borderRadius: 15,
     padding: 8,
   },
 
