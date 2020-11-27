@@ -1,14 +1,7 @@
 import React, { Component } from 'react';
-import { Alert, Text, AppRegistry, Button, TextInput, View, StyleSheet } from 'react-native';
-import Temp from './components/1_A_Temp.js'
-
-import { globalStyles } from './styles/styles';
-
-import { Constants } from 'expo';
+import { Alert, StyleSheet } from 'react-native';
 import Routes from './routes/Routes.js';
 import firebase from "firebase"
-import Icon from 'react-native-vector-icons/FontAwesome';
-// import MenuButton from 'react-native-menu-button'
 import { MenuProvider } from 'react-native-popup-menu';
 require("firebase/firestore");
 
@@ -38,17 +31,14 @@ const db = firebase.firestore();
 export default class App extends Component {
   constructor(props) {
     super(props);
-
     this.state = {  //DONT REMOVE -Eldrin
       username: '',
       password: '',
     };
-
   }
 
   onLogin() {
     const { username, password } = this.state;
-
     Alert.alert('Credentials', `${username} + ${password}`);
     auth.createUserWithEmailAndPassword(username, password);
   }
@@ -61,20 +51,3 @@ export default class App extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#ecf0f1',
-  },
-  input: {
-    width: 200,
-    height: 44,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: 'black',
-    marginBottom: 10,
-  },
-});
