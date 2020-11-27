@@ -9,10 +9,10 @@ const Book1_Date = ({ navigation }) => {
   //Highlighted dates 
   const markedDates={
     //Available Dates
-    '2020-08-10': {selected: true, selectedColor: '#56EC65'},
-    '2020-08-11': {selected: true, selectedColor: '#56EC65'},
-    '2020-08-12': {selected: true, selectedColor: '#56EC65'},
-    '2020-08-13': {selected: true, selectedColor: '#56EC65'},
+    '2020-11-10': {selected: true, selectedColor: '#56EC65'},
+    '2020-11-11': {selected: true, selectedColor: '#56EC65'},
+    '2020-11-12': {selected: true, selectedColor: '#56EC65'},
+    '2020-11-13': {selected: true, selectedColor: '#56EC65'},
   }
 
   const Appointment = () => {

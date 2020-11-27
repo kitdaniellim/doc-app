@@ -55,7 +55,7 @@ const Paypal = ({ navigation }) => {
         </Modal>
         <View style={paypalStyles.scaffold}>
           <Text style={paypalStyles.scaffold_text}>
-            Hello, your account is currently limited. Before proceeding, you must etcetc.  {"\n"}
+            Your account is currently limited. {"\n\n"} Free trial ongoing, free skipping is currently made available. {"\n"}
           </Text>
           <TouchableOpacity
             activeOpacity={0.6}
