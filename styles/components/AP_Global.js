@@ -13,7 +13,7 @@ const Global = {
     fontSize: 30,
     fontWeight: '100',
   },
-  
+
   gradient: {
     flex: 1,
     alignSelf: 'stretch',
@@ -97,6 +97,19 @@ const Global = {
     textAlign: 'center',
   },
 
+  modal_button_container_fade: {
+    height: 30,
+    width: 110,
+    backgroundColor: '#FFAD3A90',
+    borderRadius: 15,
+    marginTop: 7,
+    marginBottom: 20,
+    marginHorizontal: 2,
+    padding: 5,
+    justifyContent: 'center',
+    alignSelf: 'center'
+  },
+
   modal_button_container: {
     height: 30,
     width: 110,
@@ -104,6 +117,7 @@ const Global = {
     borderRadius: 15,
     marginTop: 7,
     marginBottom: 20,
+    marginHorizontal: 2,
     padding: 5,
     justifyContent: 'center',
     alignSelf: 'center'
@@ -128,6 +142,17 @@ const Global = {
     letterSpacing: 1, 
     textAlign: 'center',
   },
+
+  loading_container: {
+    flex: 1,
+    justifyContent: "center"
+  },
+
+  loading_horizontal: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    padding: 10
+  }
 
 }
 

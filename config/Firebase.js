@@ -5,15 +5,17 @@
 import firebase from "firebase"
 require("firebase/firestore");
 
-import { API_KEY, 
-         AUTH_DOMAIN, 
-         DATABASE_URL,
-         PROJECT_ID, 
-         STORAGE_BUCKET, 
-         MESSAGING_SENDER_ID, 
-         APP_ID, 
-         MEASUREMENT_ID } 
-from 'react-native-dotenv';
+import {
+  API_KEY,
+  AUTH_DOMAIN,
+  DATABASE_URL,
+  PROJECT_ID,
+  STORAGE_BUCKET,
+  MESSAGING_SENDER_ID,
+  APP_ID,
+  MEASUREMENT_ID
+}
+  from 'react-native-dotenv';
 import 'firebase/firestore';
 import { Alert } from "react-native";
 
@@ -30,18 +32,19 @@ const firebaseConfig = {
   measurementId: MEASUREMENT_ID
 };
 
+let Firebase = firebase.initializeApp(firebaseConfig);
 
-    let Firebase = firebase.initializeApp(firebaseConfig);
-    
-    Firebase.auth().onAuthStateChanged((user) => {
-        if (user) {  
-          console.log("Navigating Home");
-        }else{
-          console.log("Error!");
-        }
-    })
-  
-// const Firebase = ({navigation}) => {}
+Firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    console.log("Navigating Home");
+  } else {
+    console.log("Error!");
+  }
+})
+
 export const db = firebase.firestore();
+export const storage = firebase.storage();
+
+// const Firebase = ({navigation}) => {}
 
 export default Firebase;

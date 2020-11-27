@@ -24,6 +24,7 @@ export const UPDATE_USER_SUB_SPECIALTY = 'UPDATE_USER_SUB_SPECIALTY';
 export const UPDATE_OFFICE_LOCATION = 'UPDATE_OFFICE_LOCATION';
 export const UPDATE_OFFICE_HOURS = 'UPDATE_OFFICE_HOURS';
 export const LOGIN = 'LOGIN';
+export const LOGOUT = 'LOGOUT';
 export const SIGNUP = 'SIGNUP';
 
 //USER PASSWORD RECOVERY OPERATION
@@ -154,22 +155,26 @@ export const updateOfficeHours = officeHours => {
 }
 
 /* DEV: EJA - Event for login*/
-export const login = () => {
-    return async (dispatch, getState) => {
+export const login = (email, password) => {
+    return async (dispatch) => {
         try {
             console.log("Attempting to login...")
-            const { email, password } = getState().users
             console.log(email);
-            console.log(password);
-            const response = await Firebase.auth().signInWithEmailAndPassword(email, password)
-            //console.log("response")
-            //console.log(response.user.uid);
-            dispatch(getUser(response.user.uid))
+            await Firebase.auth().signInWithEmailAndPassword(email, password).then(async (result) => {
+                await db
+                .collection('users')
+                .doc(result.user.uid)
+                .get()
+                .then((doc) => {
+                    dispatch({ type: LOGIN, payload: { user: doc.data() } })
+                });
+            });
+            
 
         } catch (e) {
             Alert.alert(
                 'Error!',
-                `Invalid email or password`,
+                `Incorrect email or password`,
                 [
                     {
                         text: 'Close',
@@ -181,21 +186,9 @@ export const login = () => {
         }
     }
 }
-export const getUser = uid => {
-    return async (dispatch, getState) => {
-        try {
-            const user = await db
-                .collection('users')
-                .doc(uid)
-                .get()
-
-            //console.log("sa get user ni")
-            //console.log(user.data());
-            //console.log(uid);
-            dispatch({ type: LOGIN, payload: { user: user.data() } })
-        } catch (e) {
-            alert(e)
-        }
+export const logout = () => {
+    return {
+        type: LOGOUT
     }
 }
 
