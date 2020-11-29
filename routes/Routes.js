@@ -48,7 +48,6 @@ import {
     MenuOption,
     MenuTrigger,
 } from 'react-native-popup-menu';
-import { navStyles } from '../styles/styles';
 
 const optionsStyles = {
     optionsContainer: {
@@ -370,7 +369,7 @@ const consultantTabNavigator = createMaterialBottomTabNavigator(
 )
 
 function getTabs() {
-    let isClient = true;
+    let isClient = false;
     return (isClient) ? clientTabNavigator : consultantTabNavigator
 }
 

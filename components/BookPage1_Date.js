@@ -1,8 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import {Calendar, CalendarList} from 'react-native-calendars';
-import { calendarStyles, globalStyles } from '../styles/styles';
+import {Calendar} from 'react-native-calendars';
+import { calendarStyles} from '../styles/styles';
 
 
 const Book1_Date = ({ navigation }) => {

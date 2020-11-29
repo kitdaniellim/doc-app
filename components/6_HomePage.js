@@ -1,6 +1,5 @@
 import React from 'react';
 import { Text, Image, View, FlatList, RefreshControl, TouchableOpacity, ScrollView } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import {BackgroundCarousel} from './custom/BackgroundCarousel'
 import { homeStyles } from '../styles/styles';
 

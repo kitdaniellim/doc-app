@@ -343,7 +343,7 @@ const SignupClient2 = ({ navigation }) => {
             style={signupStyles.forms_button}
             onPress={Submit}
           >
-            <Text style={signupStyles.forms_button_label}>SUBMIT</Text>
+            <Text style={signupStyles.forms_button_label}>Next</Text>
           </TouchableOpacity>
         </View>
       </LinearGradient>
