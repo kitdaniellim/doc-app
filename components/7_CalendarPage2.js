@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { calendarStyles, globalStyles } from "../styles/styles";
 import Modal from "react-native-modal";
-import { getFiles } from "../actions/appointments";
+import { getFiles, updateAppointmentStatus, updateAppointmentStatusSuccess } from "../actions/appointments";
 import AsyncStorage from "@react-native-community/async-storage";
 import FilesModal from "./7_FilesModal.js";
 import moment from "moment";
@@ -601,10 +601,12 @@ const mapStateToProps = (state) => ({
   loading: state.appointments.loading,
   files: state.appointments.files,
   error: state.appointments.error,
+  item: state.appointments.item
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getFiles: (appointment_id) => dispatch(getFiles(appointment_id)),
+  updateAppointmentStatus: (appointment_id, status, reason) => dispatch(updateAppointmentStatusSuccess(appointment_id, status, reason))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CalendarPage2);

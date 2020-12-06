@@ -32,24 +32,24 @@ export const getUserAppointments = (id, type) => {
       await dispatch(loadBegin());
       if (type == "CLIENT") {
         db.collection("appointments")
-        .where("client_id", "==", id)
-        .onSnapshot(async (querySnapShot) => {
-          let results = [];
-          querySnapShot.forEach((doc) => {
-            results.push(doc.data());
+          .where("client_id", "==", id)
+          .onSnapshot(async (querySnapShot) => {
+            let results = [];
+            querySnapShot.forEach((doc) => {
+              results.push(doc.data());
+            });
+            await dispatch(getAppointmentsSuccess(results));
           });
-          await dispatch(getAppointmentsSuccess(results));
-        });
       } else if (type == "CONSULTANT") {
         db.collection("appointments")
-        .where("consultant_id", "==", id)
-        .onSnapshot(async (querySnapShot) => {
-          let results = [];
-          querySnapShot.forEach((doc) => {
-            results.push(doc.data());
+          .where("consultant_id", "==", id)
+          .onSnapshot(async (querySnapShot) => {
+            let results = [];
+            querySnapShot.forEach((doc) => {
+              results.push(doc.data());
+            });
+            await dispatch(getAppointmentsSuccess(results));
           });
-          await dispatch(getAppointmentsSuccess(results));
-        });
       } else {
         alert("Unknown user type");
       }
@@ -120,6 +120,30 @@ export const bookAppointment = (data) => {
   };
 };
 
+export const updateAppointmentStatus = (id, status, reason = "") => {
+  return async (dispatch) => {
+    dispatch(loadBegin());
+    db.collection("appointments")
+      .doc(id)
+      .update({
+        status: status,
+      }).then(() => {
+        if (reason != "") {
+          db.collection("appointments")
+            .doc(id)
+            .update({
+              reason: reason,
+            });
+        }
+      }).then((result) => {
+        dispatch(updateAppointmentStatusSuccess(result));
+      }).catch((error) => {
+        dispatch(updateAppointmentStatusFailure(error));
+      });
+
+  }
+}
+
 //CALL BEFORE EVERY OPERATION
 export const loadBegin = () => ({
   type: "LOAD_BEGIN",
@@ -155,6 +179,17 @@ export const bookAppointmentSuccess = (result) => ({
 
 export const bookAppointmentFailure = (error) => ({
   type: "BOOK_APPOINTMENT_FAILURE",
+  payload: { error },
+});
+
+//UPDATE APPOINTMENT STATUS STATUS
+export const updateAppointmentStatusSuccess = (result) => ({
+  type: "UPDATE_APPOINTMENT_STATUS_SUCCESS",
+  payload: { result },
+});
+
+export const updateAppointmentStatusFailure = (error) => ({
+  type: "UPDATE_APPOINTMENT_STATUS_FAILURE",
   payload: { error },
 });
 
