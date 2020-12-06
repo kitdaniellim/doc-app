@@ -1,0 +1,136 @@
+import React, { useState } from 'react';
+import { Image, Text, KeyboardAvoidingView, TextInput, View, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { loginStyles, globalStyles } from '../styles/styles';
+import { LinearGradient } from 'expo-linear-gradient';
+import Modal from 'react-native-modal';
+
+const Login = ({ navigation }) => {
+  const [username, setUser] = useState('username');
+  const [password, setPass] = useState('password');
+  const [isModalVisible, toggleModal] = useState(false);
+
+  function Close() {
+    toggleModal(false)
+  }
+
+  const Home = () => {
+    if (username === '' || password === '') {
+      toggleModal(true)
+    } else {
+      navigation.navigate('Tutorial');
+    }
+  }
+
+  const ForgotPassword = () => {
+    navigation.navigate('ForgotPassword');
+  }
+
+  const Signup = () => {
+    navigation.navigate('Selection');
+  }
+
+  return (
+    <KeyboardAvoidingView
+      behavior={Platform.OS == "ios" ? "padding" : "height"}
+      style={loginStyles.container}
+    >
+      <LinearGradient
+        colors={['rgba(239,239,239,0.5)', 'transparent']}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 0, y: 1 }}
+        style={globalStyles.gradient}
+      >
+        <Modal
+          isVisible={isModalVisible}
+          animationIn='slideInDown'
+          animationOut='slideOutUp'
+          animationInTiming={1100}
+          animationOutTiming={900}
+        >
+          <View style={globalStyles.modal_container}>
+            <View style={globalStyles.modal_container_top}>
+              <Icon style={globalStyles.modal_icon} name="times-circle-o" size={29} />
+            </View>
+            <View style={globalStyles.modal_container_bottom}>
+              <Text style={globalStyles.modal_notif_bold}>Oops!</Text>
+              <Text style={globalStyles.modal_notif}>Incorrect password or username. Please try again.</Text>
+              <TouchableOpacity
+                activeOpacity={0.6}
+                onPress={Close}
+                style={globalStyles.modal_button_container}
+              >
+                <Text style={globalStyles.modal_button_label}>Close</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+        <View style={loginStyles.forms_container}>
+          <View style={loginStyles.forms_header_container}>
+            <Image
+              source={require("../assets/app_logo.png")}
+              style={{ height: 110, width: 110 }}
+            />
+            <Image
+              source={require("../assets/app_name_1.png")}
+              style={{ height: 50, width: 120, }}
+            />
+          </View>
+          <View style={loginStyles.forms_textinput_container}>
+            <Icon style={globalStyles.icon_global} name="user-circle" size={18} />
+            <TextInput
+              placeholder="Username"
+              placeholderTextColor="#8B8787"
+              style={loginStyles.forms_textinput}
+              onChangeText={text => setUser(text)}
+              value={username}
+            />
+          </View>
+          <View style={loginStyles.forms_textinput_container}>
+            <Icon style={globalStyles.icon_global} name="key" size={18} />
+            <TextInput
+              secureTextEntry={true}
+              placeholder="Password"
+              placeholderTextColor="#8B8787"
+              style={loginStyles.forms_textinput}
+              onChangeText={text => setPass(text)}
+              value={password}
+            />
+          </View>
+          <View style={loginStyles.forms_button_container}>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={Home}
+              style={loginStyles.forms_button}
+            >
+              <Text style={loginStyles.forms_button_label}>LOGIN</Text>
+            </TouchableOpacity>
+            <View style={{ flexDirection: 'row' }}>
+              <Text style={loginStyles.forms_text}>Forgot Password?{" "}</Text>
+              <TouchableOpacity
+                activeOpacity={0.6}
+                onPress={ForgotPassword}
+                style={{ justifyContent: 'center' }}
+              >
+                <Text style={loginStyles.forms_text_underline}>Tap Here!</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          <Text style={loginStyles.forms_text_bold}>Or{"\n"}</Text>
+          <View style={loginStyles.forms_button_container}>
+            <Text style={loginStyles.forms_text}>No account yet?</Text>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={Signup}
+              style={loginStyles.forms_button}
+            >
+              <Text style={loginStyles.forms_button_label}>SIGN UP</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </LinearGradient>
+    </KeyboardAvoidingView>
+  );
+}
+
+export default Login;

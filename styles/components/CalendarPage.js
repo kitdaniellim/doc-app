@@ -1,11 +1,14 @@
 const Calendar = {
 
   container: {
+    paddingVertical: 5,
     flex: 1,
     backgroundColor: '#F5F5F5',
     alignItems: 'center',
     justifyContent: 'center',
     margin: 0,
+    alignSelf: 'stretch',
+    width: '100%',
   },
 
   header_container: {
@@ -13,6 +16,7 @@ const Calendar = {
     height: 40,
     backgroundColor: 'white',
     alignSelf: 'stretch',
+    backgroundColor: 'white',
     justifyContent: 'flex-start',
     borderBottomColor: '#8B8787',
     borderBottomWidth: 1
@@ -54,6 +58,44 @@ const Calendar = {
     color: '#8B8787',
     justifyContent: 'center',
     textAlign: 'center'
+  },
+
+  step_buttons_container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignSelf: 'stretch',
+    paddingVertical: 5
+  },
+
+  step_buttons_container_reverse: {
+    flexDirection: 'row-reverse',
+    justifyContent: 'space-between',
+    alignSelf: 'stretch',
+    paddingVertical: 5
+  },
+
+  prev_step_button: {
+    height: 50,
+    width: 100,
+    borderRadius: 5,
+    backgroundColor: '#0275d8',
+    padding: 5,
+    justifyContent: 'center',
+    marginHorizontal: 9,
+    fontSize: 36,
+    fontWeight: 'bold',
+  },
+
+  next_step_button: {
+    height: 50,
+    width: 100,
+    borderRadius: 5,
+    padding: 5,
+    backgroundColor: '#0275d8',
+    justifyContent: 'center',
+    marginHorizontal: 9,
+    fontSize: 36,
+    fontWeight: 'bold',
   },
 
   scaffold: {
@@ -107,6 +149,12 @@ const Calendar = {
     backgroundColor: '#56EC65'
   },
 
+  calendar_legend_unavailable_hue: {
+    height: 14,
+    width: 14,
+    backgroundColor: '#d9534f'
+  },
+
   calendar_legend_upcoming_hue: {
     height: 14,
     width: 14,
@@ -115,7 +163,8 @@ const Calendar = {
 
   date_container: {
     flex: 1,
-    marginVertical: -10,
+    // marginVertical: 20,
+    // paddingVertical: -10,
     marginHorizontal: 15,
   },
 
@@ -150,7 +199,8 @@ const Calendar = {
     fontSize: 13,
     fontWeight: '500',
     letterSpacing: 1,
-    margin: 2,
+    // margin: 2,
+    padding: 2,
     justifyContent: 'center',
   },
 
@@ -169,8 +219,22 @@ const Calendar = {
     borderRadius: 5,
     backgroundColor: '#ECECEC',
     marginHorizontal: 16,
-    marginVertical: 8,
+    marginBottom: 15,
+
     padding: 5,
+  },
+
+  no_appointments_scaffold: {
+    flexDirection: 'column',
+    borderRadius: 5,
+    backgroundColor: '#ECECEC',
+    marginHorizontal: 5,
+    marginBottom: 15,
+    marginTop: 5,
+    padding: 5,
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   date_details_text_container: {
@@ -195,18 +259,35 @@ const Calendar = {
     color: 'black'
   },
 
+  no_appointments_text: {
+    textAlign: 'center',
+    alignSelf: 'center',
+    fontSize: 13,
+    color: 'black'
+  },
+
   date_details_button_download_container: {
     marginRight: 5,
     marginVertical: 4,
   },
 
   date_details_button_download_icon: {
-    
+
   },
 
   date_details_button_download_label: {
     color: '#12345690',
     textDecorationLine: 'underline'
+  },
+
+  date_details_button_download_label_right: {
+    color: '#12345690',
+    textDecorationLine: 'underline',
+    alignSelf: 'flex-end'
+  },
+
+  date_details_no_files: {
+    color: '#12345690'
   },
 
   date_details_button_container: {
@@ -238,9 +319,20 @@ const Calendar = {
     marginHorizontal: 9,
   },
 
+  date_details_button_review_active: {
+    height: 30,
+    backgroundColor: '#56EC65',
+    borderRadius: 15,
+    padding: 5,
+    marginTop: 5,
+    justifyContent: 'center',
+    alignSelf: 'stretch',
+    marginHorizontal: 9,
+  },
+
   date_details_button_cancel: {
     height: 30,
-    backgroundColor: '#de1a24',
+    backgroundColor: '#D9534F',
     borderRadius: 15,
     padding: 5,
     marginTop: 5,
@@ -259,11 +351,13 @@ const Calendar = {
     alignSelf: 'stretch',
     marginHorizontal: 9,
   },
-
+  
   date_details_button_review: {
     height: 30,
-    backgroundColor: '#56EC65',
+    backgroundColor: '#fff',
     borderRadius: 15,
+    borderWidth: 1,
+    borderColor: '#56EC65',
     padding: 5,
     justifyContent: 'center',
     alignSelf: 'stretch',
@@ -280,13 +374,28 @@ const Calendar = {
     marginHorizontal: 9,
   },
 
-  date_details_button_label: {
+  date_details_button_label_active: {
     color: '#fff',
     fontSize: 12,
     justifyContent: 'center',
     alignSelf: 'center'
   },
 
+  date_details_button_label: {
+    // color: '#56EC65',
+    color: '#FFFFFF',
+    fontSize: 12,
+    justifyContent: 'center',
+    alignSelf: 'center'
+  },
+
+  step_buttons_label: {
+    color: '#fff',
+    fontSize: 16,
+    justifyContent: 'center',
+    alignSelf: 'center',
+  },
+  
   date_details_button_choose: {
     height: 30,
     backgroundColor: '#56EC65',
@@ -306,10 +415,11 @@ const Calendar = {
   date_details_button_confirm: {
     height: 30,
     width: 30,
-    backgroundColor: '#56EC6580',
+    backgroundColor: '#56EC65',
     borderRadius: 15,
     padding: 5,
     marginBottom: 10,
+    // paddingRight: 2,
     justifyContent: 'center',
     alignSelf: 'stretch',
     marginHorizontal: 9,
@@ -352,14 +462,16 @@ const Calendar = {
     marginTop: 40,
     marginHorizontal: 15,
     backgroundColor: '#fff',
-    padding: 8,
+    borderRadius: 15,
+    paddingHorizontal: 8,
+    paddingBottom: 8
   },
 
   review_details_container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignSelf: 'stretch',
-    marginTop: 3,
+    marginTop: 15,
     marginBottom: 5,
     marginHorizontal: 10,
   },
@@ -395,7 +507,7 @@ const Calendar = {
     borderRadius: 20,
     height: '100%',
     textAlignVertical: 'top'
-    
+
   },
 
   modal_container: {
@@ -496,6 +608,14 @@ const Calendar = {
     textAlign: 'center',
   },
 
+  modal_list: {
+    padding: 5,
+  },
+
+  conf_label: {
+    fontWeight: 'bold'
+  },
+
   forms_container: {
     flex: 1,
     backgroundColor: '#fff',
@@ -528,12 +648,14 @@ const Calendar = {
 
   forms_button_upload: {
     height: 45,
-    backgroundColor: '#56EC65',
+    backgroundColor: '#19BAB9',
     borderRadius: 15,
     padding: 5,
     justifyContent: 'center',
     alignSelf: 'stretch',
     marginHorizontal: 12,
+    marginBottom: 10,
+    marginTop: 10,
   },
 
   forms_button_upload_label: {
@@ -545,11 +667,37 @@ const Calendar = {
     textAlign: 'center'
   },
 
+  files_list: {
+    marginBottom: 15,
+  },
+
+  files_list_item: {
+    marginBottom: 2,
+    backgroundColor: '#ECECEC',
+    padding: 5,
+    alignSelf: 'stretch',
+    marginHorizontal: 15,
+  },
+
+  remove_file_button: {
+    alignSelf: 'flex-end',
+    backgroundColor: '#d9534f',
+    color: 'white',
+    width: '10%',
+    borderRadius: 5,
+  },
+
+  remove_file_button_label: {
+    textAlign: 'center',
+    color: 'white',
+  },
+
   forms_disclaimer: {
     fontSize: 14,
     color: '#8B8787',
     lineHeight: 25,
     marginHorizontal: 10,
+    marginBottom: 10,
   },
 
   forms_options_header: {
@@ -600,6 +748,10 @@ const Calendar = {
     marginRight: 5,
   },
 
+  files_flatlist: {
+    marginTop: 5,
+  },
+
   conf_container: {
     flex: 1,
     marginVertical: 15,
@@ -620,6 +772,10 @@ const Calendar = {
   conf_data: {
     fontSize: 15,
     color: '#8B8787'
+  },
+
+  slot_list_container: {
+    marginBottom: 5,
   },
 }
 

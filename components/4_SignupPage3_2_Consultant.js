@@ -1,11 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Text, TextInput, Picker, Button, ScrollView, View, FlatList, TouchableOpacity, TouchableHighlight, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { signupStyles, globalStyles } from '../styles/styles';
 import { LinearGradient } from 'expo-linear-gradient';
-import RadioButtons_MultipleSelect from './custom/RadioButtons_MultipleSelect.js';
+import RadioButtons_MultipleSelect from './RadioButtons_MultipleSelect.js';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import {  updateOfficeHours } from '../actions/users';
 
-class Dynamic_Input extends Component {
+class Dynamic_Input extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -88,6 +91,8 @@ class Dynamic_Input extends Component {
                 defaultValue='4'
                 keyboardType='numeric'
                 style={signupStyles.forms_timeinput_textinput}
+                value = {this.props.officeHours}
+                onChangeText={officeHours => this.props.updateOfficeHours(officeHours)}
               />
               <Text style={signupStyles.forms_text_bold_alt}>{" "} : {" "}</Text>
               <TextInput
@@ -190,6 +195,7 @@ class Dynamic_Input extends Component {
   }
 
   render() {
+   
     return (
       <View>
         <View style={signupStyles.forms_dynamicinput_margin}>
@@ -226,29 +232,30 @@ class Dynamic_Input extends Component {
   }
 }
 
-const SignupConsultant3_2 = ({ navigation }) => {
-  const Cancel = () => {
-    navigation.navigate('SignupConsultant3_1');
-  }
-
-  const Confirm = () => {
-    navigation.navigate('SignupConsultant3_1');
-  }
-
-  return (
-    <View style={signupStyles.container}>
+class SignupConsultant3_2 extends React.Component {
+  render() {
+    const Cancel = () => {
+      navigation.navigate('SignupConsultant3_1');
+    }
+  
+    const Confirm = () => {
+      navigation.navigate('SignupConsultant3_1');
+    }
+    
+    return(
+      <View style={signupStyles.container}>
       <LinearGradient
-        colors={['rgba(239,239,239,0.5)', 'transparent']}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 0, y: 1 }}
+        colors={['rgba(243,243,243,0.4)', 'transparent']}
+        start={{ x: 0, y: 1 }}
+        end={{ x: 0, y: 0 }}
         style={globalStyles.gradient}
       >
-        <View style={signupStyles.forms_container_2}>
+        <View style={signupStyles.forms_container}>
           <View style={signupStyles.forms_label_container}>
             <Text style={signupStyles.forms_label}>CONSULTANT SIGN UP</Text>
           </View>
-          <View style={signupStyles.forms_label_small_container_2}>
-            <Text style={signupStyles.forms_label_small}>Office Hours:</Text>
+          <View style={signupStyles.forms_label_small_container}>
+            <Text style={signupStyles.forms_label_small}>Office Hours: -Location-</Text>
           </View>
           <Dynamic_Input />
           <TouchableOpacity
@@ -261,7 +268,22 @@ const SignupConsultant3_2 = ({ navigation }) => {
         </View>
       </LinearGradient>
     </View>
-  );
+    )
+  }
 }
 
-export default SignupConsultant3_2;
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ updateOfficeHours }, dispatch )
+}
+
+const mapStateToProps = state => {
+  return {
+    officeHours: state.users.officeHours
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Dynamic_Input, SignupConsultant3_2 )

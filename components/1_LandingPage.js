@@ -3,12 +3,20 @@ import { View } from 'react-native';
 import { loginStyles, globalStyles } from '../styles/styles';
 import { LinearGradient } from 'expo-linear-gradient';
 import ImageLoader from './custom/ImageLoader.js';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const Landing = ({ navigation }) => {
     useEffect(() => {
-        setTimeout(() => {
-            navigation.navigate('Login')
-        }, 3000)
+        setTimeout(async () => {
+            const user = await JSON.parse(
+                await AsyncStorage.getItem("user")
+            );
+            if (!user) {
+                navigation.navigate('Login');
+            } else {
+                navigation.navigate('Home')
+            }
+        }, 2500)
     })
 
     return (
@@ -19,7 +27,7 @@ const Landing = ({ navigation }) => {
                 end={{ x: 0, y: 1 }}
                 style={globalStyles.gradient}
             >
-                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                     <ImageLoader
                         source={require("../assets/app_logo.png")}
                         style={{ height: 110, width: 110 }}

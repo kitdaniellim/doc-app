@@ -27,3 +27,6 @@
 [0522/212432.116:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
 [0522/212432.616:ERROR:exception_snapshot_win.cc(98)] thread ID 15104 not found in process
 [0522/212432.616:ERROR:exception_snapshot_win.cc(98)] thread ID 11588 not found in process
+[1017/201753.095:ERROR:settings.cc(430)] Settings version is not 5
+[1017/202753.181:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\eldrinjake.DESKTOP-RFLV4E9\AppData\Local\Microsoft\Edge\User Data\Crashpad\attachments\58eb2a47-ef21-4002-a14c-4e1f631c6a50: The system cannot find the path specified. (0x3)
+[1017/202753.182:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)

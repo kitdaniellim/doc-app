@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
-import { Text, TextInput, View, Image, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import React, { Component, useState } from 'react';
+import { Text, TextInput, Image, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { signupStyles, globalStyles } from '../styles/styles';
 import { LinearGradient } from 'expo-linear-gradient';
-import Modal from 'react-native-modal';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { updateEmail, updatePassword } from '../actions/users';
 
-
+/*DEV: Dan - Please update code using redux
 const SignupClient1 = ({ navigation }) => {
-  const [username, setUser] = useState('username');
-  const [email, setEmail] = useState('troygo@gmail.com');
-  const [password, setPass] = useState('password');
-  const [cpassword, setCpass] = useState('password');
+  const [username, setUser] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPass] = useState('');
+  const [cpassword, setCpass] = useState('');
   const [message, setMessage] = useState('Seems like you missed one. Please fill in all the required fields before proceeding.');
   const [isModalVisible, toggleModal] = useState(false);
 
@@ -18,20 +20,46 @@ const SignupClient1 = ({ navigation }) => {
     toggleModal(false)
   }
 
-  function validate() {
-    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    return (reg.test(email) === true) ? true : false
+
+  
+ */
+// const Next = (navigation) => {
+
+//     // navigation.navigate('SignupClient2', {
+//     //   email: this.state.email,
+//     //   password: this.state.password
+//     // });
+// }
+
+
+class SignupClient1 extends React.Component {
+
+  // constructor(props){
+  //   // this.setState = ({
+  //   //   isModalVisible : false,
+  //   //   toggleModal : false
+  //   // });
+  // }
+  Close = () => {
+    this.setState({
+      toggleModal: false
+    });
   }
 
-  const Next = () => {
-    if ((username !== '' && email !== '' && password !== '' && cpassword !== '')) {
-      if (password.length >= 6) {
-        if (password === cpassword) {
+  validate = () => {
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    return (reg.test(this.props.email) === true) ? true : false
+  }
+  Next = () => {
+    const navigation = this.props.navigation;
+    if ((this.props.email !== '' && this.props.password !== '' && cpassword !== '')) {
+      if (this.props.password >= 6) {
+        if (this.props.password === cpassword) {
           let isValid = validate()
           if (isValid === true) {
             navigation.navigate('SignupClient2');
           } else {
-            setMessage(email.toString() + ' is not a valid email address.')
+            setMessage(this.props.email.toString() + ' is not a valid email address.')
             toggleModal(true)
           }
         } else {
@@ -46,21 +74,23 @@ const SignupClient1 = ({ navigation }) => {
       toggleModal(true)
     }
   }
+  render() {
+    // console.log(this.props.userType);
+    return (
 
-  return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS == "ios" ? "padding" : "height"}
-      style={signupStyles.container}
-    >
-      <LinearGradient
-        colors={['rgba(239,239,239,0.5)', 'transparent']}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 0, y: 1 }}
-        style={globalStyles.gradient}
-      >
-        <Modal
+      <View style={signupStyles.container}>
+        <LinearGradient
+          colors={['rgba(243,243,243,0.4)', 'transparent']}
+          start={{ x: 0, y: 1 }}
+          end={{ x: 0, y: 0 }}
+          style={globalStyles.gradient}
+        >
+
+          {/*DEV: Dan
+             
+             <Modal
           isVisible={isModalVisible}
-          animationIn='slideInDown'
+          animationIn='bounceInDown'
           animationOut='slideOutUp'
           animationInTiming={1100}
           animationOutTiming={900}
@@ -81,67 +111,72 @@ const SignupClient1 = ({ navigation }) => {
               </TouchableOpacity>
             </View>
           </View>
-        </Modal>
-        <View style={signupStyles.forms_container}>
-          <Text style={signupStyles.forms_label}> CLIENT SIGN UP </Text>
-          <Image
-            style={{ width: 80, height: 80, alignSelf: 'center' }}
-            source={require('../assets/client.png')}
-          />
-          <View style={signupStyles.forms_textinput_container}>
-            <Icon style={globalStyles.icon_global} name="user-circle" size={18} />
-            <TextInput
-              placeholder="Username"
-              placeholderTextColor="#8B8787"
-              style={signupStyles.forms_textinput}
-              onChangeText={text => setUser(text)}
-              value={username}
+        </Modal> */}
+          <View style={signupStyles.forms_container}>
+            <Text style={signupStyles.forms_label}> CLIENT SIGN UP </Text>
+            <Image
+              style={{ width: 80, height: 80, alignSelf: 'center' }}
+              source={require('../assets/client.png')}
             />
+            <View style={signupStyles.forms_textinput_container}>
+              <Icon style={globalStyles.icon_global} name="envelope" size={18} />
+              <TextInput
+                placeholder="Email"
+                placeholderTextColor="#8B8787"
+                style={signupStyles.forms_textinput}
+                value={this.props.email}
+                onChangeText={email => this.props.updateEmail(email)}
+              />
+            </View>
+            <View style={signupStyles.forms_textinput_container}>
+              <Icon style={globalStyles.icon_global} name="lock" size={18} />
+              <TextInput
+                secureTextEntry={true}
+                placeholder="Password"
+                placeholderTextColor="#8B8787"
+                style={signupStyles.forms_textinput}
+                value={this.props.password}
+                onChangeText={password => this.props.updatePassword(password)}
+              />
+            </View>
+            <View style={signupStyles.forms_textinput_container}>
+              <Icon style={globalStyles.icon_global} name="lock" size={18} />
+              <TextInput
+                secureTextEntry={true}
+                placeholder="Confirm Password"
+                placeholderTextColor="#8B8787"
+                style={signupStyles.forms_textinput}
+              />
+            </View>
+            <Text style={signupStyles.forms_text}>1/2</Text>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              style={signupStyles.forms_button}
+              onPress={() => this.props.navigation.navigate('SignupClient2')}
+            >
+              <Text style={signupStyles.forms_button_label}>NEXT</Text>
+            </TouchableOpacity>
           </View>
-          <View style={signupStyles.forms_textinput_container}>
-            <Icon style={globalStyles.icon_global} name="envelope" size={18} />
-            <TextInput
-              placeholder="Email"
-              placeholderTextColor="#8B8787"
-              style={signupStyles.forms_textinput}
-              onChangeText={text => setEmail(text)}
-              value={email}
-            />
-          </View>
-          <View style={signupStyles.forms_textinput_container}>
-            <Icon style={globalStyles.icon_global} name="lock" size={18} />
-            <TextInput
-              secureTextEntry={true}
-              placeholder="Password"
-              placeholderTextColor="#8B8787"
-              style={signupStyles.forms_textinput}
-              onChangeText={text => setPass(text)}
-              value={password}
-            />
-          </View>
-          <View style={signupStyles.forms_textinput_container}>
-            <Icon style={globalStyles.icon_global} name="lock" size={18} />
-            <TextInput
-              secureTextEntry={true}
-              placeholder="Confirm Password"
-              placeholderTextColor="#8B8787"
-              style={signupStyles.forms_textinput}
-              onChangeText={text => setCpass(text)}
-              value={cpassword}
-            />
-          </View>
-          <Text style={signupStyles.forms_text}>1/3</Text>
-          <TouchableOpacity
-            activeOpacity={0.6}
-            style={signupStyles.forms_button}
-            onPress={Next}
-          >
-            <Text style={signupStyles.forms_button_label}>NEXT</Text>
-          </TouchableOpacity>
-        </View>
-      </LinearGradient>
-    </KeyboardAvoidingView>
-  );
+        </LinearGradient>
+      </View>
+
+    );
+  }
+};
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ updateEmail, updatePassword }, dispatch)
 }
 
-export default SignupClient1;
+const mapStateToProps = state => {
+  return {
+    email: state.users.email,
+    password: state.users.password
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SignupClient1)
+
