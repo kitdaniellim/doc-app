@@ -85,7 +85,6 @@ const CalendarPage2 = ({ navigation }) => {
   function Okay() {
     toggleConfirmModal(false)
   }
-
   const ConfirmAll = () => {
     toggleConfirmModal(true)
   }
@@ -94,13 +93,15 @@ const CalendarPage2 = ({ navigation }) => {
     toggleNotifyModal(false)
   }
 
+  const Notify = () => {
+    toggleNotifyModal(true)
+  }
+
   const Notify_2 = () => {
     toggleNotifyModal(false)
   }
 
-  const Notify = () => {
-    toggleNotifyModal(true)
-  }
+  
 
 
   const Close = () => {
@@ -229,44 +230,38 @@ const CalendarPage2 = ({ navigation }) => {
                         {item.time}
                       </Text>
                     </View>
-                    { (!isClient)? 
+                    {(!isClient) ?
                       <View style={{ flexDirection: 'row' }}>
                         <TouchableOpacity
                           activeOpacity={0.6}
                           style={calendarStyles.date_details_button_download_container}
                         >
-                          <Text style={calendarStyles.date_details_button_download_label}>Download PDF</Text>
+                          <Text style={calendarStyles.date_details_button_download_label}>Download Files</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity
-                          activeOpacity={0.6}
-                          style={calendarStyles.date_details_button_download_container}
-                        >
-                          <Text style={calendarStyles.date_details_button_download_label}>Download Form</Text>
-                        </TouchableOpacity>
-                      </View> 
-                    : 
-                    null
+                      </View>
+                      :
+                      null
                     }
                   </View>
                   <View style={calendarStyles.date_details_button_container}>
                     {/* if user is a client then button displays, else null and does not display */}
                     {(isClient === true) ?
                       (item.status === 'pending') ?
-                      <View>
-                        <TouchableOpacity
-                          activeOpacity={0.6}
-                          disabled
-                          style={calendarStyles.date_details_button_pending}
-                        >
-                          <Text style={calendarStyles.date_details_button_label}>Pending</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                          activeOpacity={0.6}
-                          onPress={()=>{}}
-                          style={calendarStyles.date_details_button_cancel}
-                        >
-                          <Text style={calendarStyles.date_details_button_label}>Cancel</Text>
-                        </TouchableOpacity>
+                        <View>
+                          <TouchableOpacity
+                            activeOpacity={0.6}
+                            disabled
+                            style={calendarStyles.date_details_button_pending}
+                          >
+                            <Text style={calendarStyles.date_details_button_label}>Pending</Text>
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                            activeOpacity={0.6}
+                            onPress={() => { }}
+                            style={calendarStyles.date_details_button_cancel}
+                          >
+                            <Text style={calendarStyles.date_details_button_label}>Cancel</Text>
+                          </TouchableOpacity>
                         </View>
                         :
                         (item.status === 'review') ?
@@ -278,31 +273,31 @@ const CalendarPage2 = ({ navigation }) => {
                             <Text style={calendarStyles.date_details_button_label}>Review</Text>
                           </TouchableOpacity>
                           :
-                          (item.status === 'confirmed') ? 
-                          <View>
-                        <TouchableOpacity
-                          activeOpacity={0.6}
-                          disabled
-                          style={calendarStyles.date_details_button_pendingconf}
-                        >
-                          <Text style={calendarStyles.date_details_button_label}>Confirmed</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                          activeOpacity={0.6}
-                          onPress={()=>{}}
-                          style={calendarStyles.date_details_button_cancel}
-                        >
-                          <Text style={calendarStyles.date_details_button_label}>Cancel</Text>
-                        </TouchableOpacity>
-                        </View> 
-                          : 
-                          <TouchableOpacity
-                            activeOpacity={0.6}
-                            disabled
-                            style={calendarStyles.date_details_button_reviewed}
-                          >
-                            <Text style={calendarStyles.date_details_button_label}>Finished</Text>
-                          </TouchableOpacity>
+                          (item.status === 'confirmed') ?
+                            <View>
+                              <TouchableOpacity
+                                activeOpacity={0.6}
+                                disabled
+                                style={calendarStyles.date_details_button_pendingconf}
+                              >
+                                <Text style={calendarStyles.date_details_button_label}>Confirmed</Text>
+                              </TouchableOpacity>
+                              <TouchableOpacity
+                                activeOpacity={0.6}
+                                onPress={() => { }}
+                                style={calendarStyles.date_details_button_cancel}
+                              >
+                                <Text style={calendarStyles.date_details_button_label}>Cancel</Text>
+                              </TouchableOpacity>
+                            </View>
+                            :
+                            <TouchableOpacity
+                              activeOpacity={0.6}
+                              disabled
+                              style={calendarStyles.date_details_button_reviewed}
+                            >
+                              <Text style={calendarStyles.date_details_button_label}>Finished</Text>
+                            </TouchableOpacity>
                       :
                       (item.isConfirmed === false) ?
                         <View>
@@ -343,6 +338,17 @@ const CalendarPage2 = ({ navigation }) => {
                             onPress={Notify}
                           >
                             <Text style={calendarStyles.date_details_button_label}>Notify</Text>
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                            activeOpacity={0.6}
+                            onPress={() => { }}
+                            style={calendarStyles.date_details_button_cancel}
+                          >
+                            <Text
+                              style={calendarStyles.date_details_button_label}
+                            >
+                              Cancel
+                                </Text>
                           </TouchableOpacity>
                         </View>
                     }
