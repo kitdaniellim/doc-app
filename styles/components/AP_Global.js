@@ -100,7 +100,7 @@ const Global = {
   modal_button_container_fade: {
     height: 30,
     width: 110,
-    backgroundColor: '#FFAD3A90',
+    backgroundColor: '#FFAD3A95',
     borderRadius: 15,
     marginTop: 7,
     marginBottom: 20,

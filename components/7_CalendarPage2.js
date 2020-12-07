@@ -21,7 +21,10 @@ class CalendarPage2 extends React.Component {
     this.state = {
       isClient: true,
       isNotifyModalVisible: false,
+      isNotifyAllModalVisible: false,
+
       isConfirmModalVisible: false,
+
       isDeclineModalVisible: false,
       isFilesModalVisible: false,
       isCancelAppointmentModalVisible: false,
@@ -42,7 +45,6 @@ class CalendarPage2 extends React.Component {
       );
       await this.setState(() => ({ user }));
       await this.setState(() => ({ appointments }));
-
       // console.log("START===================================================================")
       // console.log(this.state.user)
       // console.log("===================================================================")
@@ -51,42 +53,104 @@ class CalendarPage2 extends React.Component {
       console.log(`Error! Details: ${e}`);
     }
   }
-  Okay = () => {
-    this.setState(() => ({ isConfirmModalVisible: false }));
-  };
-  ConfirmAll = () => {
-    this.setState(() => ({ isConfirmModalVisible: true }));
-  };
-  CancelNotify = () => {
-    this.setState(() => ({ isNotifyModalVisible: false }));
-  };
-  CancelAppointment_2 = () => {
-    this.setState(() => ({ isCancelAppointmentModalVisible: false }));
-  };
-  CancelAppointment = () => {
-    this.setState(() => ({ isCancelAppointmentModalVisible: true }));
-  };
-  Notify_2 = () => {
-    this.setState(() => ({ isNotifyModalVisible: false }));
-  };
-  Notify = () => {
-    this.setState(() => ({ isNotifyModalVisible: true }));
-  };
-  Decline_2 = () => {
-    this.setState(() => ({ isDeclineModalVisible: false }));
-  };
-  Decline = () => {
-    this.setState(() => ({ isDeclineModalVisible: true }));
-  };
-  Close = () => {
+
+  //Navigates to the previous page "Calendar1" where it shows 
+  //the calendar and appointments and their corresponding day/s
+  back = () => {
     this.props.navigation.navigate('Calendar1');
   };
-  Review = () => {
+
+  //Toggle modal to confirm all appointments for this day via "Confirm All" button
+  toggleConfirmAllModal = () => {
+    if(this.state.isConfirmModalVisible) {
+      this.setState(() => ({ isConfirmModalVisible: false }));
+    } else {
+      //Confirm all appointments here
+      this.setState(() => ({ isConfirmModalVisible: true }));
+    }
+  };
+
+  //Function called by the consultant to accept the client's request for 
+  //an appointment (via check-icon)
+  acceptClient = () => {
+    console.log("Client accepted by consultant");
+  };
+
+  //Toggle Modal to decline clients request for an appointment (via times-icon)
+  toggleDeclineClientModal = () => {
+    if (this.state.isDeclineModalVisible) {
+      this.setState(() => ({ isDeclineModalVisible: false }));
+    } else {
+      this.setState(() => ({ isDeclineModalVisible: true }));
+    }
+  };
+
+  //Function called by the consultant to decline the client's request for 
+  //an appointment (via times-icon)
+  declineClient = () => {
+    console.log("Client declined by consultant");
+  };
+
+  //Toggle modal to notify single client via "Notify All" button
+  toggleNotifyClientModal = () => {
+    if (this.state.isNotifyModalVisible) {
+      this.setState(() => ({ isNotifyModalVisible: false }));
+    } else {
+      this.setState(() => ({ isNotifyModalVisible: true }));
+    }
+  };
+
+  //Toggle modal to notify multiple clients via "Notify" button
+  toggleNotifyAllClientsModal = () => {
+    if (this.state.isNotifyAllModalVisible) {
+      this.setState(() => ({ isNotifyAllModalVisible: false }));
+    } else {
+      this.setState(() => ({ isNotifyAllModalVisible: true }));
+    }
+  };
+
+  //Function called when Notify on modal-popup is pressed. Sends text to single client
+  notifyClient = () => {
+    if(this.state.text != ""){
+      console.log("Text sent to client.");
+      this.setState(() => ({ isNotifyModalVisible: false, text: "" }));
+    }
+  };
+
+  //Function called when Notify on modal-popup is pressed. Sends text to multiple client
+  notifyAllClients = () => {
+    if(this.state.text != ""){
+      console.log("Text sent to all clients.");
+      this.setState(() => ({ isNotifyAllModalVisible: false, text: "" }));
+    }
+  };
+
+  //Toggle modal to cancel appointments via "Cancel" button (visible when status of appointment is not pending)
+  toggleCancelAppointmentModal = () => {
+    if(this.state.isCancelAppointmentModalVisible) {
+      this.setState(() => ({ isCancelAppointmentModalVisible: false }));
+    } else {
+      this.setState(() => ({ isCancelAppointmentModalVisible: true }));
+    }
+  };
+
+  //Function called upon pressing "Yes" when prompted "Are you sure you want to 
+  //cancel your appointment with... etc". Cancels appointment with client/consultant.
+  cancelAppointment = () => {
+    console.log("Appointment cancelled.");
+  };
+
+  //Navigates to the Review Page for the client
+  review = () => {
     this.props.navigation.navigate("Calendar3_Review");
   };
-  setText = (text) => {
+
+  //Sets string value for text variable under this.state; "text" is the message sent from the consultants
+  //to the clients via text SMS
+  setNotificationText = (text) => {
     this.setState(() => ({ text }));
   };
+
   onViewFiles = async (id) => {
     console.log(`fetching files from appointment id: ${id}`)
     await this.props.getFiles(id);
@@ -113,7 +177,9 @@ class CalendarPage2 extends React.Component {
     this.setState(() => ({ isFilesModalVisible: false }));
   };
 
-  mayCancel = (date) => { //Checks if current date is equal to appointment date
+  //Returns true or false (based on current date) if client/consultant is allowed to cancel or not.
+  //Checks if current date is equal to appointment date
+  mayCancel = (date) => { 
     let currentDate = moment().format("Y-M-D");
     // console.log(date);
     // console.log(currentDate)
@@ -154,7 +220,7 @@ class CalendarPage2 extends React.Component {
               </Text>
               <TouchableOpacity
                 activeOpacity={0.6}
-                onPress={this.Okay}
+                onPress={this.toggleConfirmAllModal}
                 style={globalStyles.modal_button_container_verified}
               >
                 <Text style={globalStyles.modal_button_label}>Okay</Text>
@@ -162,6 +228,7 @@ class CalendarPage2 extends React.Component {
             </View>
           </View>
         </Modal>
+
         <Modal
           isVisible={this.state.isNotifyModalVisible}
           animationIn="slideInUp"
@@ -182,7 +249,7 @@ class CalendarPage2 extends React.Component {
                   placeholder="Type your message here.."
                   placeholderTextColor="#8B8787"
                   style={calendarStyles.modal_textinput}
-                  onChangeText={(text) => this.setText(text)}
+                  onChangeText={(text) => this.setNotificationText(text)}
                   value={this.state.text}
                 />
               </View>
@@ -190,14 +257,59 @@ class CalendarPage2 extends React.Component {
             <View style={calendarStyles.modal_container_bottom}>
               <TouchableOpacity
                 activeOpacity={0.6}
-                onPress={this.CancelNotify}
+                onPress={this.toggleNotifyClientModal}
                 style={calendarStyles.modal_button_container_cancel}
               >
                 <Text style={calendarStyles.modal_button_label}>Cancel</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.6}
-                onPress={this.Notify_2}
+                onPress={this.notifyClient}
+                style={calendarStyles.modal_button_container_notify}
+              >
+                <Text style={calendarStyles.modal_button_label_bold}>
+                  Notify
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+        <Modal
+          isVisible={this.state.isNotifyAllModalVisible}
+          animationIn="slideInUp"
+          animationOut="slideOutDown"
+          animationInTiming={1100}
+          animationOutTiming={900}
+        >
+          <View style={calendarStyles.modal_container}>
+            <View style={calendarStyles.modal_container_top}>
+              <Text style={calendarStyles.modal_notif_bold}>
+                Notify All Your Clients
+              </Text>
+              <Text style={calendarStyles.modal_notif}>
+                Text and inform your clients for this day.
+              </Text>
+              <View style={calendarStyles.modal_textinput_container}>
+                <TextInput
+                  placeholder="Type your message here.."
+                  placeholderTextColor="#8B8787"
+                  style={calendarStyles.modal_textinput}
+                  onChangeText={(text) => this.setNotificationText(text)}
+                  value={this.state.text}
+                />
+              </View>
+            </View>
+            <View style={calendarStyles.modal_container_bottom}>
+              <TouchableOpacity
+                activeOpacity={0.6}
+                onPress={this.toggleNotifyAllClientsModal}
+                style={calendarStyles.modal_button_container_cancel}
+              >
+                <Text style={calendarStyles.modal_button_label}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.6}
+                onPress={this.notifyAllClients}
                 style={calendarStyles.modal_button_container_notify}
               >
                 <Text style={calendarStyles.modal_button_label_bold}>
@@ -224,17 +336,17 @@ class CalendarPage2 extends React.Component {
               <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                 <TouchableOpacity
                   activeOpacity={0.6}
-                  onPress={this.Decline_2}
-                  style={globalStyles.modal_button_container_fade}
-                >
-                  <Text style={globalStyles.modal_button_label}>No</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  activeOpacity={0.6}
-                  onPress={this.Decline_2}
+                  onPress={this.declineClient}
                   style={globalStyles.modal_button_container}
                 >
                   <Text style={globalStyles.modal_button_label}>Yes</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.6}
+                  onPress={this.toggleDeclineClientModal}
+                  style={globalStyles.modal_button_container_fade}
+                >
+                  <Text style={globalStyles.modal_button_label}>No</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -253,21 +365,21 @@ class CalendarPage2 extends React.Component {
             </View>
             <View style={globalStyles.modal_container_bottom}>
               <Text style={globalStyles.modal_notif_bold}>Woah there!</Text>
-              <Text style={globalStyles.modal_notif}>Are you sure you want to cancel your {'\n'} appointment with this client?</Text>
+              <Text style={globalStyles.modal_notif}>Are you sure you want to cancel your {'\n'} appointment with this {this.state.user.userType === "CONSULTANT" ? "client" : "consultant"} ?</Text>
               <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                 <TouchableOpacity
                   activeOpacity={0.6}
-                  onPress={this.CancelAppointment_2}
-                  style={globalStyles.modal_button_container_fade}
-                >
-                  <Text style={globalStyles.modal_button_label}>No</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  activeOpacity={0.6}
-                  onPress={this.CancelAppointment_2}
+                  onPress={this.cancelAppointment}
                   style={globalStyles.modal_button_container}
                 >
                   <Text style={globalStyles.modal_button_label}>Yes</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.6}
+                  onPress={this.toggleCancelAppointmentModal}
+                  style={globalStyles.modal_button_container_fade}
+                >
+                  <Text style={globalStyles.modal_button_label}>No</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -285,7 +397,7 @@ class CalendarPage2 extends React.Component {
               <View style={{ flexDirection: "row", flex: 3 }}>
                 <TouchableOpacity
                   activeOpacity={0.6}
-                  onPress={this.Notify}
+                  onPress={this.toggleNotifyAllClientsModal}
                   style={calendarStyles.header_confirmall_container}
                 >
                   <Text style={calendarStyles.header_confirmall_text}>
@@ -294,7 +406,7 @@ class CalendarPage2 extends React.Component {
                 </TouchableOpacity>
                 <TouchableOpacity
                   activeOpacity={0.6}
-                  onPress={this.ConfirmAll}
+                  onPress={this.toggleConfirmAllModal}
                   style={calendarStyles.header_confirmall_container}
                 >
                   <Text style={calendarStyles.header_confirmall_text}>
@@ -305,7 +417,7 @@ class CalendarPage2 extends React.Component {
             ) : null}
           <TouchableOpacity
             activeOpacity={0.6}
-            onPress={this.Close}
+            onPress={this.back}
             style={calendarStyles.header_icon_container}
           >
             <Icon style={globalStyles.icon_global} name="times" size={18} />
@@ -392,7 +504,7 @@ class CalendarPage2 extends React.Component {
                             {this.mayCancel(item.date) ?
                               (<TouchableOpacity
                                 activeOpacity={0.6}
-                                onPress={this.Review}
+                                onPress={this.cancelAppointment}
                                 style={calendarStyles.date_details_button_cancel}
                               >
                                 <Text
@@ -405,7 +517,6 @@ class CalendarPage2 extends React.Component {
                               (<TouchableOpacity
                                 disabled
                                 activeOpacity={0.6}
-                                onPress={this.Review}
                                 style={calendarStyles.date_details_button_cancel_fade}
                               >
                                 <Text
@@ -434,7 +545,7 @@ class CalendarPage2 extends React.Component {
                             {this.mayCancel(item.date) ? //Cancellation button will be disabled if current date is on or past appointment date
                               (<TouchableOpacity
                                 activeOpacity={0.6}
-                                onPress={this.Review}
+                                onPress={this.cancelAppointment}
                                 style={calendarStyles.date_details_button_cancel}
                               >
                                 <Text
@@ -447,7 +558,7 @@ class CalendarPage2 extends React.Component {
                               (<TouchableOpacity
                                 disabled
                                 activeOpacity={0.6}
-                                onPress={this.Review}
+                                onPress={this.cancelAppointment}
                                 style={calendarStyles.date_details_button_cancel_fade}
                               >
                                 <Text
@@ -461,7 +572,7 @@ class CalendarPage2 extends React.Component {
                         ) : item.status === "Done" ? ( //Appointment is Done but awaiting Review
                           <TouchableOpacity
                             activeOpacity={0.6}
-                            onPress={this.Review}
+                            onPress={this.review}
                             style={calendarStyles.date_details_button_review}
                           >
                             <Text
@@ -496,6 +607,7 @@ class CalendarPage2 extends React.Component {
                             <TouchableOpacity
                               activeOpacity={0.6}
                               style={calendarStyles.date_details_button_confirm}
+                              onPress={this.acceptClient}
                             >
                               <Icon
                                 style={calendarStyles.date_details_button_icon}
@@ -506,7 +618,7 @@ class CalendarPage2 extends React.Component {
                             <TouchableOpacity
                               activeOpacity={0.6}
                               style={calendarStyles.date_details_button_decline}
-                              onPress={this.Decline}
+                              onPress={this.toggleDeclineClientModal}
                             >
                               <Icon
                                 style={calendarStyles.date_details_button_icon}
@@ -518,24 +630,13 @@ class CalendarPage2 extends React.Component {
                           <TouchableOpacity
                             activeOpacity={0.6}
                             style={calendarStyles.date_details_button_notify}
-                            onPress={this.Notify}
+                            onPress={this.toggleNotifyClientModal}
                           >
                             <Text
                               style={calendarStyles.date_details_button_label}
                             >
                               Notify
                             </Text>
-                          </TouchableOpacity>
-                          <TouchableOpacity
-                            activeOpacity={0.6}
-                            onPress={() => { }}
-                            style={calendarStyles.date_details_button_cancel}
-                          >
-                            <Text
-                              style={calendarStyles.date_details_button_label}
-                            >
-                              Cancel
-                                </Text>
                           </TouchableOpacity>
                         </View>
                       ) : ( //Appointment is approved
@@ -554,7 +655,7 @@ class CalendarPage2 extends React.Component {
                               <TouchableOpacity
                                 activeOpacity={0.6}
                                 style={calendarStyles.date_details_button_notify}
-                                onPress={this.Notify}
+                                onPress={this.toggleNotifyClientModal}
                               >
                                 <Text
                                   style={calendarStyles.date_details_button_label}
@@ -565,7 +666,7 @@ class CalendarPage2 extends React.Component {
                               {this.mayCancel(item.date) ? //Cancellation button will be disabled if current date is on or past appointment date
                                 (<TouchableOpacity
                                   activeOpacity={0.6}
-                                  onPress={this.CancelAppointment}
+                                  onPress={this.toggleCancelAppointmentModal}
                                   style={calendarStyles.date_details_button_cancel}
                                 >
                                   <Text
@@ -578,7 +679,6 @@ class CalendarPage2 extends React.Component {
                                 (<TouchableOpacity
                                   disabled
                                   activeOpacity={0.6}
-                                  onPress={this.CancelAppointment}
                                   style={calendarStyles.date_details_button_cancel_fade}
                                 >
                                   <Text
