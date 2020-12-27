@@ -446,9 +446,41 @@ const Calendar = {
     marginHorizontal: 9,
   },
 
+  date_details_button_cancelled: {
+    height: 30,
+    backgroundColor: '#d9534f80',
+    borderRadius: 15,
+    padding: 5,
+    justifyContent: 'center',
+    alignSelf: 'stretch',
+    marginHorizontal: 9,
+  },
+
   date_details_button_notify: {
     height: 30,
-    backgroundColor: '#56EC65',
+    backgroundColor: '#5bc0de',
+    borderRadius: 15,
+    padding: 5,
+    justifyContent: 'center',
+    alignSelf: 'stretch',
+    marginHorizontal: 9,
+    marginTop: 5
+  },
+
+  date_details_button_viewreason: {
+    height: 30,
+    backgroundColor: '#5bc0de',
+    borderRadius: 15,
+    padding: 5,
+    justifyContent: 'center',
+    alignSelf: 'stretch',
+    marginHorizontal: 9,
+    marginTop: 5
+  },
+
+  date_details_button_markdone: {
+    height: 30,
+    backgroundColor: '#5cb85c',
     borderRadius: 15,
     padding: 5,
     justifyContent: 'center',

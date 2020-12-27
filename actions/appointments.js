@@ -1,6 +1,7 @@
 import { db, storage } from "../config/Firebase";
 import uuid from "react-native-uuid";
 import _ from "lodash";
+import moment from "moment";
 
 export const getFiles = (appointment_id) => {
   return async (dispatch) => {
@@ -123,17 +124,15 @@ export const bookAppointment = (data) => {
 export const updateAppointmentStatus = (id, status, reason = "") => {
   return async (dispatch) => {
     dispatch(loadBegin());
-    db.collection("appointments")
-      .doc(id)
-      .update({
+    const ref = db.collection("appointments").doc(id);
+    ref.update({
         status: status,
+        updated_at: moment().format('YYYY-MM-DD HH:mm:ss').toString()
       }).then(() => {
         if (reason != "") {
-          db.collection("appointments")
-            .doc(id)
-            .update({
-              reason: reason,
-            });
+          ref.set({
+            reason
+        }, { merge: true });
         }
       }).then((result) => {
         dispatch(updateAppointmentStatusSuccess(result));
