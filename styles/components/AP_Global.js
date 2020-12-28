@@ -53,6 +53,14 @@ const Global = {
     marginHorizontal: 25,
   },
 
+  reason_modal_container: {
+    flexDirection: 'column',
+    height: 400,
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+    marginHorizontal: 25,
+  },
+
   modal_container_top: {
     flex: 1,
     backgroundColor: '#FFAD3A',
@@ -77,6 +85,13 @@ const Global = {
     justifyContent: 'space-around',
   },
 
+  reason_modal_container_bottom: {
+    flex: 2,
+    backgroundColor: '#fff',
+    padding: 15,
+    alignSelf: 'stretch',
+  },
+
   modal_notif_container: {
     marginVertical: 7,
     justifyContent: 'space-around',
@@ -88,6 +103,14 @@ const Global = {
     fontSize: 15,
     fontWeight: '300',
     textAlign: 'center',
+  },
+  
+  reason_modal_notif: {
+    color: '#8B8787',
+    fontSize: 15,
+    fontWeight: '300',
+    textAlign: 'center',
+    marginBottom: 10,
   },
 
   modal_notif_bold: {

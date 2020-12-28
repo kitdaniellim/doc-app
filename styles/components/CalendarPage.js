@@ -389,6 +389,13 @@ const Calendar = {
     alignSelf: 'center'
   },
 
+  date_details_button_review_label: {
+    color: '#56EC65',
+    fontSize: 12,
+    justifyContent: 'center',
+    alignSelf: 'center'
+  },
+
   step_buttons_label: {
     color: '#fff',
     fontSize: 16,
@@ -582,6 +589,17 @@ const Calendar = {
     paddingHorizontal: 5,
     marginHorizontal: 5,
     borderColor: 'black',
+    borderWidth: 1,
+  },
+
+  reason_modal_textinput: {
+    color: '#8B8787',
+    alignSelf: 'stretch',
+    fontSize: 12,
+    paddingHorizontal: 5,
+    marginHorizontal: 5,
+    marginTop: 5,
+    borderColor: '#8B8787',
     borderWidth: 1,
   },
 

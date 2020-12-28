@@ -264,7 +264,7 @@ class Book2_Time extends React.Component {
                                             this.props.time_start == item.time_start &&
                                             this.props.time_end == item.time_end
                                             ? calendarStyles.date_details_button_label_active
-                                            : calendarStyles.date_details_button_label
+                                            : calendarStyles.date_details_button_review_label
                                         }
                                       >
                                         Choose
