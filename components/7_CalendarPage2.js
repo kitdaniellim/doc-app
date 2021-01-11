@@ -257,7 +257,7 @@ class CalendarPage2 extends React.Component {
   //cancel your appointment with... etc". Cancels appointment with client/consultant.
   cancelAppointment = async () => {
     let reason = this.state.reason
-    if (!reason.trim()) {
+    if (this.state.user.userType === "CONSULTANT" && !reason.trim()) {
       Alert.alert(
         'Invalid Input!',
         `Please input a reason`,
