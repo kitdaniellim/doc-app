@@ -51,7 +51,19 @@ export default (state = reducerDefaultState, action) => {
                 loading: false,
                 error: action.payload.error
             };
-        case 'RESET_APPOINTMENTS': 
+        case 'UPDATE_APPOINTMENT_STATUS_SUCCESS':
+            return {
+                ...state,
+                loading: false,
+                item: action.payload.result
+            };
+        case 'UPDATE_APPOINTMENT_STATUS_FAILURE':
+            return {
+                ...state,
+                loading: false,
+                error: action.payload.error
+            };
+        case 'RESET_APPOINTMENTS':
             return {
                 state: reducerDefaultState
             }

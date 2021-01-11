@@ -59,7 +59,7 @@ class Login extends React.Component {
     } else {
       await AsyncStorage.removeItem('user');
       console.log(`logging in...`);
-      await this.props.login(this.state.email, this.state.password);
+      await this.props.login(this.state.email.trim(), this.state.password);
 
       if (this.props.user.email) {
         console.log(`login successful`)
@@ -79,10 +79,7 @@ class Login extends React.Component {
   }
 
   render() {
-
-
     return (
-
       <View style={loginStyles.container}>
         <LinearGradient
           colors={['rgba(243,243,243,0.4)', 'transparent']}
@@ -90,8 +87,6 @@ class Login extends React.Component {
           end={{ x: 0, y: 0 }}
           style={globalStyles.gradient}
         >
-
-
           <Modal
             isVisible={this.state.isModalVisible}
             animationIn='bounceInDown'
@@ -116,8 +111,6 @@ class Login extends React.Component {
               </View>
             </View>
           </Modal>
-
-
           <View style={loginStyles.forms_container}>
             <View style={loginStyles.forms_header_container}>
               <Icon style={globalStyles.icon_client} name="user" size={42} />

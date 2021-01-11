@@ -53,9 +53,25 @@ const Global = {
     marginHorizontal: 25,
   },
 
+  reason_modal_container: {
+    flexDirection: 'column',
+    height: 350,
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+    marginHorizontal: 25,
+  },
+
   modal_container_top: {
     flex: 1,
     backgroundColor: '#FFAD3A',
+    padding: 15,
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+  },
+
+  modal_container_top_dblue: {
+    flex: 1,
+    backgroundColor: '#379ae5',
     padding: 15,
     alignSelf: 'stretch',
     justifyContent: 'center',
@@ -77,6 +93,13 @@ const Global = {
     justifyContent: 'space-around',
   },
 
+  reason_modal_container_bottom: {
+    flex: 2,
+    backgroundColor: '#fff',
+    padding: 15,
+    alignSelf: 'stretch',
+  },
+
   modal_notif_container: {
     marginVertical: 7,
     justifyContent: 'space-around',
@@ -89,6 +112,22 @@ const Global = {
     fontWeight: '300',
     textAlign: 'center',
   },
+  
+  reason_modal_notif: {
+    color: '#8B8787',
+    fontSize: 15,
+    fontWeight: '300',
+    textAlign: 'justify',
+    marginVertical: 20,
+  },
+
+  reason_modal_notif_center: {
+    color: '#8B8787',
+    fontSize: 15,
+    fontWeight: '300',
+    textAlign: 'center',
+    marginVertical: 20,
+  },
 
   modal_notif_bold: {
     color: '#8B8787',
@@ -97,10 +136,30 @@ const Global = {
     textAlign: 'center',
   },
 
+  modal_notif_bold_white: {
+    color: '#FFFFFF',
+    fontSize: 19,
+    fontWeight: '900',
+    textAlign: 'center',
+  },
+
   modal_button_container_fade: {
     height: 30,
     width: 110,
-    backgroundColor: '#FFAD3A90',
+    backgroundColor: '#FFAD3A95',
+    borderRadius: 15,
+    marginTop: 7,
+    marginBottom: 20,
+    marginHorizontal: 2,
+    padding: 5,
+    justifyContent: 'center',
+    alignSelf: 'center'
+  },
+  
+  modal_button_container_fade_dblue: {
+    height: 30,
+    width: 110,
+    backgroundColor: '#379ae580',
     borderRadius: 15,
     marginTop: 7,
     marginBottom: 20,
@@ -123,6 +182,19 @@ const Global = {
     alignSelf: 'center'
   },
 
+  modal_button_container_dblue: {
+    height: 30,
+    width: 110,
+    backgroundColor: '#379ae5',
+    borderRadius: 15,
+    marginTop: 7,
+    marginBottom: 20,
+    marginHorizontal: 2,
+    padding: 5,
+    justifyContent: 'center',
+    alignSelf: 'center'
+  },
+
   modal_button_container_verified: {
     height: 30,
     width: 110,
@@ -133,6 +205,14 @@ const Global = {
     padding: 5,
     justifyContent: 'center',
     alignSelf: 'center'
+  },
+
+  modal_button_label: {
+    color: '#fff',
+    fontSize: 15,
+    fontWeight: '600', 
+    letterSpacing: 1, 
+    textAlign: 'center',
   },
 
   modal_button_label: {
