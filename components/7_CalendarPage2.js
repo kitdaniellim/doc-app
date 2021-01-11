@@ -60,8 +60,9 @@ class CalendarPage2 extends React.Component {
   //Toggle modal of viewing reason for decline/cancel
   toggleViewReasonModal = (reasonView) => {
     if (this.state.isViewReasonModalVisible) {
-      this.setState(() => ({ reasonView: "" }));
       this.setState(() => ({ isViewReasonModalVisible: false }));
+      this.setState(() => ({ reasonView: "" }));
+      // setTimeout(() => {this.setState(() => ({ reasonView: "" }))}, 2000);
     } else {
       this.setState(() => ({ reasonView }));
       this.setState(() => ({ isViewReasonModalVisible: true }));
@@ -128,7 +129,7 @@ class CalendarPage2 extends React.Component {
           }
         },
         {
-          text: 'No',
+          text: 'Reject',
           style: 'cancel'
         }
       ],
@@ -355,12 +356,15 @@ class CalendarPage2 extends React.Component {
   //Checks if current date is equal to appointment date
   mayCancel = (date) => {
     let currentDate = moment().format("Y-M-D");
+    // console.log('--------DATE------');
     // console.log(date);
+    // console.log('-------CURR-------');
     // console.log(currentDate)
     let bool = true;
-    if (currentDate >= date) {
+    if (moment(currentDate).isSameOrAfter(date)) {
       bool = false;
     }
+    // console.log(bool);
     return bool;
   };
 
@@ -447,7 +451,45 @@ class CalendarPage2 extends React.Component {
               </TouchableOpacity>
             </View>
           </View>
+
+          {/* If ever design changes, may use this for reference -Dan */}
+          {/* <View style={globalStyles.reason_modal_container}>
+            <View style={globalStyles.modal_container_top_dblue}>
+              <Icon style={globalStyles.modal_icon} name="times-circle-o" size={29} />
+              <View style={{ marginTop: 10 }}>
+                <Text style={globalStyles.modal_notif_bold_white}>Reason for Decline</Text>
+              </View>
+            </View>
+            <View style={globalStyles.reason_modal_container_bottom}>
+              <Text style={globalStyles.reason_modal_notif_center}>Please input your reason to be read {'\n'} by your {this.state.user.userType === "CONSULTANT" ? "client" : "consultant"}.</Text>
+              <TextInput
+                style={calendarStyles.reason_modal_textinput}
+                multiline={true}
+                maxLength={200}
+                numberOfLines={5}
+                onChangeText={(reason) => this.setState({ reason })}
+                value={this.state.reason}
+              />
+              <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                <TouchableOpacity
+                  activeOpacity={0.6}
+                  onPress={this.cancelAppointment}
+                  style={globalStyles.modal_button_container_dblue}
+                >
+                  <Text style={globalStyles.modal_button_label}>Submit</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.6}
+                  onPress={this.toggleReasonCancelModal}
+                  style={globalStyles.modal_button_container_fade_dblue}
+                >
+                  <Text style={globalStyles.modal_button_label}>Close</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View> */}
         </Modal>
+
         <Modal
           isVisible={this.state.isNotifyAllModalVisible}
           animationIn="slideInUp"
@@ -502,11 +544,13 @@ class CalendarPage2 extends React.Component {
           animationOutTiming={900}
         >
           <View style={globalStyles.modal_container}>
+            
             <View style={globalStyles.modal_container_top}>
               <Icon style={globalStyles.modal_icon} name="times-circle-o" size={29} />
             </View>
+
+
             <View style={globalStyles.modal_container_bottom}>
-              <Text style={globalStyles.modal_notif_bold}>Woah there!</Text>
               <Text style={globalStyles.modal_notif}>Are you sure you want to decline {'\n'} this client?</Text>
               <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                 <TouchableOpacity
@@ -535,18 +579,21 @@ class CalendarPage2 extends React.Component {
           animationInTiming={1100}
           animationOutTiming={900}
         >
-          <View style={globalStyles.modal_container}>
-            <View style={globalStyles.modal_container_top}>
+          <View style={globalStyles.reason_modal_container}>
+            <View style={globalStyles.modal_container_top_dblue}>
               <Icon style={globalStyles.modal_icon} name="times-circle-o" size={29} />
+              <View style={{ marginTop: 10 }}>
+                <Text style={globalStyles.modal_notif_bold_white}>Reason for Decline</Text>
+              </View>
+
             </View>
             <View style={globalStyles.modal_container_bottom}>
-              <Text style={globalStyles.modal_notif_bold}>Appointment Declined/Cancelled</Text>
-              <Text style={globalStyles.modal_notif}>Reason: {this.state.reasonView}</Text>
+              <Text style={globalStyles.reason_modal_notif}>{this.state.reasonView}</Text>
               <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                 <TouchableOpacity
                   activeOpacity={0.6}
                   onPress={this.toggleViewReasonModal}
-                  style={globalStyles.modal_button_container}
+                  style={globalStyles.modal_button_container_dblue}
                 >
                   <Text style={globalStyles.modal_button_label}>Close</Text>
                 </TouchableOpacity>
@@ -567,8 +614,7 @@ class CalendarPage2 extends React.Component {
               <Icon style={globalStyles.modal_icon} name="times-circle-o" size={29} />
             </View>
             <View style={globalStyles.modal_container_bottom}>
-              <Text style={globalStyles.modal_notif_bold}>Woah there!</Text>
-              <Text style={globalStyles.modal_notif}>Are you sure you want to cancel your {'\n'} appointment with this {this.state.user.userType === "CONSULTANT" ? "client" : "consultant"} ?</Text>
+              <Text style={globalStyles.modal_notif}>Are you sure you want to cancel your {'\n'} appointment with this {this.state.user.userType === "CONSULTANT" ? "client" : "consultant"}?</Text>
               <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                 <TouchableOpacity
                   activeOpacity={0.6}
@@ -604,30 +650,34 @@ class CalendarPage2 extends React.Component {
           animationOutTiming={900}
         >
           <View style={globalStyles.reason_modal_container}>
-            <View style={globalStyles.modal_container_top}>
+            <View style={globalStyles.modal_container_top_dblue}>
               <Icon style={globalStyles.modal_icon} name="times-circle-o" size={29} />
+              <View style={{ marginTop: 10 }}>
+                <Text style={globalStyles.modal_notif_bold_white}>Reason for {this.state.user.userType === "CONSULTANT" ? "Decline" : "Cancel"}</Text>
+              </View>
             </View>
             <View style={globalStyles.reason_modal_container_bottom}>
-              <Text style={globalStyles.modal_notif_bold}>Reason for Decline/Cancel {'\n'}</Text>
-              <Text style={globalStyles.reason_modal_notif}>Please input your reason to be read by your {this.state.user.userType === "CONSULTANT" ? "client" : "consultant"} ?</Text>
+              <Text style={globalStyles.reason_modal_notif_center}>Please input your reason to be read {'\n'} by your {this.state.user.userType === "CONSULTANT" ? "client" : "consultant"}.</Text>
               <TextInput
                 style={calendarStyles.reason_modal_textinput}
                 multiline={true}
+                maxLength={200}
                 numberOfLines={5}
                 onChangeText={(reason) => this.setState({ reason })}
-                value={this.state.reason} />
+                value={this.state.reason}
+              />
               <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                 <TouchableOpacity
                   activeOpacity={0.6}
                   onPress={this.cancelAppointment}
-                  style={globalStyles.modal_button_container}
+                  style={globalStyles.modal_button_container_dblue}
                 >
                   <Text style={globalStyles.modal_button_label}>Submit</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   activeOpacity={0.6}
                   onPress={this.toggleReasonCancelModal}
-                  style={globalStyles.modal_button_container_fade}
+                  style={globalStyles.modal_button_container_fade_dblue}
                 >
                   <Text style={globalStyles.modal_button_label}>Close</Text>
                 </TouchableOpacity>
@@ -797,7 +847,8 @@ class CalendarPage2 extends React.Component {
                             {this.mayCancel(item.date) ? //Cancellation button will be disabled if current date is on or past appointment date
                               (<TouchableOpacity
                                 activeOpacity={0.6}
-                                onPress={this.cancelAppointment}
+                                // onPress={this.cancelAppointment}
+                                onPress={this.toggleReasonCancelModal}
                                 style={calendarStyles.date_details_button_cancel}
                               >
                                 <Text
@@ -810,7 +861,6 @@ class CalendarPage2 extends React.Component {
                               (<TouchableOpacity
                                 disabled
                                 activeOpacity={0.6}
-                                onPress={this.cancelAppointment}
                                 style={calendarStyles.date_details_button_cancel_fade}
                               >
                                 <Text
@@ -980,10 +1030,10 @@ class CalendarPage2 extends React.Component {
                         <TouchableOpacity
                           activeOpacity={0.6}
                           disabled
-                          style={calendarStyles.date_details_button_review}
+                          style={calendarStyles.date_details_button_done}
                         >
                           <Text
-                            style={calendarStyles.date_details_button_review_label}
+                            style={calendarStyles.date_details_button_label}
                           >
                             Done
                           </Text>
