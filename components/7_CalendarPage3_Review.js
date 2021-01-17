@@ -145,7 +145,7 @@ class CalendarPage3_Review extends React.Component {
                                 placeholderTextColor="#8B8787"
                                 multiline
                                 style={calendarStyles.review_textinput}
-                                onChangeText={text => this.setState(() => ({ review: text }))}
+                                onChangeText={text => text.length < 255 && this.setState(() => ({ review: text }))}
                                 value={this.state.review}
                             />
                         </View>
