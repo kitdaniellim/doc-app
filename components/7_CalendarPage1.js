@@ -36,7 +36,7 @@ class CalendarPage extends React.Component {
                 appointment.status == "Approved"
               ) {
                 upcoming_dates.push(appointment.date);
-              } else if (appointment.status == "Done") {
+              } else if (appointment.status == "Done" || appointment.status == "Reviewed") {
                 !upcoming_dates.includes(appointment.date) &&
                   finished_dates.push(appointment.date);
               }
