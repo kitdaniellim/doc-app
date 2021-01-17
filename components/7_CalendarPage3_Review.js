@@ -42,12 +42,19 @@ class CalendarPage3_Review extends React.Component {
                 created_at: moment().format('YYYY-MM-DD HH:mm:ss').toString()
             }
             await this.props.addReview(data);
+            await this.props.updateAppointmentStatus(this.props.navigation.state.params.item.uid, "Reviewed");
             if (!this.props.error) {
-                ToastAndroid.show("Review Added Successfully", ToastAndroid.SHORT);
-                await this.props.updateAppointmentStatus(this.props.navigation.state.params.item.uid, "Reviewed");
-                this.props.navigation.navigate("Calendar1", {
-                    date: this.props.navigation.state.params.item.date,
-                });
+                Alert.alert(
+                    'Review Added Successfully',
+                    'Thank you for reviewing this appointment',
+                    [
+                        {
+                            text: 'OK',
+                            onPress: () => this.props.navigation.navigate("Calendar1")
+                        }
+                    ],
+                    { cancelable: true }
+                );
             } else {
                 Alert.alert(
                     'Oh no!',
