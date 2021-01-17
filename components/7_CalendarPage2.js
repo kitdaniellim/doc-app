@@ -316,8 +316,10 @@ class CalendarPage2 extends React.Component {
   };
 
   //Navigates to the Review Page for the client
-  review = () => {
-    this.props.navigation.navigate("Calendar3_Review");
+  review = (item) => {
+    this.props.navigation.navigate("Calendar3_Review", {
+      item
+    });
   };
 
   //Sets string value for text variable under this.state; "text" is the message sent from the consultants
@@ -544,7 +546,7 @@ class CalendarPage2 extends React.Component {
           animationOutTiming={900}
         >
           <View style={globalStyles.modal_container}>
-            
+
             <View style={globalStyles.modal_container_top}>
               <Icon style={globalStyles.modal_icon} name="times-circle-o" size={29} />
             </View>
@@ -874,7 +876,7 @@ class CalendarPage2 extends React.Component {
                         ) : item.status === "Done" ? ( //Appointment is Done but awaiting Review
                           <TouchableOpacity
                             activeOpacity={0.6}
-                            onPress={this.review}
+                            onPress={() => { this.review(item) }}
                             style={calendarStyles.date_details_button_review}
                           >
                             <Text
