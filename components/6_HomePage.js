@@ -1,12 +1,11 @@
 import React from 'react';
 import { Text, Image, View, FlatList, RefreshControl, TouchableOpacity, ScrollView } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { BackgroundCarousel } from './BackgroundCarousel'
 import { homeStyles } from '../styles/styles';
 import { getAllConsultant, getConsultant, getReviewsConsultant } from '../actions/users';
+import { getReviews } from '../actions/reviews';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Firebase, { db } from '../config/Firebase';
+import Firebase from '../config/Firebase';
 import AsyncStorage from '@react-native-community/async-storage';
 
 class Home extends React.Component {
@@ -54,6 +53,7 @@ class Home extends React.Component {
   Profile = async (uid) => {
 
     await this.props.getConsultant(uid);
+    await this.props.getReviews(uid);
     if (this.props.singleConsultant.office_details != null) {
       this.props.navigation.navigate('ProfileTab')
     }
@@ -62,12 +62,6 @@ class Home extends React.Component {
 
 
   render() {
-    // alert(this.props.navigation.)
-    // if(this.props.navigation.state.params){
-    //   alert("test")
-    //   alert(this.props.navigation.state.params);
-    // }
-
     const images = [
       {
         key: 1,
@@ -119,20 +113,11 @@ class Home extends React.Component {
     return (
       <View style={homeStyles.container}>
         <View style={{ height: 200 }}>
-          {/* <BackgroundCarousel images={images} /> */}
         </View>
-
-        {/* <Text >Email is : {this.props.user.email}</Text> */}
         <View style={homeStyles.scaffold}>
           <FlatList
             data={userSpecialty_list}
             showsVerticalScrollIndicator={false}
-            // refreshControl={
-            //   <RefreshControl 
-            //     refreshing={refreshing} 
-            //     onRefresh={onRefresh} 
-            //   />
-            // }
             keyExtractor={(item) => item.key.toString()}
             renderItem={({ item }) => (
               <View key={item.key.toString()}>
@@ -199,13 +184,14 @@ class Home extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ getAllConsultant, getConsultant, getReviewsConsultant }, dispatch)
+  return bindActionCreators({ getAllConsultant, getConsultant, getReviewsConsultant, getReviews }, dispatch)
 }
 
 const mapStateToProps = state => {
   return {
     consultant: state.users.consultant,
-    singleConsultant: state.users.singleConsultant
+    singleConsultant: state.users.singleConsultant,
+    reviews: state.reviews.items
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

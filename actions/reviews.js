@@ -18,6 +18,26 @@ export const addReview = (data) => {
     }
 }
 
+export const getReviews = (id) => {
+    return async dispatch => {
+        try {
+            dispatch(loadBegin());
+            db.collection("reviews")
+                .where("review_to", "==", id)
+                .onSnapshot(async (querySnapShot) => {
+                    let results = [];
+                    querySnapShot.forEach((doc) => {
+                        results.push(doc.data());
+                    });
+                    results.sort((a, b) => b.created_at - a.created_at);
+                    await dispatch(getReviewsSuccess(results));
+                })
+        } catch (error) {
+            dispatch(getReviewsFailure(error))
+        }
+    }
+}
+
 //CALL BEFORE EVERY OPERATION
 export const loadBegin = () => ({
     type: "LOAD_BEGIN",
@@ -33,3 +53,14 @@ export const addReviewFailure = (error) => ({
     type: "ADD_REVIEW_FAILURE",
     payload: { error },
 });
+
+//GET REVIEWS STATUS
+export const getReviewsSuccess = (results) => ({
+    type: "GET_REVIEWS_SUCCESS",
+    payload: { results }
+});
+
+export const getReviewsFailure = (error) => ({
+    type: "GET_REVIEWS_FAILURE",
+    payload: { error }
+})

@@ -26,6 +26,19 @@ export default (state = reducerDefaultState, action) => {
                 loading: false,
                 error: action.payload.error
             };
+        case 'GET_REVIEWS_SUCCESS':
+            return {
+                ...state,
+                loading: false,
+                error: null,
+                items: action.payload.results
+            };
+        case 'GET_REVIEWS_FAILURE':
+            return {
+                ...state,
+                loading: false,
+                error: action.payload.error
+            };
         default:
             return state;
     }

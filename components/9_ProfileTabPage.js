@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView, Image, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import StarRating from 'react-native-star-rating';
-import { profileStyles, globalStyles } from '../styles/styles';
+import { profileStyles, globalStyles, calendarStyles } from '../styles/styles';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getConsultant } from '../actions/users';
@@ -18,13 +18,6 @@ class ProfileTab extends React.Component {
 
 
   }
-  // async componentDidMount() {
-  //   //this.addLocation();
-  //   console.log("paku1 ");
-  //   alert("FUCK YOU");
-  //   console.log(this.props.route.params.uid.name)
-  //   this.props.getConsultant(this.props.route.params.uid.name);
-  // }
 
   Edit = (uid) => {
     //const navigation = this.props.navigation;
@@ -72,7 +65,16 @@ class ProfileTab extends React.Component {
   }
 
   render() {
-    const consultant = this.props.singleConsultant;
+    const consultant = this.props.singleConsultant,
+      reviews = this.props.reviews;
+
+    let sum = 0, average = 0;
+
+    reviews.map(item => {
+      sum += item.rating;
+    });
+
+    average = sum / reviews.length;
 
     // DOES NOT WORK IN MOBILE BUT WORKS IN WEB
     // var office_details = _.keyBy(this.props.singleConsultant.office_details,'id');
@@ -82,7 +84,6 @@ class ProfileTab extends React.Component {
 
     //START OF CHANGES - October 3 - 2020
     var office = Array.from(consultant.office_details);
-    var reviews = consultant.userReviews;
     //END OF CHANGES - October 3 - 2020
 
     return (
@@ -136,7 +137,7 @@ class ProfileTab extends React.Component {
                   <StarRating
                     disabled={true}
                     maxStars={5}
-                    rating={4}
+                    rating={average}
                     selectedStar={() => { }}
                     fullStarColor='#FDBB3B'
                     starSize={12}
@@ -171,22 +172,6 @@ class ProfileTab extends React.Component {
                     )
                   })
                 }
-                {/* <Text>  {this.props.singleConsultant.office_details[0].office_day[0]}</Text> */}
-
-                {/* { Object.keys(this.props.singleConsultant.office_details).map(function(s){
-        return  this.props.singleConsultant.office_details[s].map((data) => {
-          <Text> {data.office_day} </Text>
-        })
-          
-        
-    })} */}
-                {/* {
-      this.props.singleConsultant.office_details.map((data) => {
-        return Object.keys(data.office_day).map((data1) => {
-          <Text>{data1}</Text>
-        })
-      })
-    } */}
 
               </View>
               <View style={profileStyles.divider} />
@@ -203,13 +188,13 @@ class ProfileTab extends React.Component {
                   this.Paypal(this.props.singleConsultant.uid)
                 }}
               >
-                  <Text style={profileStyles.edit_button_label}>BOOK</Text>
-                </TouchableOpacity>}
+                <Text style={profileStyles.edit_button_label}>BOOK</Text>
+              </TouchableOpacity>}
 
               <View style={profileStyles.review_container}>
                 <Text style={profileStyles.review_header}>Reviews</Text>
                 {
-                  reviews.map((data) => {
+                  reviews.length > 0 ? reviews.slice(0, 5).map((data) => {
                     return (
                       <View style={profileStyles.review_details}>
                         <View style={profileStyles.review_details_header}>
@@ -230,9 +215,14 @@ class ProfileTab extends React.Component {
                           {data.comment}
                         </Text>
                       </View>
-
                     )
-                  })
+                  }) : (
+                      <View style={calendarStyles.no_appointments_scaffold}>
+                        <View style={calendarStyles.date_details_button_container}>
+                          <Text style={calendarStyles.no_appointments_text}>No Reviews Yet</Text>
+                        </View>
+                      </View>
+                    )
                 }
 
 
@@ -252,7 +242,8 @@ const mapDispatchToProps = dispatch => {
 }
 const mapStateToProps = state => {
   return {
-    singleConsultant: state.users.singleConsultant
+    singleConsultant: state.users.singleConsultant,
+    reviews: state.reviews.items
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileTab);
