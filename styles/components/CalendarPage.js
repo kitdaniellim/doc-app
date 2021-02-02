@@ -14,6 +14,7 @@ const Calendar = {
   header_container: {
     flexDirection: 'row',
     height: 40,
+    backgroundColor: 'white',
     alignSelf: 'stretch',
     backgroundColor: 'white',
     justifyContent: 'flex-start',
@@ -323,6 +324,7 @@ const Calendar = {
     backgroundColor: '#56EC65',
     borderRadius: 15,
     padding: 5,
+    marginTop: 5,
     justifyContent: 'center',
     alignSelf: 'stretch',
     marginHorizontal: 9,
@@ -350,12 +352,23 @@ const Calendar = {
     marginHorizontal: 9,
   },
   
+  //maybe delete
   date_details_button_review: {
     height: 30,
     backgroundColor: '#fff',
     borderRadius: 15,
     borderWidth: 1,
     borderColor: '#56EC65',
+    padding: 5,
+    justifyContent: 'center',
+    alignSelf: 'stretch',
+    marginHorizontal: 9,
+  },
+
+  date_details_button_done: {
+    height: 30,
+    backgroundColor: '#56EC6580',
+    borderRadius: 15,
     padding: 5,
     justifyContent: 'center',
     alignSelf: 'stretch',
@@ -382,6 +395,13 @@ const Calendar = {
   date_details_button_label: {
     // color: '#56EC65',
     color: '#FFFFFF',
+    fontSize: 12,
+    justifyContent: 'center',
+    alignSelf: 'center'
+  },
+
+  date_details_button_review_label: {
+    color: '#56EC65',
     fontSize: 12,
     justifyContent: 'center',
     alignSelf: 'center'
@@ -444,9 +464,41 @@ const Calendar = {
     marginHorizontal: 9,
   },
 
+  date_details_button_cancelled: {
+    height: 30,
+    backgroundColor: '#d9534f80',
+    borderRadius: 15,
+    padding: 5,
+    justifyContent: 'center',
+    alignSelf: 'stretch',
+    marginHorizontal: 9,
+  },
+
   date_details_button_notify: {
     height: 30,
-    backgroundColor: '#56EC65',
+    backgroundColor: '#379ae5',
+    borderRadius: 15,
+    padding: 5,
+    justifyContent: 'center',
+    alignSelf: 'stretch',
+    marginHorizontal: 9,
+    marginTop: 5
+  },
+
+  date_details_button_viewreason: {
+    height: 30,
+    backgroundColor: '#379ae5',
+    borderRadius: 15,
+    padding: 5,
+    justifyContent: 'center',
+    alignSelf: 'stretch',
+    marginHorizontal: 9,
+    marginTop: 5
+  },
+
+  date_details_button_markdone: {
+    height: 30,
+    backgroundColor: '#5cb85c',
     borderRadius: 15,
     padding: 5,
     justifyContent: 'center',
@@ -548,6 +600,17 @@ const Calendar = {
     paddingHorizontal: 5,
     marginHorizontal: 5,
     borderColor: 'black',
+    borderWidth: 1,
+  },
+
+  reason_modal_textinput: {
+    color: '#8B8787',
+    alignSelf: 'stretch',
+    fontSize: 12,
+    paddingHorizontal: 5,
+    marginHorizontal: 5,
+    marginBottom: 10,
+    borderColor: '#8B8787',
     borderWidth: 1,
   },
 

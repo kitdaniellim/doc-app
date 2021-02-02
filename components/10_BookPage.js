@@ -188,7 +188,7 @@ class BookPage extends React.Component {
         ],
         { cancelable: true }
       );
-    } else if (!this.props.error && this.props.appointment) {
+    } else if (!this.props.error) {
       Alert.alert(
         'Booking Successful',
         'Thank you for booking',

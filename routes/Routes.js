@@ -49,7 +49,6 @@ import {
     MenuOption,
     MenuTrigger,
 } from 'react-native-popup-menu';
-import { navStyles } from '../styles/styles';
 
 const optionsStyles = {
     optionsContainer: {
