@@ -37,9 +37,6 @@ class Home extends React.Component {
       console.log(`Error! Details: ${e}`);
       this.props.navigation.navigate('Login');
     }
-
-
-
   }
 
   SeeAll() {
@@ -51,15 +48,12 @@ class Home extends React.Component {
   }
 
   Profile = async (uid) => {
-
     await this.props.getConsultant(uid);
     await this.props.getReviews(uid);
     if (this.props.singleConsultant.office_details != null) {
-      this.props.navigation.navigate('ProfileTab')
+      this.props.navigation.navigate('Profile')
     }
   }
-
-
 
   render() {
     const images = [
@@ -85,7 +79,7 @@ class Home extends React.Component {
       },
       {
         key: 2,
-        userSpecialty: "ARCHITECTS",
+        userSpecialty: "Architects",
       },
       {
         key: 3,
@@ -93,13 +87,9 @@ class Home extends React.Component {
       },
       {
         key: 4,
-        userSpecialty: "LAWYERS",
+        userSpecialty: "Lawyers",
       },
     ]
-
-
-
-
 
     //const users = Array.from(this.props.consultant);
     if (this.props.navigation.state) {

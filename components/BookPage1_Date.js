@@ -69,7 +69,7 @@ class BookPage1_Date extends React.Component {
               renderItem={({ item }) => <Text style={calendarStyles.calendar_legend_text}>{item.day} ({item.day.substr(0, 3)})</Text>}
               />
             </View>
-            <View style={calendarStyles.calendar_legend_container}>
+            {/* <View style={calendarStyles.calendar_legend_container}>
               <Text style={calendarStyles.calendar_legend_label}>Legend:</Text>
               <View style={calendarStyles.calendar_legend_text_container}>
                 <View style={calendarStyles.calendar_legend_finished_hue}></View>
@@ -79,7 +79,7 @@ class BookPage1_Date extends React.Component {
                 <View style={calendarStyles.calendar_legend_unavailable_hue}></View>
                 <Text style={calendarStyles.calendar_legend_text}> - Occupied Date</Text>
               </View>
-            </View>
+            </View> */}
           </View>
         </React.Fragment>
       );

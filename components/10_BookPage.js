@@ -59,6 +59,11 @@ class BookPage extends React.Component {
         });
       });
       await this.setState(() => ({ daysAvailable }))
+      console.log('================days available===================');
+      console.log(daysAvailable);
+      console.log('================consultant data===================');
+      console.log(this.props.singleConsultant);
+      console.log('==================================================');
     }
   }
   showOccupiedDates = () => {
@@ -195,7 +200,10 @@ class BookPage extends React.Component {
         [
           {
             text: 'OK',
-            onPress: () => this.props.navigation.navigate("Calendar1") 
+            onPress: () => {
+              this.props.navigation.navigate("Home");
+              this.props.navigation.navigate("Calendar1");
+            }
           }
         ],
         { cancelable: true }

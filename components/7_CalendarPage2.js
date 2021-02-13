@@ -20,7 +20,6 @@ class CalendarPage2 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isClient: true,
       isNotifyModalVisible: false,
       isNotifyAllModalVisible: false,
       isConfirmModalVisible: false,
