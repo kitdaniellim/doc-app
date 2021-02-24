@@ -2,16 +2,73 @@ import React from 'react';
 import { Text, FlatList, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
+import moment from "moment";
 import { calendarStyles, globalStyles } from '../styles/styles';
 
 class BookPage1_Date extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      AVAILABLE_DAYS: [],
+      markedDates: this.getDaysInMonth(moment().month(), moment().year(), [])
+    }
   }
+
+  componentDidMount() {
+
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(this.props !== prevProps) {
+      console.log(this.props.daysAvailable)
+      console.log(prevProps.daysAvailable)
+
+
+      const AVAILABLE_DAYS = [];
+      this.props.daysAvailable.forEach((item) => {
+        AVAILABLE_DAYS.push(item.day);
+      })
+      
+      console.log('============AVAILABLE DAYS BRO==============');
+      this.setState(() => ({ 
+        AVAILABLE_DAYS: AVAILABLE_DAYS
+      }));
+      console.log(this.state.AVAILABLE_DAYS);
+      console.log('===========================================');
+
+      this.setState(() => ({ 
+        markedDates: this.getDaysInMonth(moment().month(), moment().year(), AVAILABLE_DAYS)
+      }));
+    } 
+    // else {
+    //   console.log("we're fucked homes");
+    // }
+  }
+
+  getDaysInMonth(month, year, days) {
+    let pivot = moment().month(month).year(year).startOf('month')
+    const end = moment().month(month).year(year).endOf('month')
+
+    let dates = {}
+    const available = { selected: true, selectedColor: '#56EC65' }
+    while (pivot.isBefore(end)) {
+      days.forEach((day) => {
+        // console.log(pivot.day(day).format("YYYY-MM-DD"));
+        if(pivot.day(day).isAfter(new Date())){
+          dates[pivot.day(day).format("YYYY-MM-DD")] = available
+        }
+      })
+      pivot.add(7, 'days')
+    }
+
+    return dates
+  }
+
   render() {
     if (this.props.currentStep !== 1) {
       return null;
     } else {
+
       return (
         <React.Fragment>
           <View style={calendarStyles.header_container}>
@@ -40,7 +97,12 @@ class BookPage1_Date extends React.Component {
                 style={{
                   borderRadius: 15,
                 }}
-                markedDates={this.props.occupied_dates_obj}
+                markedDates={this.state.markedDates}
+                onMonthChange={(date) => {
+                  this.setState({
+                    markedDates: this.getDaysInMonth(date.month - 1, date.year, this.state.AVAILABLE_DAYS)
+                  })
+                }}
                 disableAllTouchEventsForDisabledDays={true}
                 theme={{
                   backgroundColor: '#fff',
@@ -60,13 +122,14 @@ class BookPage1_Date extends React.Component {
                     }
                   }
                 }}
+              // enableSwipeMonths={true}
               />
             </View>
             <View style={calendarStyles.calendar_legend_container}>
               <Text style={calendarStyles.calendar_legend_label}>Available Days:</Text>
               <FlatList
                 data={this.props.daysAvailable}
-              renderItem={({ item }) => <Text style={calendarStyles.calendar_legend_text}>{item.day} ({item.day.substr(0, 3)})</Text>}
+                renderItem={({ item }) => <Text style={calendarStyles.calendar_legend_text}>{item.day} ({item.day.substr(0, 3)})</Text>}
               />
             </View>
             {/* <View style={calendarStyles.calendar_legend_container}>
