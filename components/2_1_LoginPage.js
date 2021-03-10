@@ -10,12 +10,15 @@ import { updateEmail, updatePassword, login, logout, getUser } from '../actions/
 import { resetAppointments } from '../actions/appointments';
 import Firebase, { db } from '../config/Firebase';
 import AsyncStorage from "@react-native-community/async-storage";
+
+import RNRestart from 'react-native-restart'; 
+import { Util } from 'expo';
+
 class Login extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      isModalVisible: false,
       toggleModal: false,
       email: '',
       password: ''
@@ -34,6 +37,14 @@ class Login extends React.Component {
       alert('Error in removing session');
     }
   }
+
+
+  // componentWillUnmount(){
+  //   console.log('=========================ITS UNMOUNTING');
+  //   RNRestart.Restart();
+  //   console.log('i want to restaarttt');
+  // }
+
   Home() {
     this.props.navigation.navigate('Home');
 
@@ -53,7 +64,7 @@ class Login extends React.Component {
   }
   handleLogin = async () => {
     if (this.state.email === '' || this.state.password === '') {
-      this.setstate({
+      this.setState({
         toggleModal: true
       })
     } else {
@@ -64,7 +75,23 @@ class Login extends React.Component {
       if (this.props.user.email) {
         console.log(`login successful`)
         AsyncStorage.setItem('user', JSON.stringify(this.props.user));
-        this.props.navigation.navigate("Home");
+        console.log(`NGEKNGOK HEHEHEH=================== gonna do shit here`)
+        console.log(this.props)
+        // RNRestart.Restart();
+        // Util.reload();
+        // AsyncStorage.setItem('reviews', JSON.stringify(this.props.user));
+        // DevSettings.reload()
+        // console.log('before rest')
+
+
+
+
+        // RNRestart.Restart();
+        
+        
+        
+        this.props.navigation.navigate('Tutorial');
+        // this.props.navigation.navigate('Home');
       } else {
         alert("Error in logging in!");
       }
@@ -88,7 +115,7 @@ class Login extends React.Component {
           style={globalStyles.gradient}
         >
           <Modal
-            isVisible={this.state.isModalVisible}
+            isVisible={this.state.toggleModal}
             animationIn='bounceInDown'
             animationOut='bounceOutUp'
             animationInTiming={1100}
@@ -149,7 +176,7 @@ class Login extends React.Component {
             <View style={loginStyles.forms_button_container}>
               <TouchableOpacity
                 activeOpacity={0.6}
-                onPress={this.handleLogin}
+                onPress={this.handleLogin }
                 style={loginStyles.forms_button}
               >
                 <Text style={loginStyles.forms_button_label}>LOGIN</Text>

@@ -43,6 +43,8 @@ target 'AppointmentApp' do
 
   pod 'react-native-document-picker', :path => '../node_modules/react-native-document-picker'
 
+  pod 'react-native-restart', :path => '../node_modules/react-native-restart'
+
   target 'AppointmentAppTests' do
     inherit! :search_paths
     # Pods for testing

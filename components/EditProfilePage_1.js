@@ -6,8 +6,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Modal from 'react-native-modal';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {  getConsultant,  updateProfileImage, updateOfficeImage, editProfile, updateLocation} from '../actions/users';
-  
+import { getConsultant, updateProfileImage, updateOfficeImage, editProfile, updateLocation } from '../actions/users';
+
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 //import Firebase, { db } from '../config/Firebase'
@@ -25,15 +25,15 @@ class EditProfile_1 extends React.Component {
       locationInput: [],
       text: '',
       isModalVisible: false,
-      locArray: [ ],
-      office_details: [ {
+      locArray: [],
+      office_details: [{
         id: 0,
         location: '',
         hours: [],
         days: [],
         to_hour: '',
-        from_hour:'',
-        
+        from_hour: '',
+
       }],
       detailKey: 0,
       detailLocation: ''
@@ -44,11 +44,10 @@ class EditProfile_1 extends React.Component {
     }
     console.log(this.props);
   }
-    
+
   // toggleModal(visible) {
   //   this.setState({ isModalVisible: visible })
   // }
-
   // Confirm = () => {
   //   let text = this.state.text
   //   const navigation = this.props.navigation;
@@ -63,26 +62,24 @@ class EditProfile_1 extends React.Component {
     const navigation = this.props.navigation;
     console.log("Sa add office hours ni")
     console.log(count);
-    navigation.navigate('EditProfile_2',{
+    navigation.navigate('EditProfile_2', {
       location: location,
       count: count
     });
   }
 
   updateLocationArray = (location, count) => {
-
     let updateLocArray = [];
-    var data = {location, count};
+    var data = { location, count };
 
     // updateLocArray.push(data);  
-    
     // console.log("Sa array na ni");
     // console.log(location, count);
   }
 
-  updateLocation = (location, key) => {    
+  updateLocation = (location, key) => {
     // Add location
-    const user_location ={
+    const user_location = {
       id: key,
       location: location
     }
@@ -91,7 +88,7 @@ class EditProfile_1 extends React.Component {
     console.log(this.props.updateLocation);
   }
   updateHours = (hours, key) => {
-    
+
   }
   addLocation = () => {
     let locationInput = this.state.locationInput;
@@ -106,14 +103,14 @@ class EditProfile_1 extends React.Component {
             placeholder="Location"
             placeholderTextColor="#8B8787"
             style={signupStyles.forms_textinput}
-            onChangeText={ text => this.updateLocation( text , key)}
-            //onChangeText = { text => this.props.update_location( text, key )}
-            //onChangeText={text => this.setState({ text })}
+            onChangeText={text => this.updateLocation(text, key)}
+          //onChangeText = { text => this.props.update_location( text, key )}
+          //onChangeText={text => this.setState({ text })}
           />
         </View>
         <View style={signupStyles.forms_add_textinput_container}>
           <TouchableOpacity
-            activeOpacity={0.6}   
+            activeOpacity={0.6}
             style={signupStyles.forms_add_textinput_button_container}
             onPress={() => this.addOfficeHours(this.state.text, this.state.count)}
           >
@@ -150,7 +147,7 @@ class EditProfile_1 extends React.Component {
       locationInput
     });
   }
-  
+
   async checkCameraRollPermission() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL)
     if (status !== 'granted') {
@@ -181,36 +178,38 @@ class EditProfile_1 extends React.Component {
 
     const checkPermissions = await this.checkCameraRollPermission()
     console.log(checkPermissions, '--what is returned here determins the permissions');
-     if (!checkPermissions) return
- 
-     let result = await ImagePicker.launchImageLibraryAsync({
-       allowsEditing: true,
-       aspect: [4, 3],
-     });
- 
-     console.log(result);
- 
-     if (!result.cancelled) {
-       if(text === 'Profile'){
-        this.props.updateProfileImage(result.uri);
-       }else{
-        this.props.updateOfficeImage(result.uri);
-       }
+    if (!checkPermissions) return
 
-     }
-   };
+    let result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      if (text === 'Profile') {
+        this.props.updateProfileImage(result.uri);
+      } else {
+        this.props.updateOfficeImage(result.uri);
+      }
+
+    }
+  };
   confirmEdit = (navigation) => {
     console.log("wa diay no sud diri")
     //alert("BULLSHIT")
-    
-      this.props.editProfile();
-      //this.props.navigation.navigate("ProfileTab");
-      navigation.navigate('ProfileTab');
-    
+
+    this.props.editProfile();
+    this.props.navigation.navigate('Profile');
+
   }
- 
+
 
   render() {
+    console.log('====== START OF EDIT PROFILE THINGS ======');
+    console.log(this.props);
+    console.log('====== END OF EDIT PROFILE THINGS ======');
     const office_details = {
       key: '',
       location: '',
@@ -254,8 +253,8 @@ class EditProfile_1 extends React.Component {
           <View style={profileStyles.forms_container}>
             <ScrollView
               showsVerticalScrollIndicator={false}
-              contentContainerStyle={{ 
-                flexGrow: 1, 
+              contentContainerStyle={{
+                flexGrow: 1,
                 justifyContent: 'space-around',
                 marginVertical: 10,
                 paddingBottom: 20
@@ -267,7 +266,7 @@ class EditProfile_1 extends React.Component {
                 </View>
                 <View style={profileStyles.profile_officeimg_container}>
                   <Image
-                    source={{uri:this.props.singleConsultant.officeImage}}
+                    source={{ uri: '' + this.props.singleConsultant.officeImage + '' }}
                     style={profileStyles.profile_officeimg}
                   />
                 </View>
@@ -279,10 +278,11 @@ class EditProfile_1 extends React.Component {
                   <Text style={profileStyles.forms_chooseimg_button_text} > CHOOSE OFFICE IMAGE </Text>
                 </TouchableOpacity>
                 <View style={profileStyles.forms_editbio_container}>
-                  <View style={{ flexDirection: 'row', justifyContent: 'space-around'}}>
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
                     <View style={profileStyles.profile_b_info_profileimg_container}>
                       <Image
-                        source={{uri:this.props.singleConsultant.profilePicture}}
+                        source={{ uri: '' + this.props.singleConsultant.profilePicture + '' }}
+                        // source={{ uri: this.props.singleConsultant.profilePicture }}
                         style={profileStyles.profile_b_info_profileimg}
                       />
                     </View>
@@ -291,7 +291,7 @@ class EditProfile_1 extends React.Component {
                         multiline
                         style={profileStyles.forms_textinput}
                         onChangeText={text => this.setState({ bio: text })}
-                        // value={this.state.bio}
+                      // value={this.state.bio}
                       />
                     </View>
                   </View>
@@ -299,11 +299,11 @@ class EditProfile_1 extends React.Component {
                 <TouchableOpacity
                   activeOpacity={0.6}
                   style={profileStyles.forms_chooseimg_button_container}
-                  onPress={ () => this._pickImage('Profile') }
+                  onPress={() => this._pickImage('Profile')}
                 >
                   <Text style={profileStyles.forms_chooseimg_button_text} > CHOOSE PROFILE IMAGE </Text>
                 </TouchableOpacity>
-               </View>
+              </View>
               <View>
                 <View style={profileStyles.forms_label_small_container}>
                   <Text style={profileStyles.forms_label_small}>Office Details:</Text>
@@ -347,7 +347,7 @@ class EditProfile_1 extends React.Component {
               <TouchableOpacity
                 activeOpacity={0.6}
                 style={profileStyles.forms_button}
-                onPress={ this.confirmEdit }
+                onPress={this.confirmEdit}
               >
                 <Text style={profileStyles.forms_button_label}>CONFIRMZ</Text>
               </TouchableOpacity>
@@ -361,15 +361,15 @@ class EditProfile_1 extends React.Component {
 
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ getConsultant, updateProfileImage, editProfile, updateOfficeImage, updateLocation}, dispatch)
+  return bindActionCreators({ getConsultant, updateProfileImage, editProfile, updateOfficeImage, updateLocation }, dispatch)
 }
 const mapStateToProps = state => {
-	return {
-    user : state.users,
+  return {
+    user: state.users,
     consultant: state.users,
     singleConsultant: state.users,
     locArray: state.locArray
-  	}
+  }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(EditProfile_1);
 //export default HomeClient;

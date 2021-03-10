@@ -50,11 +50,12 @@ export default (state = reducerDefaultState, action) => {
         case GET_REVIEWS:
             return { reviews_users: action.payload.reviews_users }
         case UPDATE_PROFILE_IMAGE:
-            return state.map((value, i) => {
-                if (action.payload.uri.index === i) {
-                    return value
-                }
-            })
+            // return state.map((value, i) => {
+            //     if (action.payload.uri.index === i) {
+            //         return value
+            //     }
+            // })
+            return { ...state, profilePicture: action.payload.uri }
         case UPDATE_OFFICE_IMAGE:
             return { ...state, officeImage: action.payload.uri }
         case UPDATE_OFFICE_DETAILS:

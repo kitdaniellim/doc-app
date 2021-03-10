@@ -57,14 +57,6 @@ export default class App extends React.Component {
     // console.log('===========================================');
   }
 
-  async getUserType(){
-    const user = JSON.parse(
-      await AsyncStorage.getItem("user")
-    );
-    console.log(user.userType);
-    return user.userType;
-  }
-
   render() {
     return (
       <Provider store={store}>

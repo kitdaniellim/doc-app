@@ -15,8 +15,6 @@ class ProfileTab extends React.Component {
     this.state = {
       user: {}
     }
-
-
   }
 
   Edit = (uid) => {
@@ -28,6 +26,11 @@ class ProfileTab extends React.Component {
     }
 
   }
+
+  BackToProfile = () => {
+    (this.state.user.userType === "CONSULTANT") ? this.props.navigation.replace('Profile') : this.props.navigation.goBack()
+    
+  };
 
   List({ items, fallback }) {
     if (!items || items.length === 0) {
@@ -51,6 +54,11 @@ class ProfileTab extends React.Component {
         await AsyncStorage.getItem("user")
       );
       await this.setState(() => ({ user }));
+      console.log('inside compoent dIDD MOUNT========================')
+      console.log(this.state.user)
+      console.log('inside compoent dIDD MOUNT but PROPS========================')
+      console.log(this.props)
+
     } catch (e) {
       console.log(`Error! Details: ${e}`);
     }
@@ -65,8 +73,15 @@ class ProfileTab extends React.Component {
   }
 
   render() {
-    const consultant = this.props.singleConsultant,
+
+    let consultant = this.props.navigation.state.params.singleConsultant,
       reviews = this.props.reviews;
+    // if (consultant === undefined) {
+    //   console.log('SHOWING something============')
+    //   console.log(this.props.navigation.state.params.singleConsultant)
+    //   console.log('END OF something============')
+    //   consultant = this.props.navigation.state.params.singleConsultant
+    // }
 
     let sum = 0, average = 0;
 
@@ -92,8 +107,17 @@ class ProfileTab extends React.Component {
 
         <View style={profileStyles.header_container}>
           <View style={profileStyles.header_text_container}>
-            <Text style={profileStyles.header_text_bold}>MY PROFILE: {consultant.fullName} USER: {this.props.singleConsultant.fullName} </Text>
+            <Text style={profileStyles.header_text_bold}>PROFILE: {consultant.fullName} </Text>
           </View>
+          {this.state.user.uid !== consultant.uid ? 
+            <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={this.BackToProfile}
+              style={profileStyles.header_icon_container}
+            >
+              <Icon style={globalStyles.icon_global} name="times" size={18} />
+            </TouchableOpacity>
+          : null}
         </View>
         <View style={profileStyles.scaffold}>
           <View style={profileStyles.profile_container}>
@@ -149,33 +173,27 @@ class ProfileTab extends React.Component {
                 <Text style={profileStyles.profile_hours_header}>Office Hours</Text>
                 <View style={profileStyles.divider} />
                 {
-                  office.map((data) => {
+                  office.map((data, i) => {
                     return (
-                      <View style={profileStyles.profile_hours_details}>
+                      <View key={i} style={profileStyles.profile_hours_details}>
                         <Text>
                           {data.office_location}{"\n"}
                           {data.office_hour_from} - {data.office_hour_to}
                         </Text>
                         <Text>Days: </Text>
-                        { data.office_day.map((data1) => {
+                        { data.office_day.map((data1, i) => {
                           return (
-                            <Text key={data.uid}>{data1}</Text>
-
+                            <Text key={i}>{data1}</Text>
                           )
-
-
                         })}
-
                       </View>
-
-
                     )
                   })
                 }
 
               </View>
               <View style={profileStyles.divider} />
-              {this.props.singleConsultant.uid === this.state.user.uid ? <TouchableOpacity
+              {consultant.uid === this.state.user.uid ? <TouchableOpacity
                 activeOpacity={0.6}
                 style={profileStyles.edit_button}
                 onPress={() => this.Edit(consultant.uid)}
@@ -185,7 +203,7 @@ class ProfileTab extends React.Component {
                 activeOpacity={0.6}
                 style={profileStyles.edit_button}
                 onPress={() => {
-                  this.Paypal(this.props.singleConsultant.uid)
+                  this.Paypal(consultant.uid)
                 }}
               >
                 <Text style={profileStyles.edit_button_label}>BOOK</Text>

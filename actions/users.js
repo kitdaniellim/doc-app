@@ -162,15 +162,13 @@ export const login = (email, password) => {
             console.log(email);
             await Firebase.auth().signInWithEmailAndPassword(email, password).then(async (result) => {
                 await db
-                .collection('users')
-                .doc(result.user.uid)
-                .get()
-                .then((doc) => {
-                    dispatch({ type: LOGIN, payload: { user: doc.data() } })
-                });
+                    .collection('users')
+                    .doc(result.user.uid)
+                    .get()
+                    .then((doc) => {
+                        dispatch({ type: LOGIN, payload: { user: doc.data() } })
+                    });
             });
-            
-
         } catch (e) {
             Alert.alert(
                 'Error!',
@@ -226,12 +224,26 @@ export const signup = () => {
                     officeImage: await Firebase.storage().ref('users/default/office.jpg').getDownloadURL().catch((error) => { alert("error sa geturl") })
                 }
                 db.collection('users').doc(response.user.uid).set(user);
+
+                // const notif = {
+                //   notifs: []
+                //   uid: response.user.uid,
+                //     
+                // }
+
+                // db.collection('notifs').doc(response.user.uid).set(notif);
+
+
+
                 dispatch({ type: SIGNUP, payload: { user: response.user } })
                 // }
 
 
-            }
 
+
+
+
+            }
         } catch (e) {
             alert(e)
         }
@@ -277,16 +289,11 @@ export const getAllConsultant = () => {
             //    console.log("Snapshot");
             //     console.log(snapshot);
             const consultant = snapshot.docs.map(doc =>
-
                 doc.data()
-
             )
-            //  console.log("conz01");
-            //  console.log(consultant);
             consultant.map((data) => {
                 //var reviews_details = _.keyBy(data.userReviews);
                 //var reviews = _.values(data.userReviews);
-
                 var i = 0;
                 data.userReviews.map((data1) => {
                     i += data1.rating;
@@ -418,21 +425,33 @@ export const officePicture = async (uid, officeImage) => {
 /* DEV: EJA - Event for updating consultant profile picture*/
 export const editProfile = () => {
     return async (dispatch, getState) => {
+        console.log('===== DISPLAYING SHIT =====')
+        console.log(getState());
+        console.log('===== DISPLAYING SHIT =====')
         try {
 
             const { uid, profilePicture, officeImage, day, from_hour, to_hour } = getState().singleConsultant
-            //alert(officeImage)
+
+            console.log('===== DISPLAYING SHIT =====')
+            console.log(uid)
+            console.log('-----------------------------')
+            console.log(profilePicture)
+            console.log('-----------------------------')
+            console.log(officeImage)
+            console.log('-----------------------------')
+            console.log(day)
+            console.log('-----------------------------')
+            console.log(from_hour)
+            console.log('-----------------------------')
+            console.log(to_hour)
+            console.log('===== DISPLAYING SHIT =====')
 
             if (profilePicture) {
                 profileImage(uid, profilePicture);
             }
             if (officeImage) {
-                //alert("hi")
-
                 officePicture(uid, officeImage);
             }
-
-
             // //const{ arr } = getState().locArray;
             // console.log("sa edit prof ni nga consultant");
             // console.log(getState());
@@ -449,18 +468,15 @@ export const editProfile = () => {
 
             // const url = await snapshot.ref.getDownloadURL();
             //  
-
-
         } catch (e) {
+            console.log('the error is over here my dude===================================')
             alert(e);
         }
-
     }
 }
 
 /* DEV: EJA - Event for updating email */
 export const updateLocation = user_location => {
-
     return {
         type: UPDATE_LOCATION_DETAIL,
         payload: { user_location }

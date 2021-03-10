@@ -2,7 +2,8 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
 import { createStackNavigator } from 'react-navigation-stack';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
-
+import Firebase from '../config/Firebase';
+import { getReviews } from '../actions/reviews';
 
 //Auth Screens
 import Landing from '../components/1_LandingPage.js';
@@ -53,10 +54,11 @@ import {
 } from 'react-native-popup-menu';
 
 class Routes extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
-            user: {},
+            user: { userType: 'null' },
+            reviews: []
         }
     }
 
@@ -64,16 +66,59 @@ class Routes extends React.Component {
         const user = JSON.parse(
             await AsyncStorage.getItem("user")
         );
-        this.setState(() => ({ user }));
+        
+        if(user != null) {
+            this.setState(() => ({ user }));
+        }
+        
+        console.log('SHOWING data============')
+        // await this.state.reviews.getReviews(this.state.user.uid);
+        console.log(this.state.user)
+        // console.log(reviews)
+        console.log('END OF data============')
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if (this.props !== prevProps) {
+            console.log('SHOWING PROPS============')
+            console.log(this.props)
+            console.log('END OF PROPS============')
+        }
+    }
+
+    // async getUser() {
+    //     const user = JSON.parse(
+    //         await AsyncStorage.getItem("user")
+    //     );
+    //     this.props.getAllConsultant();
+    //     console.log('SHOWING PROPS============')
+    //     console.log(this.props)
+    //     console.log('END OF PROPS============')
+    //     this.setState(() => ({ user }));
+
+    //     console.log('SHOWING USER============')
+    //     console.log(this.state.user)
+    //     console.log('END OF USER============')
+    // }
+
+    // componentDidUpdate(prevProps, prevState) {
+    //     if (this.state !== prevState) {
+    //         console.log('------------------------')
+    //         console.log('CHANGING USER')
+    //         console.log(this.state.user)
+    //         console.log(prevState.user)
+    //         console.log('------------------------')
+    //         this.getUser();
+    //     } else {
+    //         console.log('nothing happens')
+    //     }
+    // }
+
     render() {
-        // console.log('tf is happening?');
-        // console.log(this.state.user);
         const getTabs = () => {
-            console.log('=============NGEKNGOK USERTYPE FR=============');
-            console.log(this.state.user.userType);
-            console.log('==========================');
+            // console.log('SHOWING PROPS============')
+            // console.log(this.props)
+            // console.log('END OF PROPS============')
 
             let ret;
             switch (this.state.user.userType) {
@@ -85,7 +130,7 @@ class Routes extends React.Component {
                     break;
                 default:
                     ret = consultantTabNavigator;
-                    console.log('result was neitherm this is a problem?')
+                    console.log('still processing user type data..')
             }
             return ret;
         }
@@ -235,6 +280,7 @@ class Routes extends React.Component {
         const profileScreens = {
             Profile: {
                 screen: Profile,
+                params: { singleConsultant: this.state.user, reviews: [] },
             },
             EditProfile_1: {
                 screen: EditProfile_1,
@@ -245,7 +291,8 @@ class Routes extends React.Component {
         }
 
         const HomeStack = createStackNavigator(
-            (this.state.user.userType == "CLIENT") ?  homeScreensC : homeScreens,
+            // ("CLIENT" == "CLIENT") ? homeScreensC : homeScreens,
+            (this.state.user.userType == "CLIENT") ? homeScreensC : homeScreens,
             {
                 defaultNavigationOptions: {
                     headerShown: false
@@ -424,7 +471,7 @@ class Routes extends React.Component {
                 inactiveColor: '#CFCFCF',
             }
         )
-        
+
         //Array for Notifications
         const notifs = [
             {
@@ -511,7 +558,8 @@ class Routes extends React.Component {
                                 <Menu onSelect={
                                     value => {
                                         if (value === 1) {
-                                            navigation.navigate('Login')
+                                            Firebase.auth().signOut()
+                                            navigation.popToTop() && navigation.navigate('Login');
                                         } else {
                                             navigation.navigate('Home', { action: -1 })
                                         }
@@ -528,7 +576,7 @@ class Routes extends React.Component {
                                     </MenuTrigger>
                                     <MenuOptions customStyles={optionsStyles}>
                                         <MenuOption value={1} text='Sign Out' />
-                                        <MenuOption value={2} text='About Us' />
+                                        {/* <MenuOption value={2} text='About Us' /> */}
                                     </MenuOptions>
                                 </Menu>
                             </View>

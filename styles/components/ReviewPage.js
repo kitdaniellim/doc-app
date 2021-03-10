@@ -11,7 +11,9 @@ const Review = {
     header_container: {
       flexDirection: 'row',
       height: 40,
+      backgroundColor: 'white',
       alignSelf: 'stretch',
+      backgroundColor: 'white',
       justifyContent: 'flex-start',
       borderBottomColor: '#8B8787',
       borderBottomWidth: 1

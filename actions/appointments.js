@@ -92,6 +92,8 @@ export const getAppointments = (client_id, consultant_id = null) => {
 export const bookAppointment = (data) => {
   return async (dispatch) => {
     dispatch(loadBegin());
+
+
     let hasError = false;
     const new_id = uuid.v1();
     data.uid = new_id;
@@ -106,6 +108,13 @@ export const bookAppointment = (data) => {
       });
     });
     if (!hasError) {
+
+      // let consultantNotif = 'This client would like to book an appointment with you'
+      // const notif = {
+      //   notifs: consultantNotif,
+      // }
+      // db.collection("notifs").doc(data.uid).set(notif);
+
       db.collection("appointments")
         .doc(data.uid)
         .set(data)
@@ -115,6 +124,10 @@ export const bookAppointment = (data) => {
         .catch((error) => {
           dispatch(bookAppointmentFailure(error));
         });
+
+
+
+
     } else {
       dispatch(bookAppointmentFailure("Error in Booking Appointment"));
     }
@@ -126,19 +139,19 @@ export const updateAppointmentStatus = (id, status, reason = "") => {
     dispatch(loadBegin());
     const ref = db.collection("appointments").doc(id);
     ref.update({
-        status: status,
-        updated_at: moment().format('YYYY-MM-DD HH:mm:ss').toString()
-      }).then(() => {
-        if (reason != "") {
-          ref.set({
-            reason
+      status: status,
+      updated_at: moment().format('YYYY-MM-DD HH:mm:ss').toString()
+    }).then(() => {
+      if (reason != "") {
+        ref.set({
+          reason
         }, { merge: true });
-        }
-      }).then((result) => {
-        dispatch(updateAppointmentStatusSuccess(result));
-      }).catch((error) => {
-        dispatch(updateAppointmentStatusFailure(error));
-      });
+      }
+    }).then((result) => {
+      dispatch(updateAppointmentStatusSuccess(result));
+    }).catch((error) => {
+      dispatch(updateAppointmentStatusFailure(error));
+    });
 
   }
 }

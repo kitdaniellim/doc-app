@@ -14,12 +14,12 @@ export default class ImageLoader extends React.Component {
                 duration: 800,
                 useNativeDriver: true
             }),
-            Animated.timing(this.state.yValue, {
-                toValue: -190,
-                duration: 1200,
-                useNativeDriver: true,
-                asing: Easing.linear
-            })
+            // Animated.timing(this.state.yValue, {
+            //     toValue: -190,
+            //     duration: 1200,
+            //     useNativeDriver: true,
+            //     asing: Easing.linear
+            // })
         ]).start()
     }
 

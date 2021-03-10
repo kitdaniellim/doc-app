@@ -19,7 +19,9 @@ export const addReview = (data) => {
 }
 
 export const getReviews = (id) => {
+    console.log('went in')
     return async dispatch => {
+        console.log('buuuuut did it go in here??')
         try {
             dispatch(loadBegin());
             db.collection("reviews")
@@ -33,6 +35,7 @@ export const getReviews = (id) => {
                     await dispatch(getReviewsSuccess(results));
                 })
         } catch (error) {
+            console.log('idfk what happened lol')
             dispatch(getReviewsFailure(error))
         }
     }

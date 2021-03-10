@@ -27,7 +27,7 @@ class Home extends React.Component {
       if (!user) {
         this.props.navigation.navigate('Login');
       } else {
-        console.log(this.props)
+        // console.log(this.props)
         this._isMounted = true;
         if (this._isMounted) {
           this.props.getAllConsultant();
@@ -50,8 +50,9 @@ class Home extends React.Component {
   Profile = async (uid) => {
     await this.props.getConsultant(uid);
     await this.props.getReviews(uid);
+
     if (this.props.singleConsultant.office_details != null) {
-      this.props.navigation.navigate('Profile')
+      this.props.navigation.navigate('Profile', { singleConsultant: this.props.singleConsultant, reviews: this.props.reviews })
     }
   }
 
@@ -92,10 +93,12 @@ class Home extends React.Component {
     ]
 
     //const users = Array.from(this.props.consultant);
+    //Not sure when this fires
     if (this.props.navigation.state) {
       if (this.props.navigation.state.params) {
         Firebase.auth().signOut()
-        this.props.navigation.navigate('Login')
+        console.log('this happened')
+        this.props.navigation.reset('Login')
       }
     }
 
