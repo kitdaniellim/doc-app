@@ -62,7 +62,6 @@ export default class App extends React.Component {
       <Provider store={store}>
         <MenuProvider>
           <Routes/>
-          {/* <Routes userType = {this.getUserType()}/> */}
         </MenuProvider>
       </Provider>
     );

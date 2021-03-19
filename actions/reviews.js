@@ -19,9 +19,7 @@ export const addReview = (data) => {
 }
 
 export const getReviews = (id) => {
-    console.log('went in')
     return async dispatch => {
-        console.log('buuuuut did it go in here??')
         try {
             dispatch(loadBegin());
             db.collection("reviews")
@@ -35,11 +33,70 @@ export const getReviews = (id) => {
                     await dispatch(getReviewsSuccess(results));
                 })
         } catch (error) {
-            console.log('idfk what happened lol')
             dispatch(getReviewsFailure(error))
         }
     }
 }
+
+export const getReviewedBy = (id) => {
+    return async dispatch => {
+        try {
+            dispatch(loadBegin());
+            db.collection("reviews")
+                .where("reviewer_id", "==", id)
+                .onSnapshot(async (querySnapShot) => {
+                    let results = [];
+                    querySnapShot.forEach((doc) => {
+                        results.push(doc.data());
+                    });
+                    results.sort((a, b) => b.created_at - a.created_at);
+                    console.log('=====showing getReviewedBy results ======')
+                    console.log(results)
+                    console.log('=====showing results ======')
+                    await dispatch(getReviewsSuccess(results));
+                })
+        } catch (error) {
+            dispatch(getReviewsFailure(error))
+        }
+    }
+}
+
+export const getReviewByUID = (id) => {
+    return async dispatch => {
+        try {
+            dispatch(loadBegin());
+            db.collection("reviews")
+                .where("uid", "==", id)
+                .onSnapshot(async (querySnapShot) => {
+                    let results = [];
+                    querySnapShot.forEach((doc) => {
+                        results.push(doc.data());
+                    });
+                    console.log('=====showing getReviewByUID results ======')
+                    console.log(results)
+                    console.log('=====showing results ======')
+                    await dispatch(getSingleReviewSuccess(results));
+                })
+        } catch (error) {
+            dispatch(getReviewsFailure(error))
+        }
+    }
+}
+
+export const updateReview = (id, rating, text) => {
+    return async (dispatch) => {
+      dispatch(loadBegin());
+      const ref = db.collection("reviews").doc(id);
+      ref.update({
+        comment: text,
+        rating: rating
+      }).then((result) => {
+        dispatch(updateReviewSuccess(result));
+      }).catch((error) => {
+        dispatch(updateReviewFailure(error));
+      });
+    }
+  }
 
 //CALL BEFORE EVERY OPERATION
 export const loadBegin = () => ({
@@ -63,7 +120,22 @@ export const getReviewsSuccess = (results) => ({
     payload: { results }
 });
 
+export const getSingleReviewSuccess = (single_review) => ({
+    type: "GET_SINGLE_REVIEW_SUCCESS",
+    payload: { single_review }
+});
+
 export const getReviewsFailure = (error) => ({
     type: "GET_REVIEWS_FAILURE",
+    payload: { error }
+})
+
+export const updateReviewSuccess = (results) => ({
+    type: "UPDATE_REVIEW_SUCCESS",
+    payload: { results }
+});
+
+export const updateReviewFailure = (error) => ({
+    type: "UPDATE_REVIEW_FAILURE",
     payload: { error }
 })

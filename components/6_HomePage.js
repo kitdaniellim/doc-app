@@ -1,5 +1,6 @@
 import React from 'react';
-import { Text, Image, View, FlatList, RefreshControl, TouchableOpacity, ScrollView } from 'react-native';
+import { Text, Image, View, FlatList, TouchableOpacity, ScrollView } from 'react-native';
+import { BackgroundCarousel } from './custom/BackgroundCarousel'
 import { homeStyles } from '../styles/styles';
 import { getAllConsultant, getConsultant, getReviewsConsultant } from '../actions/users';
 import { getReviews } from '../actions/reviews';
@@ -27,7 +28,6 @@ class Home extends React.Component {
       if (!user) {
         this.props.navigation.navigate('Login');
       } else {
-        // console.log(this.props)
         this._isMounted = true;
         if (this._isMounted) {
           this.props.getAllConsultant();
@@ -39,8 +39,8 @@ class Home extends React.Component {
     }
   }
 
-  SeeAll() {
-    this.props.navigation.navigate('Search');
+  SeeAll(userSpecialty) {
+    this.props.navigation.navigate('Search', { userSpecialty: userSpecialty });
   }
 
   Field() {
@@ -57,7 +57,8 @@ class Home extends React.Component {
   }
 
   render() {
-    const images = [
+
+    let images = [
       {
         key: 1,
         img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/homepage%2Fassets_carousel_sample1.png?alt=media&token=b84c2e8e-c810-41ba-99aa-74655ee4cac6',
@@ -102,10 +103,10 @@ class Home extends React.Component {
       }
     }
 
-
     return (
       <View style={homeStyles.container}>
         <View style={{ height: 200 }}>
+           <BackgroundCarousel images={images} />
         </View>
         <View style={homeStyles.scaffold}>
           <FlatList
@@ -126,7 +127,7 @@ class Home extends React.Component {
                       </TouchableOpacity>
                       <TouchableOpacity
                         activeOpacity={0.6}
-                        onPress={this.SeeAll}
+                        onPress={() => {this.SeeAll(item.userSpecialty)}}
                         style={homeStyles.scaffold_vlist_item_header_container_2}
                       >
                         <Text style={homeStyles.scaffold_vlist_item_header_2}>See All</Text>

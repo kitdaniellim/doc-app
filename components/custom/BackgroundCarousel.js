@@ -58,7 +58,7 @@ class BackgroundCarousel extends React.Component {
                     {images.map((image) => (
                         <Image
                             key={image.key}
-                            source={{ uri: image.img.toString() }}
+                            source={{ uri: image.img }}
                             style={styles.backgroundImage}
                         />
 

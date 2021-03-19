@@ -40,9 +40,6 @@ class BookPage1_Date extends React.Component {
         markedDates: this.getDaysInMonth(moment().month(), moment().year(), AVAILABLE_DAYS)
       }));
     } 
-    // else {
-    //   console.log("we're fucked homes");
-    // }
   }
 
   getDaysInMonth(month, year, days) {

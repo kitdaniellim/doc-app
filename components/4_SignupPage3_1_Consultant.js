@@ -13,93 +13,75 @@ class SignupConsultant3_1 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      key: 0,
-      count: 0,
-      locationInput: [],
+      officeCount: 0,
+      officeLocations: [],
       text: '',
-      isModalVisible: false
+      toggleModal: false
     }
-  }
-  
-  toggleModal(visible) {
-    this.setState({isModalVisible: visible})
-  }
-
-  Next = () => {
-    let text = this.state.text
-    const navigation = this.props.navigation;
-    if (text === '') {
-      this.toggleModal(true)
-    } else {
-      navigation.navigate('SignupConsultant4');
-    }
-  }
-
-  addOfficeHours = (e) => {
-    const navigation = this.props.navigation;
-    navigation.navigate('SignupConsultant3_2');
-  }
-
-  addLocation = () => {
-    let locationInput = this.state.locationInput;
-    let key = this.state.key;
-    let count = this.state.count;
-
-    locationInput.push(
-      <View key={key.toString()}>
-        <View style={signupStyles.forms_textinput_container}>
-          <Icon style={globalStyles.icon_global} name="map-marker" size={18} />
-          <TextInput
-            placeholder="Location"
-            placeholderTextColor="#8B8787"
-            style={signupStyles.forms_textinput}
-            // onChangeText={text => this.setState({text})}
-            value = {this.props.userOfficeLocation}
-            onChangeText={userOfficeLocation=> this.props.updateUserOfficeLocation(userOfficeLocation)}
-          />
-        </View>
-        <View style={signupStyles.forms_add_textinput_container}>
-          <TouchableOpacity
-            activeOpacity={0.6}
-            style={signupStyles.forms_add_textinput_button_container}
-            onPress={() => this.addOfficeHours(count)}
-          >
-            <Icon style={globalStyles.icon_global} name="plus" size={14} />
-            <Text style={signupStyles.forms_add_textinput_text} > ADD OFFICE HOURS </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    )
-
-    key += 1;
-    count += 1;
-    this.setState({
-      key: key,
-      count: count,
-      locationInput: locationInput,
-    })
-  }
-
-  removeLocation = () => {
-    let locationInput = this.state.locationInput;
-    let count = this.state.count;
-
-    if (count > 1) {
-      locationInput.pop();
-      count -= 1;
-    }
-
-    this.setState({
-      count: count,
-      locationInput
-    });
   }
 
   componentDidMount() {
     this.addLocation();
   }
 
+  Next = () => {
+    let count = this.state.officeCount;
+    count--;
+    let locs = this.state.officeLocations;
+
+    if (locs[count].location === '') {
+      this.setState(() => ({ toggleModal: true }))
+    } else {
+
+
+      this.props.updateUserOfficeLocation(this.state.officeLocations)
+      this.props.navigation.navigate('Signup_TermsAndAgreement');
+    }
+  }
+
+  addOfficeHours = (e) => {
+    this.props.navigation.navigate('SignupConsultant3_2');
+  }
+
+  addLocation = () => {
+    let location = this.state.officeLocations;
+    location.push(
+      {
+        key: this.state.officeCount,
+        location: ''
+      }
+    )
+
+    this.setState({
+      officeCount: this.state.officeCount + 1,
+      officeLocations: location,
+    })
+  }
+
+  removeLocation = () => {
+    if (this.state.officeLocations.length > 1) {
+      let location = this.state.officeLocations;
+      location.pop();
+
+      this.setState({
+        officeCount: this.state.officeCount - 1,
+        officeLocations: location,
+      })
+    }
+  }
+
+  setLocation = (value, i) => {
+    let officeLocations = this.state.officeLocations;
+    officeLocations[i].location = value;
+
+    this.setState(() => ({ officeLocations }));
+  }
+
   render() {
+    console.log('===================')
+    console.log(this.props)
+    console.log('--------------------')
+    console.log(this.state)
     return (
       <View style={signupStyles.container}>
         <LinearGradient
@@ -109,7 +91,7 @@ class SignupConsultant3_1 extends React.Component {
           style={globalStyles.gradient}
         >
           <Modal
-            isVisible={this.state.isModalVisible}
+            isVisible={this.state.toggleModal}
             animationIn='slideInDown'
             animationOut='bounceOutUp'
             animationInTiming={1100}
@@ -124,7 +106,7 @@ class SignupConsultant3_1 extends React.Component {
                 <Text style={globalStyles.modal_notif}>Seems like you missed one. Please fill in all required fields before proceeding.</Text>
                 <TouchableOpacity
                   activeOpacity={0.6}
-                  onPress={() => {this.toggleModal(!this.state.isModalVisible)}}
+                  onPress={() => { this.setState(() => ({ toggleModal: false })) }}
                   style={globalStyles.modal_button_container}
                 >
                   <Text style={globalStyles.modal_button_label}>Close</Text>
@@ -143,11 +125,35 @@ class SignupConsultant3_1 extends React.Component {
               <View>
                 <View style={signupStyles.forms_dynamicinput_margin}>
                   <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-                    {/* {this.state.locationInput.map((value) => {
-                      return value;
-                    })} */}
+                    {this.state.officeLocations.map((value, i) => {
+                      return (
+                        <View key={value.key.toString()}>
+                          <View style={signupStyles.forms_textinput_container}>
+                            <Icon style={globalStyles.icon_global} name="map-marker" size={18} />
+                            <TextInput
+                              placeholder="Location"
+                              placeholderTextColor="#8B8787"
+                              style={signupStyles.forms_textinput}
+                              value={this.state.officeLocations[i].location}
+                              onChangeText={value => this.setLocation(value, i)}
+                            />
+                          </View>
+                          <View style={signupStyles.forms_add_textinput_container}>
+                            <TouchableOpacity
+                              activeOpacity={0.6}
+                              style={signupStyles.forms_add_textinput_button_container}
+                              onPress={() => this.addOfficeHours()}
+                            >
+                              <Icon style={globalStyles.icon_global} name="plus" size={14} />
+                              <Text style={signupStyles.forms_add_textinput_text} > ADD OFFICE HOURS </Text>
+                            </TouchableOpacity>
+                          </View>
+                        </View>
+                      );
+                    })}
                   </ScrollView>
                 </View>
+                {/* CODE FOR MULTIPLE LOCATION INPUTS - Dan */}
                 <View style={signupStyles.forms_add_textinput_container}>
                   <TouchableOpacity
                     activeOpacity={0.6}
@@ -185,7 +191,7 @@ class SignupConsultant3_1 extends React.Component {
 
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ updateUserOfficeLocation, updateUserOfficeHours }, dispatch )
+  return bindActionCreators({ updateUserOfficeLocation, updateUserOfficeHours }, dispatch)
 }
 
 const mapStateToProps = state => {

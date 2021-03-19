@@ -10,14 +10,12 @@ import Landing from '../components/1_LandingPage.js';
 import Login from '../components/2_1_LoginPage.js';
 import ForgotPassword from '../components/2_2_FpassPage.js';
 import Selection from '../components/3_SelectionPage.js';
-import SignupClient1 from '../components/4_SignupPage1_Client.js';
+import Signup1 from '../components/4_SignupPage1.js';
 import SignupClient2 from '../components/4_SignupPage2_Client.js';
-import SignupClient3 from '../components/4_SignupPage3_Client.js';
-import SignupConsultant1 from '../components/4_SignupPage1_Consultant.js';
 import SignupConsultant2 from '../components/4_SignupPage2_Consultant.js';
 import SignupConsultant3_1 from '../components/4_SignupPage3_1_Consultant.js';
 import SignupConsultant3_2 from '../components/4_SignupPage3_2_Consultant.js';
-import SignupConsultant4 from '../components/4_SignupPage4_Consultant.js';
+import Signup_TermsAndAgreement from '../components/4_Signup_TermsAndAgreement.js';
 
 //App Screens
 import Tutorial from '../components/1_TutorialPage.js';
@@ -71,11 +69,19 @@ class Routes extends React.Component {
             this.setState(() => ({ user }));
         }
         
-        console.log('SHOWING data============')
+        // console.log('SHOWING data============')
+
+
         // await this.state.reviews.getReviews(this.state.user.uid);
-        console.log(this.state.user)
+
+
+        // console.log(this.state.user)
+
+
         // console.log(reviews)
-        console.log('END OF data============')
+
+
+        // console.log('END OF data============')
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -185,18 +191,18 @@ class Routes extends React.Component {
             Selection: {
                 screen: Selection,
             },
-            SignupClient1: {
-                screen: SignupClient1,
+            Signup1: {
+                screen: Signup1,
             },
             SignupClient2: {
                 screen: SignupClient2,
             },
-            SignupClient3: {
-                screen: SignupClient3,
+            Signup_TermsAndAgreement: {
+                screen: Signup_TermsAndAgreement,
             },
 
-            SignupConsultant1: {
-                screen: SignupConsultant1,
+            Signup1: {
+                screen: Signup1,
             },
             SignupConsultant2: {
                 screen: SignupConsultant2,
@@ -207,8 +213,8 @@ class Routes extends React.Component {
             SignupConsultant3_2: {
                 screen: SignupConsultant3_2
             },
-            SignupConsultant4: {
-                screen: SignupConsultant4
+            Signup_TermsAndAgreement: {
+                screen: Signup_TermsAndAgreement
             }
         }
 
@@ -436,7 +442,7 @@ class Routes extends React.Component {
                 },
             },
 
-            ProfileTab: {
+            Profile: {
                 screen: ProfileStack,
                 navigationOptions: {
                     title: 'Profile',
@@ -598,8 +604,8 @@ class Routes extends React.Component {
             {
                 defaultNavigationOptions: {
                     headerStyle: {
-                        backgroundColor: '#7DD3D2',
-                        borderBottomColor: '#7DD3D2',
+                        backgroundColor: '#19BAB9',
+                        borderBottomColor: '#19BAB9',
                         shadowOpacity: 0,
                         shadowOffset: {
                             height: 0,

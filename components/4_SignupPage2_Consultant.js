@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Text, TextInput, Button, ScrollView, View, FlatList, TouchableOpacity, TouchableHighlight, StyleSheet } from 'react-native';
+import React from 'react';
+import { Text, TextInput, ScrollView, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { signupStyles, globalStyles } from '../styles/styles';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -7,10 +7,11 @@ import Modal from 'react-native-modal';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { updateFullName, updateUserSpecialty, updateUserLIC, updateUserSubSpecialty } from '../actions/users';
+import RNPickerSelect from 'react-native-picker-select';
 
 class Dynamic_Input extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       key: 0,
       count: 0,
@@ -19,28 +20,32 @@ class Dynamic_Input extends React.Component {
   }
 
   addField = () => {
-    let textInput = this.state.textInput;
-    let key = this.state.key;
-    let count = this.state.key;
+    if (this.state.count < 1) {
+      let textInput = this.state.textInput;
+      let key = this.state.key;
+      let count = this.state.key;
+      key += 1;
+      count += 1;
+      textInput.push(
+        <View key={key.toString()} style={signupStyles.forms_textinput_container}>
+          <Icon style={globalStyles.icon_global} name="briefcase" size={18} />
+          <TextInput
+            placeholder="Sub-specialty"
+            placeholderTextColor="#8B8787"
+            style={signupStyles.forms_textinput}
+            value={this.props.userSubSpecialty}
+            onChangeText={userSubSpecialty => this.props.props.updateUserSubSpecialty(userSubSpecialty)}
+          />
+        </View>
+      );
 
-    key += 1;
-    count += 1;
-    textInput.push(
-      <View key={key.toString()} style={signupStyles.forms_textinput_container}>
-        <Icon style={globalStyles.icon_global} name="briefcase" size={18} />
-        <TextInput
-          placeholder="Sub-specialty"
-          placeholderTextColor="#8B8787"
-          style={signupStyles.forms_textinput}
-        />
-      </View>
-    );
+      this.setState({
+        key: key,
+        count: count,
+        textInput
+      });
+    }
 
-    this.setState({
-      key: key,
-      count: count,
-      textInput
-    });
   }
 
   removeField = () => {
@@ -58,6 +63,9 @@ class Dynamic_Input extends React.Component {
   }
 
   render() {
+    console.log('----------------')
+    console.log(this.props.props)
+    console.log('----------------')
     return (
       <View>
         <View style={signupStyles.forms_dynamicinput_margin, { height: 100 }}>
@@ -91,19 +99,22 @@ class Dynamic_Input extends React.Component {
 }
 
 
-class SignupConsultant2 extends React.Component  {
+class SignupConsultant2 extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      userSpecialty: ''
+    }
   }
-    
+
   Next = () => {
     const navigation = this.props.navigation;
-      navigation.navigate('SignupConsultant3_1');
+    navigation.navigate('SignupConsultant3_1');
   }
 
-  render(){
-
+  render() {
+    console.log(this.props)
     return (
       <View style={signupStyles.container}>
         <LinearGradient
@@ -138,7 +149,7 @@ class SignupConsultant2 extends React.Component  {
           </Modal> */}
           <View style={signupStyles.forms_container}>
             <Text style={signupStyles.forms_label}>CONSULTANT SIGN UP</Text>
-            <View style={signupStyles.forms_label_small_container}>
+            <View style={signupStyles.forms_label_small_container_2}>
               <Text style={signupStyles.forms_label_small}>Professional Details:</Text>
             </View>
             <View style={signupStyles.forms_textinput_container}>
@@ -149,21 +160,61 @@ class SignupConsultant2 extends React.Component  {
                 style={signupStyles.forms_textinput}
                 // onChangeText={text => setName(text)}
                 // value={fname}
-                value = {this.props.fullName}
+                value={this.props.fullName}
                 onChangeText={fullName => this.props.updateFullName(fullName)}
               />
             </View>
-            <View style={signupStyles.forms_textinput_container}>
-              <Icon style={globalStyles.icon_global} name="briefcase" size={18} />
-              <TextInput
+            <View style={signupStyles.forms_specialty_container}>
+
+              {/* <TextInput
                 placeholder="Specialty"
                 placeholderTextColor="#8B8787"
                 style={signupStyles.forms_textinput}
-                // onChangeText={text => setSpec(text)}
-                // value={specialty}
                 value = {this.props.userSpecialty}
                 onChangeText={userSpecialty => this.props.updateUserSpecialty(userSpecialty)}
+              /> */}
+
+              <RNPickerSelect
+                Icon={() => {
+                  return <Icon style={globalStyles.icon_global} name="briefcase" size={18} />
+                }}
+                placeholder={{
+                  label: 'User Specialty',
+                  value: '',
+                }}
+                style={{
+                  iconContainer: {
+                    paddingRight: 6,
+                    paddingTop: 16
+                  },
+                  viewContainer: {
+                    alignSelf: 'stretch',
+                    marginVertical: -8,
+                    // padding: -5,
+                    paddingRight: 10,
+                    paddingLeft: 15,
+                  },
+                  inputIOS: {
+                    color: 'black',
+                    // paddingTop: 13,
+                    // paddingHorizontal: 10,
+                    // paddingBottom: 12,
+                  },
+                  inputAndroid: {
+                    color: 'black',
+                  },
+                }}
+
+                value={this.props.userSpecialty}
+                onValueChange={(userSpecialty) => this.props.updateUserSpecialty(userSpecialty)}
+                items={[
+                  { label: 'Engineer', value: 'Engineer' },
+                  { label: 'Architect', value: 'Architect' },
+                  { label: 'Doctor', value: 'Doctor' },
+                  { label: 'Lawyer', value: 'Lawyer' }
+                ]}
               />
+
             </View>
             <View style={signupStyles.forms_textinput_container}>
               <Icon style={globalStyles.icon_global} name="id-card" size={15} />
@@ -173,19 +224,19 @@ class SignupConsultant2 extends React.Component  {
                 style={signupStyles.forms_textinput}
                 // onChangeText={text => setLic(text)}
                 // value={lic}
-                value = {this.props.userLIC}
-                onChangeText={ userLIC=> this.props.updateUserLIC(userLIC)}
+                value={this.props.userLIC}
+                onChangeText={userLIC => this.props.updateUserLIC(userLIC)}
               />
             </View>
-            <Dynamic_Input />
-            <TouchableOpacity
+            <Dynamic_Input props = {this.props} />
+            {/* <TouchableOpacity
               activeOpacity={0.6}
               style={signupStyles.forms_paybutton}
               onPress={() => { }}
             >
               <Text style={signupStyles.forms_paybutton_label}>Pay Through PayPal</Text>
-            </TouchableOpacity>
-            <Text style={signupStyles.forms_text}>2/4</Text>
+            </TouchableOpacity> */}
+            <Text style={signupStyles.forms_text_lessmargin}>2/4</Text>
             <TouchableOpacity
               activeOpacity={0.6}
               style={signupStyles.forms_button}
@@ -198,12 +249,12 @@ class SignupConsultant2 extends React.Component  {
       </View>
     );
   }
-  
+
 }
 
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ updateFullName, updateUserSpecialty, updateUserLIC, updateUserSubSpecialty }, dispatch )
+  return bindActionCreators({ updateFullName, updateUserSpecialty, updateUserLIC, updateUserSubSpecialty }, dispatch)
 }
 
 const mapStateToProps = state => {

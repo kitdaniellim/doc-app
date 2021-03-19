@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Image, Text, TextInput, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { loginStyles, globalStyles } from '../styles/styles';
@@ -8,6 +8,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { updateEmail, updatePassword, login, logout, getUser } from '../actions/users';
 import { resetAppointments } from '../actions/appointments';
+import { getReviews, getReviewedBy } from '../actions/reviews';
 import Firebase, { db } from '../config/Firebase';
 import AsyncStorage from "@react-native-community/async-storage";
 
@@ -39,12 +40,6 @@ class Login extends React.Component {
   }
 
 
-  // componentWillUnmount(){
-  //   console.log('=========================ITS UNMOUNTING');
-  //   RNRestart.Restart();
-  //   console.log('i want to restaarttt');
-  // }
-
   Home() {
     this.props.navigation.navigate('Home');
 
@@ -62,6 +57,7 @@ class Login extends React.Component {
     const navigation = this.props.navigation;
     navigation.navigate('ForgotPassword');
   }
+
   handleLogin = async () => {
     if (this.state.email === '' || this.state.password === '') {
       this.setState({
@@ -75,8 +71,7 @@ class Login extends React.Component {
       if (this.props.user.email) {
         console.log(`login successful`)
         AsyncStorage.setItem('user', JSON.stringify(this.props.user));
-        console.log(`NGEKNGOK HEHEHEH=================== gonna do shit here`)
-        console.log(this.props)
+
         // RNRestart.Restart();
         // Util.reload();
         // AsyncStorage.setItem('reviews', JSON.stringify(this.props.user));
@@ -211,14 +206,15 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ updateEmail, updatePassword, login, getUser, logout, resetAppointments }, dispatch)
+  return bindActionCreators({ updateEmail, updatePassword, login, getUser, logout, resetAppointments, getReviewedBy }, dispatch)
 }
 
 const mapStateToProps = state => {
   return {
     user: state.users.user,
     email: state.users.email,
-    password: state.users.password
+    password: state.users.password,
+    reviews: state.users.reviews
   }
 }
 

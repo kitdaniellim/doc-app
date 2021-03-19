@@ -77,7 +77,7 @@ const SignUp = {
         fontWeight: '700',
         fontSize: 40,
         letterSpacing: 1,
-        marginBottom: 10,
+        marginBottom: 5,
     },
 
     forms_label_small_container: {
@@ -175,6 +175,17 @@ const SignUp = {
         shadowOpacity: 0.1,
     },
 
+    forms_specialty_container: {
+        borderRadius: 15,
+        paddingHorizontal: 6,
+        marginHorizontal: 8,
+        marginVertical: 5,
+        backgroundColor: '#fff',
+        shadowOffset: { width: 0, height: 2, },
+        shadowColor: 'black',
+        shadowOpacity: 0.1,
+    },
+
     forms_button_container: {
         justifyContent: 'center',
         alignItems: 'center',
@@ -207,6 +218,14 @@ const SignUp = {
         fontWeight: '500',
         textAlign: 'center',
         marginTop: 20,
+    },
+
+    forms_text_lessmargin: {
+        color: '#fff',
+        fontSize: 15,
+        fontWeight: '500',
+        textAlign: 'center',
+        marginTop: 5,
     },
 
     forms_text_underline: {

@@ -200,22 +200,20 @@ export const getUrl = async () => {
 }
 /* DEV: EJA - Event for sign up*/
 export const signup = () => {
-
     return async (dispatch, getState) => {
         try {
             const { email, password, fullName, mobileNumber, birthDay, userType } = getState().users
 
-            const response = await Firebase.auth().createUserWithEmailAndPassword(email, password)
+            const response = await Firebase.auth().createUserWithEmailAndPassword(email.trim(), password)
 
             if (response.user.uid) {
-                const getUser = getState().users.userType;
+                // const getUser = getState().users.userType;
                 // if (getUser === "CLIENT")
                 // {
                 const user = {
                     uid: response.user.uid,
                     email: email,
                     emailVerified: false,
-                    userType: userType,
                     fullName: fullName,
                     mobileNumber: mobileNumber,
                     birthDay: birthDay,
@@ -223,6 +221,9 @@ export const signup = () => {
                     profilePicture: await Firebase.storage().ref('users/default/default.jpg').getDownloadURL().catch((error) => { alert("error sa geturl") }),
                     officeImage: await Firebase.storage().ref('users/default/office.jpg').getDownloadURL().catch((error) => { alert("error sa geturl") })
                 }
+                console.log('========showing user==========')
+                console.log(user);
+                console.log('==================')
                 db.collection('users').doc(response.user.uid).set(user);
 
                 // const notif = {
@@ -245,6 +246,7 @@ export const signup = () => {
 
             }
         } catch (e) {
+            console.log('?????????????????????')
             alert(e)
         }
     }

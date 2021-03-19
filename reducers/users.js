@@ -20,7 +20,7 @@ const reducerDefaultState = {
     userLIC: '',
     userSpecialty: '',
     userSubSpecialty: '',
-    userOfficeLocation: '',
+    userOfficeLocation: [],
     officeHours: ''
 }
 

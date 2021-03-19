@@ -37,6 +37,7 @@ class CalendarPage3_Review extends React.Component {
                 rating: this.state.starCount,
                 comment: this.state.review,
                 review_to: this.props.navigation.state.params.item.consultant_id,
+                reviewee_name: this.props.navigation.state.params.item.consultant_name,
                 reviewer_id: this.props.navigation.state.params.item.client_id,
                 reviewer_name: this.props.navigation.state.params.item.client_name,
                 created_at: moment().format('YYYY-MM-DD HH:mm:ss').toString()
