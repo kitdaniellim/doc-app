@@ -3,6 +3,9 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import Firebase from '../config/Firebase';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { getConsultant } from '../actions/users';
 import { getReviews } from '../actions/reviews';
 
 //Auth Screens
@@ -56,7 +59,7 @@ class Routes extends React.Component {
         super(props);
         this.state = {
             user: { userType: 'null' },
-            reviews: []
+            isMounted: false,
         }
     }
 
@@ -70,61 +73,28 @@ class Routes extends React.Component {
         }
         
         // console.log('SHOWING data============')
-
-
-        // await this.state.reviews.getReviews(this.state.user.uid);
-
-
-        // console.log(this.state.user)
-
-
-        // console.log(reviews)
-
-
-        // console.log('END OF data============')
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        if (this.props !== prevProps) {
-            console.log('SHOWING PROPS============')
-            console.log(this.props)
-            console.log('END OF PROPS============')
+        console.log('SHOWING USER')
+        console.log(user)
+        let isMounted = this.state.isMounted;
+        if(isMounted === false) {
+            this.props.getConsultant(user.uid);
+            this.props.getReviews(user.uid);
+            this.setState(() => ({isMounted : true}))
         }
+
     }
 
-    // async getUser() {
-    //     const user = JSON.parse(
-    //         await AsyncStorage.getItem("user")
-    //     );
-    //     this.props.getAllConsultant();
-    //     console.log('SHOWING PROPS============')
-    //     console.log(this.props)
-    //     console.log('END OF PROPS============')
-    //     this.setState(() => ({ user }));
-
-    //     console.log('SHOWING USER============')
-    //     console.log(this.state.user)
-    //     console.log('END OF USER============')
-    // }
-
-    // componentDidUpdate(prevProps, prevState) {
-    //     if (this.state !== prevState) {
-    //         console.log('------------------------')
-    //         console.log('CHANGING USER')
-    //         console.log(this.state.user)
-    //         console.log(prevState.user)
-    //         console.log('------------------------')
-    //         this.getUser();
-    //     } else {
-    //         console.log('nothing happens')
-    //     }
-    // }
+    //Once routes are mounted, prevents unnecessary rerendering
+    shouldComponentUpdate() {
+        return !this.state.isMounted
+    }
 
     render() {
+        console.log('SHOWING ROUTES PROPS============')
+        console.log(this.props)
+        console.log('END OF PROPS============')
         const getTabs = () => {
-            // console.log('SHOWING PROPS============')
-            // console.log(this.props)
-            // console.log('END OF PROPS============')
+            
 
             let ret;
             switch (this.state.user.userType) {
@@ -208,7 +178,8 @@ class Routes extends React.Component {
                 screen: SignupConsultant2,
             },
             SignupConsultant3_1: {
-                screen: SignupConsultant3_1
+                screen: SignupConsultant3_1,
+                params: { key: 0, office_schedules: [] }
             },
             SignupConsultant3_2: {
                 screen: SignupConsultant3_2
@@ -248,6 +219,7 @@ class Routes extends React.Component {
             BookPage: {
                 screen: BookPage,
             },
+            //not sure if needed delete later maybe
             Book1_Date: {
                 screen: Book1_Date,
             },
@@ -286,7 +258,7 @@ class Routes extends React.Component {
         const profileScreens = {
             Profile: {
                 screen: Profile,
-                params: { singleConsultant: this.state.user, reviews: [] },
+                // params: { singleConsultant: this.state.user, reviews: this.props.reviews },
             },
             EditProfile_1: {
                 screen: EditProfile_1,
@@ -297,7 +269,6 @@ class Routes extends React.Component {
         }
 
         const HomeStack = createStackNavigator(
-            // ("CLIENT" == "CLIENT") ? homeScreensC : homeScreens,
             (this.state.user.userType == "CLIENT") ? homeScreensC : homeScreens,
             {
                 defaultNavigationOptions: {
@@ -429,6 +400,7 @@ class Routes extends React.Component {
 
             Search: {
                 screen: Search,
+                params: { userSpecialty: "None" },
                 navigationOptions: {
                     title: 'Search',
                     tabBarIcon: ({ tintColor }) => (
@@ -544,7 +516,11 @@ class Routes extends React.Component {
                                         />
                                     </MenuTrigger>
                                     <MenuOptions customStyles={optionsStyles}>
-                                        <View style={{ height: 270 }}>
+                                        <View style={{ height: 70 }}>
+                                            <MenuOption text={'Notifications Coming Soon'} />
+                                        </View>
+                                        {/* CODE FOR NOTIFICATIONS */}
+                                        {/* <View style={{ height: 270 }}>
                                             <FlatList
                                                 data={notifs}
                                                 showsVerticalScrollIndicator={false}
@@ -558,7 +534,7 @@ class Routes extends React.Component {
                                                     <MenuOption key={item.key} value={item.key} text={item.text} />
                                                 )}
                                             />
-                                        </View>
+                                        </View> */}
                                     </MenuOptions>
                                 </Menu>
                                 <Menu onSelect={
@@ -647,4 +623,13 @@ class Routes extends React.Component {
     }
 }
 
-export default Routes;
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ getConsultant, getReviews }, dispatch)
+  }
+  const mapStateToProps = state => {
+    return {
+      curr_singleConsultant: state.users.singleConsultant,
+      curr_reviews: state.reviews.items
+    }
+  }
+  export default connect(mapStateToProps, mapDispatchToProps)(Routes);

@@ -2,11 +2,13 @@ import React from 'react';
 import { Text, TextInput, Image, ScrollView, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { signupStyles, profileStyles, globalStyles } from '../styles/styles';
-import { LinearGradient } from 'expo-linear-gradient';
+import RNPickerSelect from 'react-native-picker-select';
 import Modal from 'react-native-modal';
-import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getConsultant, updateProfileImage, updateOfficeImage, editProfile, updateLocation } from '../actions/users';
+import { connect } from 'react-redux';
+import { getConsultant, updateProfileImage, updateOfficeImage, editProfile, updateLocation, updateEmail, updatePassword, updateFullName, updateUserSpecialty, updateUserLIC, updateUserSubSpecialty, updateOfficeDetails } from '../actions/users';
+import { getReviews } from '../actions/reviews';
+
 
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
@@ -16,34 +18,60 @@ import * as Permissions from 'expo-permissions';
 class EditProfile_1 extends React.Component {
   constructor(props) {
     super(props);
+    // this.state = {
+      // photo: null,
+    // }
     this.state = {
       photo: null,
-    }
-    this.state = {
-      key: 0,
-      count: 0,
-      locationInput: [],
-      text: '',
-      isModalVisible: false,
-      locArray: [],
-      office_details: [{
-        id: 0,
-        location: '',
-        hours: [],
-        days: [],
-        to_hour: '',
-        from_hour: '',
+      // key: 0,
+      // count: 0,
+      // locationInput: [],
+      // text: '',
 
-      }],
-      detailKey: 0,
-      detailLocation: ''
-      //name: "Dr. Go",
-      //bio: 'Dr. Go\n Opthalmology\n troygo@gmail.com\n 09324758192',
-      //office_img: require("../assets/office.jpg"),
-      //profile_img: require("../assets/troy.png"),
+      // isModalVisible: false,
+      // locArray: [],
+      // office_details: [{
+      //   id: 0,
+      //   location: '',
+      //   hours: [],
+      //   days: [],
+      //   to_hour: '',
+      //   from_hour: '',
+
+      // }],
+
+      // detailKey: 0,
+      // detailLocation: '',
+      officeCount: 0,
+      officeLocations: [],
+      office_details: [],
+      toggleModal: false,
+
+
+
+
+      // email: '',
+      // password: '',
+      // fullName: '',
+      // userSpecialty: '',
+      // userLIC: 0,
+      // userSubSpecialty: '',
+
     }
-    console.log(this.props);
   }
+
+  componentDidMount() {
+    this.props.updateEmail(this.props.singleConsultant.email);
+    // this.props.updatePassword(this.props.singleConsultant.email);
+    this.props.updateFullName(this.props.singleConsultant.fullName);
+    this.props.updateUserSpecialty(this.props.singleConsultant.userSpecialty);
+    this.props.updateUserLIC(this.props.singleConsultant.userLIC);
+    this.props.updateUserSubSpecialty(this.props.singleConsultant.userSubSpecialty);
+    this.props.updateProfileImage(this.props.singleConsultant.profilePicture);
+    this.props.updateOfficeImage(this.props.singleConsultant.officeImage);
+    this.props.updateOfficeDetails(this.props.singleConsultant.office_details)
+  }
+
 
   // toggleModal(visible) {
   //   this.setState({ isModalVisible: visible })
@@ -58,19 +86,58 @@ class EditProfile_1 extends React.Component {
   //   }
   // }
 
-  addOfficeHours = (location, count) => {
-    const navigation = this.props.navigation;
-    console.log("Sa add office hours ni")
-    console.log(count);
-    navigation.navigate('EditProfile_2', {
-      location: location,
-      count: count
-    });
+
+  // addOfficeHours = (location, count) => {
+  //   const navigation = this.props.navigation;
+  //   console.log("Sa add office hours ni")
+  //   console.log(count);
+  //   navigation.navigate('EditProfile_2', {
+  //     location: location,
+  //     count: count
+  //   });
+  // }
+
+  addOfficeHours = (key) => {
+    this.props.navigation.navigate('EditProfile_2', { key: key, officeLocation: this.state.officeLocations[key].location });
+  }
+
+  addLocation = () => {
+    let location = this.state.officeLocations;
+    location.push(
+      {
+        key: this.state.officeCount,
+        location: ''
+      }
+    )
+
+    this.setState({
+      officeCount: this.state.officeCount + 1,
+      officeLocations: location,
+    })
+  }
+
+  removeLocation = () => {
+    if (this.state.officeLocations.length > 1) {
+      let location = this.state.officeLocations;
+      location.pop();
+
+      this.setState({
+        officeCount: this.state.officeCount - 1,
+        officeLocations: location,
+      })
+    }
+  }
+
+  setLocation = (value, i) => {
+    let officeLocations = this.state.officeLocations;
+    officeLocations[i].location = value;
+
+    this.setState(() => ({ officeLocations }));
   }
 
   updateLocationArray = (location, count) => {
-    let updateLocArray = [];
-    var data = { location, count };
+    // let updateLocArray = [];
+    // var data = { location, count };
 
     // updateLocArray.push(data);  
     // console.log("Sa array na ni");
@@ -79,74 +146,75 @@ class EditProfile_1 extends React.Component {
 
   updateLocation = (location, key) => {
     // Add location
-    const user_location = {
-      id: key,
-      location: location
-    }
-    this.props.updateLocation(user_location);
-    //console.log("Update location ni boi")
-    console.log(this.props.updateLocation);
+    // const user_location = {
+    //   id: key,
+    //   location: location
+    // }
+    // this.props.updateLocation(user_location);
+    // console.log(this.props.updateLocation);
   }
+
   updateHours = (hours, key) => {
 
   }
-  addLocation = () => {
-    let locationInput = this.state.locationInput;
-    let key = this.state.key;
-    let count = this.state.count;
 
-    locationInput.push(
-      < View key={key.toString()}>
-        <View style={signupStyles.forms_textinput_container}>
-          <Icon style={globalStyles.icon_global} name="map-marker" size={18} />
-          <TextInput
-            placeholder="Location"
-            placeholderTextColor="#8B8787"
-            style={signupStyles.forms_textinput}
-            onChangeText={text => this.updateLocation(text, key)}
-          //onChangeText = { text => this.props.update_location( text, key )}
-          //onChangeText={text => this.setState({ text })}
-          />
-        </View>
-        <View style={signupStyles.forms_add_textinput_container}>
-          <TouchableOpacity
-            activeOpacity={0.6}
-            style={signupStyles.forms_add_textinput_button_container}
-            onPress={() => this.addOfficeHours(this.state.text, this.state.count)}
-          >
-            <Icon style={globalStyles.icon_global} name="plus" size={14} />
-            <Text style={signupStyles.forms_add_textinput_text} > ADD OFFICE HOURS </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    )
+  // addLocation = () => {
+    // let locationInput = this.state.locationInput;
+    // let key = this.state.key;
+    // let count = this.state.count;
 
-    key += 1;
-    count += 1;
-    this.setState({
-      key: key,
-      count: count,
-      locationInput: locationInput,
-    })
-    console.log("edit loc")
-    console.log(count);
+    // locationInput.push(
+    //   < View key={key.toString()}>
+    //     <View style={signupStyles.forms_textinput_container}>
+    //       <Icon style={globalStyles.icon_global} name="map-marker" size={18} />
+    //       <TextInput
+    //         placeholder="Location"
+    //         placeholderTextColor="#8B8787"
+    //         style={signupStyles.forms_textinput}
+    //         onChangeText={text => this.updateLocation(text, key)}
+    //       //onChangeText = { text => this.props.update_location( text, key )}
+    //       //onChangeText={text => this.setState({ text })}
+    //       />
+    //     </View>
+    //     <View style={signupStyles.forms_add_textinput_container}>
+    //       <TouchableOpacity
+    //         activeOpacity={0.6}
+    //         style={signupStyles.forms_add_textinput_button_container}
+    //         onPress={() => this.addOfficeHours(this.state.text, this.state.count)}
+    //       >
+    //         <Icon style={globalStyles.icon_global} name="plus" size={14} />
+    //         <Text style={signupStyles.forms_add_textinput_text} > ADD OFFICE HOURS </Text>
+    //       </TouchableOpacity>
+    //     </View>
+    //   </View>
+    // )
+
+    // key += 1;
+    // count += 1;
+    // this.setState({
+    //   key: key,
+    //   count: count,
+    //   locationInput: locationInput,
+    // })
+    // console.log("edit loc")
+    // console.log(count);
     //console.log(text);
-  }
+  // }
 
-  removeLocation = () => {
-    let locationInput = this.state.locationInput;
-    let count = this.state.count;
+  // removeLocation = () => {
+    // let locationInput = this.state.locationInput;
+    // let count = this.state.count;
 
-    if (count > 1) {
-      locationInput.pop();
-      count -= 1;
-    }
+    // if (count > 1) {
+    //   locationInput.pop();
+    //   count -= 1;
+    // }
 
-    this.setState({
-      count: count,
-      locationInput
-    });
-  }
+    // this.setState({
+    //   count: count,
+    //   locationInput
+    // });
+  // }
 
   async checkCameraRollPermission() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL)
@@ -186,9 +254,8 @@ class EditProfile_1 extends React.Component {
     });
 
     console.log(result);
-
     if (!result.cancelled) {
-      if (text === 'Profile') {
+      if (text === 'profile') {
         this.props.updateProfileImage(result.uri);
       } else {
         this.props.updateOfficeImage(result.uri);
@@ -196,20 +263,23 @@ class EditProfile_1 extends React.Component {
 
     }
   };
-  confirmEdit = (navigation) => {
-    console.log("wa diay no sud diri")
-    //alert("BULLSHIT")
 
-    this.props.editProfile();
-    this.props.navigation.navigate('Profile');
-
+  Confirm = async () => {
+    await this.props.editProfile(this.props.singleConsultant.uid);
+    await this.props.getConsultant(this.props.singleConsultant.uid);
+    await this.props.getReviews(this.props.singleConsultant.uid);
+    this.props.navigation.replace('Profile');
   }
+
+  BackToProfile = () => {
+    this.props.navigation.goBack();
+  };
 
 
   render() {
-    console.log('====== START OF EDIT PROFILE THINGS ======');
-    console.log(this.props);
-    console.log('====== END OF EDIT PROFILE THINGS ======');
+    // console.log('====== START OF EDIT PROFILE THINGS ======');
+    // console.log(this.props.singleConsultant);
+    // console.log('====== END OF EDIT PROFILE THINGS ======');
     const office_details = {
       key: '',
       location: '',
@@ -219,156 +289,315 @@ class EditProfile_1 extends React.Component {
     }
 
     return (
+
       <View style={profileStyles.container}>
-        <LinearGradient
-          colors={['rgba(243,243,243,0.4)', 'transparent']}
-          start={{ x: 0, y: 1 }}
-          end={{ x: 0, y: 0 }}
-          style={globalStyles.gradient}
-        >
-          {/* <Modal
-            isVisible={this.state.isModalVisible}
-            animationIn='bounceInDown'
-            animationOut='bounceOutUp'
-            animationInTiming={1100}
-            animationOutTiming={900}
+        <View style={profileStyles.header_container}>
+          <View style={profileStyles.header_text_container}>
+            <Text style={profileStyles.header_text_bold}>EDIT PROFILE: {this.props.singleConsultant.fullName} </Text>
+          </View>
+          <TouchableOpacity
+            activeOpacity={0.6}
+            onPress={this.BackToProfile}
+            style={profileStyles.header_icon_container}
           >
-            <View style={globalStyles.modal_container}>
-              <View style={globalStyles.modal_container_top}>
-                <Icon style={globalStyles.modal_icon} name="times-circle-o" size={29} />
-              </View>
-              <View style={globalStyles.modal_container_bottom}>
-                <Text style={globalStyles.modal_notif_bold}>Oops!</Text>
-                <Text style={globalStyles.modal_notif}>Seems like you missed one. Please fill in all required fields before proceeding.</Text>
-                <TouchableOpacity
-                  activeOpacity={0.6}
-                  onPress={() => { this.toggleModal(!this.state.isModalVisible) }}
-                  style={globalStyles.modal_button_container}
-                >
-                  <Text style={globalStyles.modal_button_label}>Close</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </Modal> */}
-          <View style={profileStyles.forms_container}>
+            <Icon style={globalStyles.icon_global} name="times" size={18} />
+          </TouchableOpacity>
+        </View>
+        <View style={profileStyles.scaffold}>
+          <View style={profileStyles.profile_container}>
             <ScrollView
               showsVerticalScrollIndicator={false}
               contentContainerStyle={{
                 flexGrow: 1,
-                justifyContent: 'space-around',
-                marginVertical: 10,
-                paddingBottom: 20
+                padding: 14,
+                marginTop: 10,
+                borderRadius: 15,
+                backgroundColor: '#fff',
               }}
             >
-              <View>
-                <View style={profileStyles.forms_label_small_container}>
-                  <Text style={profileStyles.forms_label_small}>Profile Details:</Text>
-                </View>
-                <View style={profileStyles.profile_officeimg_container}>
-                  <Image
-                    source={{ uri: '' + this.props.singleConsultant.officeImage + '' }}
-                    style={profileStyles.profile_officeimg}
-                  />
-                </View>
-                <TouchableOpacity
-                  activeOpacity={0.6}
-                  style={profileStyles.forms_chooseimg_button_container}
-                  onPress={() => this._pickImage('office')}
-                >
-                  <Text style={profileStyles.forms_chooseimg_button_text} > CHOOSE OFFICE IMAGE </Text>
-                </TouchableOpacity>
-                <View style={profileStyles.forms_editbio_container}>
-                  <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-                    <View style={profileStyles.profile_b_info_profileimg_container}>
-                      <Image
-                        source={{ uri: '' + this.props.singleConsultant.profilePicture + '' }}
-                        // source={{ uri: this.props.singleConsultant.profilePicture }}
-                        style={profileStyles.profile_b_info_profileimg}
-                      />
-                    </View>
-                    <View style={profileStyles.forms_textinput_container}>
-                      <TextInput
-                        multiline
-                        style={profileStyles.forms_textinput}
-                        onChangeText={text => this.setState({ bio: text })}
-                      // value={this.state.bio}
-                      />
-                    </View>
+
+
+              <View style={profileStyles.profile_officeimg_container}>
+                <Image
+                  source={{ uri: '' + this.props.officeImage + '' }}
+                  style={profileStyles.profile_officeimg}
+                />
+              </View>
+              <TouchableOpacity
+                activeOpacity={0.6}
+                style={profileStyles.forms_add_textinput_button_container_i}
+                onPress={() => this._pickImage('office')}
+              >
+                <Text style={profileStyles.forms_chooseimg_button_text_i} > CHOOSE OFFICE IMAGE </Text>
+              </TouchableOpacity>
+
+
+
+              <View style={profileStyles.profile_b_info_container}>
+                <View style={profileStyles.profile_b_info_details_container}>
+                  <View style={profileStyles.profile_b_info_profileimg_container}>
+                    <Image
+                      source={{ uri: '' + this.props.profilePicture + '' }}
+                      style={profileStyles.profile_b_info_profileimg}
+                    />
                   </View>
                 </View>
                 <TouchableOpacity
                   activeOpacity={0.6}
-                  style={profileStyles.forms_chooseimg_button_container}
-                  onPress={() => this._pickImage('Profile')}
+                  style={profileStyles.forms_add_textinput_button_container_i}
+                  onPress={() => this._pickImage('profile')}
                 >
-                  <Text style={profileStyles.forms_chooseimg_button_text} > CHOOSE PROFILE IMAGE </Text>
+                  <Text style={profileStyles.forms_chooseimg_button_text_i} > CHOOSE PROFILE IMAGE </Text>
                 </TouchableOpacity>
               </View>
-              <View>
-                <View style={profileStyles.forms_label_small_container}>
-                  <Text style={profileStyles.forms_label_small}>Office Details:</Text>
-                </View>
-                <View style={profileStyles.forms_dynamicinput_margin}>
 
-                  {this.state.locationInput.map((value) => {
-                    return value;
-                  })}
-                  {/* {
-                    this.props.singleConsultant.officeLocation.map((data) => {
+
+              {/* <View style={profileStyles.profile_hours_container}>
+                <Text style={profileStyles.profile_hours_header}>Office Hours</Text>
+                <View style={profileStyles.divider} />
+                {
+                  office.map((data, i) => {
+                    return (
+                      <View key={i} style={profileStyles.profile_hours_details}>
+                        <Text>
+                          {data.office_location}{"\n"}
+                          {data.office_hour_from} - {data.office_hour_to}
+                        </Text>
+                        <Text>Days: </Text>
+                        { data.office_day.map((data1, i) => {
+                          return (
+                            <Text key={i}>{data1}</Text>
+                          )
+                        })}
+                      </View>
+                    )
+                  })
+                }
+              </View> */}
+
+
+              <View style={profileStyles.divider} />
+              <View style={profileStyles.profile_b_info_container}>
+                <Text style={profileStyles.profile_b_info_header}>Basic Information</Text>
+                <View style={signupStyles.forms_textinput_container}>
+                  <Icon style={globalStyles.icon_global} name="envelope" size={18} />
+                  <TextInput
+                    placeholder="Email Address"
+                    placeholderTextColor="#8B8787"
+                    style={signupStyles.forms_textinput}
+                    value={this.props.email}
+                    onChangeText={email => this.props.updateEmail(email)}
+                  // onChangeText={password => this.props.updatePassword(password)}
+                  />
+                </View>
+                <View style={signupStyles.forms_textinput_container}>
+                  <Icon style={globalStyles.icon_global} name="user-circle" size={18} />
+                  <TextInput
+                    placeholder="Full Name"
+                    placeholderTextColor="#8B8787"
+                    style={signupStyles.forms_textinput}
+                    value={this.props.fullName}
+                    onChangeText={name => this.props.updateFullName(name)}
+                  // onChangeText={password => this.props.updatePassword(password)}
+                  />
+                </View>
+                <View style={signupStyles.forms_specialty_container}>
+                  <RNPickerSelect
+                    Icon={() => {
+                      return <Icon style={globalStyles.icon_global} name="briefcase" size={18} />
+                    }}
+                    placeholder={{
+                      label: 'User Specialty',
+                      value: '',
+                    }}
+                    style={{
+                      iconContainer: {
+                        paddingRight: 6,
+                        paddingTop: 16
+                      },
+                      viewContainer: {
+                        alignSelf: 'stretch',
+                        marginVertical: -8,
+                        paddingRight: 10,
+                        paddingLeft: 15,
+                      },
+                      inputIOS: {
+                        color: 'black',
+                      },
+                      inputAndroid: {
+                        color: 'black',
+                      },
+                    }}
+
+                    value={this.props.userSpecialty}
+                    onValueChange={specialty => this.props.updateUserSpecialty(specialty)}
+                    // onValueChange={(userSpecialty) => this.props.updateUserSpecialty(userSpecialty)}
+                    items={[
+                      { label: 'Engineer', value: 'Engineer' },
+                      { label: 'Architect', value: 'Architect' },
+                      { label: 'Doctor', value: 'Doctor' },
+                      { label: 'Lawyer', value: 'Lawyer' }
+                    ]}
+                  />
+
+                </View>
+                <View style={signupStyles.forms_textinput_container}>
+                  <Icon style={globalStyles.icon_global} name="briefcase" size={15} />
+                  <TextInput
+                    placeholder="Sub-specialty"
+                    placeholderTextColor="#8B8787"
+                    style={signupStyles.forms_textinput}
+                    value={this.props.userSubSpecialty}
+                    onChangeText={subSpecialty => this.props.updateUserSubSpecialty(subSpecialty)}
+                  // onChangeText={password => this.props.updatePassword(password)}
+                  />
+                </View>
+                <View style={signupStyles.forms_textinput_container}>
+                  <Icon style={globalStyles.icon_global} name="id-card" size={15} />
+                  <TextInput
+                    placeholder="LIC"
+                    placeholderTextColor="#8B8787"
+                    style={signupStyles.forms_textinput}
+                    value={this.props.userLIC}
+                    onChangeText={lic => this.props.updateUserLIC(lic)}
+                  // onChangeText={password => this.props.updatePassword(password)}
+                  />
+                </View>
+                {/* <View style={signupStyles.forms_textinput_container}>
+                  <Icon style={globalStyles.icon_global} name="lock" size={18} />
+                  <TextInput
+                    secureTextEntry={true}
+                    placeholder="Password"
+                    placeholderTextColor="#8B8787"
+                    style={signupStyles.forms_textinput}
+                    value={this.props.password}
+                    onChangeText={() => { }}
+                  // onChangeText={password => this.props.updatePassword(password)}
+                  />
+                </View>
+                <View style={signupStyles.forms_textinput_container}>
+                  <Icon style={globalStyles.icon_global} name="lock" size={18} />
+                  <TextInput
+                    secureTextEntry={true}
+                    placeholder="Confirm Password"
+                    placeholderTextColor="#8B8787"
+                    style={signupStyles.forms_textinput}
+                    value={this.props.password}
+                    onChangeText={() => { }}
+                  // onChangeText={password => this.props.updatePassword(password)}
+                  />
+                </View> */}
+              </View>
+              <View style={profileStyles.divider} />
+              <View style={profileStyles.profile_b_info_container}>
+                <Text style={profileStyles.profile_b_info_header}>Office Details</Text>
+                {this.props.office_details.map((value, i) => {
                       return (
-                        <View>
-                         <Text>{data}</Text>
-                        </View>
-                      )
-                    })
-                  } */}
+                        <View key={value.id.toString()}>
+                          <View style={signupStyles.forms_textinput_container}>
+                            <Icon style={globalStyles.icon_global} name="map-marker" size={18} />
+                            <TextInput
+                              placeholder="Location"
+                              placeholderTextColor="#8B8787"
+                              style={signupStyles.forms_textinput}
+                              value={value.office_location}
+                              onChangeText={text => this.setLocation(text, i)}
+                            />
+                          </View>
+                          <Text style={profileStyles.profile_b_info_header_justify}>{value.office_hour_from} - {value.office_hour_to} {value.office_day.map((day) => {return ' ' + day})}</Text>
+                          <View style={signupStyles.forms_add_textinput_container}>
+                            
+                            <TouchableOpacity
+                              activeOpacity={0.6}
+                              style={profileStyles.forms_add_textinput_button_container_i}
+                              onPress={() => this.addOfficeHours(value.id)}
+                            >
+                              <View style={{ flexDirection: 'row' }}>
+                                <Icon style={globalStyles.icon_global_i} name="plus" size={14} />
+                                <Text style={profileStyles.forms_chooseimg_button_text_i} >
+                                  ADD OFFICE HOURS
+                                  </Text>
+                              </View>
 
-                </View>
-                <View style={profileStyles.forms_add_textinput_container}>
-                  <TouchableOpacity
-                    activeOpacity={0.6}
-                    style={profileStyles.forms_add_textinput_button_container}
-                    onPress={() => this.addLocation()}
-                  >
-                    <Icon style={globalStyles.icon_global} name="plus" size={14} />
-                    <Text style={profileStyles.forms_add_textinput_text} > ADD LOCATION </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.6}
-                    style={signupStyles.forms_add_textinput_button_container}
-                    onPress={() => this.removeLocation()}
-                  >
-                    <Icon style={globalStyles.icon_global} name="times" size={14} />
-                    <Text style={profileStyles.forms_add_textinput_text} > REMOVE LOCATION </Text>
-                  </TouchableOpacity>
-                </View>
+                            </TouchableOpacity>
+                          </View>
+                        </View>
+                      );
+                    })}
+
 
               </View>
+              <View style={signupStyles.forms_add_textinput_container}>
+                  <TouchableOpacity
+                    activeOpacity={0.6}
+                    style={profileStyles.forms_add_textinput_button_container_i}
+                    onPress={() => this.addLocation()}
+                  >
+                    <Icon style={globalStyles.icon_global_i} name="plus" size={14} />
+                    <Text style={profileStyles.forms_chooseimg_button_text_i} > ADD </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.6}
+                    style={profileStyles.forms_add_textinput_button_container_i}
+                    onPress={() => this.removeLocation()}
+                  >
+                    <Icon style={globalStyles.icon_global_i} name="times" size={14} />
+                    <Text style={profileStyles.forms_chooseimg_button_text_i} >REMOVE </Text>
+                  </TouchableOpacity>
+                </View>
+
               <TouchableOpacity
                 activeOpacity={0.6}
-                style={profileStyles.forms_button}
-                onPress={this.confirmEdit}
+                style={profileStyles.forms_confirm_edit_profile}
+                onPress={this.Confirm}
               >
-                <Text style={profileStyles.forms_button_label}>CONFIRMZ</Text>
+                <Text style={profileStyles.forms_chooseimg_button_text_i}>CONFIRM</Text>
               </TouchableOpacity>
             </ScrollView>
           </View>
-        </LinearGradient>
+        </View>
       </View>
-    )
+
+    );
   }
 }
 
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ getConsultant, updateProfileImage, editProfile, updateOfficeImage, updateLocation }, dispatch)
+  return bindActionCreators({
+    getConsultant,
+    getReviews,
+    updateProfileImage,
+    editProfile,
+    updateOfficeImage,
+    updateLocation,
+    updateEmail,
+    updatePassword,
+    updateFullName,
+    updateUserLIC,
+    updateUserSpecialty,
+    updateUserSubSpecialty,
+    updateOfficeDetails
+  }, dispatch)
 }
 const mapStateToProps = state => {
   return {
     user: state.users,
     consultant: state.users,
-    singleConsultant: state.users,
-    locArray: state.locArray
+    singleConsultant: state.users.singleConsultant,
+    locArray: state.locArray,
+
+    email: state.users.email,
+    // password: state.users.password,
+    fullName: state.users.fullName,
+    userType: state.users.userType,
+    userSpecialty: state.users.userSpecialty,
+    userLIC: state.users.userLIC,
+    userSubSpecialty: state.users.userSubSpecialty,
+    office_details: state.users.office_details,
+    profilePicture: state.users.profilePicture,
+    officeImage: state.users.officeImage,
+
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(EditProfile_1);

@@ -204,8 +204,29 @@ const SignUp = {
         alignSelf: 'center',
     },
 
+    forms_button_disabled: {
+        width: 130,
+        height: 30,
+        marginTop: 20,
+        backgroundColor: '#FFFFFF80',
+        borderRadius: 15,
+        shadowOffset: { width: 0, height: 2, },
+        shadowColor: 'black',
+        shadowOpacity: 0.1,
+        justifyContent: 'center',
+        alignSelf: 'center',
+    },
+
     forms_button_label: {
         color: '#8B8787',
+        fontSize: 15,
+        fontWeight: '600',
+        letterSpacing: 1,
+        textAlign: 'center',
+    },
+
+    forms_button_label_disabled: {
+        color: '#8B878780',
         fontSize: 15,
         fontWeight: '600',
         letterSpacing: 1,
@@ -358,6 +379,11 @@ const SignUp = {
     },
 
     forms_dynamicinput_margin: {
+        marginTop: 8,
+        height: 220
+    },
+
+    forms_dynamicinput_scaffold: {
         marginTop: 8,
         height: 220
     }

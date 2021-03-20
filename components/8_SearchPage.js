@@ -34,7 +34,6 @@ class Search extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
-      console.log('Filter Updated to passed userspecialty params')
       this.setState(() => ({ filterVal: this.props.navigation.state.params.userSpecialty }));
     }
   }
@@ -49,9 +48,11 @@ class Search extends React.Component {
   }
 
   render() {
-    console.log('=================================');
-    console.log(this.state);
-    console.log('=================================');
+    // console.log('=================================');
+    // console.log(this.props);
+    // console.log('-----------------------------');
+    // console.log(this.state);
+    // console.log('=================================');
 
     const userSpecialty_list = [
       {
@@ -60,7 +61,7 @@ class Search extends React.Component {
       },
       {
         key: 2,
-        userSpecialty: "Architects",
+        userSpecialty: "Architect",
       },
       {
         key: 3,
@@ -68,7 +69,7 @@ class Search extends React.Component {
       },
       {
         key: 4,
-        userSpecialty: "Lawyers",
+        userSpecialty: "Lawyer",
       },
     ]
 
@@ -132,8 +133,8 @@ class Search extends React.Component {
               items={[
                 { label: 'ENGINEERS', value: 'Engineer' },
                 { label: 'DOCTORS', value: 'Doctor' },
-                { label: 'ARCHITECTS', value: 'Architects' },
-                { label: 'LAWYERS', value: 'Lawyers' },
+                { label: 'ARCHITECTS', value: 'Architect' },
+                { label: 'LAWYERS', value: 'Lawyer' },
               ]}
             />
           </View>

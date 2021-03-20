@@ -6,9 +6,10 @@ import { profileStyles, globalStyles, calendarStyles } from '../styles/styles';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getConsultant } from '../actions/users';
+import { getReviews } from '../actions/reviews';
 import AsyncStorage from '@react-native-community/async-storage';
 
-class ProfileTab extends React.Component {
+class Profile extends React.Component {
 
   constructor(props) {
     super(props);
@@ -18,18 +19,20 @@ class ProfileTab extends React.Component {
   }
 
   Edit = (uid) => {
-    //const navigation = this.props.navigation;
     if (uid) {
       this.props.getConsultant(uid);
       this.props.navigation.navigate('EditProfile_1');
-      console.log("CLICKED EDIDT");
     }
-
   }
 
-  BackToProfile = () => {
-    (this.state.user.userType === "CONSULTANT") ? this.props.navigation.replace('Profile') : this.props.navigation.goBack()
-    
+  BackToProfile = async () => {
+    if (this.state.user.userType === "CONSULTANT") {
+      await this.props.getConsultant(this.state.user.uid);
+      await this.props.getReviews(this.state.user.uid);
+      this.props.navigation.replace('Profile');
+    } else {
+      this.props.navigation.goBack();
+    }
   };
 
   List({ items, fallback }) {
@@ -54,10 +57,10 @@ class ProfileTab extends React.Component {
         await AsyncStorage.getItem("user")
       );
       await this.setState(() => ({ user }));
-      console.log('inside compoent dIDD MOUNT========================')
-      console.log(this.state.user)
-      console.log('inside compoent dIDD MOUNT but PROPS========================')
-      console.log(this.props)
+      // console.log('inside compoent dIDD MOUNT========================')
+      // console.log(this.state.user)
+      // console.log('inside compoent dIDD MOUNT but PROPS========================')
+      // console.log(this.props)
 
     } catch (e) {
       console.log(`Error! Details: ${e}`);
@@ -74,12 +77,25 @@ class ProfileTab extends React.Component {
 
   render() {
 
-    let consultant = this.props.navigation.state.params.singleConsultant,
+    let consultant = this.props.singleConsultant,
       reviews = this.props.reviews;
+
+    console.log('HELHLELEELL')
+    console.log(consultant)
+    if(consultant === undefined) {
+      consultant = this.props.curr_singleConsultant
+    }
+
+    if(reviews === undefined) {
+      reviews = this.props.curr_reviews
+    }
+
+
+    // if(reviews === undefined) {
+
+    // }
+
     // if (consultant === undefined) {
-    //   console.log('SHOWING something============')
-    //   console.log(this.props.navigation.state.params.singleConsultant)
-    //   console.log('END OF something============')
     //   consultant = this.props.navigation.state.params.singleConsultant
     // }
 
@@ -100,16 +116,17 @@ class ProfileTab extends React.Component {
     //START OF CHANGES - October 3 - 2020
     var office = Array.from(consultant.office_details);
     //END OF CHANGES - October 3 - 2020
-
+    console.log('SHOWING PROFILE PROPS============')
+    console.log(this.props)
+    console.log('END OF PROFILE PROPS============')
     return (
 
       <View style={profileStyles.container}>
-
         <View style={profileStyles.header_container}>
           <View style={profileStyles.header_text_container}>
             <Text style={profileStyles.header_text_bold}>PROFILE: {consultant.fullName} </Text>
           </View>
-          {this.state.user.uid !== consultant.uid ? 
+          {this.state.user.uid !== consultant.uid ?
             <TouchableOpacity
               activeOpacity={0.6}
               onPress={this.BackToProfile}
@@ -117,7 +134,7 @@ class ProfileTab extends React.Component {
             >
               <Icon style={globalStyles.icon_global} name="times" size={18} />
             </TouchableOpacity>
-          : null}
+            : null}
         </View>
         <View style={profileStyles.scaffold}>
           <View style={profileStyles.profile_container}>
@@ -148,9 +165,9 @@ class ProfileTab extends React.Component {
                   <View style={profileStyles.profile_b_info_details}>
                     <Text >
                       Specialty: {consultant.userSpecialty} {"\n"}
-             Name: {consultant.fullName} {"\n"}
-             Email: {consultant.email}{"\n"}
-             Mobile Number: {consultant.mobileNumber}
+                      {consultant.userSubSpecialty ? 'Sub-specialty: ' + consultant.userSubSpecialty : null} {"\n"}
+                      Name: {consultant.fullName} {"\n"}
+                      Email: {consultant.email}{"\n"}
                     </Text>
                   </View>
                 </View>
@@ -214,7 +231,7 @@ class ProfileTab extends React.Component {
                 {
                   reviews.length > 0 ? reviews.slice(0, 5).map((data) => {
                     return (
-                      <View style={profileStyles.review_details}>
+                      <View key={data.uid} style={profileStyles.review_details}>
                         <View style={profileStyles.review_details_header}>
                           <Text style={profileStyles.review_details_label}>By {data.reviewer_name}</Text>
                           <View style={{ alignSelf: 'flex-start' }}>
@@ -235,12 +252,12 @@ class ProfileTab extends React.Component {
                       </View>
                     )
                   }) : (
-                      <View style={calendarStyles.no_appointments_scaffold}>
-                        <View style={calendarStyles.date_details_button_container}>
-                          <Text style={calendarStyles.no_appointments_text}>No Reviews Yet</Text>
-                        </View>
+                    <View style={calendarStyles.no_appointments_scaffold}>
+                      <View style={calendarStyles.date_details_button_container}>
+                        <Text style={calendarStyles.no_appointments_text}>No Reviews Yet</Text>
                       </View>
-                    )
+                    </View>
+                  )
                 }
 
 
@@ -256,7 +273,7 @@ class ProfileTab extends React.Component {
 
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ getConsultant }, dispatch)
+  return bindActionCreators({ getConsultant, getReviews }, dispatch)
 }
 const mapStateToProps = state => {
   return {
@@ -264,4 +281,4 @@ const mapStateToProps = state => {
     reviews: state.reviews.items
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileTab);
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

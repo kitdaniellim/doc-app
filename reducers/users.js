@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT, SIGNUP, UPDATE_EMAIL, UPDATE_PASSWORD, UPDATE_FULL_NAME, UPDATE_MOBILE_NUMBER, UPDATE_BIRTH_DAY, UPDATE_USER_TYPE, UPDATE_USER_LIC, UPDATE_USER_SPECIALTY, UPDATE_USER_SUB_SPECIALTY, UPDATE_OFFICE_LOCATION, UPDATE_OFFICE_HOURS } from '../actions/users';
+import { LOGIN, LOGOUT, SIGNUP, EDIT_PROFILE, UPDATE_EMAIL, UPDATE_PASSWORD, UPDATE_FULL_NAME, UPDATE_MOBILE_NUMBER, UPDATE_BIRTH_DAY, UPDATE_USER_TYPE, UPDATE_USER_LIC, UPDATE_USER_SPECIALTY, UPDATE_USER_SUB_SPECIALTY, UPDATE_OFFICE_LOCATION, UPDATE_OFFICE_HOURS } from '../actions/users';
 import { GET_ALL_CONSULTANT, GET_REVIEWS, GET_CONSULTANT, UPDATE_PROFILE_IMAGE, UPDATE_OFFICE_IMAGE, UPDATE_OFFICE_DETAILS, UPDATE_LOCATION_DETAIL, UPDATE_TO_HOUR_DETAIL, UPDATE_FROM_HOUR_DETAIL, UPDATE_DAY_DETAIL } from '../actions/users';
 
 const reducerDefaultState = {
@@ -7,11 +7,12 @@ const reducerDefaultState = {
     items: [],
     item: {},
     consultant: [],
-    officeImage: {},
+
     add_office: [],
     location: {},
     to_hour: {},
     from_hour: {},
+
     email: '',
     password: '',
     fullName: '',
@@ -21,7 +22,10 @@ const reducerDefaultState = {
     userSpecialty: '',
     userSubSpecialty: '',
     userOfficeLocation: [],
-    officeHours: ''
+    profilePicture: {},
+    officeImage: {},
+    office_details: [],
+    officeHours: []
 }
 
 export default (state = reducerDefaultState, action) => {
@@ -50,16 +54,11 @@ export default (state = reducerDefaultState, action) => {
         case GET_REVIEWS:
             return { reviews_users: action.payload.reviews_users }
         case UPDATE_PROFILE_IMAGE:
-            // return state.map((value, i) => {
-            //     if (action.payload.uri.index === i) {
-            //         return value
-            //     }
-            // })
             return { ...state, profilePicture: action.payload.uri }
         case UPDATE_OFFICE_IMAGE:
             return { ...state, officeImage: action.payload.uri }
-        case UPDATE_OFFICE_DETAILS:
-            return { ...state, add_office: [...state.arr, action.payload.office_details] }
+        // case UPDATE_OFFICE_DETAILS:
+        //     return { ...state, add_office: [...state.arr, action.payload.office_details] }
         case UPDATE_LOCATION_DETAIL:
             return { ...state, location: action.payload.user_location }
         case UPDATE_TO_HOUR_DETAIL:
@@ -75,6 +74,8 @@ export default (state = reducerDefaultState, action) => {
         case LOGOUT:
             return { state: reducerDefaultState }
         case SIGNUP:
+            return { ...state, user: action.payload.user }
+        case EDIT_PROFILE:
             return { ...state, user: action.payload.user }
         case UPDATE_EMAIL:
             return { ...state, email: action.payload.email }
@@ -98,6 +99,8 @@ export default (state = reducerDefaultState, action) => {
             return { ...state, userOfficeLocation: action.payload }
         case UPDATE_OFFICE_HOURS:
             return { ...state, officeHours: action.payload.officeHours }
+        case UPDATE_OFFICE_DETAILS:
+            return { ...state, office_details: action.payload.office_details }
         default:
             return state;
     }

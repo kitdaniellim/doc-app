@@ -18,6 +18,26 @@ export const addReview = (data) => {
     }
 }
 
+export const getAllReviews = (id) => {
+    return async dispatch => {
+        try {
+            dispatch(loadBegin());
+            db.collection("reviews")
+                .onSnapshot(async (querySnapShot) => {
+                    let results = [];
+                    querySnapShot.forEach((doc) => {
+                        results.push(doc.data());
+                    });
+                    results.sort((a, b) => b.created_at - a.created_at);
+                    await dispatch(getReviewsSuccess(results));
+                })
+        } catch (error) {
+            dispatch(getReviewsFailure(error))
+        }
+    }
+}
+
+//get reviews for consultant profile display
 export const getReviews = (id) => {
     return async dispatch => {
         try {
@@ -38,6 +58,7 @@ export const getReviews = (id) => {
     }
 }
 
+//get reviews for client reviewpage display
 export const getReviewedBy = (id) => {
     return async dispatch => {
         try {

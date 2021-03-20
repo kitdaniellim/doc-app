@@ -13,11 +13,7 @@ class Home extends React.Component {
   _isMounted = false
   constructor(props) {
     super(props);
-    //this.Profile = this.Profile.bind(this);
-    // this.ref = firebase.firestore().collection
-    //  this.state = {
-    //    imgUrl =  ''
-    //  }
+
   }
 
   async componentDidMount() {
@@ -43,20 +39,23 @@ class Home extends React.Component {
     this.props.navigation.navigate('Search', { userSpecialty: userSpecialty });
   }
 
-  Field() {
-    this.props.navigation.navigate('Search');
-  }
-
   Profile = async (uid) => {
     await this.props.getConsultant(uid);
     await this.props.getReviews(uid);
-
+    
+    // this.props.navigation.navigate('Profile', { singleConsultant: this.props.singleConsultant, reviews: this.props.reviews })
     if (this.props.singleConsultant.office_details != null) {
-      this.props.navigation.navigate('Profile', { singleConsultant: this.props.singleConsultant, reviews: this.props.reviews })
+      // console.log('Clicked profile')
+      // console.log(this.props.singleConsultant)
+      // console.log('Clicked profile-------------------')
+      this.props.navigation.navigate('Profile')
     }
   }
 
   render() {
+    // console.log('showing props')
+    // console.log(this.props)
+    // console.log('------')
 
     let images = [
       {
@@ -81,7 +80,7 @@ class Home extends React.Component {
       },
       {
         key: 2,
-        userSpecialty: "Architects",
+        userSpecialty: "Architect",
       },
       {
         key: 3,
@@ -89,7 +88,7 @@ class Home extends React.Component {
       },
       {
         key: 4,
-        userSpecialty: "Lawyers",
+        userSpecialty: "Lawyer",
       },
     ]
 
@@ -102,6 +101,8 @@ class Home extends React.Component {
         this.props.navigation.reset('Login')
       }
     }
+
+    // let consultant = this.props.consultant;
 
     return (
       <View style={homeStyles.container}>
@@ -119,8 +120,9 @@ class Home extends React.Component {
                   <View style={homeStyles.scaffold_vlist_item_container}>
                     <View style={{ flexDirection: 'row' }}>
                       <TouchableOpacity
+                        disabled
                         activeOpacity={0.6}
-                        onPress={this.Field}
+                        onPress={() => {}}
                         style={homeStyles.scaffold_vlist_item_header_container}
                       >
                         <Text style={homeStyles.scaffold_vlist_item_header}>{item.userSpecialty}</Text>

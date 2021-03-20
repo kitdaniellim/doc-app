@@ -69,6 +69,13 @@ const Profile = {
     color: '#8B8787',
   },
 
+  profile_b_info_header_justify: {
+    fontSize: 11,
+    color: '#8B8787',
+    justifyContent: 'center',
+    alignSelf: 'center'
+  },
+
   profile_b_info_details_container: {
     flexDirection: 'row',
     backgroundColor: '#ECECEC',
@@ -256,7 +263,7 @@ const Profile = {
     letterSpacing: 1,
     marginTop: 15,
     marginBottom: 5,
-},
+  },
 
   forms_label_small_container_2: {
     marginTop: 8,
@@ -276,19 +283,19 @@ const Profile = {
     textAlign: 'center',
     justifyContent: 'center',
     alignSelf: 'center',
-},
+  },
 
-forms_timeinput_container: {
-  flex: 3,
-  flexDirection: 'row',
-  borderRadius: 15,
-  backgroundColor: '#ECECEC',
-  justifyContent: 'center',
-  alignSelf: 'center',
-  shadowOffset: { width: 0, height: 2, },
-  shadowColor: 'black',
-  shadowOpacity: 0.1,
-},
+  forms_timeinput_container: {
+    flex: 3,
+    flexDirection: 'row',
+    borderRadius: 15,
+    backgroundColor: '#ECECEC',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    shadowOffset: { width: 0, height: 2, },
+    shadowColor: 'black',
+    shadowOpacity: 0.1,
+  },
 
   forms_dynamicinput_margin: {
     flex: 1
@@ -343,7 +350,7 @@ forms_timeinput_container: {
   },
 
   forms_chooseimg_button_text: {
-    fontSize: 10,
+    fontSize: 11,
     fontWeight: '600',
     textAlign: 'center',
     color: '#8B8787',
@@ -352,11 +359,11 @@ forms_timeinput_container: {
     letterSpacing: 1,
   },
 
-  forms_chooseimg_button_text_edit: {
-    fontSize: 10,
+  forms_chooseimg_button_text_i: {
+    fontSize: 11,
     fontWeight: '600',
     textAlign: 'center',
-    color: '#000',
+    color: '#fff',
     justifyContent: 'center',
     alignSelf: 'center',
     letterSpacing: 1,
@@ -376,6 +383,42 @@ forms_timeinput_container: {
     shadowOffset: { width: 0, height: 2, },
     shadowColor: 'black',
     shadowOpacity: 0.1,
+  },
+
+  forms_add_textinput_button_container_i: {
+    flex: 1,
+    flexDirection: 'row',
+    height: 40,
+    backgroundColor: '#19BAB9',
+    borderRadius: 15,
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    marginHorizontal: 10,
+    marginVertical: 4,
+    justifyContent: 'center',
+    alignSelf: 'stretch',
+    shadowOffset: { width: 0, height: 2, },
+    shadowColor: 'black',
+    shadowOpacity: 0.1,
+  },
+
+  forms_confirm_edit_profile: {
+    flex: 1,
+    flexDirection: 'row',
+    height: 40,
+    backgroundColor: '#19BAB9',
+    borderRadius: 15,
+    paddingHorizontal: 15,
+    paddingVertical: 3,
+    marginHorizontal: 50,
+    marginTop: 4,
+    marginBottom: 15,
+    justifyContent: 'center',
+    alignSelf: 'stretch',
+    shadowOffset: { width: 0, height: 2, },
+    shadowColor: 'black',
+    shadowOpacity: 0.1,
+    
   },
 
   forms_add_textinput_button_container_edit: {

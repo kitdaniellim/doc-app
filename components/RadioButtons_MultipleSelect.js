@@ -38,9 +38,8 @@ class RadioButtons_MultipleSelect extends React.Component {
       
         //const { days } = this.props.values;
         //  this.props.day(values);
-        console.log("radiobutton");
        
-        console.log(this.props );
+        // console.log(this.props );
         //console.log(days);
         return (
          

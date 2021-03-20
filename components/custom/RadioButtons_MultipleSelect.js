@@ -2,23 +2,47 @@ import React from 'react';
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 
 export default class RadioButtons_MultipleSelect extends React.Component {
-    state = {
-        values: [],
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            values: [],
+            days: [
+                { key: 'Su', text: 'Su', Checked: false },
+                { key: 'M', text: 'M', Checked: false },
+                { key: 'Tu', text: 'Tu', Checked: false },
+                { key: 'W', text: 'W', Checked: false },
+                { key: 'Th', text: 'Th', Checked: false },
+                { key: 'F', text: 'F', Checked: false },
+                { key: 'Sa', text: 'Sa', Checked: false },
+            ]
+        }
+    }
+
+    componentDidUpdate = (prevProps, prevState) => {
+        if (this.props !== prevProps) {
+            // console.log('IT UPDATED OMG')
+            // console.log(this.props)
+            // console.log('---------------')
+            // console.log(prevProps)
+            // console.log('================')
+        }
+    }
 
     render() {
-        const { options } = this.props;
-        const { values } = this.state;
+
         return (
             <View style={styles.container}>
-                {options.map((item) => {
+
+                {this.state.days.map((item) => {
                     return (
                         <View key={item.key} style={styles.buttonContainer}>
-                            <Text style={styles.text}>{item.text}</Text>
+                            <Text style={(this.props.isDisabled) ? styles.text_disabled : styles.text}>{item.text}</Text>
                             <TouchableOpacity
-                                style={styles.circle}
+                                disabled={this.props.isDisabled}
+                                style={(this.props.isDisabled) ? styles.circle_disabled : styles.circle}
                                 onPress={() => {
-                                    const temp = values;
+                                    
+                                    const temp = this.state.values;
                                     item.Checked = item.Checked === false ? true : false;
                                     if (item.Checked) {
                                         temp.push(item.key);
@@ -28,6 +52,7 @@ export default class RadioButtons_MultipleSelect extends React.Component {
                                             temp.splice(index, 1);
                                         }
                                     }
+                                    this.props.setDays(temp, this.props.count)
                                     this.setState({
                                         values: temp,
                                     });
@@ -68,6 +93,17 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 
+    circle_disabled: {
+        height: 20,
+        width: 20,
+        margin: 2,
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: '#CACACA',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
     checkedCircle: {
         width: 14,
         height: 14,
@@ -78,6 +114,15 @@ const styles = StyleSheet.create({
 
     text: {
         color: '#fff',
+        fontSize: 13,
+        fontWeight: '600',
+        textAlign: 'center',
+        justifyContent: 'center',
+        alignSelf: 'center',
+    },
+
+    text_disabled: {
+        color: '#CACACA',
         fontSize: 13,
         fontWeight: '600',
         textAlign: 'center',

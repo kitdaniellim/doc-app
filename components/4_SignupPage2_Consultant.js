@@ -104,13 +104,26 @@ class SignupConsultant2 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userSpecialty: ''
+      toggleModal: false,
     }
   }
 
+  Close = () => {
+    this.setState({
+      toggleModal: false,
+    });
+  }
+
   Next = () => {
-    const navigation = this.props.navigation;
-    navigation.navigate('SignupConsultant3_1');
+    if (
+      this.props.fullName !== '' && this.props.fullName !== undefined &&
+      this.props.userSpecialty !== '' && this.props.userSpecialty !== undefined &&
+      this.props.userLIC !== '' && this.props.userLIC !== undefined
+    ) {
+      this.props.navigation.navigate('SignupConsultant3_1');
+    } else {
+      this.setState(() => ({ toggleModal: true }))
+    }
   }
 
   render() {
@@ -123,8 +136,8 @@ class SignupConsultant2 extends React.Component {
           end={{ x: 0, y: 0 }}
           style={globalStyles.gradient}
         >
-          {/* <Modal 
-            isVisible={isModalVisible} 
+          <Modal
+            isVisible={this.state.toggleModal}
             animationIn='bounceInDown'
             animationOut='bounceOutUp'
             animationInTiming={1100}
@@ -139,14 +152,14 @@ class SignupConsultant2 extends React.Component {
                 <Text style={globalStyles.modal_notif}>Seems like you missed one. Please fill in all required fields before proceeding.</Text>
                 <TouchableOpacity
                   activeOpacity={0.6}
-                  onPress={Close}
+                  onPress={this.Close}
                   style={globalStyles.modal_button_container}
                 >
                   <Text style={globalStyles.modal_button_label}>Close</Text>
                 </TouchableOpacity>
               </View>
             </View>
-          </Modal> */}
+          </Modal>
           <View style={signupStyles.forms_container}>
             <Text style={signupStyles.forms_label}>CONSULTANT SIGN UP</Text>
             <View style={signupStyles.forms_label_small_container_2}>
@@ -158,22 +171,11 @@ class SignupConsultant2 extends React.Component {
                 placeholder="Full Name"
                 placeholderTextColor="#8B8787"
                 style={signupStyles.forms_textinput}
-                // onChangeText={text => setName(text)}
-                // value={fname}
                 value={this.props.fullName}
                 onChangeText={fullName => this.props.updateFullName(fullName)}
               />
             </View>
             <View style={signupStyles.forms_specialty_container}>
-
-              {/* <TextInput
-                placeholder="Specialty"
-                placeholderTextColor="#8B8787"
-                style={signupStyles.forms_textinput}
-                value = {this.props.userSpecialty}
-                onChangeText={userSpecialty => this.props.updateUserSpecialty(userSpecialty)}
-              /> */}
-
               <RNPickerSelect
                 Icon={() => {
                   return <Icon style={globalStyles.icon_global} name="briefcase" size={18} />
@@ -222,13 +224,11 @@ class SignupConsultant2 extends React.Component {
                 placeholder="LIC Number"
                 placeholderTextColor="#8B8787"
                 style={signupStyles.forms_textinput}
-                // onChangeText={text => setLic(text)}
-                // value={lic}
                 value={this.props.userLIC}
                 onChangeText={userLIC => this.props.updateUserLIC(userLIC)}
               />
             </View>
-            <Dynamic_Input props = {this.props} />
+            <Dynamic_Input props={this.props} />
             {/* <TouchableOpacity
               activeOpacity={0.6}
               style={signupStyles.forms_paybutton}
@@ -259,7 +259,10 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
+    email: state.users.email,
+    password: state.users.password,
     fullName: state.users.fullName,
+    userType: state.users.userType,
     userSpecialty: state.users.userSpecialty,
     userLIC: state.users.userLIC,
     userSubSpecialty: state.users.userSubSpecialty

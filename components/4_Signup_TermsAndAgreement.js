@@ -52,8 +52,9 @@ class Signup_TermsAndAgreement extends React.Component {
   }
 
   render() {
-
-  
+    console.log('--final props--')
+    console.log(this.props)
+    console.log('---------------')
     return (
       <View style={signupStyles.container}>
         <LinearGradient x
@@ -105,7 +106,7 @@ class Signup_TermsAndAgreement extends React.Component {
                 <Text style={signupStyles.forms_scaffold_checkbox_label}>Do you agree with the{"\n"}Terms and Conditions?</Text>
               </View>
             </View>
-            <Text style={signupStyles.forms_text}>3/3</Text>
+            <Text style={signupStyles.forms_text}> {this.props.userType === 'CLIENT' ? '3/3' : '4/4'} </Text>
             <TouchableOpacity
               activeOpacity={0.6}
               style={signupStyles.forms_button}
@@ -127,12 +128,16 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    userType: state.users.userType,
     email: state.users.email,
     password: state.users.password,
     fullName: state.users.fullName,
+    userType: state.users.userType,
+    userSpecialty: state.users.userSpecialty,
+    userLIC: state.users.userLIC,
+    userSubSpecialty: state.users.userSubSpecialty,
     mobileNumber: state.users.mobileNumber,
-    birthDay: state.users.birthDay
+    birthDay: state.users.birthDay,
+    office_details: state.users.office_details
   }
 }
 

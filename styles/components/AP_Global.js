@@ -37,6 +37,7 @@ const Global = {
     color: '#fff',
     justifyContent: 'center',
     alignSelf: 'center',
+    marginHorizontal: 3,
   },
 
   modal_icon: {

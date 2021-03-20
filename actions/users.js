@@ -26,6 +26,7 @@ export const UPDATE_OFFICE_HOURS = 'UPDATE_OFFICE_HOURS';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const SIGNUP = 'SIGNUP';
+export const EDIT_PROFILE = 'EDIT_PROFILE';
 
 //USER PASSWORD RECOVERY OPERATION
 export const recoverPassword = (token) => {
@@ -202,25 +203,41 @@ export const getUrl = async () => {
 export const signup = () => {
     return async (dispatch, getState) => {
         try {
-            const { email, password, fullName, mobileNumber, birthDay, userType } = getState().users
-
+            const { email, password, fullName, userType } = getState().users
             const response = await Firebase.auth().createUserWithEmailAndPassword(email.trim(), password)
-
+            let user;
             if (response.user.uid) {
-                // const getUser = getState().users.userType;
-                // if (getUser === "CLIENT")
-                // {
-                const user = {
-                    uid: response.user.uid,
-                    email: email,
-                    emailVerified: false,
-                    fullName: fullName,
-                    mobileNumber: mobileNumber,
-                    birthDay: birthDay,
-                    userType: userType,
-                    profilePicture: await Firebase.storage().ref('users/default/default.jpg').getDownloadURL().catch((error) => { alert("error sa geturl") }),
-                    officeImage: await Firebase.storage().ref('users/default/office.jpg').getDownloadURL().catch((error) => { alert("error sa geturl") })
+                if (userType === "CLIENT") {
+                    const { mobileNumber, birthDay } = getState().users
+                    user = {
+                        uid: response.user.uid,
+                        email: email,
+                        emailVerified: false,
+                        fullName: fullName,
+                        mobileNumber: mobileNumber,
+                        birthDay: birthDay,
+                        userType: userType,
+                        profilePicture: await Firebase.storage().ref('users/default/default.jpg').getDownloadURL().catch((error) => { alert("error sa geturl") }),
+                        officeImage: await Firebase.storage().ref('users/default/office.jpg').getDownloadURL().catch((error) => { alert("error sa geturl") })
+                    }
+                } else {
+                    const { userSpecialty, userLIC, userSubSpecialty, office_details } = getState().users
+                    user = {
+                        uid: response.user.uid,
+                        email: email,
+                        emailVerified: false,
+                        fullName: fullName,
+                        rating: 0,
+                        userSpecialty: userSpecialty,
+                        userLIC: userLIC,
+                        userSubSpecialty: userSubSpecialty,
+                        office_details: office_details,
+                        userType: userType,
+                        profilePicture: await Firebase.storage().ref('users/default/default.jpg').getDownloadURL().catch((error) => { alert("error sa geturl") }),
+                        officeImage: await Firebase.storage().ref('users/default/office.jpg').getDownloadURL().catch((error) => { alert("error sa geturl") })
+                    }
                 }
+
                 console.log('========showing user==========')
                 console.log(user);
                 console.log('==================')
@@ -281,7 +298,6 @@ export const getAllConsultant = () => {
     return async (dispatch, getState) => {
         try {
             const snapshot = await db.collection('users').where("userType", "==", "CONSULTANT").get()
-            // const consultant = snapshot.docs.map( {
             //     if(  doc.data().profilePicture !== "DEFAULT" )
             //     {
             //            Firebase.storage().ref('users/default/default.jpg').getDownloadURL().then(imgUrl => { doc.data.profilePicture })
@@ -290,24 +306,30 @@ export const getAllConsultant = () => {
             // reviews.map((data) => {
             //    console.log("Snapshot");
             //     console.log(snapshot);
+
             const consultant = snapshot.docs.map(doc =>
                 doc.data()
             )
-            consultant.map((data) => {
-                //var reviews_details = _.keyBy(data.userReviews);
-                //var reviews = _.values(data.userReviews);
-                var i = 0;
-                data.userReviews.map((data1) => {
-                    i += data1.rating;
+            console.log('INSIDE GET CONSULTANT')
+            console.log(consultant)
 
-                })
-                data.rating = i;
-                return data;
-            })
 
-            consultant.sort(function (a, b) {
-                return parseInt(b.rating) - parseInt(a.rating);
-            })
+            // consultant.map((data) => {
+
+            //     //var reviews_details = _.keyBy(data.userReviews);
+            //     //var reviews = _.values(data.userReviews);
+            //     var i = 0;
+            //     data.userReviews.map((data1) => {
+            //         i += data1.rating;
+
+            //     })
+            //     data.rating = i;
+            //     return data;
+            // })
+
+            // consultant.sort(function (a, b) {
+            //     return parseInt(b.rating) - parseInt(a.rating);
+            // })
             //Firebase.storage().ref('users/default/default.jpg').getDownloadURL().then((imgUrl) => { console.log(imgUrl)  })
             //console.log(consultant);
 
@@ -425,54 +447,94 @@ export const officePicture = async (uid, officeImage) => {
 
 }
 /* DEV: EJA - Event for updating consultant profile picture*/
-export const editProfile = () => {
+// export const editProfile = () => {
+//     return async (dispatch, getState) => {
+//         console.log('===== DISPLAYING SHIT =====')
+//         console.log(getState());
+//         console.log('===== DISPLAYING SHIT =====')
+//         try {
+
+//             const { uid, profilePicture, officeImage, day, from_hour, to_hour } = getState().singleConsultant
+
+//             console.log('===== DISPLAYING SHIT =====')
+//             console.log(uid)
+//             console.log('-----------------------------')
+//             console.log(profilePicture)
+//             console.log('-----------------------------')
+//             console.log(officeImage)
+//             console.log('-----------------------------')
+//             console.log(day)
+//             console.log('-----------------------------')
+//             console.log(from_hour)
+//             console.log('-----------------------------')
+//             console.log(to_hour)
+//             console.log('===== DISPLAYING SHIT =====')
+
+//             if (profilePicture) {
+//                 profileImage(uid, profilePicture);
+//             }
+//             if (officeImage) {
+//                 officePicture(uid, officeImage);
+//             }
+//             // //const{ arr } = getState().locArray;
+//             // console.log("sa edit prof ni nga consultant");
+//             // console.log(getState());
+//             // const response = await fetch(profilePicture);
+//             // //const response_office = await fetch(officeImage);
+
+//             // const blob = await response.blob();
+
+//             // const ref = Firebase.storage().ref().child("users/" + uid + getCurrentDate());
+
+//             // const snapshot = await ref.put(blob);
+
+//             // blob.close();
+
+//             // const url = await snapshot.ref.getDownloadURL();
+//             //  
+//         } catch (e) {
+//             conso
+//             console.log(e)
+//             alert(e);
+//         }
+//     }
+// }
+
+export const editProfile = (uid) => {
+    console.log('====================================NGEKGNGOKKK')
     return async (dispatch, getState) => {
-        console.log('===== DISPLAYING SHIT =====')
-        console.log(getState());
-        console.log('===== DISPLAYING SHIT =====')
         try {
+            const snapshot = await db.collection('users').where("uid", "==", uid).get()
+            const { email, fullName, userSpecialty, userLIC, userSubSpecialty, office_details, profilePicture, officeImage } = getState().users
 
-            const { uid, profilePicture, officeImage, day, from_hour, to_hour } = getState().singleConsultant
+            let arr = snapshot.docs.map(doc =>
+                doc.data()
+            )
 
-            console.log('===== DISPLAYING SHIT =====')
-            console.log(uid)
-            console.log('-----------------------------')
-            console.log(profilePicture)
-            console.log('-----------------------------')
-            console.log(officeImage)
-            console.log('-----------------------------')
-            console.log(day)
-            console.log('-----------------------------')
-            console.log(from_hour)
-            console.log('-----------------------------')
-            console.log(to_hour)
-            console.log('===== DISPLAYING SHIT =====')
+            let user = arr[0];
 
-            if (profilePicture) {
-                profileImage(uid, profilePicture);
-            }
-            if (officeImage) {
-                officePicture(uid, officeImage);
-            }
-            // //const{ arr } = getState().locArray;
-            // console.log("sa edit prof ni nga consultant");
-            // console.log(getState());
-            // const response = await fetch(profilePicture);
-            // //const response_office = await fetch(officeImage);
+            console.log('========showing user 1==========')
+            console.log(user);
+            console.log('==================')
 
-            // const blob = await response.blob();
+            user.email = email;
+            user.fullName = fullName;
+            user.userSpecialty = userSpecialty;
+            user.userLIC = userLIC;
+            user.userSubSpecialty = (userSubSpecialty == undefined) ? '' : userSubSpecialty;
+            user.profilePicture = (profilePicture == undefined) ? '' : profilePicture;
+            user.officeImage = (officeImage == undefined) ? '' : officeImage;
 
-            // const ref = Firebase.storage().ref().child("users/" + uid + getCurrentDate());
+            console.log('========showing user 2==========')
+            console.log(user);
+            console.log('==================')
 
-            // const snapshot = await ref.put(blob);
+            db.collection('users').doc(uid).set(user);
 
-            // blob.close();
-
-            // const url = await snapshot.ref.getDownloadURL();
-            //  
+            dispatch({ type: EDIT_PROFILE, payload: { user } })
         } catch (e) {
-            console.log('the error is over here my dude===================================')
-            alert(e);
+            console.log(e)
+            alert(e)
         }
     }
 }
