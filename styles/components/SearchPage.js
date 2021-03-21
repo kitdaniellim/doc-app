@@ -140,6 +140,15 @@ const Search = {
     justifyContent: 'center'
   },
 
+  scaffold_list_item_data_stars: {
+    fontSize: 15,
+    marginHorizontal: 8,
+    marginVertical: 2,
+    color: '#8B8787',
+    justifyContent: 'center',
+    alignSelf: 'flex-start'
+  },
+
   scaffold_list_item_img: {
     height: 75,
     width: 75,

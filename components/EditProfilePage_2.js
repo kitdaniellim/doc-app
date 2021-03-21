@@ -4,6 +4,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { signupStyles, profileStyles, globalStyles } from '../styles/styles';
 import RNPickerSelect from 'react-native-picker-select';
 import Modal from 'react-native-modal';
+import moment from "moment";
+import RadioButtons_MultipleSelect from './custom/RadioButtons_MultipleSelect.js';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getConsultant, updateProfileImage, updateOfficeImage, editProfile, updateLocation, updateEmail, updatePassword, updateFullName, updateUserSpecialty, updateUserLIC, updateUserSubSpecialty, updateOfficeDetails } from '../actions/users';
@@ -23,56 +26,64 @@ class EditProfile_2 extends React.Component {
       showTo: false,
       schedCount: 0,
       key: 0,
-      office_schedules: [],
+      office_location: '',
+      office_details: [],
       canConfirm: false,
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // if (this.state.canConfirm === false) {
-    //   let canConfirm = true;
-    //   for (let x = 0; canConfirm === true && x < this.state.schedCount; x++) {
-    //     if (
-    //       this.state.office_schedules[x].office_day.length === 0 ||
-    //       this.state.office_schedules[x].office_hour_from === '' ||
-    //       this.state.office_schedules[x].office_hour_from === 'Invalid date' ||
-    //       this.state.office_schedules[x].office_hour_to === '' || 
-    //       this.state.office_schedules[x].office_hour_to === 'Invalid date'
-    //     ) {
-    //       canConfirm = false;
-    //     }
-    //   }
+    if (this.state.canConfirm === false) {
+      let canConfirm = true;
+      for (let x = 0; canConfirm === true && x < this.state.schedCount; x++) {
+        if (
+          this.state.office_details[x].office_day.length === 0 ||
+          this.state.office_details[x].office_hour_from === '' ||
+          this.state.office_details[x].office_hour_from === 'Invalid date' ||
+          this.state.office_details[x].office_hour_to === '' || 
+          this.state.office_details[x].office_hour_to === 'Invalid date'
+        ) {
+          canConfirm = false;
+        }
+      }
 
-    //   if (canConfirm === true) {
-    //     this.setState(() => ({
-    //       canConfirm: canConfirm
-    //     }))
-    //   }
-    // }
-
+      if (canConfirm === true) {
+        this.setState(() => ({
+          canConfirm: canConfirm
+        }))
+      }
+    }
   }
 
   setDays = (value, key) => {
-    // let office_schedules = this.state.office_schedules;
+    let office_details = this.state.office_details;
 
-    // office_schedules[key].office_day = value;
-    // this.setState(() => ({
-    //   office_schedules: office_schedules
-    // }))
-    // if (value.length === 0) {
-    //   this.setState(() => ({
-    //     canConfirm: false
-    //   }))
-    // }
-    // console.log(value)
-    // console.log(key)
-    // console.log('===========OFFICE SCHEDS============')
-    // console.log(this.state.office_schedules)
-    // console.log('===========-------------============')
+    office_details[key].office_day = value;
+    this.setState(() => ({
+      office_details: office_details
+    }))
+    if (value.length === 0) {
+      this.setState(() => ({
+        canConfirm: false
+      }))
+    }
+    console.log(value)
+    console.log(key)
+    console.log('===========OFFICE SCHEDS============')
+    console.log(this.state.office_details)
+    console.log('===========-------------============')
   }
 
   componentDidMount() {
-    // this.addHours();
+    let office_details = this.props.navigation.state.params.office_details
+    let key = this.props.navigation.state.params.key;
+    let office_location = office_details[key].office_location;
+
+    this.setState({
+      schedCount: office_details.length,
+      office_location: office_location,
+      office_details: office_details,
+    })
   }
 
   toggleTimeFrom = (key) => {
@@ -90,69 +101,70 @@ class EditProfile_2 extends React.Component {
   }
 
   onChange = (officeHours, key, type) => {
-    // let timestamp = new Date(officeHours.nativeEvent.timestamp);
-    // let format = moment(timestamp).format("hh:mm A");
+    let timestamp = new Date(officeHours.nativeEvent.timestamp);
+    let format = moment(timestamp).format("hh:mm A");
 
+    console.log(format)
 
-    // console.log(format)
+    let office_details = this.state.office_details;
 
-    // let office_schedules = this.state.office_schedules;
+    if (type === 'from') {
+      office_details[key].office_hour_from = format;
+      this.setState(() => ({ showFrom: false }))
+    } else {
+      office_details[key].office_hour_to = format;
+      this.setState(() => ({ showTo: false }))
+    }
+    if (format === 'Invalid date') {
+      console.log('thisigshidfhaigs the formamtamtat')
+      console.log(format)
+      this.setState(() => ({
+        canConfirm: false
+      }))
+    }
 
-    // if (type === 'from') {
-    //   office_schedules[key].office_hour_from = format;
-    //   this.setState(() => ({ showFrom: false }))
-    // } else {
-    //   office_schedules[key].office_hour_to = format;
-    //   this.setState(() => ({ showTo: false }))
-    // }
-    // if (format === 'Invalid date') {
-    //   console.log('thisigshidfhaigs the formamtamtat')
-    //   console.log(format)
-
-    //   this.setState(() => ({
-    //     canConfirm: false
-    //   }))
-    // }
-    // this.setState(() => ({
-    //   office_schedules: office_schedules
-    // }))
-
+    this.setState(() => ({
+      office_details: office_details
+    }))
   }
 
   addHours = () => {
-    // let office_schedules = this.state.office_schedules;
-    // office_schedules.push(
-    //   {
-    //     id: this.state.schedCount,
-    //     office_day: [],
-    //     office_hour_from: '',
-    //     office_hour_to: '',
-    //     office_location: '',
-    //   }
-    // );
+    let office_details = this.state.office_details;
+    office_details.push(
+      {
+        id: this.state.schedCount,
+        office_day: [],
+        office_hour_from: '',
+        office_hour_to: '',
+        office_location: this.state.office_location,
+      }
+    );
 
-    // this.setState({
-    //   schedCount: this.state.schedCount + 1,
-    //   office_schedules: office_schedules,
-    //   canConfirm: false,
-    // })
+    console.log('ADDING HOURS')
+
+    this.setState({
+      schedCount: this.state.schedCount + 1,
+      office_details: office_details,
+      canConfirm: false,
+    })
   }
 
+  //INACCURATE CODE, ADDING AND REMOVING HOURS WILL ALSO AFFECT OFFICE_DETAILS - dan
   removeHours = () => {
-    // if (this.state.schedCount > 1) {
-    //   let office_schedules = this.state.office_schedules;
-    //   office_schedules.pop();
+    if (this.state.schedCount > 1) {
+      let office_details = this.state.office_details;
+      office_details.pop();
 
-    //   this.setState({
-    //     schedCount: this.state.schedCount - 1,
-    //     office_schedules: office_schedules,
-    //   })
-    // }
+      this.setState({
+        schedCount: this.state.schedCount - 1,
+        office_details: office_details,
+      })
+    }
   }
 
   Confirm = () => {
-    let key = this.props.navigation.state.params.key;
-    this.props.navigation.navigate('EditProfile_2', { key: key, office_schedules: this.state.office_schedules });
+    // let key = this.props.navigation.state.params.key;
+    this.props.navigation.navigate('EditProfile_1', { office_details: this.state.office_details });
   }
 
   Back = () => {
@@ -161,9 +173,9 @@ class EditProfile_2 extends React.Component {
 
 
   render() {
-    // console.log('====== START OF EDIT PROFILE THINGS ======');
-    // console.log(this.props.singleConsultant);
-    // console.log('====== END OF EDIT PROFILE THINGS ======');
+    console.log('====== START OF EDIT PROFILE THINGS ======');
+    console.log(this.state.office_details);
+    console.log('====== END OF EDIT PROFILE THINGS ======');
 
     return (
       <View style={profileStyles.container}>
@@ -193,18 +205,101 @@ class EditProfile_2 extends React.Component {
             >
 
               <View style={profileStyles.profile_b_info_container}>
-                <Text style={profileStyles.profile_b_info_header}>Office Hours</Text>
-
+                <Text style={profileStyles.profile_b_info_header}>Office Hours - {this.state.office_location}</Text>
               </View>
 
-              <TouchableOpacity
-                activeOpacity={0.6}
-                style={profileStyles.forms_confirm_edit_profile}
-                onPress={this.Confirm}
-              >
-                <Text style={profileStyles.forms_chooseimg_button_text_i}>CONFIRM</Text>
-              </TouchableOpacity>
+              {this.state.office_details.map((value, i) => {
+                if (value.office_location === this.state.office_location) {
+                  return (
+                    <View key={value.id.toString()} style={signupStyles.forms_time_container}>
+                      <View style={signupStyles.forms_time_scaffold}>
+                        <View style={signupStyles.forms_timeinput_container}>
+
+                          <TouchableOpacity
+                            activeOpacity={0.6}
+                            style={profileStyles.forms_add_textinput_button_container_i}
+                            onPress={() => { this.toggleTimeFrom(i) }}
+                          >
+                            <Text style={profileStyles.forms_chooseimg_button_text_i} > {(this.state.office_details[i].office_hour_from !== '') ? this.state.office_details[i].office_hour_from : 'Set Time From'} </Text>
+                          </TouchableOpacity>
+
+                          {this.state.key == i && this.state.showFrom && (
+                            <DateTimePicker
+                              mode={'time'}
+                              is24Hour={false}
+                              display="default"
+                              value={new Date()} //7 AM in Milliseconds
+                              // onChange={officeHours => this.props.updateOfficeHours(officeHours)}
+                              onChange={officeHours => this.onChange(officeHours, i, 'from')}
+                            />
+                          )}
+                        </View>
+                        <View style={signupStyles.forms_timeinput_divider}>
+                          <Text style={profileStyles.profile_b_info_header_justify}>to</Text>
+                        </View>
+                        <View style={signupStyles.forms_timeinput_container}>
+                          <TouchableOpacity
+                            activeOpacity={0.6}
+                            style={profileStyles.forms_add_textinput_button_container_i}
+                            onPress={() => { this.toggleTimeTo(i) }}
+                          >
+                            <Text style={profileStyles.forms_chooseimg_button_text_i} > {(this.state.office_details[i].office_hour_to !== '') ? this.state.office_details[i].office_hour_to : 'Set Time To'} </Text>
+                          </TouchableOpacity>
+                        </View>
+                        {this.state.key == i && this.state.showTo && (
+                          <DateTimePicker
+                            mode={'time'}
+                            is24Hour={false}
+                            display="default"
+                            value={new Date()}
+                            onChange={officeHours => this.onChange(officeHours, i, 'to')}
+                          />
+                        )}
+                      </View>
+
+                      <View>
+                        <RadioButtons_MultipleSelect days={this.state.office_details[i].office_day} invert_colors={true} isDisabled={this.state.office_details[i].office_hour_from === '' || this.state.office_details[i].office_hour_to === '' || this.state.office_details[i].office_hour_from === 'Invalid date' || this.state.office_details[i].office_hour_to === 'Invalid date' ? true : false} setDays={this.setDays.bind(this)} count={i} />
+                      </View>
+                    </View>
+                  );
+                }
+              })}
+
+              <View style={signupStyles.forms_add_textinput_container}>
+                <TouchableOpacity
+                  activeOpacity={0.6}
+                  style={profileStyles.forms_add_textinput_button_container_i}
+                  onPress={this.addHours}
+                >
+                  <Icon style={globalStyles.icon_global_i} name="plus" size={14} />
+                  <Text style={profileStyles.forms_chooseimg_button_text_i} > ADD</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.6}
+                  style={profileStyles.forms_add_textinput_button_container_i}
+                  onPress={this.removeHours}
+                >
+                  <Icon style={globalStyles.icon_global_i} name="times" size={14} />
+                  <Text style={profileStyles.forms_chooseimg_button_text_i} > REMOVE</Text>
+                </TouchableOpacity>
+              </View>
+              <View>
+                <TouchableOpacity
+                  disabled={!this.state.canConfirm}
+                  activeOpacity={0.6}
+                  style={(!this.state.canConfirm) ? profileStyles.forms_confirm_edit_profile_disabled : profileStyles.forms_confirm_edit_profile}
+                  onPress={this.Confirm}
+                >
+                  <Text style={(!this.state.canConfirm) ? profileStyles.forms_chooseimg_button_text_i_disabled : profileStyles.forms_chooseimg_button_text_i}>CONFIRM</Text>
+                </TouchableOpacity>
+              </View>
+
             </ScrollView>
+
+
+
+
+
           </View>
         </View>
       </View>

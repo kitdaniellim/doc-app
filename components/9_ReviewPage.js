@@ -204,7 +204,7 @@ class Review extends React.Component {
         <View style={reviewStyles.scaffold}>
           <View>
             <FlatList
-              data={this.props.results}
+              data={this.props.client_reviews}
               scrollEnabled={true}
               showsVerticalScrollIndicator={false}
               keyExtractor={(item) => item.uid}
@@ -256,7 +256,7 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    results: state.reviews.items
+    client_reviews: state.reviews.client_reviews
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Review);

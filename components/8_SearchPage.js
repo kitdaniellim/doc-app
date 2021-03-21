@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, Image, View, FlatList, TouchableOpacity } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import RNPickerSelect from 'react-native-picker-select';
+import StarRating from 'react-native-star-rating';
 import { searchStyles } from '../styles/styles';
 import { getAllConsultant, getConsultant } from '../actions/users';
 import { getReviews } from '../actions/reviews';
@@ -24,7 +25,7 @@ class Search extends React.Component {
       const user = JSON.parse(
         await AsyncStorage.getItem("user")
       );
-      this.props.getAllConsultant();
+      await this.props.getAllConsultant();
 
     } catch (e) {
       console.log(`Error! Details: ${e}`);
@@ -43,7 +44,7 @@ class Search extends React.Component {
     await this.props.getReviews(uid);
 
     if (this.props.singleConsultant.office_details != null) {
-      this.props.navigation.navigate('Profile', { singleConsultant: this.props.singleConsultant, reviews: this.props.reviews })
+      await this.props.navigation.navigate('Profile', { singleConsultant: this.props.singleConsultant, reviews: this.props.reviews })
     }
   }
 
@@ -168,8 +169,18 @@ class Search extends React.Component {
                                     />
                                   </View>
                                   <View style={{ justifyContent: 'center' }}>
-                                    <Text style={searchStyles.scaffold_list_item_data}>Dr. {value.fullName}</Text>
-                                    <Text style={searchStyles.scaffold_list_item_data}>Rating: {value.rating}</Text>
+                                    <Text style={searchStyles.scaffold_list_item_data}>{(value.userSpecialty === "Doctor") ? 'Dr. ' : value.userSpecialty} {value.fullName}</Text>
+                                    <View style={searchStyles.scaffold_list_item_data_stars}>
+                                      <StarRating
+                                        disabled={true}
+                                        maxStars={5}
+                                        rating={value.rating}
+                                        selectedStar={() => { }}
+                                        fullStarColor='#FDBB3B'
+                                        starSize={12}
+                                        starStyle={{ marginRight: 5, alignSelf: 'center' }}
+                                      />
+                                    </View>
                                   </View>
                                 </View>
                               </TouchableOpacity>

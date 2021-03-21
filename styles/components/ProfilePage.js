@@ -369,6 +369,16 @@ const Profile = {
     letterSpacing: 1,
   },
 
+  forms_chooseimg_button_text_i_disabled: {
+    fontSize: 11,
+    fontWeight: '600',
+    textAlign: 'center',
+    color: '#FFFFFF80',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    letterSpacing: 1,
+  },
+
   forms_add_textinput_button_container: {
     flex: 1,
     flexDirection: 'row',
@@ -419,6 +429,24 @@ const Profile = {
     shadowColor: 'black',
     shadowOpacity: 0.1,
     
+  },
+
+  forms_confirm_edit_profile_disabled: {
+    flex: 1,
+    flexDirection: 'row',
+    height: 40,
+    backgroundColor: '#19BAB980',
+    borderRadius: 15,
+    paddingHorizontal: 15,
+    paddingVertical: 3,
+    marginHorizontal: 50,
+    marginTop: 4,
+    marginBottom: 15,
+    justifyContent: 'center',
+    alignSelf: 'stretch',
+    shadowOffset: { width: 0, height: 2, },
+    shadowColor: 'black',
+    shadowOpacity: 0.1,
   },
 
   forms_add_textinput_button_container_edit: {

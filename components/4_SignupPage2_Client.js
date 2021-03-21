@@ -99,7 +99,7 @@ class SignupClient2 extends React.Component {
 
   Next = () => {
     if(this.props.fullName !== undefined && this.props.fullName !== '' && this.props.birthDay !== '' && this.props.mobileNumber !== '') {
-      this.props.navigation.navigate('SignupClient3');
+      this.props.navigation.navigate('Signup_TermsAndAgreement');
     } else {
       this.setState({ toggleModal: true })
     }

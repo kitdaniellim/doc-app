@@ -122,7 +122,7 @@ class EditReview extends React.Component {
                 await AsyncStorage.getItem("user")
             );
             this.props.getReviewByUID(this.props.navigation.state.params.review_uid);
-            this.setState(()=> ({ user: user }))
+            this.setState(() => ({ user: user }))
         } catch (e) {
             console.log(`Review Page Error! Details: ${e}`);
         }
@@ -130,15 +130,13 @@ class EditReview extends React.Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (this.props !== prevProps) {
-            console.log('start')
-            console.log(this.props)
-            console.log('-------------------------------------------')
-            console.log(prevProps)
-            console.log('end')
-            this.setState(() => ({ 
-                starCount : this.props.single_review[0].rating,
-                comment : this.props.single_review[0].comment
-            }))
+            if (this.props.single_review !== undefined) {
+                this.setState(() => ({
+                    starCount: this.props.single_review[0].rating,
+                    comment: this.props.single_review[0].comment
+                }))
+            }
+
         }
     }
 
@@ -187,7 +185,7 @@ class EditReview extends React.Component {
                                                     disabled={false}
                                                     maxStars={5}
                                                     rating={this.state.starCount}
-                                                    selectedStar={(rating) => this.setState(() => ({ starCount : rating}))}
+                                                    selectedStar={(rating) => this.setState(() => ({ starCount: rating }))}
                                                     fullStarColor='#FDBB3B'
                                                     starSize={13}
                                                     starStyle={{ marginRight: 10 }}
@@ -209,7 +207,7 @@ class EditReview extends React.Component {
                                         <TextInput
                                             style={reviewStyles.review_textinput}
                                             multiline
-                                            onChangeText={text => this.setState(() => ({ comment : text}))}
+                                            onChangeText={text => this.setState(() => ({ comment: text }))}
                                             defaultValue={item.comment}
                                         >
                                         </TextInput>

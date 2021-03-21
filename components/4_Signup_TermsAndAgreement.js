@@ -43,7 +43,7 @@ class Signup_TermsAndAgreement extends React.Component {
       this.setState({ 
         toggleModal: true,
         messageLabel: 'Hooray',
-        message: 'You have successfully created an account! Close this tab to start logging in with your username.',
+        message: 'Account created successfully. Close this to navigate to Login page.',
         icon: 'check-circle-o',
       })
       

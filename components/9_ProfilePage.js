@@ -14,7 +14,52 @@ class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: {}
+      user: {},
+      consultant: {},
+      reviews: [],
+      average: 0,
+      office: [],
+    }
+  }
+
+  async componentDidMount() {
+    try {
+      const user = JSON.parse(
+        await AsyncStorage.getItem("user")
+      );
+      this.setState(() => ({ user }));
+      if(user.userType === "CONSULTANT") {
+        await this.props.getConsultant(user.uid)
+        await this.props.getReviews(user.uid);
+      }
+    } catch (e) {
+      console.log(`Error! Details: ${e}`);
+    }
+  }
+
+  getRatingAverage = (reviews) => {
+    let sum = 0, result = 0;
+    reviews.map(item => {
+      sum += item.rating;
+    });
+    result = sum/reviews.length;
+
+    return result;
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props !== prevProps) {
+      let consultant = this.props.singleConsultant;
+      let reviews = this.props.reviews;
+      let average = this.getRatingAverage(this.props.reviews);
+      let office = Array.from(consultant.office_details);
+
+      this.setState(() => ({
+        consultant: consultant,
+        reviews: reviews,
+        average: average,
+        office: office
+      }))
     }
   }
 
@@ -51,22 +96,6 @@ class Profile extends React.Component {
 
   }
 
-  async componentDidMount() {
-    try {
-      const user = JSON.parse(
-        await AsyncStorage.getItem("user")
-      );
-      await this.setState(() => ({ user }));
-      // console.log('inside compoent dIDD MOUNT========================')
-      // console.log(this.state.user)
-      // console.log('inside compoent dIDD MOUNT but PROPS========================')
-      // console.log(this.props)
-
-    } catch (e) {
-      console.log(`Error! Details: ${e}`);
-    }
-  }
-
   Paypal = (id) => {
 
     this.props.navigation.navigate('Paypal', {
@@ -77,18 +106,16 @@ class Profile extends React.Component {
 
   render() {
 
-    let consultant = this.props.singleConsultant,
-      reviews = this.props.reviews;
+    // let consultant = this.props.singleConsultant,
+    //   reviews = this.props.reviews;
 
-    console.log('HELHLELEELL')
-    console.log(consultant)
-    if(consultant === undefined) {
-      consultant = this.props.curr_singleConsultant
-    }
+    // if(consultant === undefined) {
+    //   consultant = this.props.curr_singleConsultant
+    // }
 
-    if(reviews === undefined) {
-      reviews = this.props.curr_reviews
-    }
+    // if(reviews === undefined) {
+    //   reviews = this.props.curr_reviews
+    // }
 
 
     // if(reviews === undefined) {
@@ -99,13 +126,13 @@ class Profile extends React.Component {
     //   consultant = this.props.navigation.state.params.singleConsultant
     // }
 
-    let sum = 0, average = 0;
+    // let sum = 0, average = 0;
 
-    reviews.map(item => {
-      sum += item.rating;
-    });
+    // reviews.map(item => {
+    //   sum += item.rating;
+    // });
 
-    average = sum / reviews.length;
+    // average = sum / reviews.length;
 
     // DOES NOT WORK IN MOBILE BUT WORKS IN WEB
     // var office_details = _.keyBy(this.props.singleConsultant.office_details,'id');
@@ -114,19 +141,24 @@ class Profile extends React.Component {
     // var reviews = _.values(reviews_details);
 
     //START OF CHANGES - October 3 - 2020
-    var office = Array.from(consultant.office_details);
+
+    // var office = [];
+    // if(this.props.singleConsultant !== undefined) {
+    //   office = Array.from(consultant.office_details);
+    // }
+
     //END OF CHANGES - October 3 - 2020
     console.log('SHOWING PROFILE PROPS============')
     console.log(this.props)
+    console.log(this.state)
     console.log('END OF PROFILE PROPS============')
     return (
-
       <View style={profileStyles.container}>
         <View style={profileStyles.header_container}>
           <View style={profileStyles.header_text_container}>
-            <Text style={profileStyles.header_text_bold}>PROFILE: {consultant.fullName} </Text>
+            <Text style={profileStyles.header_text_bold}>PROFILE: {this.state.consultant.fullName} </Text>
           </View>
-          {this.state.user.uid !== consultant.uid ?
+          {this.state.user.uid !== this.state.consultant.uid ?
             <TouchableOpacity
               activeOpacity={0.6}
               onPress={this.BackToProfile}
@@ -149,7 +181,7 @@ class Profile extends React.Component {
             >
               <View style={profileStyles.profile_officeimg_container}>
                 <Image
-                  source={{ uri: consultant.officeImage }}
+                  source={{ uri: this.state.consultant.officeImage }}
                   style={profileStyles.profile_officeimg}
                 />
               </View>
@@ -158,16 +190,16 @@ class Profile extends React.Component {
                 <View style={profileStyles.profile_b_info_details_container}>
                   <View style={profileStyles.profile_b_info_profileimg_container}>
                     <Image
-                      source={{ uri: consultant.profilePicture }}
+                      source={{ uri: this.state.consultant.profilePicture }}
                       style={profileStyles.profile_b_info_profileimg}
                     />
                   </View>
                   <View style={profileStyles.profile_b_info_details}>
                     <Text >
-                      Specialty: {consultant.userSpecialty} {"\n"}
-                      {consultant.userSubSpecialty ? 'Sub-specialty: ' + consultant.userSubSpecialty : null} {"\n"}
-                      Name: {consultant.fullName} {"\n"}
-                      Email: {consultant.email}{"\n"}
+                      Specialty: {this.state.consultant.userSpecialty} {"\n"}
+                      {this.state.consultant.userSubSpecialty ? 'Sub-specialty: ' + this.state.consultant.userSubSpecialty : null} {"\n"}
+                      Name: {this.state.consultant.fullName} {"\n"}
+                      Email: {this.state.consultant.email}{"\n"}
                     </Text>
                   </View>
                 </View>
@@ -178,7 +210,7 @@ class Profile extends React.Component {
                   <StarRating
                     disabled={true}
                     maxStars={5}
-                    rating={average}
+                    rating={this.state.average}
                     selectedStar={() => { }}
                     fullStarColor='#FDBB3B'
                     starSize={12}
@@ -190,7 +222,7 @@ class Profile extends React.Component {
                 <Text style={profileStyles.profile_hours_header}>Office Hours</Text>
                 <View style={profileStyles.divider} />
                 {
-                  office.map((data, i) => {
+                  this.state.office.map((data, i) => {
                     return (
                       <View key={i} style={profileStyles.profile_hours_details}>
                         <Text>
@@ -210,17 +242,17 @@ class Profile extends React.Component {
 
               </View>
               <View style={profileStyles.divider} />
-              {consultant.uid === this.state.user.uid ? <TouchableOpacity
+              {this.state.consultant.uid === this.state.user.uid ? <TouchableOpacity
                 activeOpacity={0.6}
                 style={profileStyles.edit_button}
-                onPress={() => this.Edit(consultant.uid)}
+                onPress={() => this.Edit(this.state.consultant.uid)}
               >
                 <Text style={profileStyles.edit_button_label}>Edit Profile</Text>
               </TouchableOpacity> : this.state.user.userType === "CLIENT" && <TouchableOpacity
                 activeOpacity={0.6}
                 style={profileStyles.edit_button}
                 onPress={() => {
-                  this.Paypal(consultant.uid)
+                  this.Paypal(this.state.consultant.uid)
                 }}
               >
                 <Text style={profileStyles.edit_button_label}>BOOK</Text>
@@ -229,7 +261,7 @@ class Profile extends React.Component {
               <View style={profileStyles.review_container}>
                 <Text style={profileStyles.review_header}>Reviews</Text>
                 {
-                  reviews.length > 0 ? reviews.slice(0, 5).map((data) => {
+                  this.state.reviews.length > 0 ? this.state.reviews.slice(0, 5).map((data) => {
                     return (
                       <View key={data.uid} style={profileStyles.review_details}>
                         <View style={profileStyles.review_details_header}>

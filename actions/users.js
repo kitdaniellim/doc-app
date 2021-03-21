@@ -4,6 +4,8 @@ import uuid from 'react-native-uuid';
 export const GET_ALL_CONSULTANT = 'GET_ALL_CONSULTANT';
 export const GET_CONSULTANT = 'GET_CONSULTANT';
 export const GET_REVIEWS = 'GET_REVIEWS';
+// export const GET_PROFILE_IMAGE = 'GET_PROFILE_IMAGE';
+// export const GET_OFFICE_IMAGE = 'GET_OFFICE_IMAGE';
 export const UPDATE_PROFILE_IMAGE = 'UPDATE_PROFILE_IMAGE';
 export const UPDATE_OFFICE_IMAGE = 'UPDATE_OFFICE_IMAGE';
 export const UPDATE_OFFICE_DETAILS = 'UPDATE_OFFICE_DETAILS';
@@ -216,9 +218,7 @@ export const signup = () => {
                         fullName: fullName,
                         mobileNumber: mobileNumber,
                         birthDay: birthDay,
-                        userType: userType,
-                        profilePicture: await Firebase.storage().ref('users/default/default.jpg').getDownloadURL().catch((error) => { alert("error sa geturl") }),
-                        officeImage: await Firebase.storage().ref('users/default/office.jpg').getDownloadURL().catch((error) => { alert("error sa geturl") })
+                        userType: userType
                     }
                 } else {
                     const { userSpecialty, userLIC, userSubSpecialty, office_details } = getState().users
@@ -274,69 +274,51 @@ export const display_default_pic = () => {
 
 }
 
-export const getReviewsConsultant = uid => {
-    return async (dispatch, getState) => {
-        try {
-            const user = await db
-                .collection('reviews')
-                .doc(uid)
-                .get()
-
-            //console.log("sa get user ni")
-            //console.log(user.data());
-            //console.log(uid);
-            dispatch({ type: LOGIN, payload: { user: user.data() } })
-        } catch (e) {
-            alert(e)
-        }
-    }
-}
-
 /*DEV: EJA - get all CONSULTANT  */
 export const getAllConsultant = () => {
 
     return async (dispatch, getState) => {
         try {
             const snapshot = await db.collection('users').where("userType", "==", "CONSULTANT").get()
-            //     if(  doc.data().profilePicture !== "DEFAULT" )
-            //     {
-            //            Firebase.storage().ref('users/default/default.jpg').getDownloadURL().then(imgUrl => { doc.data.profilePicture })
-            //     }
-            // }
-            // reviews.map((data) => {
-            //    console.log("Snapshot");
-            //     console.log(snapshot);
+            const { all_reviews } = getState().reviews
+
+            // console.log('IS THIS THING EMPTY???')
+            // console.log(all_reviews)
+            // console.log('===========')
+
 
             const consultant = snapshot.docs.map(doc =>
                 doc.data()
             )
-            console.log('INSIDE GET CONSULTANT')
-            console.log(consultant)
 
+            consultant.map((data) => {
+                let sum = 0, count = 0;
+                all_reviews.map((review) => {
+                    if(review.review_to === data.uid) {
+                        sum += review.rating;
+                        count++;
+                    }
+                })
+                if(count == 0) {
+                    data.rating = 0;
+                } else {
+                    data.rating = sum / count;
+                }
+                
+                return data;
+            })
 
-            // consultant.map((data) => {
-
-            //     //var reviews_details = _.keyBy(data.userReviews);
-            //     //var reviews = _.values(data.userReviews);
-            //     var i = 0;
-            //     data.userReviews.map((data1) => {
-            //         i += data1.rating;
-
-            //     })
-            //     data.rating = i;
-            //     return data;
-            // })
-
-            // consultant.sort(function (a, b) {
-            //     return parseInt(b.rating) - parseInt(a.rating);
-            // })
-            //Firebase.storage().ref('users/default/default.jpg').getDownloadURL().then((imgUrl) => { console.log(imgUrl)  })
-            //console.log(consultant);
+            consultant.sort(function (a, b) {
+                return parseInt(b.rating) - parseInt(a.rating);
+            })
+            // console.log('IS THIS THING EMPTY???')
+            // console.log(consultant)
+            // console.log('===========')
+            // db.collection('users').doc(uid).update({rating: value});
 
             dispatch({ type: GET_ALL_CONSULTANT, payload: { consultant } })
 
         } catch (e) {
-            alert("puta1")
             console.log("puta1")
             console.log(e);
         }
@@ -375,20 +357,42 @@ export const getConsultant = uid => {
     }
 }
 
+// export const getUserType = uid => {
+//     return async (dispatch, getState) => {
+//         try {
+
+//             const singleConsultant = await db
+//                 .collection('users')
+//                 .doc(uid)
+//                 .get()
+//             console.log("get consultant");
+//             console.log(uid);
+//             //console.log(singleConsultant.data());
+//             dispatch({ type: GET_CONSULTANT, payload: { singleConsultant: singleConsultant.data() } })
+
+//         } catch (e) {
+//             alert("puta3");
+//         }
+//     }
+// }
+
+
 /* DEV: EJA - Event for updating consultant profile picture*/
-export const updateProfileImage = uri => {
-    return {
-        type: UPDATE_PROFILE_IMAGE,
-        payload: { uri }
-    }
-}
+// export const updateProfileImage = uri => {
+//     return {
+//         type: UPDATE_PROFILE_IMAGE,
+//         payload: { uri }
+//     }
+// }
+
 /* DEV: EJA - Event for updating consultant profile picture*/
-export const updateOfficeImage = uri => {
-    return {
-        type: UPDATE_OFFICE_IMAGE,
-        payload: { uri }
-    }
-}
+// export const updateOfficeImage = uri => {
+//     return {
+//         type: UPDATE_OFFICE_IMAGE,
+//         payload: { uri }
+//     }
+// }
+
 /* DEV: EJA - Event for updating consultant profile picture*/
 export const updateOfficeDetails = office_details => {
     return {
@@ -407,45 +411,73 @@ export const getCurrentDate = () => {
     return date + month + year + hours + min + sec;
 }
 
-export const profileImage = async (uid, profilePicture) => {
-    try {
-        var uuid_profile = uuid.v1();
-        const response = await fetch(profilePicture);
-        const blob = await response.blob();
-        const ref = Firebase.storage().ref().child("users/" + uuid_profile);
-        const snapshot = await ref.put(blob);
-
-        blob.close();
-
-        const url = await snapshot.ref.getDownloadURL();
-        //return url;
-        //console.log(url);
-        db.collection("users").doc(uid).update({ profilePicture: url });
-    } catch (e) {
-        alert("error prof image")
+export const updateOfficeImage = uri => {
+    return {
+        type: UPDATE_OFFICE_IMAGE,
+        payload: { uri }
     }
-
-
 }
-export const officePicture = async (uid, officeImage) => {
-    try {
-        var uuid_office = uuid.v1();
-        const response_office = await fetch(officeImage);
-        const blob_office = await response_office.blob();
 
-        const ref_office = Firebase.storage().ref().child("users/" + uuid_office);
-        const snapshot_office = await ref_office.put(blob_office);
-
-        blob_office.close();
-
-        const url_office = await snapshot_office.ref.getDownloadURL();
-        db.collection("users").doc(uid).update({ officeImage: url_office });
-    } catch (e) {
-        alert(e)
+export const updateProfileImage = uri => {
+    return {
+        type: UPDATE_PROFILE_IMAGE,
+        payload: { uri }
     }
-
-
 }
+
+// export const updateProfileImage = (uid, profilePicture) => {
+//     console.log('UPDATING PROF IMAGE')
+//     console.log(uid)
+//     console.log(profilePicture)
+//     return async (dispatch, getState) => {
+//         try {
+
+//             var uuid_profile = uuid.v1();
+//             const response = await fetch(profilePicture);
+//             const blob = await response.blob();
+//             const ref = Firebase.storage().ref().child("users/" + uuid_profile);
+//             const snapshot = await ref.put(blob);
+
+//             blob.close();
+
+//             const url = await snapshot.ref.getDownloadURL();
+//             //return url;
+//             console.log(url);
+//             // db.collection("users").doc(uid).update({ profilePicture: url });
+//             dispatch({ type: UPDATE_PROFILE_IMAGE, payload: { profilePicture: url } })
+//         } catch (e) {
+//             alert("error prof image")
+//         }
+//     }
+// }
+
+// export const updateOfficeImage = (uid, officeImage) => {
+//     console.log('UPDATING OFFICE IMAGE')
+//     console.log(uid)
+//     console.log(officeImage)
+//     return async (dispatch, getState) => {
+//         try {
+
+//             var uuid_office = uuid.v1();
+//             const response_office = await fetch(officeImage);
+//             const blob_office = await response_office.blob();
+
+//             const ref_office = Firebase.storage().ref().child("users/" + uuid_office);
+//             const snapshot_office = await ref_office.put(blob_office);
+
+//             blob_office.close();
+
+//             const url_office = await snapshot_office.ref.getDownloadURL();
+//             console.log(url_office);
+//             // db.collection("users").doc(uid).update({ officeImage: url_office });
+//             dispatch({ type: UPDATE_OFFICE_IMAGE, payload: { officeImage: url_office } })
+//         } catch (e) {
+//             console.log('error office image')
+//             alert(e)
+//         }
+//     }
+// }
+
 /* DEV: EJA - Event for updating consultant profile picture*/
 // export const editProfile = () => {
 //     return async (dispatch, getState) => {
@@ -501,7 +533,6 @@ export const officePicture = async (uid, officeImage) => {
 // }
 
 export const editProfile = (uid) => {
-    console.log('====================================NGEKGNGOKKK')
     return async (dispatch, getState) => {
         try {
             const snapshot = await db.collection('users').where("uid", "==", uid).get()
@@ -510,26 +541,56 @@ export const editProfile = (uid) => {
             let arr = snapshot.docs.map(doc =>
                 doc.data()
             )
-
             let user = arr[0];
 
-            console.log('========showing user 1==========')
-            console.log(user);
-            console.log('==================')
+            // console.log('========showing user 1==========')
+            // console.log(user);
+            // console.log('==================')
+
+            
+            if(user.profilePicture !== profilePicture){
+                let profileImage_url;
+                let uuid_profile = uuid.v1();
+                const response_profile = await fetch(profilePicture);
+                const blob_profile = await response_profile.blob();
+                const ref_profile = Firebase.storage().ref().child("users/" + uuid_profile);
+                const snapshot_profile = await ref_profile.put(blob_profile);
+                blob_profile.close();
+                profileImage_url = await snapshot_profile.ref.getDownloadURL();
+                user.profilePicture = profileImage_url;
+                console.log('========showing profile pic url==========')
+                console.log(profileImage_url);
+                console.log('==================')
+            }
+
+            
+            if(user.officeImage !== officeImage){
+                let officeImage_url;
+                let uuid_office = uuid.v1();
+                const response_office = await fetch(officeImage);
+                const blob_office = await response_office.blob();
+                const ref_office = Firebase.storage().ref().child("users/" + uuid_office);
+                const snapshot_office = await ref_office.put(blob_office);
+                blob_office.close();
+                officeImage_url = await snapshot_office.ref.getDownloadURL();
+                user.officeImage = officeImage_url;
+                console.log('========showing office pic url==========')
+                console.log(officeImage_url);
+                console.log('==================')
+            }
 
             user.email = email;
             user.fullName = fullName;
             user.userSpecialty = userSpecialty;
             user.userLIC = userLIC;
             user.userSubSpecialty = (userSubSpecialty == undefined) ? '' : userSubSpecialty;
-            user.profilePicture = (profilePicture == undefined) ? '' : profilePicture;
-            user.officeImage = (officeImage == undefined) ? '' : officeImage;
+            user.office_details = office_details;
 
-            console.log('========showing user 2==========')
+            console.log('========showing user==========')
             console.log(user);
             console.log('==================')
 
-            db.collection('users').doc(uid).set(user);
+            db.collection('users').doc(uid).update(user);
 
             dispatch({ type: EDIT_PROFILE, payload: { user } })
         } catch (e) {

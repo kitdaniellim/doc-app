@@ -29,7 +29,7 @@ export const getAllReviews = (id) => {
                         results.push(doc.data());
                     });
                     results.sort((a, b) => b.created_at - a.created_at);
-                    await dispatch(getReviewsSuccess(results));
+                    await dispatch(getAllReviewsSuccess(results));
                 })
         } catch (error) {
             dispatch(getReviewsFailure(error))
@@ -37,7 +37,7 @@ export const getAllReviews = (id) => {
     }
 }
 
-//get reviews for consultant profile display
+//get reviews related to consultant 
 export const getReviews = (id) => {
     return async dispatch => {
         try {
@@ -74,7 +74,7 @@ export const getReviewedBy = (id) => {
                     console.log('=====showing getReviewedBy results ======')
                     console.log(results)
                     console.log('=====showing results ======')
-                    await dispatch(getReviewsSuccess(results));
+                    await dispatch(getReviewedBySuccess(results));
                 })
         } catch (error) {
             dispatch(getReviewsFailure(error))
@@ -138,6 +138,16 @@ export const addReviewFailure = (error) => ({
 //GET REVIEWS STATUS
 export const getReviewsSuccess = (results) => ({
     type: "GET_REVIEWS_SUCCESS",
+    payload: { results }
+});
+
+export const getAllReviewsSuccess = (results) => ({
+    type: "GET_ALL_REVIEWS_SUCCESS",
+    payload: { results }
+});
+
+export const getReviewedBySuccess = (results) => ({
+    type: "GET_REVIEWED_BY_SUCCESS",
     payload: { results }
 });
 

@@ -43,7 +43,7 @@ class EditProfile_1 extends React.Component {
       // detailKey: 0,
       // detailLocation: '',
       officeCount: 0,
-      officeLocations: [],
+      // officeLocations: [],
       office_details: [],
       toggleModal: false,
 
@@ -69,7 +69,20 @@ class EditProfile_1 extends React.Component {
     this.props.updateUserSubSpecialty(this.props.singleConsultant.userSubSpecialty);
     this.props.updateProfileImage(this.props.singleConsultant.profilePicture);
     this.props.updateOfficeImage(this.props.singleConsultant.officeImage);
-    this.props.updateOfficeDetails(this.props.singleConsultant.office_details)
+    // this.props.updateOfficeDetails(this.props.singleConsultant.office_details);
+
+    // let office_locations = [], count;
+    // this.props.singleConsultant.office_details.map((value) => {
+    //   office_locations.push({key: count, location: value.office_location});
+    //   count++;
+    // })
+
+    
+    this.setState(() => ({
+      officeCount: this.props.singleConsultant.office_details.length,
+      office_details : this.props.singleConsultant.office_details,
+    }))
+
   }
 
 
@@ -97,42 +110,61 @@ class EditProfile_1 extends React.Component {
   //   });
   // }
 
-  addOfficeHours = (key) => {
-    this.props.navigation.navigate('EditProfile_2', { key: key, officeLocation: this.state.officeLocations[key].location });
+  componentDidUpdate(prevProps) {
+    if(this.props.navigation.state.params.office_details.length !== prevProps.navigation.state.params.office_details.length){
+      console.log('DIFFERENT PARAMETERS')
+      console.log(this.props.navigation.state.params.office_details)
+      console.log('---------------------')
+      console.log(prevProps.navigation.state.params.office_details)
+      console.log('==========================')
+      this.setState(() => ({
+        office_details : this.props.navigation.state.params.office_details,
+      }))
+    }
   }
 
-  addLocation = () => {
-    let location = this.state.officeLocations;
-    location.push(
+  addOfficeHours = (key) => {
+    // console.log('ADDING HOURS')
+    // console.log(this.state.office_details[key])
+    // console.log('------end')
+    this.props.navigation.navigate('EditProfile_2', {key: key, office_details: this.state.office_details});
+  }
+
+  addSchedule = () => {
+    let schedule = this.state.office_details;
+    schedule.push(
       {
-        key: this.state.officeCount,
-        location: ''
+        id: this.state.officeCount,
+        office_day: [],
+        office_hour_from: '',
+        office_hour_to: '',
+        office_location: '',
       }
     )
 
     this.setState({
       officeCount: this.state.officeCount + 1,
-      officeLocations: location,
+      office_details: schedule,
     })
   }
 
-  removeLocation = () => {
-    if (this.state.officeLocations.length > 1) {
-      let location = this.state.officeLocations;
-      location.pop();
+  removeSchedule = () => {
+    if (this.state.office_details.length > 1) {
+      let schedule = this.state.office_details;
+      schedule.pop();
 
       this.setState({
         officeCount: this.state.officeCount - 1,
-        officeLocations: location,
+        office_details: schedule,
       })
     }
   }
 
-  setLocation = (value, i) => {
-    let officeLocations = this.state.officeLocations;
-    officeLocations[i].location = value;
+  setLocation = (text, i) => {
+    let office_locations = this.state.office_details;
+    office_locations[i].office_location = text;
 
-    this.setState(() => ({ officeLocations }));
+    this.setState(() => ({ office_details : office_locations }));
   }
 
   updateLocationArray = (location, count) => {
@@ -253,8 +285,13 @@ class EditProfile_1 extends React.Component {
       aspect: [4, 3],
     });
 
-    console.log(result);
+    
     if (!result.cancelled) {
+      console.log('SHOWING SHIT==============');
+      console.log(result)
+      console.log('---------------------');
+      console.log(result.uri)
+      console.log('---------------------');
       if (text === 'profile') {
         this.props.updateProfileImage(result.uri);
       } else {
@@ -265,14 +302,15 @@ class EditProfile_1 extends React.Component {
   };
 
   Confirm = async () => {
+    await this.props.updateOfficeDetails(this.state.office_details);
     await this.props.editProfile(this.props.singleConsultant.uid);
     await this.props.getConsultant(this.props.singleConsultant.uid);
     await this.props.getReviews(this.props.singleConsultant.uid);
     this.props.navigation.replace('Profile');
   }
 
-  BackToProfile = () => {
-    this.props.navigation.goBack();
+  BackToProfile = async () => {
+    await this.props.navigation.replace('Profile');
   };
 
 
@@ -280,16 +318,15 @@ class EditProfile_1 extends React.Component {
     // console.log('====== START OF EDIT PROFILE THINGS ======');
     // console.log(this.props.singleConsultant);
     // console.log('====== END OF EDIT PROFILE THINGS ======');
-    const office_details = {
-      key: '',
-      location: '',
-      office_day: [],
-      office_hour_from: '',
-      office_hour_to: ''
-    }
+    // const office_details = {
+    //   key: '',
+    //   location: '',
+    //   office_day: [],
+    //   office_hour_from: '',
+    //   office_hour_to: ''
+    // }
 
     return (
-
       <View style={profileStyles.container}>
         <View style={profileStyles.header_container}>
           <View style={profileStyles.header_text_container}>
@@ -315,8 +352,6 @@ class EditProfile_1 extends React.Component {
                 backgroundColor: '#fff',
               }}
             >
-
-
               <View style={profileStyles.profile_officeimg_container}>
                 <Image
                   source={{ uri: '' + this.props.officeImage + '' }}
@@ -330,9 +365,6 @@ class EditProfile_1 extends React.Component {
               >
                 <Text style={profileStyles.forms_chooseimg_button_text_i} > CHOOSE OFFICE IMAGE </Text>
               </TouchableOpacity>
-
-
-
               <View style={profileStyles.profile_b_info_container}>
                 <View style={profileStyles.profile_b_info_details_container}>
                   <View style={profileStyles.profile_b_info_profileimg_container}>
@@ -387,7 +419,6 @@ class EditProfile_1 extends React.Component {
                     style={signupStyles.forms_textinput}
                     value={this.props.email}
                     onChangeText={email => this.props.updateEmail(email)}
-                  // onChangeText={password => this.props.updatePassword(password)}
                   />
                 </View>
                 <View style={signupStyles.forms_textinput_container}>
@@ -398,7 +429,6 @@ class EditProfile_1 extends React.Component {
                     style={signupStyles.forms_textinput}
                     value={this.props.fullName}
                     onChangeText={name => this.props.updateFullName(name)}
-                  // onChangeText={password => this.props.updatePassword(password)}
                   />
                 </View>
                 <View style={signupStyles.forms_specialty_container}>
@@ -431,7 +461,6 @@ class EditProfile_1 extends React.Component {
 
                     value={this.props.userSpecialty}
                     onValueChange={specialty => this.props.updateUserSpecialty(specialty)}
-                    // onValueChange={(userSpecialty) => this.props.updateUserSpecialty(userSpecialty)}
                     items={[
                       { label: 'Engineer', value: 'Engineer' },
                       { label: 'Architect', value: 'Architect' },
@@ -439,7 +468,6 @@ class EditProfile_1 extends React.Component {
                       { label: 'Lawyer', value: 'Lawyer' }
                     ]}
                   />
-
                 </View>
                 <View style={signupStyles.forms_textinput_container}>
                   <Icon style={globalStyles.icon_global} name="briefcase" size={15} />
@@ -449,7 +477,6 @@ class EditProfile_1 extends React.Component {
                     style={signupStyles.forms_textinput}
                     value={this.props.userSubSpecialty}
                     onChangeText={subSpecialty => this.props.updateUserSubSpecialty(subSpecialty)}
-                  // onChangeText={password => this.props.updatePassword(password)}
                   />
                 </View>
                 <View style={signupStyles.forms_textinput_container}>
@@ -460,7 +487,6 @@ class EditProfile_1 extends React.Component {
                     style={signupStyles.forms_textinput}
                     value={this.props.userLIC}
                     onChangeText={lic => this.props.updateUserLIC(lic)}
-                  // onChangeText={password => this.props.updatePassword(password)}
                   />
                 </View>
                 {/* <View style={signupStyles.forms_textinput_container}>
@@ -491,7 +517,7 @@ class EditProfile_1 extends React.Component {
               <View style={profileStyles.divider} />
               <View style={profileStyles.profile_b_info_container}>
                 <Text style={profileStyles.profile_b_info_header}>Office Details</Text>
-                {this.props.office_details.map((value, i) => {
+                {this.state.office_details.map((value, i) => {
                       return (
                         <View key={value.id.toString()}>
                           <View style={signupStyles.forms_textinput_container}>
@@ -501,7 +527,7 @@ class EditProfile_1 extends React.Component {
                               placeholderTextColor="#8B8787"
                               style={signupStyles.forms_textinput}
                               value={value.office_location}
-                              onChangeText={text => this.setLocation(text, i)}
+                              onChangeText={text => this.setLocation(text, value.id)}
                             />
                           </View>
                           <Text style={profileStyles.profile_b_info_header_justify}>{value.office_hour_from} - {value.office_hour_to} {value.office_day.map((day) => {return ' ' + day})}</Text>
@@ -531,7 +557,7 @@ class EditProfile_1 extends React.Component {
                   <TouchableOpacity
                     activeOpacity={0.6}
                     style={profileStyles.forms_add_textinput_button_container_i}
-                    onPress={() => this.addLocation()}
+                    onPress={() => this.addSchedule()}
                   >
                     <Icon style={globalStyles.icon_global_i} name="plus" size={14} />
                     <Text style={profileStyles.forms_chooseimg_button_text_i} > ADD </Text>
@@ -539,7 +565,7 @@ class EditProfile_1 extends React.Component {
                   <TouchableOpacity
                     activeOpacity={0.6}
                     style={profileStyles.forms_add_textinput_button_container_i}
-                    onPress={() => this.removeLocation()}
+                    onPress={() => this.removeSchedule()}
                   >
                     <Icon style={globalStyles.icon_global_i} name="times" size={14} />
                     <Text style={profileStyles.forms_chooseimg_button_text_i} >REMOVE </Text>
@@ -582,10 +608,10 @@ const mapDispatchToProps = dispatch => {
 }
 const mapStateToProps = state => {
   return {
-    user: state.users,
-    consultant: state.users,
+    // user: state.users,
+    // consultant: state.users,
     singleConsultant: state.users.singleConsultant,
-    locArray: state.locArray,
+    // locArray: state.locArray,
 
     email: state.users.email,
     // password: state.users.password,
@@ -601,4 +627,3 @@ const mapStateToProps = state => {
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(EditProfile_1);
-//export default HomeClient;

@@ -5,8 +5,8 @@ import { createMaterialBottomTabNavigator } from 'react-navigation-material-bott
 import Firebase from '../config/Firebase';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getConsultant } from '../actions/users';
-import { getReviews } from '../actions/reviews';
+import { updateUserType, } from '../actions/users';
+// import { getReviews } from '../actions/reviews';
 
 //Auth Screens
 import Landing from '../components/1_LandingPage.js';
@@ -58,8 +58,7 @@ class Routes extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: { userType: 'null' },
-            isMounted: false,
+
         }
     }
 
@@ -67,37 +66,24 @@ class Routes extends React.Component {
         const user = JSON.parse(
             await AsyncStorage.getItem("user")
         );
-        
-        if(user != null) {
-            this.setState(() => ({ user }));
-        }
-        
-        // console.log('SHOWING data============')
-        console.log('SHOWING USER')
-        console.log(user)
-        let isMounted = this.state.isMounted;
-        if(isMounted === false) {
-            this.props.getConsultant(user.uid);
-            this.props.getReviews(user.uid);
-            this.setState(() => ({isMounted : true}))
-        }
 
+        if (user != null) {
+            // console.log('SHOWING CURRENTLY LOGGED IN USER')
+            // console.log(user)
+            this.props.updateUserType(user.userType)
+        }
     }
 
     //Once routes are mounted, prevents unnecessary rerendering
-    shouldComponentUpdate() {
-        return !this.state.isMounted
-    }
 
     render() {
-        console.log('SHOWING ROUTES PROPS============')
-        console.log(this.props)
-        console.log('END OF PROPS============')
+        // console.log('SHOWING ROUTES PROPS============')
+        // console.log(this.props)
+        // console.log(this.state)
+        // console.log('END OF PROPS============')
         const getTabs = () => {
-            
-
             let ret;
-            switch (this.state.user.userType) {
+            switch (this.props.userType) {
                 case "CLIENT": ret = clientTabNavigator;
                     console.log('Client Logged In');
                     break;
@@ -262,6 +248,8 @@ class Routes extends React.Component {
             },
             EditProfile_1: {
                 screen: EditProfile_1,
+                // params: { key: 0, office_details: [] },
+                params: { office_details: [] },
             },
             EditProfile_2: {
                 screen: EditProfile_2,
@@ -269,7 +257,7 @@ class Routes extends React.Component {
         }
 
         const HomeStack = createStackNavigator(
-            (this.state.user.userType == "CLIENT") ? homeScreensC : homeScreens,
+            (this.props.userType === "CLIENT") ? homeScreensC : homeScreens,
             {
                 defaultNavigationOptions: {
                     headerShown: false
@@ -505,7 +493,8 @@ class Routes extends React.Component {
                     headerRight: () => {
                         return (
                             <View style={{ flexDirection: 'row' }}>
-                                <Menu onSelect={() => { navigation.navigate('Calendar1') }}>
+                                {/* <Menu onSelect={() => { navigation.navigate('Calendar1') }}> */}
+                                <Menu onSelect={() => { }}>
                                     <MenuTrigger
                                         style={{ marginRight: 25, padding: 10, }}
                                     >
@@ -624,12 +613,11 @@ class Routes extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ getConsultant, getReviews }, dispatch)
-  }
-  const mapStateToProps = state => {
+    return bindActionCreators({ updateUserType }, dispatch)
+}
+const mapStateToProps = state => {
     return {
-      curr_singleConsultant: state.users.singleConsultant,
-      curr_reviews: state.reviews.items
+        userType: state.users.userType,
     }
-  }
-  export default connect(mapStateToProps, mapDispatchToProps)(Routes);
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Routes);

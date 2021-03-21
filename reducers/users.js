@@ -1,5 +1,5 @@
 import { LOGIN, LOGOUT, SIGNUP, EDIT_PROFILE, UPDATE_EMAIL, UPDATE_PASSWORD, UPDATE_FULL_NAME, UPDATE_MOBILE_NUMBER, UPDATE_BIRTH_DAY, UPDATE_USER_TYPE, UPDATE_USER_LIC, UPDATE_USER_SPECIALTY, UPDATE_USER_SUB_SPECIALTY, UPDATE_OFFICE_LOCATION, UPDATE_OFFICE_HOURS } from '../actions/users';
-import { GET_ALL_CONSULTANT, GET_REVIEWS, GET_CONSULTANT, UPDATE_PROFILE_IMAGE, UPDATE_OFFICE_IMAGE, UPDATE_OFFICE_DETAILS, UPDATE_LOCATION_DETAIL, UPDATE_TO_HOUR_DETAIL, UPDATE_FROM_HOUR_DETAIL, UPDATE_DAY_DETAIL } from '../actions/users';
+import { GET_ALL_CONSULTANT, GET_REVIEWS, GET_CONSULTANT, GET_PROFILE_IMAGE, GET_OFFICE_IMAGE, UPDATE_PROFILE_IMAGE, UPDATE_OFFICE_IMAGE, UPDATE_OFFICE_DETAILS, UPDATE_LOCATION_DETAIL, UPDATE_TO_HOUR_DETAIL, UPDATE_FROM_HOUR_DETAIL, UPDATE_DAY_DETAIL } from '../actions/users';
 
 const reducerDefaultState = {
     loading: false,
@@ -17,7 +17,7 @@ const reducerDefaultState = {
     password: '',
     fullName: '',
     birthDay: '',
-    userType: '',
+    userType: undefined,
     userLIC: '',
     userSpecialty: '',
     userSubSpecialty: '',
@@ -57,8 +57,6 @@ export default (state = reducerDefaultState, action) => {
             return { ...state, profilePicture: action.payload.uri }
         case UPDATE_OFFICE_IMAGE:
             return { ...state, officeImage: action.payload.uri }
-        // case UPDATE_OFFICE_DETAILS:
-        //     return { ...state, add_office: [...state.arr, action.payload.office_details] }
         case UPDATE_LOCATION_DETAIL:
             return { ...state, location: action.payload.user_location }
         case UPDATE_TO_HOUR_DETAIL:
@@ -101,6 +99,8 @@ export default (state = reducerDefaultState, action) => {
             return { ...state, officeHours: action.payload.officeHours }
         case UPDATE_OFFICE_DETAILS:
             return { ...state, office_details: action.payload.office_details }
+        // case UPDATE_OFFICE_DETAILS:
+        //     return { ...state, add_office: [...state.arr, action.payload.office_details] }
         default:
             return state;
     }

@@ -254,7 +254,7 @@ class SignupConsultant3_2 extends React.Component {
 
                         <View>
                           {/* options={this.state.option[this.state.optionIndex].days} */}
-                          <RadioButtons_MultipleSelect isDisabled={this.state.office_schedules[i].office_hour_from === '' || this.state.office_schedules[i].office_hour_to === '' || this.state.office_schedules[i].office_hour_from === 'Invalid date' || this.state.office_schedules[i].office_hour_to === 'Invalid date' ? true : false} setDays={this.setDays.bind(this)} count={i} />
+                          <RadioButtons_MultipleSelect days={[]} invert_colors={false} isDisabled={this.state.office_schedules[i].office_hour_from === '' || this.state.office_schedules[i].office_hour_to === '' || this.state.office_schedules[i].office_hour_from === 'Invalid date' || this.state.office_schedules[i].office_hour_to === 'Invalid date' ? true : false} setDays={this.setDays.bind(this)} count={i} />
                         </View>
                       </View>
                     );

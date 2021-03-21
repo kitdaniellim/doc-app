@@ -1,9 +1,10 @@
 import React from 'react';
 import { Text, Image, View, FlatList, TouchableOpacity, ScrollView } from 'react-native';
+import StarRating from 'react-native-star-rating';
 import { BackgroundCarousel } from './custom/BackgroundCarousel'
 import { homeStyles } from '../styles/styles';
-import { getAllConsultant, getConsultant, getReviewsConsultant } from '../actions/users';
-import { getReviews } from '../actions/reviews';
+import { getAllConsultant, getConsultant } from '../actions/users';
+import { getReviews, getAllReviews } from '../actions/reviews';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Firebase from '../config/Firebase';
@@ -26,6 +27,7 @@ class Home extends React.Component {
       } else {
         this._isMounted = true;
         if (this._isMounted) {
+          this.props.getAllReviews();
           this.props.getAllConsultant();
         }
       }
@@ -42,14 +44,21 @@ class Home extends React.Component {
   Profile = async (uid) => {
     await this.props.getConsultant(uid);
     await this.props.getReviews(uid);
-    
+
     // this.props.navigation.navigate('Profile', { singleConsultant: this.props.singleConsultant, reviews: this.props.reviews })
     if (this.props.singleConsultant.office_details != null) {
-      // console.log('Clicked profile')
-      // console.log(this.props.singleConsultant)
-      // console.log('Clicked profile-------------------')
-      this.props.navigation.navigate('Profile')
+      await this.props.navigation.navigate('Profile')
     }
+  }
+
+  getRatingAverage = (reviews) => {
+    let sum = 0, result = 0;
+    reviews.map(item => {
+      sum += item.rating;
+    });
+    result = sum / reviews.length;
+
+    return result;
   }
 
   render() {
@@ -107,7 +116,7 @@ class Home extends React.Component {
     return (
       <View style={homeStyles.container}>
         <View style={{ height: 200 }}>
-           <BackgroundCarousel images={images} />
+          <BackgroundCarousel images={images} />
         </View>
         <View style={homeStyles.scaffold}>
           <FlatList
@@ -122,14 +131,14 @@ class Home extends React.Component {
                       <TouchableOpacity
                         disabled
                         activeOpacity={0.6}
-                        onPress={() => {}}
+                        onPress={() => { }}
                         style={homeStyles.scaffold_vlist_item_header_container}
                       >
                         <Text style={homeStyles.scaffold_vlist_item_header}>{item.userSpecialty}</Text>
                       </TouchableOpacity>
                       <TouchableOpacity
                         activeOpacity={0.6}
-                        onPress={() => {this.SeeAll(item.userSpecialty)}}
+                        onPress={() => { this.SeeAll(item.userSpecialty) }}
                         style={homeStyles.scaffold_vlist_item_header_container_2}
                       >
                         <Text style={homeStyles.scaffold_vlist_item_header_2}>See All</Text>
@@ -158,7 +167,18 @@ class Home extends React.Component {
                                         style={homeStyles.scaffold_hlist_item_box_image}
                                       />
                                     </TouchableOpacity>
-                                    <Text style={homeStyles.scaffold_hlist_item_box_name}>{data.userSpecialty} {data.fullName}</Text>
+                                    <Text style={homeStyles.scaffold_hlist_item_box_name}>{(data.userSpecialty === "Doctor") ? 'Dr. ' : data.userSpecialty} {data.fullName}</Text>
+                                    <View style={{ flex: 1, alignSelf: 'flex-start', justifyContent: 'center' }}>
+                                      <StarRating
+                                        disabled={true}
+                                        maxStars={5}
+                                        rating={data.rating}
+                                        selectedStar={() => { }}
+                                        fullStarColor='#FDBB3B'
+                                        starSize={12}
+                                        starStyle={{ marginRight: 5, alignSelf: 'center' }}
+                                      />
+                                    </View>
                                   </View>
                                 </View>
                               </View>
@@ -180,13 +200,14 @@ class Home extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ getAllConsultant, getConsultant, getReviewsConsultant, getReviews }, dispatch)
+  return bindActionCreators({ getAllConsultant, getConsultant, getReviews, getAllReviews }, dispatch)
 }
 
 const mapStateToProps = state => {
   return {
     consultant: state.users.consultant,
     singleConsultant: state.users.singleConsultant,
+    all_reviews: state.reviews.all_reviews,
     reviews: state.reviews.items
   }
 }

@@ -2,7 +2,9 @@ const reducerDefaultState = {
     loading: false,
     error: null,
     items: [],
-    item: {}
+    item: {},
+    all_reviews: [],
+    client_reviews: [],
 }
 
 export default (state = reducerDefaultState, action) => {
@@ -32,6 +34,20 @@ export default (state = reducerDefaultState, action) => {
                 loading: false,
                 error: null,
                 items: action.payload.results
+            };
+        case 'GET_ALL_REVIEWS_SUCCESS':
+            return {
+                ...state,
+                loading: false,
+                error: null,
+                all_reviews: action.payload.results
+            };
+        case 'GET_REVIEWED_BY_SUCCESS':
+            return {
+                ...state,
+                loading: false,
+                error: null,
+                client_reviews: action.payload.results
             };
         case 'GET_SINGLE_REVIEW_SUCCESS':
             return {

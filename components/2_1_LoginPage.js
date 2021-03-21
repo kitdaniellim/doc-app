@@ -6,7 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Modal from 'react-native-modal';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { updateEmail, updatePassword, login, logout, getUser } from '../actions/users';
+import { updateEmail, updatePassword, updateUserType, login, logout } from '../actions/users';
 import { resetAppointments } from '../actions/appointments';
 import { getReviews, getReviewedBy } from '../actions/reviews';
 import Firebase, { db } from '../config/Firebase';
@@ -72,20 +72,8 @@ class Login extends React.Component {
         console.log(`login successful`)
         AsyncStorage.setItem('user', JSON.stringify(this.props.user));
 
-        // RNRestart.Restart();
-        // Util.reload();
-        // AsyncStorage.setItem('reviews', JSON.stringify(this.props.user));
-        // DevSettings.reload()
-        // console.log('before rest')
-
-
-
-
-        // RNRestart.Restart();
-        
-        
-        
-        this.props.navigation.navigate('Tutorial');
+        this.props.updateUserType(this.props.user.userType);
+        // this.props.navigation.navigate('Tutorial');
         // this.props.navigation.navigate('Home');
       } else {
         alert("Error in logging in!");
@@ -206,7 +194,7 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ updateEmail, updatePassword, login, getUser, logout, resetAppointments, getReviewedBy }, dispatch)
+  return bindActionCreators({ updateEmail, updatePassword, updateUserType, login, logout, resetAppointments, getReviewedBy }, dispatch)
 }
 
 const mapStateToProps = state => {
