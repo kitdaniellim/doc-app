@@ -6,7 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Modal from 'react-native-modal';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { updateEmail, updatePassword, updateUserType, login, logout } from '../actions/users';
+import { updateEmail, updatePassword, updateCurrentUserType, login, logout } from '../actions/users';
 import { resetAppointments } from '../actions/appointments';
 import { getReviews, getReviewedBy } from '../actions/reviews';
 import Firebase, { db } from '../config/Firebase';
@@ -42,12 +42,8 @@ class Login extends React.Component {
 
   Home() {
     this.props.navigation.navigate('Home');
-
   }
-  Login = ({ navigation }) => {
-    navigation.navigate('Login');
 
-  }
   SignUp = () => {
     const navigation = this.props.navigation;
     navigation.navigate('Selection');
@@ -65,14 +61,14 @@ class Login extends React.Component {
       })
     } else {
       await AsyncStorage.removeItem('user');
-      console.log(`logging in...`);
+      console.log(`Attempting to Log in...`);
       await this.props.login(this.state.email.trim(), this.state.password);
 
       if (this.props.user.email) {
-        console.log(`login successful`)
+        console.log(`Login successful.`)
         AsyncStorage.setItem('user', JSON.stringify(this.props.user));
-
-        this.props.updateUserType(this.props.user.userType);
+        console.log(this.props.user.userType)
+        this.props.updateCurrentUserType(this.props.user.userType);
         // this.props.navigation.navigate('Tutorial');
         // this.props.navigation.navigate('Home');
       } else {
@@ -124,15 +120,6 @@ class Login extends React.Component {
           <View style={loginStyles.forms_container}>
             <View style={loginStyles.forms_header_container}>
               <Icon style={globalStyles.icon_client} name="user" size={42} />
-              {/* <Image
-              source={require('../assets/doc_logo.png')}
-              style={{
-                height: 60, 
-                width: 80,
-                alignSelf: 'center',
-                justifyContent: 'center'
-              }}
-            /> */}
               <Text style={loginStyles.forms_label}>LOGIN</Text>
             </View>
             <View style={loginStyles.forms_textinput_container}>
@@ -194,7 +181,7 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ updateEmail, updatePassword, updateUserType, login, logout, resetAppointments, getReviewedBy }, dispatch)
+  return bindActionCreators({ updateEmail, updatePassword, updateCurrentUserType, login, logout, resetAppointments, getReviewedBy }, dispatch)
 }
 
 const mapStateToProps = state => {

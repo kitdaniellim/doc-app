@@ -20,6 +20,7 @@ export const UPDATE_FULL_NAME = 'UPDATE_FULL_NAME';
 export const UPDATE_MOBILE_NUMBER = 'UPDATE_MOBILE_NUMBER';
 export const UPDATE_BIRTH_DAY = 'UPDATE_BIRTH_DAY';
 export const UPDATE_USER_TYPE = 'UPDATE_USER_TYPE';
+export const UPDATE_CURRENT_USER_TYPE = 'UPDATE_CURRENT_USER_TYPE';
 export const UPDATE_USER_LIC = 'UPDATE_USER_LIC';
 export const UPDATE_USER_SPECIALTY = 'UPDATE_USER_SPECIALTY';
 export const UPDATE_USER_SUB_SPECIALTY = 'UPDATE_USER_SUB_SPECIALTY';
@@ -112,6 +113,13 @@ export const updateBirthDay = birthday => {
 export const updateUserType = userType => {
     return {
         type: UPDATE_USER_TYPE,
+        payload: { userType }
+    }
+}
+
+export const updateCurrentUserType = userType => {
+    return {
+        type: UPDATE_CURRENT_USER_TYPE,
         payload: { userType }
     }
 }
@@ -227,7 +235,6 @@ export const signup = () => {
                         email: email,
                         emailVerified: false,
                         fullName: fullName,
-                        rating: 0,
                         userSpecialty: userSpecialty,
                         userLIC: userLIC,
                         userSubSpecialty: userSubSpecialty,
@@ -279,6 +286,7 @@ export const getAllConsultant = () => {
 
     return async (dispatch, getState) => {
         try {
+            dispatch(loadBegin());
             const snapshot = await db.collection('users').where("userType", "==", "CONSULTANT").get()
             const { all_reviews } = getState().reviews
 
@@ -341,7 +349,7 @@ export const getDefaultImage = () => {
 export const getConsultant = uid => {
     return async (dispatch, getState) => {
         try {
-
+            dispatch(loadBegin());
             const singleConsultant = await db
                 .collection('users')
                 .doc(uid)

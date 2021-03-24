@@ -58,12 +58,13 @@ const Paypal = ({ navigation }) => {
         </Modal>
         <View style={paypalStyles.scaffold}>
           <Text style={paypalStyles.scaffold_text}>
-            Hello, your account is currently limited. Before proceeding, you must choose between "Pay Through Paypal" or Press "Skip" if you want to pay with cash. {"\n"}
+            Your account is currently in free access. Press 'Skip' for now.  {"\n"}
           </Text>
           <TouchableOpacity
             activeOpacity={0.6}
             style={paypalStyles.forms_paybutton}
-            onPress={Pay}
+            // onPress={Pay}
+            onPress={() => {}}
           >
             <Text style={paypalStyles.forms_paybutton_label}>Pay Through PayPal</Text>
           </TouchableOpacity>

@@ -15,6 +15,7 @@ class CalendarPage extends React.Component {
       occupied_dates_obj: {},
     };
   }
+
   async componentDidMount() {
     try {
       const user = JSON.parse(
@@ -28,7 +29,7 @@ class CalendarPage extends React.Component {
         await this.props.getUserAppointments(user.uid, user.userType);
         setTimeout(async () => {
           if (!this.props.loading && this.props.appointments.length > 0) {
-            console.log(this.props.appointments.length);
+            // console.log(this.props.appointments.length);
             this.props.appointments.sort((a, b) => a.created_at - b.created_at);
             await this.props.appointments.map((appointment) => {
               if (
@@ -56,6 +57,51 @@ class CalendarPage extends React.Component {
       this.props.navigation.navigate('Login');
     }
   }
+
+  // async componentDidUpdate(prevProps) {
+  //   if (this.props.appointments !== prevProps.appointments) {
+  //     try {
+  //       const user = JSON.parse(
+  //         await AsyncStorage.getItem("user")
+  //       );
+  //       if (!user) {
+  //         this.props.navigation.navigate('Login');
+  //       } else {
+  //         let upcoming_dates = [],
+  //           finished_dates = [];
+  //         await this.props.getUserAppointments(user.uid, user.userType);
+  //         setTimeout(async () => {
+  //           if (!this.props.loading && this.props.appointments.length > 0) {
+  //             // console.log(this.props.appointments.length);
+  //             this.props.appointments.sort((a, b) => a.created_at - b.created_at);
+  //             await this.props.appointments.map((appointment) => {
+  //               if (
+  //                 appointment.status == "Pending" ||
+  //                 appointment.status == "Approved"
+  //               ) {
+  //                 upcoming_dates.push(appointment.date);
+  //               } else if (appointment.status == "Done" || appointment.status == "Reviewed") {
+  //                 !upcoming_dates.includes(appointment.date) &&
+  //                   finished_dates.push(appointment.date);
+  //               }
+  //             });
+  //             upcoming_dates = Array.from(new Set(upcoming_dates));
+  //             finished_dates = Array.from(new Set(finished_dates));
+  //             upcoming_dates.sort((a, b) => a - b);
+  //             finished_dates.sort((a, b) => a - b);
+  //             this.setState(() => ({ upcoming_dates }));
+  //             this.setState(() => ({ finished_dates }));
+  //             this.showOccupiedDates();
+  //           }
+  //         }, 2000);
+  //       }
+  //     } catch (e) {
+  //       console.log(`Error! Details: ${e}`);
+  //       this.props.navigation.navigate('Login');
+  //     }
+  //   }
+  // }
+
   showOccupiedDates = async () => {
     let occupied_dates_obj = {};
     this.state.upcoming_dates.forEach((val) => {
@@ -71,8 +117,9 @@ class CalendarPage extends React.Component {
       };
     });
     this.setState(() => ({ occupied_dates_obj }));
-    console.log(this.state.occupied_dates_obj);
+    // console.log(this.state.occupied_dates_obj);
   };
+
   onDayPress = async (date) => {
     try {
       const appointments = this.props.appointments.filter(
@@ -87,6 +134,7 @@ class CalendarPage extends React.Component {
       console.log(`Error! Details: ${e}`);
     }
   };
+
   render() {
     return (
       <View style={calendarStyles.container}>
@@ -102,37 +150,38 @@ class CalendarPage extends React.Component {
                 <ActivityIndicator size="large" color="#00ff00" />
               </View>
             ) : (
-                <Calendar
-                  onDayPress={(day) => {
-                    this.onDayPress(day.dateString);
-                  }}
-                  //36 months
-                  pastScrollRange={36}
-                  //24 months
-                  futureScrollRange={24}
-                  style={{
-                    borderRadius: 15,
-                  }}
-                  markedDates={this.state.occupied_dates_obj}
-                  theme={{
-                    backgroundColor: "#fff",
-                    calendarBackground: "#fff",
-                    textSectionTitleColor: "#8B8787",
-                    dayTextColor: "black",
-                    textDayFontSize: 10,
-                    textMonthFontSize: 14,
-                    textDayHeaderFontSize: 12,
-                    "stylesheet.day.basic": {
-                      base: {
-                        width: 25,
-                        height: 25,
-                        alignItems: "center",
-                        borderRadius: 0,
-                      },
+              <Calendar
+                onDayPress={(day) => {
+                  this.onDayPress(day.dateString);
+                }}
+                //36 months
+                pastScrollRange={36}
+                //24 months
+                futureScrollRange={24}
+                style={{
+                  borderRadius: 15,
+                }}
+                markedDates={this.state.occupied_dates_obj}
+                theme={{
+                  backgroundColor: "#fff",
+                  calendarBackground: "#fff",
+                  textSectionTitleColor: "#8B8787",
+                  todayTextColor: '#19BAB9',
+                  dayTextColor: "black",
+                  textDayFontSize: 10,
+                  textMonthFontSize: 14,
+                  textDayHeaderFontSize: 12,
+                  "stylesheet.day.basic": {
+                    base: {
+                      width: 25,
+                      height: 25,
+                      alignItems: "center",
+                      borderRadius: 0,
                     },
-                  }}
-                />
-              )}
+                  },
+                }}
+              />
+            )}
           </View>
           <View style={calendarStyles.calendar_legend_container}>
             <Text style={calendarStyles.calendar_legend_label}>Legend:</Text>

@@ -1,5 +1,5 @@
-import { LOGIN, LOGOUT, SIGNUP, EDIT_PROFILE, UPDATE_EMAIL, UPDATE_PASSWORD, UPDATE_FULL_NAME, UPDATE_MOBILE_NUMBER, UPDATE_BIRTH_DAY, UPDATE_USER_TYPE, UPDATE_USER_LIC, UPDATE_USER_SPECIALTY, UPDATE_USER_SUB_SPECIALTY, UPDATE_OFFICE_LOCATION, UPDATE_OFFICE_HOURS } from '../actions/users';
-import { GET_ALL_CONSULTANT, GET_REVIEWS, GET_CONSULTANT, GET_PROFILE_IMAGE, GET_OFFICE_IMAGE, UPDATE_PROFILE_IMAGE, UPDATE_OFFICE_IMAGE, UPDATE_OFFICE_DETAILS, UPDATE_LOCATION_DETAIL, UPDATE_TO_HOUR_DETAIL, UPDATE_FROM_HOUR_DETAIL, UPDATE_DAY_DETAIL } from '../actions/users';
+import { LOGIN, LOGOUT, SIGNUP, EDIT_PROFILE, UPDATE_EMAIL, UPDATE_PASSWORD, UPDATE_FULL_NAME, UPDATE_MOBILE_NUMBER, UPDATE_BIRTH_DAY, UPDATE_USER_TYPE, UPDATE_CURRENT_USER_TYPE, UPDATE_USER_LIC, UPDATE_USER_SPECIALTY, UPDATE_USER_SUB_SPECIALTY, UPDATE_OFFICE_LOCATION, UPDATE_OFFICE_HOURS } from '../actions/users';
+import { GET_ALL_CONSULTANT, GET_CONSULTANT, GET_PROFILE_IMAGE, GET_OFFICE_IMAGE, UPDATE_PROFILE_IMAGE, UPDATE_OFFICE_IMAGE, UPDATE_OFFICE_DETAILS, UPDATE_LOCATION_DETAIL, UPDATE_TO_HOUR_DETAIL, UPDATE_FROM_HOUR_DETAIL, UPDATE_DAY_DETAIL } from '../actions/users';
 
 const reducerDefaultState = {
     loading: false,
@@ -17,6 +17,7 @@ const reducerDefaultState = {
     password: '',
     fullName: '',
     birthDay: '',
+    current_userType: undefined,
     userType: undefined,
     userLIC: '',
     userSpecialty: '',
@@ -50,9 +51,7 @@ export default (state = reducerDefaultState, action) => {
                 error: action.payload.error
             };
         case GET_CONSULTANT:
-            return { ...state, singleConsultant: action.payload.singleConsultant }
-        case GET_REVIEWS:
-            return { reviews_users: action.payload.reviews_users }
+            return { ...state, loading: false, singleConsultant: action.payload.singleConsultant }
         case UPDATE_PROFILE_IMAGE:
             return { ...state, profilePicture: action.payload.uri }
         case UPDATE_OFFICE_IMAGE:
@@ -87,6 +86,8 @@ export default (state = reducerDefaultState, action) => {
             return { ...state, birthDay: action.payload.birthday }
         case UPDATE_USER_TYPE:
             return { ...state, userType: action.payload.userType }
+        case UPDATE_CURRENT_USER_TYPE:
+            return { ...state, current_userType: action.payload.userType }
         case UPDATE_USER_LIC:
             return { ...state, userLIC: action.payload.userLIC }
         case UPDATE_USER_SPECIALTY:

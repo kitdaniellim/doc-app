@@ -134,6 +134,7 @@ export const bookAppointment = (data) => {
   };
 };
 
+//GIVE REASON FUNCTIONALITY TAKEN OUT - Dan, edited on 24/03/2021
 export const updateAppointmentStatus = (id, status, reason = "") => {
   return async (dispatch) => {
     dispatch(loadBegin());
@@ -141,13 +142,16 @@ export const updateAppointmentStatus = (id, status, reason = "") => {
     ref.update({
       status: status,
       updated_at: moment().format('YYYY-MM-DD HH:mm:ss').toString()
-    }).then(() => {
-      if (reason != "") {
-        ref.set({
-          reason
-        }, { merge: true });
-      }
-    }).then((result) => {
+    })
+    // .then(() => {
+    //   if (reason != "") {
+    //     ref.set({
+    //       reason
+    //     }, { merge: true });
+    //   }
+    // })
+    
+    .then((result) => {
       dispatch(updateAppointmentStatusSuccess(result));
     }).catch((error) => {
       dispatch(updateAppointmentStatusFailure(error));

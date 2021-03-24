@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Text, View, ScrollView, Image, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { Text, View, ScrollView, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import StarRating from 'react-native-star-rating';
 import { profileStyles, globalStyles, calendarStyles } from '../styles/styles';
@@ -28,7 +28,7 @@ class Profile extends React.Component {
         await AsyncStorage.getItem("user")
       );
       this.setState(() => ({ user }));
-      if(user.userType === "CONSULTANT") {
+      if (user.userType === "CONSULTANT") {
         await this.props.getConsultant(user.uid)
         await this.props.getReviews(user.uid);
       }
@@ -42,7 +42,7 @@ class Profile extends React.Component {
     reviews.map(item => {
       sum += item.rating;
     });
-    result = sum/reviews.length;
+    result = sum / reviews.length;
 
     return result;
   }
@@ -105,49 +105,6 @@ class Profile extends React.Component {
   }
 
   render() {
-
-    // let consultant = this.props.singleConsultant,
-    //   reviews = this.props.reviews;
-
-    // if(consultant === undefined) {
-    //   consultant = this.props.curr_singleConsultant
-    // }
-
-    // if(reviews === undefined) {
-    //   reviews = this.props.curr_reviews
-    // }
-
-
-    // if(reviews === undefined) {
-
-    // }
-
-    // if (consultant === undefined) {
-    //   consultant = this.props.navigation.state.params.singleConsultant
-    // }
-
-    // let sum = 0, average = 0;
-
-    // reviews.map(item => {
-    //   sum += item.rating;
-    // });
-
-    // average = sum / reviews.length;
-
-    // DOES NOT WORK IN MOBILE BUT WORKS IN WEB
-    // var office_details = _.keyBy(this.props.singleConsultant.office_details,'id');
-    // var office = _.values(office_details);
-    // var reviews_details = _.keyBy(this.props.singleConsultant.userReviews,'id');
-    // var reviews = _.values(reviews_details);
-
-    //START OF CHANGES - October 3 - 2020
-
-    // var office = [];
-    // if(this.props.singleConsultant !== undefined) {
-    //   office = Array.from(consultant.office_details);
-    // }
-
-    //END OF CHANGES - October 3 - 2020
     console.log('SHOWING PROFILE PROPS============')
     console.log(this.props)
     console.log(this.state)
@@ -179,31 +136,51 @@ class Profile extends React.Component {
                 backgroundColor: '#fff',
               }}
             >
-              <View style={profileStyles.profile_officeimg_container}>
-                <Image
-                  source={{ uri: this.state.consultant.officeImage }}
-                  style={profileStyles.profile_officeimg}
-                />
-              </View>
+              {/* {this.props.loading ? (
+                <View style={[globalStyles.loading_container, globalStyles.loading_horizontal]}>
+                  <ActivityIndicator size="large" color="#00ff00" />
+                </View>
+              ) : (
+                <View> */}
+              {/* {this.props.loading ? (
+                <View style={[globalStyles.loading_container, globalStyles.loading_horizontal]}>
+                  <ActivityIndicator size="large" color="#00ff00" />
+                </View>
+              ) : ( */}
+                <View style={profileStyles.profile_officeimg_container}>
+                  <Image
+                    source={{ uri: this.state.consultant.officeImage }}
+                    style={profileStyles.profile_officeimg}
+                  />
+                </View>
+              {/* )} */}
               <View style={profileStyles.profile_b_info_container}>
                 <Text style={profileStyles.profile_b_info_header}>Basic Information</Text>
-                <View style={profileStyles.profile_b_info_details_container}>
-                  <View style={profileStyles.profile_b_info_profileimg_container}>
-                    <Image
-                      source={{ uri: this.state.consultant.profilePicture }}
-                      style={profileStyles.profile_b_info_profileimg}
-                    />
+                {/* {this.props.loading ? (
+                  <View style={[globalStyles.loading_container, globalStyles.loading_horizontal]}>
+                    <ActivityIndicator size="large" color="#00ff00" />
                   </View>
-                  <View style={profileStyles.profile_b_info_details}>
-                    <Text >
-                      Specialty: {this.state.consultant.userSpecialty} {"\n"}
-                      {this.state.consultant.userSubSpecialty ? 'Sub-specialty: ' + this.state.consultant.userSubSpecialty : null} {"\n"}
+                ) : ( */}
+                  <View style={profileStyles.profile_b_info_details_container}>
+                    <View style={profileStyles.profile_b_info_profileimg_container}>
+                      <Image
+                        source={{ uri: this.state.consultant.profilePicture }}
+                        style={profileStyles.profile_b_info_profileimg}
+                      />
+                    </View>
+                    <View style={profileStyles.profile_b_info_details}>
+                      <Text >
+                        Specialty: {this.state.consultant.userSpecialty} {"\n"}
+                        {this.state.consultant.userSubSpecialty ? 'Sub-specialty: ' + this.state.consultant.userSubSpecialty : null} {"\n"}
                       Name: {this.state.consultant.fullName} {"\n"}
                       Email: {this.state.consultant.email}{"\n"}
-                    </Text>
+                      </Text>
+                    </View>
                   </View>
-                </View>
+                {/* )} */}
+
               </View>
+
               <View style={profileStyles.profile_rating_container}>
                 <Text style={profileStyles.profile_rating_header}>Overall Rating</Text>
                 <View style={profileStyles.profile_rating_details}>
@@ -291,9 +268,10 @@ class Profile extends React.Component {
                     </View>
                   )
                 }
-
-
               </View>
+
+              {/* </View>
+              )} */}
             </ScrollView>
           </View>
         </View>
@@ -309,6 +287,7 @@ const mapDispatchToProps = dispatch => {
 }
 const mapStateToProps = state => {
   return {
+    loading: state.users.loading,
     singleConsultant: state.users.singleConsultant,
     reviews: state.reviews.items
   }

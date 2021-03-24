@@ -5,7 +5,7 @@ import { createMaterialBottomTabNavigator } from 'react-navigation-material-bott
 import Firebase from '../config/Firebase';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { updateUserType, } from '../actions/users';
+import { updateCurrentUserType, } from '../actions/users';
 // import { getReviews } from '../actions/reviews';
 
 //Auth Screens
@@ -32,10 +32,10 @@ import Review from '../components/9_ReviewPage.js';
 import EditReview from '../components/EditReview.js';
 import Profile from '../components/9_ProfilePage.js';
 import BookPage from '../components/10_BookPage.js';
-import Book1_Date from '../components/BookPage1_Date.js';
-import Book2_Time from '../components/BookPage2_Time.js';
-import Book3_Form from '../components/BookPage3_Form.js';
-import Book4_Confirmation from '../components/BookPage4_Confirmation.js';
+// import Book1_Date from '../components/BookPage1_Date.js';
+// import Book2_Time from '../components/BookPage2_Time.js';
+// import Book3_Form from '../components/BookPage3_Form.js';
+// import Book4_Confirmation from '../components/BookPage4_Confirmation.js';
 
 import EditProfile_1 from '../components/EditProfilePage_1.js';
 import EditProfile_2 from '../components/EditProfilePage_2.js';
@@ -68,13 +68,9 @@ class Routes extends React.Component {
         );
 
         if (user != null) {
-            // console.log('SHOWING CURRENTLY LOGGED IN USER')
-            // console.log(user)
-            this.props.updateUserType(user.userType)
+            this.props.updateCurrentUserType(user.userType)
         }
     }
-
-    //Once routes are mounted, prevents unnecessary rerendering
 
     render() {
         // console.log('SHOWING ROUTES PROPS============')
@@ -92,7 +88,7 @@ class Routes extends React.Component {
                     break;
                 default:
                     ret = consultantTabNavigator;
-                    console.log('still processing user type data..')
+                    console.log('No user logged in.. Processing user type.')
             }
             return ret;
         }
@@ -187,15 +183,15 @@ class Routes extends React.Component {
             BookPage: {
                 screen: BookPage,
             },
-            Book1_Date: {
-                screen: Book1_Date,
-            },
-            Book2_Time: {
-                screen: Book2_Time,
-            },
-            Book3_Form: {
-                screen: Book3_Form,
-            },
+            // Book1_Date: {
+            //     screen: Book1_Date,
+            // },
+            // Book2_Time: {
+            //     screen: Book2_Time,
+            // },
+            // Book3_Form: {
+            //     screen: Book3_Form,
+            // },
         }
 
         const homeScreens = {
@@ -206,15 +202,15 @@ class Routes extends React.Component {
                 screen: BookPage,
             },
             //not sure if needed delete later maybe
-            Book1_Date: {
-                screen: Book1_Date,
-            },
-            Book2_Time: {
-                screen: Book2_Time,
-            },
-            Book3_Form: {
-                screen: Book3_Form,
-            },
+            // Book1_Date: {
+            //     screen: Book1_Date,
+            // },
+            // Book2_Time: {
+            //     screen: Book2_Time,
+            // },
+            // Book3_Form: {
+            //     screen: Book3_Form,
+            // },
         }
 
         const calendarScreens = {
@@ -244,11 +240,9 @@ class Routes extends React.Component {
         const profileScreens = {
             Profile: {
                 screen: Profile,
-                // params: { singleConsultant: this.state.user, reviews: this.props.reviews },
             },
             EditProfile_1: {
                 screen: EditProfile_1,
-                // params: { key: 0, office_details: [] },
                 params: { office_details: [] },
             },
             EditProfile_2: {
@@ -531,6 +525,7 @@ class Routes extends React.Component {
                                         if (value === 1) {
                                             Firebase.auth().signOut()
                                             navigation.popToTop() && navigation.navigate('Login');
+                                            // navigation.reset('Login')
                                         } else {
                                             navigation.navigate('Home', { action: -1 })
                                         }
@@ -613,11 +608,11 @@ class Routes extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ updateUserType }, dispatch)
+    return bindActionCreators({ updateCurrentUserType }, dispatch)
 }
 const mapStateToProps = state => {
     return {
-        userType: state.users.userType,
+        userType: state.users.current_userType,
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Routes);

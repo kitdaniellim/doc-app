@@ -103,13 +103,13 @@ class Home extends React.Component {
 
     //const users = Array.from(this.props.consultant);
     //Not sure when this fires
-    if (this.props.navigation.state) {
-      if (this.props.navigation.state.params) {
-        Firebase.auth().signOut()
-        console.log('this happened')
-        this.props.navigation.reset('Login')
-      }
-    }
+    // if (this.props.navigation.state) {
+    //   if (this.props.navigation.state.params) {
+    //     Firebase.auth().signOut()
+    //     console.log('this happened')
+    //     this.props.navigation.reset('Login')
+    //   }
+    // }
 
     // let consultant = this.props.consultant;
 

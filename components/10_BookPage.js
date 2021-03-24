@@ -1,11 +1,11 @@
 import React from "react";
-import { Alert, View, TouchableOpacity, Text } from "react-native";
+import { Alert, View } from "react-native";
 import { connect } from "react-redux";
 import BookPage1_Date from "./BookPage1_Date";
 import BookPage2_Time from "./BookPage2_Time";
 import BookPage3_Form from "./BookPage3_Form";
 import BookPage4_Confirmation from "./BookPage4_Confirmation";
-import { calendarStyles, globalStyles } from "../styles/styles";
+import { calendarStyles } from "../styles/styles";
 import { bookAppointment, getAppointments } from "../actions/appointments";
 import moment from "moment";
 import AsyncStorage from '@react-native-community/async-storage';
@@ -33,6 +33,7 @@ class BookPage extends React.Component {
       daysAvailable: []
     };
   }
+
   async componentDidMount() {
     let occupied_dates = [], daysAvailable = [];
     const user = await JSON.parse(
@@ -59,13 +60,14 @@ class BookPage extends React.Component {
         });
       });
       await this.setState(() => ({ daysAvailable }))
-      console.log('================days available===================');
-      console.log(daysAvailable);
-      console.log('================consultant data===================');
-      console.log(this.props.singleConsultant);
-      console.log('==================================================');
+      // console.log('================days available===================');
+      // console.log(daysAvailable);
+      // console.log('================consultant data===================');
+      // console.log(this.props.singleConsultant);
+      // console.log('==================================================');
     }
   }
+
   showOccupiedDates = () => {
     let temp,
       count = 0,
@@ -97,11 +99,13 @@ class BookPage extends React.Component {
     }
     this.setState(() => ({ occupied_dates_obj }));
   };
+
   _next = () => {
     let currentStep = this.state.currentStep;
     currentStep = currentStep >= 2 ? 3 : currentStep + 1;
     this.setState(() => ({ currentStep }));
   };
+
   _prev = () => {
     let currentStep = this.state.currentStep;
     if (currentStep == 1) {
@@ -113,7 +117,7 @@ class BookPage extends React.Component {
             text: 'No',
             style: 'cancel'
           },
-          { text: 'OK', onPress: () => this.props.navigation.navigate("Home") }
+          { text: 'Yes', onPress: () => this.props.navigation.navigate("Home") }
         ],
         { cancelable: true }
       );
@@ -123,6 +127,7 @@ class BookPage extends React.Component {
       this.showOccupiedDates();
     }
   };
+
   onStep1Submit = async (date) => {
     await this.setState(() => ({ date }));
     const appointments_on_date =
@@ -132,18 +137,21 @@ class BookPage extends React.Component {
     await this.setState(() => ({ appointments_on_date }));
     await this.setState(() => ({ currentStep: 2 }));
   };
+
   onStep2Submit = (item) => {
     this.setState(() => ({ location: item.location }));
     this.setState(() => ({ time_start: item.time_start }));
     this.setState(() => ({ time_end: item.time_end }));
     this.setState(() => ({ currentStep: 3 }));
   };
+
   onStep3SymptomsChange = (symptoms) => {
     this.setState(() => ({ symptoms }));
   };
   onStep3FilesChange = (files) => {
     this.setState(() => ({ files }));
   };
+
   onStep3Submit = () => {
     if (
       this.state.date == "" ||
@@ -156,6 +164,7 @@ class BookPage extends React.Component {
       this.setState(() => ({ currentStep: 4 }));
     }
   };
+
   onFormSubmit = async () => {
     let files = [];
     this.state.files.map((file) => {
@@ -164,6 +173,7 @@ class BookPage extends React.Component {
         name: file.name,
       });
     });
+
     const appointment = {
       date: this.state.date,
       time_start: this.state.time_start,
@@ -209,7 +219,10 @@ class BookPage extends React.Component {
         { cancelable: true }
       );
     }
+
+    // await this.props.getUserAppointments(this.state.user.uid, 'CLIENT');
   };
+  
   render() {
     return (
       <View style={calendarStyles.container}>
@@ -271,7 +284,7 @@ const mapDispatchToProps = (dispatch) => ({
   bookAppointment: (data) => dispatch(bookAppointment(data)),
   getAppointments: (client_id, consultant_id) =>
     dispatch(getAppointments(client_id, consultant_id)),
-  getConsultant: (uid) => dispatch(getConsultant(uid))
+  getConsultant: (uid) => dispatch(getConsultant(uid)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BookPage);
