@@ -6,7 +6,6 @@ import Firebase from '../config/Firebase';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { updateCurrentUserType, } from '../actions/users';
-// import { getReviews } from '../actions/reviews';
 
 //Auth Screens
 import Landing from '../components/1_LandingPage.js';
@@ -43,7 +42,7 @@ import Paypal from '../components/PaypalPage.js';
 
 import React from 'react';
 import AsyncStorage from "@react-native-community/async-storage";
-import { View, FlatList } from 'react-native';
+import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Header from '../components/custom/Header.js';
 
@@ -198,19 +197,6 @@ class Routes extends React.Component {
             Home: {
                 screen: Home,
             },
-            BookPage: {
-                screen: BookPage,
-            },
-            //not sure if needed delete later maybe
-            // Book1_Date: {
-            //     screen: Book1_Date,
-            // },
-            // Book2_Time: {
-            //     screen: Book2_Time,
-            // },
-            // Book3_Form: {
-            //     screen: Book3_Form,
-            // },
         }
 
         const calendarScreens = {
@@ -563,6 +549,7 @@ class Routes extends React.Component {
             authScreens,
             {
                 defaultNavigationOptions: {
+                    headerForceInset: { top: 'never', bottom: 'never' },
                     headerStyle: {
                         backgroundColor: '#19BAB9',
                         borderBottomColor: '#19BAB9',
@@ -583,6 +570,7 @@ class Routes extends React.Component {
             appScreens,
             {
                 defaultNavigationOptions: {
+                    headerForceInset: { top: 'never', bottom: 'never' },
                     headerStyle: {
                         backgroundColor: '#19BAB9',
                         borderBottomColor: '#19BAB9',

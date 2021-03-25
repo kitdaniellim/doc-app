@@ -1,7 +1,4 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-// import Selection from './components/2_SelectionPage.js';
-// import { LinearGradient } from  'expo-linear-gradient';
 import { Provider } from 'react-redux';
 
 import Routes from './routes/Routes.js';
@@ -11,7 +8,6 @@ import { MenuProvider } from 'react-native-popup-menu';
 import firebase from "firebase"
 import configureStore from './store/configureStore';
 import 'firebase/firestore';
-import AsyncStorage from "@react-native-community/async-storage";
 
 const store = configureStore();
 
@@ -36,25 +32,7 @@ export default class App extends React.Component {
   }
 
   async componentDidMount() {
-    //alert("PUTANGNGNGGNGNNG")
-    //firebase.initializeApp(firebaseConfig);
-    // const Firebase = ({navigation}) => {}
 
-    // const user = JSON.parse(
-    //     await AsyncStorage.getItem("user")
-    // );
-
-    // this.setState(() => ({ user }));
-
-    // console.log(user);
-
-    // console.log('==================user type=========================');
-    // console.log(user.userType);
-    // console.log('===========================================');
-
-    // console.log('==================state user type=========================');
-    // console.log(this.state.user.userType);
-    // console.log('===========================================');
   }
 
   render() {

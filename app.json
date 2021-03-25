@@ -1,7 +1,10 @@
 {
   "expo": {
-    "name": "doc-app-client",
-    "slug": "doc-app-client",
+    "name": "SetApp",
+    "icon": "./assets/app_logo.png",
+    "description": "Appointment application for professionals.",
+    "slug": "SetApp",
+    "sdkVersion": "37.0.0",
     "platforms": [
       "ios",
       "android",
@@ -9,7 +12,6 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -24,6 +26,9 @@
     "ios": {
       "supportsTablet": true,
       "usesIcloudStorage": true
+    },
+    "android": {
+      "package": "com.appointmentapp"
     }
   }
 }

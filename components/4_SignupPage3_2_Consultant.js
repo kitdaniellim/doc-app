@@ -151,11 +151,11 @@ class SignupConsultant3_2 extends React.Component {
   }
 
   render() {
-    console.log('==========3_2=========')
+    // console.log('==========3_2=========')
     // console.log(this.props)
     // console.log('--------------------')
-    console.log(this.state)
-    console.log('===================')
+    // console.log(this.state)
+    // console.log('===================')
     let location = this.props.navigation.state.params;
     return (
       <View style={signupStyles.container}>
