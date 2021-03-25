@@ -16,4 +16,4 @@ To build apk for Android:
 
 To build apk for Apple:
 
-    --
+    expo build:ios -t simulator

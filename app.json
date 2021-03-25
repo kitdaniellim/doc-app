@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "SetApp",
-    "icon": "./assets/app_logo.png",
+    "icon": "./assets/app_logo_nontransparent.png",
     "description": "Appointment application for professionals.",
     "slug": "SetApp",
     "sdkVersion": "37.0.0",
@@ -25,7 +25,8 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "usesIcloudStorage": true
+      "usesIcloudStorage": true,
+      "bundleIdentifier": "com.appointmentapp"
     },
     "android": {
       "package": "com.appointmentapp"
