@@ -24,7 +24,7 @@ class Login extends React.Component {
       email: '',
       password: ''
     };
-    this.Home = this.Home.bind(this);
+    // this.Home = this.Home.bind(this);
   }
 
   async componentDidMount() {
@@ -41,7 +41,7 @@ class Login extends React.Component {
 
 
   Home() {
-    this.props.navigation.navigate('Home');
+    // this.props.navigation.navigate('Home');
   }
 
   SignUp = () => {
@@ -69,8 +69,6 @@ class Login extends React.Component {
         AsyncStorage.setItem('user', JSON.stringify(this.props.user));
         console.log(this.props.user.userType)
         this.props.updateCurrentUserType(this.props.user.userType);
-        // this.props.navigation.navigate('Tutorial');
-        // this.props.navigation.navigate('Home');
       } else {
         alert("Error in logging in!");
       }

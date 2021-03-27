@@ -26,19 +26,11 @@ class SignupConsultant3_1 extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.props !== prevProps) {
-      // console.log('==============prevpropsszzzz====================')
-      // console.log(this.props.navigation.state.params.office_schedules)
-      // console.log('---------------------------------')
-      // console.log(prevProps.navigation.state.params)
-      // console.log('===================zzz===============')
       let office_details = this.state.office_details
-      let details = this.props.navigation.state.params.office_schedules;
-      let key = this.props.navigation.state.params.key;
+      let details = this.props.route.params.office_schedules;
+      let key = this.props.route.params.key;
       let count = office_details.length;
       details.map((value, i) => {
-        // console.log(value)
-        // console.log(this.props.navigation.state.params)
-        // console.log(this.state.officeLocations[key].location)
         value.id = count;
         value.office_location = this.state.officeLocations[key].location;
         count++;

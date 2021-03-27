@@ -36,9 +36,9 @@ let Firebase = firebase.initializeApp(firebaseConfig);
 
 Firebase.auth().onAuthStateChanged((user) => {
   if (user) {
-    console.log("Navigating Home");
+    console.log("User logged in.");
   } else {
-    console.log("Error!");
+    console.log("User signed out.");
   }
 })
 

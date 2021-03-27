@@ -46,7 +46,7 @@ class CalendarPage2 extends React.Component {
       );
       await this.setState(() => ({ user }));
       await this.props.getUserAppointments(user.uid, user.userType);
-      await this.setState(() => ({ appointments: this.props.appointments.filter((appointment) => appointment.date == this.props.navigation.state.params.date) }));
+      await this.setState(() => ({ appointments: this.props.appointments.filter((appointment) => appointment.date == this.props.route.params.date) }));
       // console.log("START===================================================================")
       // console.log(this.state.user)
       // console.log("===================================================================")
@@ -126,7 +126,7 @@ class CalendarPage2 extends React.Component {
               setTimeout(acc, 2000);
             });
             this.props.getUserAppointments(this.state.user.uid, this.state.user.userType);
-            await this.setState(() => ({ appointments: this.props.appointments.filter((appointment) => appointment.date == this.props.navigation.state.params.date) }));
+            await this.setState(() => ({ appointments: this.props.appointments.filter((appointment) => appointment.date == this.props.route.params.date) }));
           }
         },
         {
@@ -229,7 +229,7 @@ class CalendarPage2 extends React.Component {
               await new Promise(acc => {
                 setTimeout(acc, 2000);
               });
-              this.setState(() => ({ appointments: this.props.appointments.filter((appointment) => appointment.date == this.props.navigation.state.params.date) }));
+              this.setState(() => ({ appointments: this.props.appointments.filter((appointment) => appointment.date == this.props.route.params.date) }));
             } else {
               Alert.alert(
                 'Oops!',
@@ -281,7 +281,7 @@ class CalendarPage2 extends React.Component {
       await new Promise(acc => {
         setTimeout(acc, 2000);
       });
-      this.setState(() => ({ appointments: this.props.appointments.filter((appointment) => appointment.date == this.props.navigation.state.params.date) }));
+      this.setState(() => ({ appointments: this.props.appointments.filter((appointment) => appointment.date == this.props.route.params.date) }));
       if (!this.props.error) {
         Alert.alert(
           'Success!',
@@ -739,11 +739,11 @@ class CalendarPage2 extends React.Component {
             >
               <View style={calendarStyles.date_header_container}>
                 <Text style={calendarStyles.date_details_header}>
-                  {moment(this.props.navigation.state.params.date)
+                  {moment(this.props.route.params.date)
                     .format("dddd")
                     .toUpperCase() +
                     ", " +
-                    moment(this.props.navigation.state.params.date)
+                    moment(this.props.route.params.date)
                       .format("MMMM DD YYYY")
                       .toUpperCase()}
                 </Text>

@@ -45,6 +45,8 @@ target 'AppointmentApp' do
 
   pod 'react-native-restart', :path => '../node_modules/react-native-restart'
 
+  pod 'react-native-safe-area-context', :path => '../node_modules/react-native-safe-area-context'
+
   target 'AppointmentAppTests' do
     inherit! :search_paths
     # Pods for testing

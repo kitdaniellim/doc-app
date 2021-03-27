@@ -75,8 +75,8 @@ class EditProfile_2 extends React.Component {
   }
 
   componentDidMount() {
-    let office_details = this.props.navigation.state.params.office_details
-    let key = this.props.navigation.state.params.key;
+    let office_details = this.props.route.params.office_details
+    let key = this.props.route.params.key;
     let office_location = office_details[key].office_location;
 
     this.setState({
@@ -163,7 +163,6 @@ class EditProfile_2 extends React.Component {
   }
 
   Confirm = () => {
-    // let key = this.props.navigation.state.params.key;
     this.props.navigation.navigate('EditProfile_1', { office_details: this.state.office_details });
   }
 

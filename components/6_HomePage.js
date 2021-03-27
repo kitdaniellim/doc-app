@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, Image, View, FlatList, TouchableOpacity, ScrollView } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import StarRating from 'react-native-star-rating';
 import { BackgroundCarousel } from './custom/BackgroundCarousel'
 import { homeStyles } from '../styles/styles';
@@ -19,21 +20,20 @@ class Home extends React.Component {
 
   async componentDidMount() {
     try {
-      const user = JSON.parse(
-        await AsyncStorage.getItem("user")
-      );
-      if (!user) {
-        this.props.navigation.navigate('Login');
-      } else {
-        this._isMounted = true;
-        if (this._isMounted) {
-          this.props.getAllReviews();
-          this.props.getAllConsultant();
-        }
+      // const user = JSON.parse(
+      //   await AsyncStorage.getItem("user")
+      // );
+      // if (!user) {
+      //   this.props.navigation.navigate('Login');
+      // } else {
+      this._isMounted = true;
+      if (this._isMounted) {
+        this.props.getAllReviews();
+        this.props.getAllConsultant();
       }
+      // }
     } catch (e) {
       console.log(`Error! Details: ${e}`);
-      this.props.navigation.navigate('Login');
     }
   }
 
@@ -63,7 +63,7 @@ class Home extends React.Component {
 
   render() {
     // console.log('showing props')
-    // console.log(this.props)
+    // console.log(this.props.navigation)
     // console.log('------')
 
     let images = [
@@ -101,100 +101,90 @@ class Home extends React.Component {
       },
     ]
 
-    //const users = Array.from(this.props.consultant);
-    //Not sure when this fires
-    // if (this.props.navigation.state) {
-    //   if (this.props.navigation.state.params) {
-    //     Firebase.auth().signOut()
-    //     console.log('this happened')
-    //     this.props.navigation.reset('Login')
-    //   }
-    // }
-
-    // let consultant = this.props.consultant;
-
     return (
-      <View style={homeStyles.container}>
-        <View style={{ height: 200 }}>
-          <BackgroundCarousel images={images} />
-        </View>
-        <View style={homeStyles.scaffold}>
-          <FlatList
-            data={userSpecialty_list}
-            showsVerticalScrollIndicator={false}
-            keyExtractor={(item) => item.key.toString()}
-            renderItem={({ item }) => (
-              <View key={item.key.toString()}>
-                <View style={homeStyles.scaffold_list_container}>
-                  <View style={homeStyles.scaffold_vlist_item_container}>
-                    <View style={{ flexDirection: 'row' }}>
-                      <TouchableOpacity
-                        disabled
-                        activeOpacity={0.6}
-                        onPress={() => { }}
-                        style={homeStyles.scaffold_vlist_item_header_container}
-                      >
-                        <Text style={homeStyles.scaffold_vlist_item_header}>{item.userSpecialty}</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        activeOpacity={0.6}
-                        onPress={() => { this.SeeAll(item.userSpecialty) }}
-                        style={homeStyles.scaffold_vlist_item_header_container_2}
-                      >
-                        <Text style={homeStyles.scaffold_vlist_item_header_2}>See All</Text>
-                      </TouchableOpacity>
-                    </View>
-                    <View style={homeStyles.scaffold_hlist_container}>
-                      <ScrollView
-                        horizontal={true}
-                        showsHorizontalScrollIndicator={false}
-                        contentContainerStyle={{}}
-                      >
-                        {this.props.consultant && this.props.consultant.map((data) => {
+      // <SafeAreaView style={{ flex: 1 }}>
+        <View style={homeStyles.container}>
+          <View style={{ height: 200 }}>
+            <BackgroundCarousel images={images} />
+          </View>
+          <View style={homeStyles.scaffold}>
+            <FlatList
+              data={userSpecialty_list}
+              showsVerticalScrollIndicator={false}
+              keyExtractor={(item) => item.key.toString()}
+              renderItem={({ item }) => (
+                <View key={item.key.toString()}>
+                  <View style={homeStyles.scaffold_list_container}>
+                    <View style={homeStyles.scaffold_vlist_item_container}>
+                      <View style={{ flexDirection: 'row' }}>
+                        <TouchableOpacity
+                          disabled
+                          activeOpacity={0.6}
+                          onPress={() => { }}
+                          style={homeStyles.scaffold_vlist_item_header_container}
+                        >
+                          <Text style={homeStyles.scaffold_vlist_item_header}>{item.userSpecialty}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          activeOpacity={0.6}
+                          onPress={() => { this.SeeAll(item.userSpecialty) }}
+                          style={homeStyles.scaffold_vlist_item_header_container_2}
+                        >
+                          <Text style={homeStyles.scaffold_vlist_item_header_2}>See All</Text>
+                        </TouchableOpacity>
+                      </View>
+                      <View style={homeStyles.scaffold_hlist_container}>
+                        <ScrollView
+                          horizontal={true}
+                          showsHorizontalScrollIndicator={false}
+                          contentContainerStyle={{}}
+                        >
+                          {this.props.consultant && this.props.consultant.map((data) => {
 
-                          if (item.userSpecialty === data.userSpecialty) {
-                            return (
-                              <View style={homeStyles.scaffold_hlist_item_container} key={data.uid}>
-                                <View style={homeStyles.scaffold_hlist_item_box_container}>
-                                  <View style={homeStyles.scaffold_hlist_item_box_content}>
-                                    <TouchableOpacity
-                                      activeOpacity={0.6}
-                                      onPress={() => this.Profile(data.uid)}
-                                      style={homeStyles.scaffold_hlist_item_box_image_container}
-                                    >
-                                      <Image
-                                        source={{ uri: data.profilePicture }}
-                                        style={homeStyles.scaffold_hlist_item_box_image}
-                                      />
-                                    </TouchableOpacity>
-                                    <Text style={homeStyles.scaffold_hlist_item_box_name}>{(data.userSpecialty === "Doctor") ? 'Dr. ' : data.userSpecialty} {data.fullName}</Text>
-                                    <View style={{ flex: 1, alignSelf: 'flex-start', justifyContent: 'center' }}>
-                                      <StarRating
-                                        disabled={true}
-                                        maxStars={5}
-                                        rating={data.rating}
-                                        selectedStar={() => { }}
-                                        fullStarColor='#FDBB3B'
-                                        starSize={12}
-                                        starStyle={{ marginRight: 5, alignSelf: 'center' }}
-                                      />
+                            if (item.userSpecialty === data.userSpecialty) {
+                              return (
+                                <View style={homeStyles.scaffold_hlist_item_container} key={data.uid}>
+                                  <View style={homeStyles.scaffold_hlist_item_box_container}>
+                                    <View style={homeStyles.scaffold_hlist_item_box_content}>
+                                      <TouchableOpacity
+                                        activeOpacity={0.6}
+                                        onPress={() => this.Profile(data.uid)}
+                                        style={homeStyles.scaffold_hlist_item_box_image_container}
+                                      >
+                                        <Image
+                                          source={{ uri: data.profilePicture }}
+                                          style={homeStyles.scaffold_hlist_item_box_image}
+                                        />
+                                      </TouchableOpacity>
+                                      <Text style={homeStyles.scaffold_hlist_item_box_name}>{(data.userSpecialty === "Doctor") ? 'Dr. ' : data.userSpecialty} {data.fullName}</Text>
+                                      <View style={{ flex: 1, alignSelf: 'flex-start', justifyContent: 'center' }}>
+                                        <StarRating
+                                          disabled={true}
+                                          maxStars={5}
+                                          rating={data.rating}
+                                          selectedStar={() => { }}
+                                          fullStarColor='#FDBB3B'
+                                          starSize={12}
+                                          starStyle={{ marginRight: 5, alignSelf: 'center' }}
+                                        />
+                                      </View>
                                     </View>
                                   </View>
                                 </View>
-                              </View>
-                            )
-                          }
+                              )
+                            }
 
-                        })}
-                      </ScrollView>
+                          })}
+                        </ScrollView>
+                      </View>
                     </View>
                   </View>
                 </View>
-              </View>
-            )}
-          />
+              )}
+            />
+          </View>
         </View>
-      </View>
+      // </SafeAreaView>
     );
   }
 }

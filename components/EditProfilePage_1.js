@@ -111,14 +111,14 @@ class EditProfile_1 extends React.Component {
   // }
 
   componentDidUpdate(prevProps) {
-    if(this.props.navigation.state.params.office_details.length !== prevProps.navigation.state.params.office_details.length){
+    if(this.props.route.params.office_details.length !== prevProps.route.params.office_details.length){
       console.log('DIFFERENT PARAMETERS')
-      console.log(this.props.navigation.state.params.office_details)
+      console.log(this.props.route.params.office_details)
       console.log('---------------------')
-      console.log(prevProps.navigation.state.params.office_details)
+      console.log(prevProps.route.params.office_details)
       console.log('==========================')
       this.setState(() => ({
-        office_details : this.props.navigation.state.params.office_details,
+        office_details : this.props.route.params.office_details,
       }))
     }
   }

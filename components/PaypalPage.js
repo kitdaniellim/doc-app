@@ -6,9 +6,9 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Modal from 'react-native-modal';
 
 
-const Paypal = ({ navigation }) => {
+const Paypal = ({ navigation, route }) => {
   const [isModalVisible, toggleModal] = useState(false);
-  const consultant_id = navigation.state.params.consultant_id;
+  const consultant_id = route.params.consultant_id;
 
   function Close() {
     navigation.navigate('BookPage');

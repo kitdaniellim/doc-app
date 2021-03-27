@@ -5,16 +5,11 @@ import { LinearGradient } from 'expo-linear-gradient';
 import ImageLoader from './custom/ImageLoader.js';
 import AsyncStorage from '@react-native-community/async-storage';
 
-const Landing = ({ navigation }) => {
+const Landing = (props) => {
     useEffect(() => {
         setTimeout(async () => {
-            const user = await JSON.parse(
-                await AsyncStorage.getItem("user")
-            );
-            if (!user) {
-                navigation.navigate('Login');
-            } else {
-                navigation.navigate('Home')
+            if(props.route.params.path === undefined) {
+                props.navigation.navigate((props.route.params.path === 'auth') ? 'Login' : 'Home');
             }
         }, 2500)
     })

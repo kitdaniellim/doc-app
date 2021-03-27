@@ -121,7 +121,7 @@ class EditReview extends React.Component {
             const user = JSON.parse(
                 await AsyncStorage.getItem("user")
             );
-            this.props.getReviewByUID(this.props.navigation.state.params.review_uid);
+            this.props.getReviewByUID(this.props.route.params.review_uid);
             this.setState(() => ({ user: user }))
         } catch (e) {
             console.log(`Review Page Error! Details: ${e}`);
@@ -149,7 +149,7 @@ class EditReview extends React.Component {
 
     Submit = () => {
         console.log(this.state);
-        this.props.updateReview(this.props.navigation.state.params.review_uid, this.state.starCount, this.state.comment);
+        this.props.updateReview(this.props.route.params.review_uid, this.state.starCount, this.state.comment);
         this.props.navigation.replace('Review')
     }
 

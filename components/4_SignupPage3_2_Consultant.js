@@ -146,7 +146,7 @@ class SignupConsultant3_2 extends React.Component {
   }
 
   Confirm = () => {
-    let key = this.props.navigation.state.params.key;
+    let key = this.props.route.params.key;
     this.props.navigation.navigate('SignupConsultant3_1', { key: key, office_schedules: this.state.office_schedules });
   }
 
@@ -156,7 +156,7 @@ class SignupConsultant3_2 extends React.Component {
     // console.log('--------------------')
     // console.log(this.state)
     // console.log('===================')
-    let location = this.props.navigation.state.params;
+    let location = this.props.route.params;
     return (
       <View style={signupStyles.container}>
         <LinearGradient

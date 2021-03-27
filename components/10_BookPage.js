@@ -26,7 +26,7 @@ class BookPage extends React.Component {
       occupied_dates: [],
       occupied_times: [],
       occupied_dates_obj: {},
-      consultant_id: this.props.navigation.state.params.consultant_id,
+      consultant_id: this.props.route.params.consultant_id,
       symptoms: [],
       files: [],
       user: {},

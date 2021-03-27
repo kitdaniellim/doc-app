@@ -36,14 +36,14 @@ class CalendarPage3_Review extends React.Component {
             const data = {
                 rating: this.state.starCount,
                 comment: this.state.review,
-                review_to: this.props.navigation.state.params.item.consultant_id,
-                reviewee_name: this.props.navigation.state.params.item.consultant_name,
-                reviewer_id: this.props.navigation.state.params.item.client_id,
-                reviewer_name: this.props.navigation.state.params.item.client_name,
+                review_to: this.props.route.params.item.consultant_id,
+                reviewee_name: this.props.route.params.item.consultant_name,
+                reviewer_id: this.props.route.params.item.client_id,
+                reviewer_name: this.props.route.params.item.client_name,
                 created_at: moment().format('YYYY-MM-DD HH:mm:ss').toString()
             }
             await this.props.addReview(data);
-            await this.props.updateAppointmentStatus(this.props.navigation.state.params.item.uid, "Reviewed");
+            await this.props.updateAppointmentStatus(this.props.route.params.item.uid, "Reviewed");
             if (!this.props.error) {
                 Alert.alert(
                     'Review Added Successfully',
@@ -95,11 +95,11 @@ class CalendarPage3_Review extends React.Component {
                         <View style={calendarStyles.date_details_container}>
                             <View style={calendarStyles.date_header_container}>
                                 <Text style={calendarStyles.date_details_header}>
-                                    {moment(this.props.navigation.state.params.item.date)
+                                    {moment(this.props.route.params.item.date)
                                         .format("dddd")
                                         .toUpperCase() +
                                         ", " +
-                                        moment(this.props.navigation.state.params.item.date)
+                                        moment(this.props.route.params.item.date)
                                             .format("MMMM DD YYYY")
                                             .toUpperCase()}
                                 </Text>
@@ -108,11 +108,11 @@ class CalendarPage3_Review extends React.Component {
                                 <View style={calendarStyles.date_details_text_container}>
                                     <Text style={calendarStyles.date_details_text}>
                                         Appointment with{" "}
-                                        {this.props.navigation.state.params.item.consultant_name} {"\n"}
-                                        {this.props.navigation.state.params.item.location} {"\n"}
-                                        {moment(this.props.navigation.state.params.item.time_start, "HH:mm").format(
+                                        {this.props.route.params.item.consultant_name} {"\n"}
+                                        {this.props.route.params.item.location} {"\n"}
+                                        {moment(this.props.route.params.item.time_start, "HH:mm").format(
                                             "h:mm A"
-                                        )} - {moment(this.props.navigation.state.params.item.time_end, "HH:mm").format("h:mm A")}
+                                        )} - {moment(this.props.route.params.item.time_end, "HH:mm").format("h:mm A")}
                                     </Text>
                                 </View>
                             </View>
@@ -121,7 +121,7 @@ class CalendarPage3_Review extends React.Component {
                     <View style={calendarStyles.review_container}>
                         <View style={calendarStyles.review_details_container}>
                             <View>
-                                <Text style={calendarStyles.review_details_header}>You to {this.props.navigation.state.params.item.consultant_name}</Text>
+                                <Text style={calendarStyles.review_details_header}>You to {this.props.route.params.item.consultant_name}</Text>
                                 <StarRating
                                     disabled={false}
                                     maxStars={5}

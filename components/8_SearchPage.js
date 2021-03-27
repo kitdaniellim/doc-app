@@ -35,7 +35,7 @@ class Search extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
-      this.setState(() => ({ filterVal: this.props.navigation.state.params.userSpecialty }));
+      this.setState(() => ({ filterVal: this.props.route.params.userSpecialty }));
     }
   }
 
@@ -49,11 +49,11 @@ class Search extends React.Component {
   }
 
   render() {
-    // console.log('=================================');
-    // console.log(this.props);
+    console.log('=================================');
+    console.log(this.props);
     // console.log('-----------------------------');
     // console.log(this.state);
-    // console.log('=================================');
+    console.log('=================================');
 
     const userSpecialty_list = [
       {
