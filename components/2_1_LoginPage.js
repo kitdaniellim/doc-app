@@ -39,11 +39,6 @@ class Login extends React.Component {
     }
   }
 
-
-  Home() {
-    // this.props.navigation.navigate('Home');
-  }
-
   SignUp = () => {
     const navigation = this.props.navigation;
     navigation.navigate('Selection');

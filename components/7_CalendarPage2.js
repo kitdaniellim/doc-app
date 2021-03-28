@@ -89,6 +89,11 @@ class CalendarPage2 extends React.Component {
 
   // CHANGE MODAL STYLE HERE
   acceptClient = (id) => {
+
+
+
+
+
     Alert.alert(
       'Appointment Approval',
       'Accept appointment?',
@@ -97,6 +102,7 @@ class CalendarPage2 extends React.Component {
           text: 'Accept', onPress: async () => {
             console.log("Client accepted by consultant");
             this.props.updateAppointmentStatus(id, "Approved");
+            //insert notif from consultant to client- your appointment has been approved @client
             if (!this.props.error) {
               Alert.alert(
                 'Success!',
@@ -171,6 +177,9 @@ class CalendarPage2 extends React.Component {
   notifyClient = () => {
     if (this.state.text != "") {
       console.log("Notification sent to client. " + this.state.text);
+      //insert function to insert notifs to notifs collection
+      //from consultant to client
+      //addNotif()
       this.setState(() => ({ isNotifyModalVisible: false, text: "" }));
     }
   };
@@ -213,6 +222,7 @@ class CalendarPage2 extends React.Component {
         {
           text: 'Yes', onPress: async () => {
             await this.props.updateAppointmentStatus(id, "Done");
+            //insert notif from consultant to client - please leave a review for the consultant @client
             if (!this.props.error) {
               Alert.alert(
                 'Success!',
@@ -274,6 +284,8 @@ class CalendarPage2 extends React.Component {
     //   );
     // } else {
       await this.props.updateAppointmentStatus(this.state.id, this.state.typeofReject, this.state.reason);
+      //insert notif that appointment has been cancelled
+      //if current user type is client, send notif to consultant, and vice versa
       await new Promise(acc => {
         setTimeout(acc, 2000);
       });
@@ -966,7 +978,7 @@ class CalendarPage2 extends React.Component {
                           <TouchableOpacity
                             activeOpacity={0.6}
                             style={calendarStyles.date_details_button_notify}
-                            // onPress={this.toggleNotifyClientModal}
+                            // onPress={this.toggleNotifyClientModal(item.uid)}
                             onPress={() => {}}
                           >
                             <Text
@@ -1003,7 +1015,7 @@ class CalendarPage2 extends React.Component {
                           <TouchableOpacity
                             activeOpacity={0.6}
                             style={calendarStyles.date_details_button_notify}
-                            // onPress={this.toggleNotifyClientModal}
+                            // onPress={this.toggleNotifyClientModal(item.uid)}
                             onPress={() => {}}
                           >
                             <Text
