@@ -9,8 +9,8 @@ import { getReviews, getAllReviews } from '../actions/reviews';
 import { getNotifs, addNotif } from '../actions/notifs';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Firebase from '../config/Firebase';
 import AsyncStorage from '@react-native-community/async-storage';
+import { db } from '../config/Firebase';
 
 class Home extends React.Component {
   _isMounted = false
@@ -20,22 +20,29 @@ class Home extends React.Component {
   }
 
   async componentDidMount() {
-    try {
-      // const user = JSON.parse(
-      //   await AsyncStorage.getItem("user")
-      // );
-      // if (!user) {
-      //   this.props.navigation.navigate('Login');
-      // } else {
-      this._isMounted = true;
-      if (this._isMounted) {
-        this.props.getAllReviews();
-        this.props.getAllConsultant();
-      }
-      // }
-    } catch (e) {
-      console.log(`Error! Details: ${e}`);
-    }
+
+    // const user = JSON.parse(
+    //   await AsyncStorage.getItem("user")
+    // );
+    this.props.getAllReviews();
+    this.props.getAllConsultant();
+
+    //Listener for real-time notifications
+    // db.collection('notifs')
+    //   .doc(user.uid)
+    //   .onSnapshot(documentSnapshot => {
+    //     // console.log('notif data: ', documentSnapshot.data());
+
+    //     console.log('something changed ssss');
+    //     // this.props.navigation.setOptions({
+    //     //   headerRight: () => { 
+    //     //     return <Text>Fuckkk</Text> },
+    //     //   title: ' hell o world?'
+    //     // })
+    //   });
+
+
+
   }
 
   SeeAll(userSpecialty) {
@@ -112,13 +119,11 @@ class Home extends React.Component {
         {/* //test button */}
         <TouchableOpacity
           activeOpacity={0.6}
-          onPress={() => { this.props.addNotif('3hwzvxWGt8YFSJ5S43OHnWvd9HD2', 'Some notif') }}
+          onPress={() => { this.props.addNotif('CLIENT', '99adfbd0-8a38-11eb-bc09-a977e0d274c7', 'BOOK') }}
           style={homeStyles.scaffold_vlist_item_header_container_2}
         >
           <Text style={homeStyles.scaffold_vlist_item_header_2}>TEST NOTIFY</Text>
         </TouchableOpacity>
-
-
 
         <View style={homeStyles.scaffold}>
           <FlatList

@@ -6,6 +6,7 @@ import Main from './Main.js';
 
 //Navigation
 import { NavigationContainer } from '@react-navigation/native';
+import { navigationRef } from './RootNavigation';
 
 //Actions
 import { connect } from 'react-redux';
@@ -16,9 +17,9 @@ import AsyncStorage from "@react-native-community/async-storage";
 class Routes extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            userType: '',
-        }
+        // this.state = {
+        //     user: {},
+        // }
     }
 
     async componentDidMount() {
@@ -28,30 +29,30 @@ class Routes extends React.Component {
 
         if (user != null) {
             this.props.updateCurrentUserType(user.userType)
-            this.setState(() => ({
-                userType: this.props.userType
-            }))
+            // this.setState(() => ({
+            //     user: user
+            // }))
         }
     }
 
     componentDidUpdate(prevProps) {
         if (this.props.userType !== prevProps.userType) {
-            this.setState(() => ({
-                userType: this.props.userType
-            }))
+            // this.setState(() => ({
+            //     user: user
+            // }))
         }
     }
 
     render() {
-        console.log('showing routes props')
-        console.log(this.props);
-        console.log('--------------------');
-        console.log(this.state);
-        console.log('--------------------');
-        return <NavigationContainer  >
+        // console.log('showing routes props')
+        // console.log(this.props);
+        // console.log('--------------------');
+        // console.log(this.state);
+        // console.log('--------------------');
+        return <NavigationContainer ref={navigationRef}>
 
             {this.props.userType !== undefined ? (
-                <Main userType={this.props.userType} />
+                <Main />
             ) : (
                 <Auth />
             )}

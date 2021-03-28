@@ -46,7 +46,10 @@ class CalendarPage2 extends React.Component {
       );
       await this.setState(() => ({ user }));
       await this.props.getUserAppointments(user.uid, user.userType);
-      await this.setState(() => ({ appointments: this.props.appointments.filter((appointment) => appointment.date == this.props.route.params.date) }));
+      if (this.props.appointments !== undefined) {
+        await this.setState(() => ({ appointments: this.props.appointments.filter((appointment) => appointment.date == this.props.route.params.date) }));
+      }
+
       // console.log("START===================================================================")
       // console.log(this.state.user)
       // console.log("===================================================================")
@@ -283,50 +286,50 @@ class CalendarPage2 extends React.Component {
     //     { cancelable: true }
     //   );
     // } else {
-      await this.props.updateAppointmentStatus(this.state.id, this.state.typeofReject, this.state.reason);
-      //insert notif that appointment has been cancelled
-      //if current user type is client, send notif to consultant, and vice versa
-      await new Promise(acc => {
-        setTimeout(acc, 2000);
-      });
-      await this.props.getUserAppointments(this.state.user.uid, this.state.user.userType);
-      await new Promise(acc => {
-        setTimeout(acc, 2000);
-      });
-      this.setState(() => ({ appointments: this.props.appointments.filter((appointment) => appointment.date == this.props.route.params.date) }));
-      if (!this.props.error) {
-        Alert.alert(
-          'Success!',
-          `Appointment ${this.state.typeofReject}`,
-          [
-            {
-              text: 'OK',
-              style: 'cancel'
-            }
-          ],
-          { cancelable: true }
-        );
-      } else {
-        Alert.alert(
-          'Oops!',
-          `There was a problem in declining/cancelling. \n Details: ${this.props.error}`,
-          [
-            {
-              text: 'OK',
-              style: 'cancel'
-            }
-          ],
-          { cancelable: true }
-        );
-      }
-      this.setState(() => ({
-        reason: "",
-        typeofReject: "",
-        id: "",
-        isReasonCancelModalVisible: false,
-        isCancelAppointmentModalVisible: false,
-        isDeclineModalVisible: false,
-      }));
+    await this.props.updateAppointmentStatus(this.state.id, this.state.typeofReject, this.state.reason);
+    //insert notif that appointment has been cancelled
+    //if current user type is client, send notif to consultant, and vice versa
+    await new Promise(acc => {
+      setTimeout(acc, 2000);
+    });
+    await this.props.getUserAppointments(this.state.user.uid, this.state.user.userType);
+    await new Promise(acc => {
+      setTimeout(acc, 2000);
+    });
+    this.setState(() => ({ appointments: this.props.appointments.filter((appointment) => appointment.date == this.props.route.params.date) }));
+    if (!this.props.error) {
+      Alert.alert(
+        'Success!',
+        `Appointment ${this.state.typeofReject}`,
+        [
+          {
+            text: 'OK',
+            style: 'cancel'
+          }
+        ],
+        { cancelable: true }
+      );
+    } else {
+      Alert.alert(
+        'Oops!',
+        `There was a problem in declining/cancelling. \n Details: ${this.props.error}`,
+        [
+          {
+            text: 'OK',
+            style: 'cancel'
+          }
+        ],
+        { cancelable: true }
+      );
+    }
+    this.setState(() => ({
+      reason: "",
+      typeofReject: "",
+      id: "",
+      isReasonCancelModalVisible: false,
+      isCancelAppointmentModalVisible: false,
+      isDeclineModalVisible: false,
+    }));
     // }
   };
 
@@ -386,6 +389,9 @@ class CalendarPage2 extends React.Component {
   };
 
   render() {
+    console.log('showing appointments')
+    console.log(this.state.appointments)
+    console.log('--------------')
     return (
       <View style={calendarStyles.container}>
         <FilesModal
@@ -716,7 +722,7 @@ class CalendarPage2 extends React.Component {
               <TouchableOpacity
                 activeOpacity={0.6}
                 // onPress={this.toggleNotifyAllClientsModal}
-                onPress={() => {}}
+                onPress={() => { }}
                 style={calendarStyles.header_confirmall_container}
               >
                 <Text style={calendarStyles.header_confirmall_text}>
@@ -726,7 +732,7 @@ class CalendarPage2 extends React.Component {
               <TouchableOpacity
                 activeOpacity={0.6}
                 // onPress={this.toggleConfirmAllModal}
-                onPress={() => {}}
+                onPress={() => { }}
                 style={calendarStyles.header_confirmall_container}
               >
                 <Text style={calendarStyles.header_confirmall_text}>
@@ -979,7 +985,7 @@ class CalendarPage2 extends React.Component {
                             activeOpacity={0.6}
                             style={calendarStyles.date_details_button_notify}
                             // onPress={this.toggleNotifyClientModal(item.uid)}
-                            onPress={() => {}}
+                            onPress={() => { }}
                           >
                             <Text
                               style={calendarStyles.date_details_button_label}
@@ -1016,7 +1022,7 @@ class CalendarPage2 extends React.Component {
                             activeOpacity={0.6}
                             style={calendarStyles.date_details_button_notify}
                             // onPress={this.toggleNotifyClientModal(item.uid)}
-                            onPress={() => {}}
+                            onPress={() => { }}
                           >
                             <Text
                               style={calendarStyles.date_details_button_label}
@@ -1060,6 +1066,18 @@ class CalendarPage2 extends React.Component {
                             style={calendarStyles.date_details_button_label}
                           >
                             Done
+                          </Text>
+                        </TouchableOpacity>
+                      ) : item.status === "Reviewed" ? ( //Appointment is Done and Reviewed
+                        <TouchableOpacity
+                          activeOpacity={0.6}
+                          disabled
+                          style={calendarStyles.date_details_button_reviewed}
+                        >
+                          <Text
+                            style={calendarStyles.date_details_button_label}
+                          >
+                            Finished
                           </Text>
                         </TouchableOpacity>
                       ) : (   //Appointment is Declined/Cancelled

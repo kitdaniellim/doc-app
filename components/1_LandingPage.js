@@ -8,9 +8,11 @@ import AsyncStorage from '@react-native-community/async-storage';
 const Landing = (props) => {
     useEffect(() => {
         setTimeout(async () => {
-            if(props.route.params.path === undefined) {
-                props.navigation.navigate((props.route.params.path === 'auth') ? 'Login' : 'Home');
-            }
+            // if(props.route.params.path === undefined) {
+                // props.navigation.navigate((props.route.params.path === 'auth') ? 'Login' : 'Home');
+                
+            // }
+            props.navigation.navigate('Login');
         }, 2500)
     })
 

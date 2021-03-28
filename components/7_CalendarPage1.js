@@ -54,7 +54,6 @@ class CalendarPage extends React.Component {
       }
     } catch (e) {
       console.log(`Error! Details: ${e}`);
-      this.props.navigation.navigate('Login');
     }
   }
 
@@ -136,6 +135,9 @@ class CalendarPage extends React.Component {
   };
 
   render() {
+    console.log('showing state')
+    console.log(this.state)
+    console.log('--------------')
     return (
       <View style={calendarStyles.container}>
         <View style={calendarStyles.header_container}>

@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, FlatList, Text, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Header from '../components/custom/Header.js';
-import Firebase from '../config/Firebase';
+import * as RootNavigation from './RootNavigation.js';
+
 import {
     Menu,
     MenuOptions,
@@ -35,49 +36,82 @@ import Paypal from '../components/PaypalPage.js';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { updateCurrentUserType, } from '../actions/users';
-
+import { getNotifs } from '../actions/notifs';
+import Firebase, { db } from '../config/Firebase';
+import AsyncStorage from "@react-native-community/async-storage";
 
 class Main extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
+    }
 
+    componentDidMount = async () => {
+
+        const user = JSON.parse(
+            await AsyncStorage.getItem("user")
+        );
+        // console.log('HEHEJIAJHFJAF')
+        // console.log(user)
+        await this.props.getNotifs(user.uid);
+
+        //Listener for real-time notifications
+        // db.collection('notifs')
+        //   .doc(this.props.user.uid)
+        //   .onSnapshot(documentSnapshot => {
+        //     console.log('notif data: ', documentSnapshot.data());
+        //   });
+
+    }
+
+    // componentDidUpdate() {
+    //     console.log('HELHELHELHLEHLEHLELHEL')
+    // }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        if (this.props.userNotifs == nextProps.userNotifs) {
+            return false;
+        } else {
+            return true;
         }
     }
 
-    render() {
-        console.log('MAIN PROPS')
-        console.log(this.props)
 
+
+    render() {
+        // console.log('MAIN PROPS')
+        // console.log(navigation)
+        // console.log('-------------------')
 
         const optionsStyles = {
             optionsContainer: {
                 //   backgroundColor: 'green',
                 marginTop: 48,
                 justifyContent: 'flex-end',
-                width: 200,
+                width: 260,
             },
             optionsWrapper: {
                 //   backgroundColor: 'purple',
                 // marginRight: 50,
-
             },
+
             optionWrapper: {
                 //   backgroundColor: 'yellow',
                 // marginRight: 50,
-                height: 45,
+                height: 85,
                 justifyContent: 'center',
-                marginVertical: 11,
+                padding: 10,
+                paddingRight: 20,
+                // marginVertical: 8,
             },
             optionTouchable: {
                 //   underlayColor: 'gold',
                 activeOpacity: 70,
-                padding: 15,
-                margin: 10,
+                // padding: 15,
+                // margin: 10,
             },
             optionText: {
                 color: 'black',
-                marginHorizontal: 10,
+                marginHorizontal: 6,
             },
         };
 
@@ -221,7 +255,7 @@ class Main extends React.Component {
                     initialRouteName="Home"
                     activeColor="#19BAB9"
                     inactiveColor="#CFCFCF"
-                    // barStyle={{ backgroundColor: '#19BAB9' }}
+                // barStyle={{ backgroundColor: '#19BAB9' }}
                 >
                     {(props.userType === "CLIENT") ?
                         <>
@@ -329,7 +363,7 @@ class Main extends React.Component {
         return (
             <MainStack.Navigator
                 screenOptions={{
-                    headerForceInset: { top: 'never', bottom: 'never' },
+                    // headerForceInset: { top: 'never', bottom: 'never' },
                     headerStyle: {
                         backgroundColor: '#19BAB9',
                         borderBottomColor: '#19BAB9',
@@ -355,14 +389,19 @@ class Main extends React.Component {
                 />
                 <MainStack.Screen
                     name="Home"
-                    component={() => { return GetTabs(this.props) }}
                     options={{
                         headerTitle: () => <Header />,
                         headerLeft: () => null,
                         headerRight: () => {
-                            return (
+                            return (Object.keys(this.props.userNotifs).length != 0 && this.props.userNotifs.notifs.length != 0) ?
                                 <View style={{ flexDirection: 'row' }}>
-                                    <Menu onSelect={() => { }}>
+                                    <Menu onSelect={(date) => {
+                                        console.log(date)
+                                        RootNavigation.navigate("Calendar", {
+                                            screen: 'Calendar2',
+                                            params: { date: date }
+                                        });
+                                    }}>
                                         <MenuTrigger
                                             style={{ marginRight: 25, padding: 10, }}
                                         >
@@ -373,9 +412,34 @@ class Main extends React.Component {
                                             />
                                         </MenuTrigger>
                                         <MenuOptions customStyles={optionsStyles}>
-                                            <View style={{ height: 70 }}>
-                                                <MenuOption text={'Notifications Coming Soon'} />
+                                            {/* CODE FOR NOTIFICATIONS */}
+                                            <View style={{
+                                                minHeight: '30%',
+                                                maxHeight: 270,
+                                            }}>
+                                                <FlatList
+                                                    data={this.props.userNotifs.notifs}
+                                                    showsVerticalScrollIndicator={false}
+                                                    keyExtractor={(item, index) => index.toString()}
+                                                    ItemSeparatorComponent={() => {
+                                                        return (
+                                                            <View style={{ borderBottomColor: '#00000080', borderBottomWidth: 1, alignSelf: 'stretch' }} />
+                                                        );
+                                                    }}
+                                                    renderItem={({ item }) => (
+                                                        <View style={{ flexDirection: 'row' }}>
+                                                            <View style={{ flex: 3 }}>
+                                                                <MenuOption value={item.date} text={item.text} />
+                                                            </View>
+                                                            <View style={{ flex: 1, justifyContent: 'center' }}>
+                                                                <Text style={{ fontSize: 12, paddingRight: 20 }}>{item.created_at}</Text>
+                                                            </View>
+                                                        </View>
+
+                                                    )}
+                                                />
                                             </View>
+
                                         </MenuOptions>
                                     </Menu>
                                     <Menu onSelect={
@@ -385,7 +449,7 @@ class Main extends React.Component {
                                                 this.props.updateCurrentUserType(undefined);
                                             }
                                             else {
-                                                navigation.navigate('Home', { action: -1 })
+                                                // navigation.navigate('Home', { action: -1 })
                                             }
                                         }
                                     }>
@@ -403,10 +467,55 @@ class Main extends React.Component {
                                         </MenuOptions>
                                     </Menu>
                                 </View>
-                            )
+                                :
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Menu onSelect={() => { }}>
+                                        <MenuTrigger
+                                            style={{ marginRight: 25, padding: 10, }}
+                                        >
+                                            <Icon
+                                                color='#fff'
+                                                name='bell'
+                                                size={21}
+                                            />
+                                        </MenuTrigger>
+                                        <MenuOptions customStyles={optionsStyles}>
+                                            <View style={{ height: 70, justifyContent: 'center' }}>
+                                                <MenuOption text={'You have no notifications yet!'} />
+                                            </View>
+                                        </MenuOptions>
+                                    </Menu>
+                                    <Menu onSelect={
+                                        value => {
+                                            if (value === 1) {
+                                                Firebase.auth().signOut();
+                                                this.props.updateCurrentUserType(undefined);
+                                            }
+                                            else {
+                                                // navigation.navigate('Home', { action: -1 })
+                                            }
+                                        }
+                                    }>
+                                        <MenuTrigger
+                                            style={{ marginRight: 25, padding: 10, }}
+                                        >
+                                            <Icon
+                                                color='#fff'
+                                                name='ellipsis-v'
+                                                size={21}
+                                            />
+                                        </MenuTrigger>
+                                        <MenuOptions customStyles={optionsStyles}>
+                                            <MenuOption value={1} text='Sign Out' />
+                                        </MenuOptions>
+                                    </Menu>
+                                </View>
+                                ;
                         }
                     }}
-                />
+                >
+                    {() => GetTabs(this.props)}
+                </MainStack.Screen >
                 <MainStack.Screen
                     name="Paypal"
                     component={Paypal}
@@ -451,11 +560,13 @@ class Main extends React.Component {
 // });
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ updateCurrentUserType }, dispatch)
+    return bindActionCreators({ updateCurrentUserType, getNotifs }, dispatch)
 }
 const mapStateToProps = state => {
+    // console.log(state)
     return {
         userType: state.users.current_userType,
+        userNotifs: state.notifs.notifs,
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

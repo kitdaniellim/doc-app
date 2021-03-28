@@ -50,7 +50,7 @@ class Auth extends React.Component {
                     options={{
                         headerShown: false,
                     }}
-                    initialParams={{ path: 'auth',}}
+                    // initialParams={{ path: 'auth',}}
                 /> */}
                 <AuthStack.Screen
                     name="Login"

@@ -44,6 +44,7 @@ class CalendarPage3_Review extends React.Component {
             }
             await this.props.addReview(data);
             await this.props.updateAppointmentStatus(this.props.route.params.item.uid, "Reviewed");
+            //Review addnotif
             if (!this.props.error) {
                 Alert.alert(
                     'Review Added Successfully',

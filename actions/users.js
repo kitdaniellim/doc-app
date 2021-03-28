@@ -566,9 +566,6 @@ export const editProfile = (uid) => {
                 blob_profile.close();
                 profileImage_url = await snapshot_profile.ref.getDownloadURL();
                 user.profilePicture = profileImage_url;
-                console.log('========showing profile pic url==========')
-                console.log(profileImage_url);
-                console.log('==================')
             }
 
             
@@ -582,9 +579,6 @@ export const editProfile = (uid) => {
                 blob_office.close();
                 officeImage_url = await snapshot_office.ref.getDownloadURL();
                 user.officeImage = officeImage_url;
-                console.log('========showing office pic url==========')
-                console.log(officeImage_url);
-                console.log('==================')
             }
 
             user.email = email;
@@ -594,9 +588,9 @@ export const editProfile = (uid) => {
             user.userSubSpecialty = (userSubSpecialty == undefined) ? '' : userSubSpecialty;
             user.office_details = office_details;
 
-            console.log('========showing user==========')
-            console.log(user);
-            console.log('==================')
+            // console.log('========showing user==========')
+            // console.log(user);
+            // console.log('==================')
 
             db.collection('users').doc(uid).update(user);
 
