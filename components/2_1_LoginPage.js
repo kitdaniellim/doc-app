@@ -6,7 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Modal from 'react-native-modal';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { updateEmail, updatePassword, updateCurrentUserType, login, logout } from '../actions/users';
+import { updateEmail, updatePassword, updateCurrentUser, login, logout } from '../actions/users';
 import { resetAppointments } from '../actions/appointments';
 import {  getReviewedBy } from '../actions/reviews';
 import AsyncStorage from "@react-native-community/async-storage";
@@ -59,7 +59,10 @@ class Login extends React.Component {
         console.log(`Login successful.`)
         AsyncStorage.setItem('user', JSON.stringify(this.props.user));
         console.log(this.props.user.userType)
-        this.props.updateCurrentUserType(this.props.user.userType);
+        this.props.updateCurrentUser({
+          userType: this.props.user.userType,
+          uid: this.props.user.uid
+        });
       } else {
         alert("Error in logging in!");
       }
@@ -170,7 +173,7 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ updateEmail, updatePassword, updateCurrentUserType, login, logout, resetAppointments, getReviewedBy }, dispatch)
+  return bindActionCreators({ updateEmail, updatePassword, updateCurrentUser, login, logout, resetAppointments, getReviewedBy }, dispatch)
 }
 
 const mapStateToProps = state => {

@@ -6,45 +6,24 @@ import { BackgroundCarousel } from './custom/BackgroundCarousel'
 import { homeStyles } from '../styles/styles';
 import { getAllConsultant, getConsultant } from '../actions/users';
 import { getReviews, getAllReviews } from '../actions/reviews';
-import { getNotifs, addNotif } from '../actions/notifs';
+import { addNotif } from '../actions/notifs';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
-import { db } from '../config/Firebase';
-// import {Permissions, Notifications} from 'expo';
 
 class Home extends React.Component {
-  _isMounted = false
   constructor(props) {
     super(props);
-
+    this.state = {
+      user: {},
+      notification: {},
+    }
   }
 
   async componentDidMount() {
-
-    const user = JSON.parse(
-      await AsyncStorage.getItem("user")
-    );
     this.props.getAllReviews();
     this.props.getAllConsultant();
-
-    //Listener for real-time notifications
-    db.collection('notifs')
-      .doc(user.uid)
-      .onSnapshot(documentSnapshot => {
-        // console.log('notif data: ', documentSnapshot.data());
-
-        console.log('something changed ssss');
-        this.props.navigation.setOptions({
-          headerRight: () => { 
-            return <Text>Fuckkk</Text> },
-        })
-      });
-
-
-
   }
-
   SeeAll(userSpecialty) {
     this.props.navigation.navigate('Search', { userSpecialty: userSpecialty });
   }
@@ -117,13 +96,36 @@ class Home extends React.Component {
         </View>
 
         {/* //test button */}
-        <TouchableOpacity
+        {/* <TouchableOpacity
           activeOpacity={0.6}
-          onPress={() => { this.props.addNotif('CLIENT', '99adfbd0-8a38-11eb-bc09-a977e0d274c7', 'BOOK') }}
+          onPress={() => {
+            this.props.addNotif('CLIENT', '99adfbd0-8a38-11eb-bc09-a977e0d274c7', 'BOOK')
+
+            // const trigger = new Date(Date.now() + 60 * 60 * 1000);
+            // trigger.setMinutes(0);
+            // trigger.setSeconds(0);
+
+            // Notifications.scheduleNotificationAsync({
+            //   content: {
+            //     title: 'Happy new hour!',
+            //   },
+            //   trigger,
+            // });
+
+            // Notifications.scheduleNotificationAsync({
+            //   content: {
+            //     title: "Time's up!",
+            //     body: 'Change sides!',
+            //   },
+            //   trigger: {
+            //     seconds: 10,
+            //   },
+            // });
+          }}
           style={homeStyles.scaffold_vlist_item_header_container_2}
         >
           <Text style={homeStyles.scaffold_vlist_item_header_2}>TEST NOTIFY</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <View style={homeStyles.scaffold}>
           <FlatList
@@ -220,5 +222,4 @@ const mapStateToProps = state => {
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
-
 

@@ -11,7 +11,7 @@ import { navigationRef } from './RootNavigation';
 //Actions
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { updateCurrentUserType, } from '../actions/users';
+import { updateCurrentUser, } from '../actions/users';
 import AsyncStorage from "@react-native-community/async-storage";
 
 class Routes extends React.Component {
@@ -28,15 +28,15 @@ class Routes extends React.Component {
         );
 
         if (user != null) {
-            this.props.updateCurrentUserType(user.userType)
-            // this.setState(() => ({
-            //     user: user
-            // }))
+            this.props.updateCurrentUser({
+                userType: user.userType,
+                uid: user.uid
+            });
         }
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.userType !== prevProps.userType) {
+        if (this.props.current_user !== prevProps.current_user) {
             // this.setState(() => ({
             //     user: user
             // }))
@@ -51,7 +51,7 @@ class Routes extends React.Component {
         // console.log('--------------------');
         return <NavigationContainer ref={navigationRef}>
 
-            {this.props.userType !== undefined ? (
+            {this.props.current_user !== undefined ? (
                 <Main />
             ) : (
                 <Auth />
@@ -62,11 +62,11 @@ class Routes extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ updateCurrentUserType }, dispatch)
+    return bindActionCreators({ updateCurrentUser }, dispatch)
 }
 const mapStateToProps = state => {
     return {
-        userType: state.users.current_userType,
+        current_user: state.users.current_user,
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Routes);

@@ -105,7 +105,7 @@ class BookPage1_Date extends React.Component {
                       markedDates: this.getDaysInMonth(date.month - 1, date.year, this.state.AVAILABLE_DAYS)
                     })
                   }}
-                  disableAllTouchEventsForDisabledDays={true}
+                  // disableAllTouchEventsForDisabledDays={true}
                   theme={{
                     backgroundColor: '#fff',
                     calendarBackground: '#fff',

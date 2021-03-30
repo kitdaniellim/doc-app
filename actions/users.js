@@ -19,13 +19,14 @@ export const UPDATE_PASSWORD = 'UPDATE_PASSWORD';
 export const UPDATE_FULL_NAME = 'UPDATE_FULL_NAME';
 export const UPDATE_MOBILE_NUMBER = 'UPDATE_MOBILE_NUMBER';
 export const UPDATE_BIRTH_DAY = 'UPDATE_BIRTH_DAY';
+export const UPDATE_CURRENT_USER = 'UPDATE_CURRENT_USER';
 export const UPDATE_USER_TYPE = 'UPDATE_USER_TYPE';
-export const UPDATE_CURRENT_USER_TYPE = 'UPDATE_CURRENT_USER_TYPE';
 export const UPDATE_USER_LIC = 'UPDATE_USER_LIC';
 export const UPDATE_USER_SPECIALTY = 'UPDATE_USER_SPECIALTY';
 export const UPDATE_USER_SUB_SPECIALTY = 'UPDATE_USER_SUB_SPECIALTY';
 export const UPDATE_OFFICE_LOCATION = 'UPDATE_OFFICE_LOCATION';
 export const UPDATE_OFFICE_HOURS = 'UPDATE_OFFICE_HOURS';
+export const UPDATE_TOKEN = 'UPDATE_TOKEN';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const SIGNUP = 'SIGNUP';
@@ -114,16 +115,16 @@ export const updateBirthDay = birthday => {
 }
 
 /* DEV: EJA - Event for updating user type*/
-export const updateUserType = userType => {
+export const updateCurrentUser = current_user => {
     return {
-        type: UPDATE_USER_TYPE,
-        payload: { userType }
+        type: UPDATE_CURRENT_USER,
+        payload: { current_user }
     }
 }
 
-export const updateCurrentUserType = userType => {
+export const updateUserType = userType => {
     return {
-        type: UPDATE_CURRENT_USER_TYPE,
+        type: UPDATE_USER_TYPE,
         payload: { userType }
     }
 }
@@ -306,17 +307,17 @@ export const getAllConsultant = () => {
             consultant.map((data) => {
                 let sum = 0, count = 0;
                 all_reviews.map((review) => {
-                    if(review.review_to === data.uid) {
+                    if (review.review_to === data.uid) {
                         sum += review.rating;
                         count++;
                     }
                 })
-                if(count == 0) {
+                if (count == 0) {
                     data.rating = 0;
                 } else {
                     data.rating = sum / count;
                 }
-                
+
                 return data;
             })
 
@@ -367,42 +368,6 @@ export const getConsultant = uid => {
     }
 }
 
-// export const getUserType = uid => {
-//     return async (dispatch, getState) => {
-//         try {
-
-//             const singleConsultant = await db
-//                 .collection('users')
-//                 .doc(uid)
-//                 .get()
-//             console.log("get consultant");
-//             console.log(uid);
-//             //console.log(singleConsultant.data());
-//             dispatch({ type: GET_CONSULTANT, payload: { singleConsultant: singleConsultant.data() } })
-
-//         } catch (e) {
-//             alert("puta3");
-//         }
-//     }
-// }
-
-
-/* DEV: EJA - Event for updating consultant profile picture*/
-// export const updateProfileImage = uri => {
-//     return {
-//         type: UPDATE_PROFILE_IMAGE,
-//         payload: { uri }
-//     }
-// }
-
-/* DEV: EJA - Event for updating consultant profile picture*/
-// export const updateOfficeImage = uri => {
-//     return {
-//         type: UPDATE_OFFICE_IMAGE,
-//         payload: { uri }
-//     }
-// }
-
 /* DEV: EJA - Event for updating consultant profile picture*/
 export const updateOfficeDetails = office_details => {
     return {
@@ -435,112 +400,20 @@ export const updateProfileImage = uri => {
     }
 }
 
-// export const updateProfileImage = (uid, profilePicture) => {
-//     console.log('UPDATING PROF IMAGE')
-//     console.log(uid)
-//     console.log(profilePicture)
-//     return async (dispatch, getState) => {
-//         try {
+export const updateToken = (uid, token) => {
+    return async (dispatch) => {
+        try {
+            // console.log(uid)
+            // console.log(token)
+            db.collection('users').doc(uid).update({ expoToken: token });
 
-//             var uuid_profile = uuid.v1();
-//             const response = await fetch(profilePicture);
-//             const blob = await response.blob();
-//             const ref = Firebase.storage().ref().child("users/" + uuid_profile);
-//             const snapshot = await ref.put(blob);
-
-//             blob.close();
-
-//             const url = await snapshot.ref.getDownloadURL();
-//             //return url;
-//             console.log(url);
-//             // db.collection("users").doc(uid).update({ profilePicture: url });
-//             dispatch({ type: UPDATE_PROFILE_IMAGE, payload: { profilePicture: url } })
-//         } catch (e) {
-//             alert("error prof image")
-//         }
-//     }
-// }
-
-// export const updateOfficeImage = (uid, officeImage) => {
-//     console.log('UPDATING OFFICE IMAGE')
-//     console.log(uid)
-//     console.log(officeImage)
-//     return async (dispatch, getState) => {
-//         try {
-
-//             var uuid_office = uuid.v1();
-//             const response_office = await fetch(officeImage);
-//             const blob_office = await response_office.blob();
-
-//             const ref_office = Firebase.storage().ref().child("users/" + uuid_office);
-//             const snapshot_office = await ref_office.put(blob_office);
-
-//             blob_office.close();
-
-//             const url_office = await snapshot_office.ref.getDownloadURL();
-//             console.log(url_office);
-//             // db.collection("users").doc(uid).update({ officeImage: url_office });
-//             dispatch({ type: UPDATE_OFFICE_IMAGE, payload: { officeImage: url_office } })
-//         } catch (e) {
-//             console.log('error office image')
-//             alert(e)
-//         }
-//     }
-// }
-
-/* DEV: EJA - Event for updating consultant profile picture*/
-// export const editProfile = () => {
-//     return async (dispatch, getState) => {
-//         console.log('===== DISPLAYING SHIT =====')
-//         console.log(getState());
-//         console.log('===== DISPLAYING SHIT =====')
-//         try {
-
-//             const { uid, profilePicture, officeImage, day, from_hour, to_hour } = getState().singleConsultant
-
-//             console.log('===== DISPLAYING SHIT =====')
-//             console.log(uid)
-//             console.log('-----------------------------')
-//             console.log(profilePicture)
-//             console.log('-----------------------------')
-//             console.log(officeImage)
-//             console.log('-----------------------------')
-//             console.log(day)
-//             console.log('-----------------------------')
-//             console.log(from_hour)
-//             console.log('-----------------------------')
-//             console.log(to_hour)
-//             console.log('===== DISPLAYING SHIT =====')
-
-//             if (profilePicture) {
-//                 profileImage(uid, profilePicture);
-//             }
-//             if (officeImage) {
-//                 officePicture(uid, officeImage);
-//             }
-//             // //const{ arr } = getState().locArray;
-//             // console.log("sa edit prof ni nga consultant");
-//             // console.log(getState());
-//             // const response = await fetch(profilePicture);
-//             // //const response_office = await fetch(officeImage);
-
-//             // const blob = await response.blob();
-
-//             // const ref = Firebase.storage().ref().child("users/" + uid + getCurrentDate());
-
-//             // const snapshot = await ref.put(blob);
-
-//             // blob.close();
-
-//             // const url = await snapshot.ref.getDownloadURL();
-//             //  
-//         } catch (e) {
-//             conso
-//             console.log(e)
-//             alert(e);
-//         }
-//     }
-// }
+            dispatch({ type: UPDATE_TOKEN, payload: { token } })
+        } catch (e) {
+            console.log(e)
+            alert(e)
+        }
+    }
+}
 
 export const editProfile = (uid) => {
     return async (dispatch, getState) => {
@@ -557,8 +430,8 @@ export const editProfile = (uid) => {
             // console.log(user);
             // console.log('==================')
 
-            
-            if(user.profilePicture !== profilePicture){
+
+            if (user.profilePicture !== profilePicture) {
                 let profileImage_url;
                 let uuid_profile = uuid.v1();
                 const response_profile = await fetch(profilePicture);
@@ -570,8 +443,8 @@ export const editProfile = (uid) => {
                 user.profilePicture = profileImage_url;
             }
 
-            
-            if(user.officeImage !== officeImage){
+
+            if (user.officeImage !== officeImage) {
                 let officeImage_url;
                 let uuid_office = uuid.v1();
                 const response_office = await fetch(officeImage);
@@ -589,10 +462,6 @@ export const editProfile = (uid) => {
             user.userLIC = userLIC;
             user.userSubSpecialty = (userSubSpecialty == undefined) ? '' : userSubSpecialty;
             user.office_details = office_details;
-
-            // console.log('========showing user==========')
-            // console.log(user);
-            // console.log('==================')
 
             db.collection('users').doc(uid).update(user);
 

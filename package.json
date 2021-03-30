@@ -24,6 +24,7 @@
     "expo-cli": "^4.0.1",
     "expo-document-picker": "~8.1.0",
     "expo-image-picker": "~8.1.0",
+    "expo-notifications": "~0.1.1",
     "firebase": "7.9.0",
     "firebase-admin": "^8.13.0",
     "lodash": "^4.17.19",

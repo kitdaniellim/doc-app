@@ -10,12 +10,12 @@ const Paypal = ({ navigation, route }) => {
   const [isModalVisible, toggleModal] = useState(false);
   const consultant_id = route.params.consultant_id;
 
-  function Close() {
-    navigation.navigate('BookPage');
-  }
+  // const Pay = () => {
+  //   toggleModal(true)
+  // }
 
-  const Pay = () => {
-    toggleModal(true)
+  const Close = () => {
+  
   }
 
   const Skip = () => {

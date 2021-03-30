@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT, SIGNUP, EDIT_PROFILE, UPDATE_EMAIL, UPDATE_PASSWORD, UPDATE_FULL_NAME, UPDATE_MOBILE_NUMBER, UPDATE_BIRTH_DAY, UPDATE_USER_TYPE, UPDATE_CURRENT_USER_TYPE, UPDATE_USER_LIC, UPDATE_USER_SPECIALTY, UPDATE_USER_SUB_SPECIALTY, UPDATE_OFFICE_LOCATION, UPDATE_OFFICE_HOURS } from '../actions/users';
+import { LOGIN, LOGOUT, SIGNUP, EDIT_PROFILE, UPDATE_TOKEN, UPDATE_USER_TYPE, UPDATE_EMAIL, UPDATE_PASSWORD, UPDATE_FULL_NAME, UPDATE_MOBILE_NUMBER, UPDATE_BIRTH_DAY, UPDATE_CURRENT_USER, UPDATE_USER_LIC, UPDATE_USER_SPECIALTY, UPDATE_USER_SUB_SPECIALTY, UPDATE_OFFICE_LOCATION, UPDATE_OFFICE_HOURS } from '../actions/users';
 import { GET_ALL_CONSULTANT, GET_CONSULTANT, GET_PROFILE_IMAGE, GET_OFFICE_IMAGE, UPDATE_PROFILE_IMAGE, UPDATE_OFFICE_IMAGE, UPDATE_OFFICE_DETAILS, UPDATE_LOCATION_DETAIL, UPDATE_TO_HOUR_DETAIL, UPDATE_FROM_HOUR_DETAIL, UPDATE_DAY_DETAIL } from '../actions/users';
 
 const reducerDefaultState = {
@@ -12,13 +12,13 @@ const reducerDefaultState = {
     location: {},
     to_hour: {},
     from_hour: {},
-
+    token: '',
     email: '',
     password: '',
     fullName: '',
     birthDay: '',
-    current_userType: undefined,
     userType: undefined,
+    current_user: undefined,
     userLIC: '',
     userSpecialty: '',
     userSubSpecialty: '',
@@ -96,8 +96,8 @@ export default (state = reducerDefaultState, action) => {
             return { ...state, birthDay: action.payload.birthday }
         case UPDATE_USER_TYPE:
             return { ...state, userType: action.payload.userType }
-        case UPDATE_CURRENT_USER_TYPE:
-            return { ...state, current_userType: action.payload.userType }
+        case UPDATE_CURRENT_USER:
+            return { ...state, current_user: action.payload.current_user }
         case UPDATE_USER_LIC:
             return { ...state, userLIC: action.payload.userLIC }
         case UPDATE_USER_SPECIALTY:
@@ -110,8 +110,8 @@ export default (state = reducerDefaultState, action) => {
             return { ...state, officeHours: action.payload.officeHours }
         case UPDATE_OFFICE_DETAILS:
             return { ...state, office_details: action.payload.office_details }
-        // case UPDATE_OFFICE_DETAILS:
-        //     return { ...state, add_office: [...state.arr, action.payload.office_details] }
+        case UPDATE_TOKEN:
+            return { ...state, token: action.payload.token }
         default:
             return state;
     }

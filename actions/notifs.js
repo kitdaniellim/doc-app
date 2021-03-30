@@ -13,7 +13,7 @@ export const addNotif = (userType, uid, type) => {
         console.log(uid)
         console.log(type)
         console.log('---------------')
-
+        let result = false;
         let snapshot = await db.collection('appointments').where("uid", "==", uid).get()
         let arr = snapshot.docs.map(doc =>
             doc.data()
@@ -41,26 +41,41 @@ export const addNotif = (userType, uid, type) => {
         let notif_details = arr[0];
         // console.log(notif_details)
 
-        let text = ''
-
+        let text = '';
+        let title = appoint_details.consultant_name + ' sent you a message.';
+        console.log('Showing ntifs shit')
+        console.log(appoint_details.date)
+        console.log(moment(appoint_details.date, "YYYY-MM-DD").format('MMMM Do, YYYY').toString())
         switch (type) {
-            case 'BOOK': text = appoint_details.client_name + ' would like to schedule an appointment with you on ' + moment(appoint_details.date, "YYYY-MM-DD").format('MMMM Mo, YYYY').toString() + ' from ' + moment(appoint_details.time_start, "HH:mm:ss").format('h:mm a').toString() + ' to ' + moment(appoint_details.time_end, "HH:mm:ss").format('h:mm a').toString() + '.'
+            case 'BOOK':
+                text = appoint_details.client_name + ' would like to schedule an appointment with you on ' + moment(appoint_details.date, "YYYY-MM-DD").format('MMMM Do, YYYY').toString() + ' from ' + moment(appoint_details.time_start, "HH:mm:ss").format('h:mm a').toString() + ' to ' + moment(appoint_details.time_end, "HH:mm:ss").format('h:mm a').toString() + '.'
+                title = 'You got an Appointment!'
                 break;
-            case 'APPROVE': text = 'Your ' + moment(appoint_details.time_start, "HH:mm:ss").format('h:mm a').toString() + ' to ' + moment(appoint_details.time_end, "HH:mm:ss").format('h:mm a').toString() + ' appointment at ' + appoint_details.location + ' with ' + appoint_details.consultant_name + ' has been approved.'
+            case 'APPROVE':
+                text = 'Your ' + moment(appoint_details.time_start, "HH:mm:ss").format('h:mm a').toString() + ' to ' + moment(appoint_details.time_end, "HH:mm:ss").format('h:mm a').toString() + ' appointment at ' + appoint_details.location + ' with ' + appoint_details.consultant_name + ' has been approved.'
+                title = 'Appointment Approved.'
                 break;
-            case 'Declined': text = 'Your ' + moment(appoint_details.time_start, "HH:mm:ss").format('h:mm a').toString() + ' to ' + moment(appoint_details.time_end, "HH:mm:ss").format('h:mm a').toString() + ' appointment at ' + appoint_details.location + ' with ' + appoint_details.consultant_name + ' was declined.'
+            case 'Declined':
+                text = 'Your ' + moment(appoint_details.time_start, "HH:mm:ss").format('h:mm a').toString() + ' to ' + moment(appoint_details.time_end, "HH:mm:ss").format('h:mm a').toString() + ' appointment at ' + appoint_details.location + ' with ' + appoint_details.consultant_name + ' was declined.'
+                title = 'Appointment Declined.'
                 break;
-            case 'Cancelled': text = 'Your ' + moment(appoint_details.time_start, "HH:mm:ss").format('h:mm a').toString() + ' to ' + moment(appoint_details.time_end, "HH:mm:ss").format('h:mm a').toString() + ' appointment at ' + appoint_details.location + ' with ' + appoint_details.client_name + ' was cancelled.'
+            case 'Cancelled':
+                text = 'Your ' + moment(appoint_details.time_start, "HH:mm:ss").format('h:mm a').toString() + ' to ' + moment(appoint_details.time_end, "HH:mm:ss").format('h:mm a').toString() + ' appointment at ' + appoint_details.location + ' with ' + appoint_details.client_name + ' was cancelled.'
+                title = 'Appointment Cancelled.'
                 break;
-            case 'REVIEW': text = 'Your last appointment with ' + appoint_details.client_name + ' has just been reviewed.'
+            case 'REVIEW':
+                text = 'Your last appointment with ' + appoint_details.client_name + ' has just been reviewed.'
+                title = 'New Review.'
                 break;
             case 'DONE': text = 'Your appointment with ' + appoint_details.consultant_name + ' has finished. Leave a review!'
+                title = 'Appointment Finished.'
                 break;
             default: text = type + ' - ' + appoint_details.consultant_name //meaning text is customized
         }
 
         const obj = {
             date: appoint_details.date,
+            title: title,
             text: text,
             created_at: moment().format('hh:mm A').toString(),
         }
@@ -68,6 +83,7 @@ export const addNotif = (userType, uid, type) => {
         if (notif_details !== undefined) {
             notif_details.notifs.unshift(obj)
             db.collection('notifs').doc(id).set(notif_details);
+            result = true;
         } else {
             //create
             const doc = {
@@ -76,20 +92,15 @@ export const addNotif = (userType, uid, type) => {
             }
 
             db.collection('notifs').doc(id).set(doc);
+            result = true;
         }
 
-
-        // db.collection('notifs').doc(response.user.uid).set(user);
-
-        // db.collection("notifs")
-        //     .doc(id)
-        //     .set(data)
-        //     .then(() => {
-        //         dispatch(addNotifSuccess(data));
-        //     })
-        //     .catch((error) => {
-        //         dispatch(addNotifFailure(error));
-        //     });
+        if(result) {
+            dispatch(addNotifSuccess(obj));
+        } else {
+            dispatch(addNotifFailure(error));
+        }
+        
     }
 }
 

@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import StarRating from 'react-native-star-rating';
 import { calendarStyles, globalStyles } from '../styles/styles';
 import { addReview } from '../actions/reviews';
+import { addNotif } from '../actions/notifs';
 import { updateAppointmentStatus } from "../actions/appointments";
 import moment from "moment";
 
@@ -44,33 +45,8 @@ class CalendarPage3_Review extends React.Component {
             }
             await this.props.addReview(data);
             await this.props.updateAppointmentStatus(this.props.route.params.item.uid, "Reviewed");
-            //Review addnotif
-            if (!this.props.error) {
-                Alert.alert(
-                    'Review Added Successfully',
-                    'Thank you for reviewing this appointment',
-                    [
-                        {
-                            text: 'OK',
-                            onPress: () => this.props.navigation.navigate("Calendar1")
-                        }
-                    ],
-                    { cancelable: true }
-                );
-            } else {
-                Alert.alert(
-                    'Oh no!',
-                    `Error in adding review. {\n} Details: ${this.props.error}`,
-                    [
-                        {
-                            text: 'Close',
-                            style: 'cancel'
-                        }
-                    ],
-                    { cancelable: true }
-                );
-            }
-
+            this.props.addNotif('CLIENT', this.props.route.params.item.uid, 'REVIEW')
+            this.props.navigation.navigate("Calendar1")
         }
     }
     render() {
@@ -166,7 +142,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     addReview: (data) => dispatch(addReview(data)),
-    updateAppointmentStatus: (appointment_id, status, reason) => dispatch(updateAppointmentStatus(appointment_id, status, reason))
+    updateAppointmentStatus: (appointment_id, status, reason) => dispatch(updateAppointmentStatus(appointment_id, status, reason)),
+    addNotif: (userType, uid, type) => dispatch(addNotif(userType, uid, type)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CalendarPage3_Review);

@@ -238,7 +238,10 @@ class BookPage extends React.Component {
             text: 'OK',
             onPress: () => {
               this.props.navigation.navigate("Home");
-              this.props.navigation.navigate("Calendar", { screen: 'Calendar1' });
+              this.props.navigation.navigate("Calendar", {
+                screen: 'Calendar2',
+                params: { date: this.state.date }
+              });
             }
           }
         ],

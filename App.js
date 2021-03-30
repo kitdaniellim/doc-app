@@ -14,37 +14,16 @@ import firebase from "firebase"
 import configureStore from './store/configureStore';
 import 'firebase/firestore';
 
-
 const store = configureStore();
 
 if (!global.btoa) { global.btoa = encode }
 
 if (!global.atob) { global.atob = decode }
 
-
-
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      user: {},
-      isLoggedIn: false,
-    }
   }
-
-
-  // async componentDidMount() {
-  //   const user = JSON.parse(
-  //     await AsyncStorage.getItem("user")
-  //   );
-
-  //   if (user != null) {
-  //     this.setState(() => ({
-  //       user: user,
-  //       isLoggedIn: true,
-  //     }))
-  //   }
-  // }
 
   render() {
     // console.disableYellowBox = true;

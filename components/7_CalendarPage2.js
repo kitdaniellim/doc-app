@@ -81,6 +81,7 @@ class CalendarPage2 extends React.Component {
   //Navigates to the previous page "Calendar1" where it shows 
   //the calendar and appointments and their corresponding day/s
   back = () => {
+    this.setState(() => ({ appointments: [] }));
     this.props.navigation.navigate('Calendar1');
   };
 
@@ -303,31 +304,6 @@ class CalendarPage2 extends React.Component {
       setTimeout(acc, 2000);
     });
     this.setState(() => ({ appointments: this.props.appointments.filter((appointment) => appointment.date == this.props.route.params.date) }));
-    if (!this.props.error) {
-      Alert.alert(
-        'Success!',
-        `Appointment ${this.state.typeofReject}`,
-        [
-          {
-            text: 'OK',
-            style: 'cancel'
-          }
-        ],
-        { cancelable: true }
-      );
-    } else {
-      Alert.alert(
-        'Oops!',
-        `There was a problem in declining/cancelling. \n Details: ${this.props.error}`,
-        [
-          {
-            text: 'OK',
-            style: 'cancel'
-          }
-        ],
-        { cancelable: true }
-      );
-    }
     this.setState(() => ({
       reason: "",
       typeofReject: "",

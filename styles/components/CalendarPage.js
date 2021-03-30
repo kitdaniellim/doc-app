@@ -355,10 +355,8 @@ const Calendar = {
   //maybe delete
   date_details_button_review: {
     height: 30,
-    backgroundColor: '#fff',
+    backgroundColor: '#56EC65',
     borderRadius: 15,
-    borderWidth: 1,
-    borderColor: '#56EC65',
     padding: 5,
     justifyContent: 'center',
     alignSelf: 'stretch',
@@ -401,7 +399,8 @@ const Calendar = {
   },
 
   date_details_button_review_label: {
-    color: '#56EC65',
+    // color: '#56EC65',
+    color: '#FFFFFF',
     fontSize: 12,
     justifyContent: 'center',
     alignSelf: 'center'

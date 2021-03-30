@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TextInput, Image, ScrollView, View, TouchableOpacity } from 'react-native';
+import {  Alert, Text, TextInput, Image, ScrollView, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { signupStyles, profileStyles, globalStyles } from '../styles/styles';
 import RNPickerSelect from 'react-native-picker-select';
@@ -252,8 +252,8 @@ class EditProfile_1 extends React.Component {
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL)
     if (status !== 'granted') {
       Alert.alert(
-        'Hey',
-        'Hey! You might want to enable notifications for my app, they are good.',
+        'Allow access to Camera Roll',
+        'SetMeApp needs permission to view your camera roll.',
         [
           { text: 'Settings', onPress: () => Linking.openURL('app-settings:') },
           {

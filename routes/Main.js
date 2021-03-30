@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, FlatList, Text, StyleSheet } from 'react-native';
+import { Alert, Vibration, View, FlatList, Text, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Badge } from 'react-native-elements'
 import Header from '../components/custom/Header.js';
@@ -36,62 +36,163 @@ import Paypal from '../components/PaypalPage.js';
 //Actions
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { updateCurrentUserType, } from '../actions/users';
+import { updateCurrentUser, updateToken, logout } from '../actions/users';
 import { getNotifs } from '../actions/notifs';
-import Firebase, { db } from '../config/Firebase';
+import { resetAppointments } from '../actions/appointments';
 import AsyncStorage from "@react-native-community/async-storage";
+import { Notifications } from 'expo';
+import * as Permissions from 'expo-permissions';
+import Constants from 'expo-constants';
+import Firebase, { db } from '../config/Firebase'
 
 class Main extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            user: {},
+            notification: {},
             count: 0,
         }
     }
 
     componentDidMount = async () => {
-
         const user = JSON.parse(
             await AsyncStorage.getItem("user")
         );
-        // console.log('HEHEJIAJHFJAF')
-        // console.log(user)
         await this.props.getNotifs(user.uid);
-        if(this.props.userNotifs !== undefined) {
+        if (this.props.userNotifs !== undefined) {
             // console.log(this.props.userNotifs)
             // console.log('helhlelhleh')
             // this.setState(() => ({
             //     count: this.props.userNotifs.notifs.length
             // }))
         }
-        
-        //Listener for real-time notifications
-        // db.collection('notifs')
-        //   .doc(this.props.user.uid)
-        //   .onSnapshot(documentSnapshot => {
-        //     console.log('notif data: ', documentSnapshot.data());
-        //   });
 
-    }
+        this.setState(() => ({
+            user: user
+        }))
+        console.log(user)
+        this.registerForPushNotificationsAsync(user.uid, user.expoToken);
+        this._notificationSubscription = Notifications.addListener(this._handleNotification);
 
-    componentDidUpdate() {
-        // console.log('HELHELHELHLEHLEHLELHEL')
+        let count = 0;
+        //If user has expoToken, notifications is allowed
+        if (this.state.user.expoToken !== undefined) {
+            //Listener for real-time notifications
+            //Handles receiving notifications on a realtime basis
+            db.collection('notifs')
+                .doc(user.uid)
+                .onSnapshot(documentSnapshot => {
+                    let result = documentSnapshot.data()
+                    if (result !== undefined) {
+                        console.log('HELLLO I RANT');
+                        // console.log(result.notifs[0])
+                        console.log(++count);
+                        this.sendPushNotification(result.notifs[0]);
+                        // console.log('something changed ssss');
+                        // this.props.navigation.setOptions({
+                        //   headerRight: () => { 
+                        //     return <Text>Fuckkk</Text> },
+                        // })
+                    }
+
+                });
+        }
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        if (this.props.userNotifs == nextProps.userNotifs) {
-            return false;
-        } else {
+        if (this.props.userNotifs == undefined || nextProps.userNotifs == undefined) {
             return true;
         }
+        console.log('THIS PROPS')
+        console.log(this.props.userNotifs.uid)
+        console.log('-------------------')
+        console.log('NEXT PROPS')
+        console.log(nextProps.userNotifs.uid)
+        console.log('-------------------')
+        if (
+            this.props.userNotifs !== nextProps.userNotifs &&
+            this.props.userNotifs.uid == nextProps.userNotifs.uid ||
+            this.props.current_user !== nextProps.current_user
+        ) {
+
+            return true;
+        } else {
+            return false;
+        }
     }
+
+    sendPushNotification = async (notif) => {
+        // console.log('PUSHING NOTIFICATION HELLO??')
+
+        const message = {
+            to: this.state.user.expoToken,
+            sound: 'default',
+            title: notif.title,
+            body: notif.text,
+            // data: { data: 'goes here' },
+            _displayInForeground: true,
+        };
+        console.log(message)
+        await fetch('https://exp.host/--/api/v2/push/send', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Accept-encoding': 'gzip, deflate',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(message),
+        });
+    };
+
+    _handleNotification = () => {
+        Vibration.vibrate();
+    };
+
+    registerForPushNotificationsAsync = async (uid, userToken) => {
+        const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+        if (existingStatus !== 'granted' || userToken === undefined) {
+            Alert.alert(
+                'Allow Push-in Notifications',
+                'Hey! You might want to enable push-in notifications for this app, they are good.',
+                [
+                    {
+                        text: 'No',
+                        onPress: () => console.log('Cancel Pressed'),
+                        style: 'cancel'
+                    },
+                    {
+                        text: 'Yes',
+                        onPress: async () => {
+                            await Permissions.askAsync(Permissions.NOTIFICATIONS);
+                            await Notifications.getExpoPushTokenAsync().then(async (token) => {
+                                await this.props.updateToken(uid, token).then(async () => {
+                                    let user = this.state.user
+                                    user['expoToken'] = token;
+                                    AsyncStorage.setItem('user', JSON.stringify(user));
+                                })
+                            })
+                        }
+                    }
+                ]
+            )
+        }
+        if (Platform.OS === 'android') {
+            Notifications.createChannelAndroidAsync('default', {
+                name: 'default',
+                sound: true,
+                priority: 'max',
+                vibrate: [0, 250, 250, 250],
+            });
+        }
+    };
+
+
 
 
 
     render() {
-        // console.log('MAIN PROPS')
-        // console.log(this.props.screenProps)
-        // console.log('-------------------')
+
 
         const optionsStyles = {
             optionsContainer: {
@@ -151,6 +252,13 @@ class Main extends React.Component {
                         name="Profile"
                         component={Profile}
                     />
+                    <MainStack.Screen
+                        name="Paypal"
+                        component={Paypal}
+                        options={{
+                            headerShown: false,
+                        }}
+                    />
                     <HomeStackClient.Screen
                         name="BookPage"
                         component={BookPage}
@@ -188,10 +296,6 @@ class Main extends React.Component {
                     <CalendarStack.Screen
                         name="Calendar2"
                         component={Calendar2}
-                    />
-                    <CalendarStack.Screen
-                        name="Calendar3_Notify"
-                        component={Calendar3_Notify}
                     />
                     <CalendarStack.Screen
                         name="Calendar3_Review"
@@ -268,7 +372,7 @@ class Main extends React.Component {
                     inactiveColor="#CFCFCF"
                 // barStyle={{ backgroundColor: '#19BAB9' }}
                 >
-                    {(props.userType === "CLIENT") ?
+                    {(props.current_user.userType === "CLIENT") ?
                         <>
                             <Tab.Screen
                                 name="Home"
@@ -332,7 +436,7 @@ class Main extends React.Component {
                             tabBarColor: '#fff',
                         }}
                     />
-                    {(props.userType === "CLIENT") ?
+                    {(props.current_user.userType === "CLIENT") ?
                         <>
                             <Tab.Screen
                                 name="Review"
@@ -474,7 +578,15 @@ class Main extends React.Component {
                                         value => {
                                             if (value === 1) {
                                                 Firebase.auth().signOut();
-                                                this.props.updateCurrentUserType(undefined);
+
+                                                this.props.logout();
+                                                this.props.resetAppointments();
+                                                AsyncStorage.removeItem('user');
+                                                AsyncStorage.removeItem('appointments');
+
+
+
+                                                this.props.updateCurrentUser(undefined);
                                             }
                                             else {
                                                 // navigation.navigate('Home', { action: -1 })
@@ -522,7 +634,7 @@ class Main extends React.Component {
                                         value => {
                                             if (value === 1) {
                                                 Firebase.auth().signOut();
-                                                this.props.updateCurrentUserType(undefined);
+                                                this.props.updateCurrentUser(undefined);
                                             }
                                             else {
                                                 // navigation.navigate('Home', { action: -1 })
@@ -549,13 +661,6 @@ class Main extends React.Component {
                 >
                     {() => GetTabs(this.props)}
                 </MainStack.Screen >
-                <MainStack.Screen
-                    name="Paypal"
-                    component={Paypal}
-                    options={{
-                        headerShown: false,
-                    }}
-                />
             </MainStack.Navigator>
         );
     }
@@ -593,12 +698,12 @@ class Main extends React.Component {
 // });
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ updateCurrentUserType, getNotifs }, dispatch)
+    return bindActionCreators({ updateCurrentUser, getNotifs, updateToken, logout, resetAppointments }, dispatch)
 }
 const mapStateToProps = state => {
     // console.log(state)
     return {
-        userType: state.users.current_userType,
+        current_user: state.users.current_user,
         userNotifs: state.notifs.notifs,
     }
 }

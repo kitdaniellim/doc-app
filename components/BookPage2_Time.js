@@ -213,72 +213,79 @@ class Book2_Time extends React.Component {
                     : "No Date Selected"}</Text>
                 </View>
                 {
-                  this.state.locations.map(ind_loc => {
-                    return (
-                      <View style={calendarStyles.slot_list_container} key={ind_loc}>
-                        <View style={calendarStyles.date_header_container}>
-                          <Text style={calendarStyles.date_details_header}>LOCATION: {ind_loc}</Text>
-                        </View>
+                  (this.state.locations.length === 0) ?
+                    <View style={calendarStyles.no_appointments_scaffold}>
+                      <View style={calendarStyles.date_details_button_container}>
+                        <Text style={calendarStyles.no_appointments_text}>There are no available appointments to {"\n"} schedule on this date.</Text>
+                      </View>
+                    </View>
+                    :
+                    this.state.locations.map(ind_loc => {
+                      return (
+                        <View style={calendarStyles.slot_list_container} key={ind_loc}>
+                          <View style={calendarStyles.date_header_container}>
+                            <Text style={calendarStyles.date_details_header}>LOCATION: {ind_loc}</Text>
+                          </View>
 
-                        {
-                          this.state.availableSlots.map((item) => {
-                            if (item.location == ind_loc) {
-                              return (
-                                <View
-                                  key={item.key.toString()}
-                                  style={calendarStyles.date_details_scaffold}
-                                >
+                          {
+                            this.state.availableSlots.map((item) => {
+                              if (item.location == ind_loc) {
+                                return (
                                   <View
-                                    style={calendarStyles.date_details_text_container}
+                                    key={item.key.toString()}
+                                    style={calendarStyles.date_details_scaffold}
                                   >
-                                    <View>
-                                      <Text style={calendarStyles.date_details_text}>
-                                        SLOT {"\n"}
-                                        {moment(item.time_start, "HH:mm").format(
-                                          "h:mm A"
-                                        )}{" "}
-                                -{" "}
-                                        {moment(item.time_end, "HH:mm").format("h:mm A")}
-                                      </Text>
-                                    </View>
-                                  </View>
-                                  <View
-                                    style={calendarStyles.date_details_button_container}
-                                  >
-                                    <TouchableOpacity
-                                      activeOpacity={0.6}
-                                      onPress={() => {
-                                        this.props.onStep2Submit(item);
-                                      }}
-                                      style={
-                                        this.props.location == ind_loc &&
-                                          this.props.time_start == item.time_start &&
-                                          this.props.time_end == item.time_end
-                                          ? calendarStyles.date_details_button_review_active
-                                          : calendarStyles.date_details_button_review
-                                      }
+                                    <View
+                                      style={calendarStyles.date_details_text_container}
                                     >
-                                      <Text
+                                      <View>
+                                        <Text style={calendarStyles.date_details_text}>
+                                          SLOT {"\n"}
+                                          {moment(item.time_start, "HH:mm").format(
+                                            "h:mm A"
+                                          )}{" "}
+                                -{" "}
+                                          {moment(item.time_end, "HH:mm").format("h:mm A")}
+                                        </Text>
+                                      </View>
+                                    </View>
+                                    <View
+                                      style={calendarStyles.date_details_button_container}
+                                    >
+                                      <TouchableOpacity
+                                        activeOpacity={0.6}
+                                        onPress={() => {
+                                          this.props.onStep2Submit(item);
+                                        }}
                                         style={
                                           this.props.location == ind_loc &&
                                             this.props.time_start == item.time_start &&
                                             this.props.time_end == item.time_end
-                                            ? calendarStyles.date_details_button_label_active
-                                            : calendarStyles.date_details_button_review_label
+                                            ? calendarStyles.date_details_button_review_active
+                                            : calendarStyles.date_details_button_review
                                         }
                                       >
-                                        Choose
+                                        <Text
+                                          style={
+                                            this.props.location == ind_loc &&
+                                              this.props.time_start == item.time_start &&
+                                              this.props.time_end == item.time_end
+                                              ? calendarStyles.date_details_button_label_active
+                                              : calendarStyles.date_details_button_review_label
+                                          }
+                                        >
+                                          Choose
                               </Text>
-                                    </TouchableOpacity>
+                                      </TouchableOpacity>
+                                    </View>
                                   </View>
-                                </View>
-                              )
-                            };
-                          })
-                        }
-                      </View>
-                    )
-                  })
+                                )
+                              };
+                            })
+                          }
+                        </View>
+                      )
+                    })
 
                 }
               </ScrollView>
