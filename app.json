@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "SetApp",
+    "name": "SetMeApp",
     "icon": "./assets/app_logo_nontransparent.png",
     "description": "Appointment application for professionals.",
-    "slug": "SetApp",
+    "slug": "SetMeApp",
     "sdkVersion": "37.0.0",
     "platforms": [
       "ios",
