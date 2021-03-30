@@ -11,6 +11,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
 import { db } from '../config/Firebase';
+// import {Permissions, Notifications} from 'expo';
 
 class Home extends React.Component {
   _isMounted = false
@@ -21,25 +22,24 @@ class Home extends React.Component {
 
   async componentDidMount() {
 
-    // const user = JSON.parse(
-    //   await AsyncStorage.getItem("user")
-    // );
+    const user = JSON.parse(
+      await AsyncStorage.getItem("user")
+    );
     this.props.getAllReviews();
     this.props.getAllConsultant();
 
     //Listener for real-time notifications
-    // db.collection('notifs')
-    //   .doc(user.uid)
-    //   .onSnapshot(documentSnapshot => {
-    //     // console.log('notif data: ', documentSnapshot.data());
+    db.collection('notifs')
+      .doc(user.uid)
+      .onSnapshot(documentSnapshot => {
+        // console.log('notif data: ', documentSnapshot.data());
 
-    //     console.log('something changed ssss');
-    //     // this.props.navigation.setOptions({
-    //     //   headerRight: () => { 
-    //     //     return <Text>Fuckkk</Text> },
-    //     //   title: ' hell o world?'
-    //     // })
-    //   });
+        console.log('something changed ssss');
+        this.props.navigation.setOptions({
+          headerRight: () => { 
+            return <Text>Fuckkk</Text> },
+        })
+      });
 
 
 

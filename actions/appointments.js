@@ -83,6 +83,8 @@ export const getAppointments = (client_id, consultant_id = null) => {
               dispatch(getAppointmentsSuccess(results));
             });
         });
+        console.log('RETRIEVING RESULTS')
+        console.log(results)
     } catch (error) {
       dispatch(getAppointmentsFailure(error));
     }
@@ -108,26 +110,15 @@ export const bookAppointment = (data) => {
       });
     });
     if (!hasError) {
-
-      // let consultantNotif = 'This client would like to book an appointment with you'
-      // const notif = {
-      //   notifs: consultantNotif,
-      // }
-      // db.collection("notifs").doc(data.uid).set(notif);
-
       db.collection("appointments")
         .doc(data.uid)
         .set(data)
         .then(() => {
-          dispatch(bookAppointmentSuccess("Booking Successful"));
+          dispatch(bookAppointmentSuccess(data.uid));
         })
         .catch((error) => {
           dispatch(bookAppointmentFailure(error));
         });
-
-
-
-
     } else {
       dispatch(bookAppointmentFailure("Error in Booking Appointment"));
     }

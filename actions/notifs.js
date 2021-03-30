@@ -8,14 +8,19 @@ import moment from "moment";
 export const addNotif = (userType, uid, type) => {
     return async dispatch => {
         dispatch(loadBegin());
+        console.log('-------ADD NOTIF VALS--------')
+        console.log(userType)
+        console.log(uid)
+        console.log(type)
+        console.log('---------------')
 
         let snapshot = await db.collection('appointments').where("uid", "==", uid).get()
         let arr = snapshot.docs.map(doc =>
             doc.data()
         )
         let appoint_details = arr[0];
-        console.log('Showing appointment details')
-        console.log(appoint_details)
+        // console.log('Showing appointment details')
+        // console.log(appoint_details)
 
         //types
         //'Book' - Client '-client name- would like to schedule an appointment with you!'
@@ -34,22 +39,24 @@ export const addNotif = (userType, uid, type) => {
         )
 
         let notif_details = arr[0];
-        console.log(notif_details)
+        // console.log(notif_details)
 
         let text = ''
 
         switch (type) {
-            case 'BOOK': text = appoint_details.client_name + ' would like to schedule an appointment with you on ' +  moment(appoint_details.date).format('MMMM Mo, YYYY').toString() + ' from ' + moment(appoint_details.time_start, "HH:mm:ss").format('h:mm a').toString() + ' to ' + moment(appoint_details.time_end, "HH:mm:ss").format('h:mm a').toString() + '.'                            
+            case 'BOOK': text = appoint_details.client_name + ' would like to schedule an appointment with you on ' + moment(appoint_details.date, "YYYY-MM-DD").format('MMMM Mo, YYYY').toString() + ' from ' + moment(appoint_details.time_start, "HH:mm:ss").format('h:mm a').toString() + ' to ' + moment(appoint_details.time_end, "HH:mm:ss").format('h:mm a').toString() + '.'
                 break;
             case 'APPROVE': text = 'Your ' + moment(appoint_details.time_start, "HH:mm:ss").format('h:mm a').toString() + ' to ' + moment(appoint_details.time_end, "HH:mm:ss").format('h:mm a').toString() + ' appointment at ' + appoint_details.location + ' with ' + appoint_details.consultant_name + ' has been approved.'
                 break;
-            case 'CANCEL': text = 'Your ' + moment(appoint_details.time_start, "HH:mm:ss").format('h:mm a').toString() + ' to ' + moment(appoint_details.time_end, "HH:mm:ss").format('h:mm a').toString() + ' appointment at ' + appoint_details.location + ' was cancelled.'
+            case 'Declined': text = 'Your ' + moment(appoint_details.time_start, "HH:mm:ss").format('h:mm a').toString() + ' to ' + moment(appoint_details.time_end, "HH:mm:ss").format('h:mm a').toString() + ' appointment at ' + appoint_details.location + ' with ' + appoint_details.consultant_name + ' was declined.'
+                break;
+            case 'Cancelled': text = 'Your ' + moment(appoint_details.time_start, "HH:mm:ss").format('h:mm a').toString() + ' to ' + moment(appoint_details.time_end, "HH:mm:ss").format('h:mm a').toString() + ' appointment at ' + appoint_details.location + ' with ' + appoint_details.client_name + ' was cancelled.'
                 break;
             case 'REVIEW': text = 'Your last appointment with ' + appoint_details.client_name + ' has just been reviewed.'
                 break;
-            case 'FINISH': text = 'Your appointment with ' + appoint_details.consultant_name + ' has finished. Please leave a review for feedback for the consultant!'
+            case 'DONE': text = 'Your appointment with ' + appoint_details.consultant_name + ' has finished. Leave a review!'
                 break;
-            default: text = type //meaning text is customized
+            default: text = type + ' - ' + appoint_details.consultant_name //meaning text is customized
         }
 
         const obj = {
@@ -139,7 +146,7 @@ export const getCurrentNotifs = (id) => {
                         notifs.push(doc.data());
                     });
                     let obj = notifs[0]
-                    
+
                     await dispatch(getCurrentNotifsSuccess(obj));
                 })
         } catch (error) {

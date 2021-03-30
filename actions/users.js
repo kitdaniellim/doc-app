@@ -58,6 +58,10 @@ export const loadBegin = () => ({
     type: 'LOAD_BEGIN'
 });
 
+export const loadEnd = () => ({
+    type: 'LOAD_END'
+});
+
 //USER PASSWORD RECOVERY STATUS
 export const recoverPassSuccess = result => ({
     type: 'RECOVER_PASS_SUCCESS',
@@ -354,11 +358,9 @@ export const getConsultant = uid => {
                 .collection('users')
                 .doc(uid)
                 .get()
-            console.log("get consultant");
-            console.log(uid);
             //console.log(singleConsultant.data());
             dispatch({ type: GET_CONSULTANT, payload: { singleConsultant: singleConsultant.data() } })
-
+            dispatch(loadEnd());
         } catch (e) {
             alert("puta3");
         }

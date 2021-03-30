@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, FlatList, Text, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { Badge } from 'react-native-elements'
 import Header from '../components/custom/Header.js';
 import * as RootNavigation from './RootNavigation.js';
 
@@ -43,6 +44,9 @@ import AsyncStorage from "@react-native-community/async-storage";
 class Main extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            count: 0,
+        }
     }
 
     componentDidMount = async () => {
@@ -53,7 +57,14 @@ class Main extends React.Component {
         // console.log('HEHEJIAJHFJAF')
         // console.log(user)
         await this.props.getNotifs(user.uid);
-
+        if(this.props.userNotifs !== undefined) {
+            // console.log(this.props.userNotifs)
+            // console.log('helhlelhleh')
+            // this.setState(() => ({
+            //     count: this.props.userNotifs.notifs.length
+            // }))
+        }
+        
         //Listener for real-time notifications
         // db.collection('notifs')
         //   .doc(this.props.user.uid)
@@ -63,9 +74,9 @@ class Main extends React.Component {
 
     }
 
-    // componentDidUpdate() {
-    //     console.log('HELHELHELHLEHLEHLELHEL')
-    // }
+    componentDidUpdate() {
+        // console.log('HELHELHELHLEHLEHLELHEL')
+    }
 
     shouldComponentUpdate(nextProps, nextState) {
         if (this.props.userNotifs == nextProps.userNotifs) {
@@ -79,7 +90,7 @@ class Main extends React.Component {
 
     render() {
         // console.log('MAIN PROPS')
-        // console.log(navigation)
+        // console.log(this.props.screenProps)
         // console.log('-------------------')
 
         const optionsStyles = {
@@ -393,15 +404,23 @@ class Main extends React.Component {
                         headerTitle: () => <Header />,
                         headerLeft: () => null,
                         headerRight: () => {
-                            return (Object.keys(this.props.userNotifs).length != 0 && this.props.userNotifs.notifs.length != 0) ?
+                            return (this.props.userNotifs !== undefined && Object.keys(this.props.userNotifs).length != 0 && this.props.userNotifs.notifs.length != 0) ?
                                 <View style={{ flexDirection: 'row' }}>
-                                    <Menu onSelect={(date) => {
-                                        console.log(date)
-                                        RootNavigation.navigate("Calendar", {
-                                            screen: 'Calendar2',
-                                            params: { date: date }
-                                        });
-                                    }}>
+                                    <Menu
+                                        onOpen={() => {
+                                            // console.log(this.state.count)
+                                            // this.setState(() => ({
+                                            //     count: 0,
+                                            // }))
+                                        }}
+
+                                        onSelect={(date) => {
+                                            console.log(date)
+                                            RootNavigation.navigate("Calendar", {
+                                                screen: 'Calendar2',
+                                                params: { date: date }
+                                            });
+                                        }}>
                                         <MenuTrigger
                                             style={{ marginRight: 25, padding: 10, }}
                                         >
@@ -410,6 +429,15 @@ class Main extends React.Component {
                                                 name='bell'
                                                 size={21}
                                             />
+                                            {(this.props.userNotifs.notifs.length != 0) ?
+                                                <Badge
+                                                    value={this.props.userNotifs.notifs.length}
+                                                    containerStyle={{ position: 'absolute', bottom: -1, right: -4 }}
+                                                    status="error"
+                                                />
+                                                :
+                                                null
+                                            }
                                         </MenuTrigger>
                                         <MenuOptions customStyles={optionsStyles}>
                                             {/* CODE FOR NOTIFICATIONS */}
@@ -463,7 +491,12 @@ class Main extends React.Component {
                                             />
                                         </MenuTrigger>
                                         <MenuOptions customStyles={optionsStyles}>
-                                            <MenuOption value={1} text='Sign Out' />
+                                            <View style={{
+                                                minHeight: '30%',
+                                                maxHeight: 270,
+                                            }}>
+                                                <MenuOption value={1} text='Sign Out' />
+                                            </View>
                                         </MenuOptions>
                                     </Menu>
                                 </View>

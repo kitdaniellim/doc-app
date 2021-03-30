@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Text, TextInput, View, TouchableOpacity } from 'react-native';
+import { Text, TextInput, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { loginStyles, globalStyles } from '../styles/styles';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -8,12 +8,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { updateEmail, updatePassword, updateCurrentUserType, login, logout } from '../actions/users';
 import { resetAppointments } from '../actions/appointments';
-import { getReviews, getReviewedBy } from '../actions/reviews';
-import Firebase, { db } from '../config/Firebase';
+import {  getReviewedBy } from '../actions/reviews';
 import AsyncStorage from "@react-native-community/async-storage";
-
-import RNRestart from 'react-native-restart'; 
-import { Util } from 'expo';
 
 class Login extends React.Component {
 

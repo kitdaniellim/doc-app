@@ -106,8 +106,7 @@ class Profile extends React.Component {
 
   render() {
     console.log('SHOWING PROFILE PROPS============')
-    console.log(this.props)
-    console.log(this.state)
+    console.log(this.props.loading)
     console.log('END OF PROFILE PROPS============')
     return (
       <View style={profileStyles.container}>
@@ -147,12 +146,12 @@ class Profile extends React.Component {
                   <ActivityIndicator size="large" color="#00ff00" />
                 </View>
               ) : ( */}
-                <View style={profileStyles.profile_officeimg_container}>
-                  <Image
-                    source={{ uri: this.state.consultant.officeImage }}
-                    style={profileStyles.profile_officeimg}
-                  />
-                </View>
+              <View style={profileStyles.profile_officeimg_container}>
+                <Image
+                  source={{ uri: this.state.consultant.officeImage }}
+                  style={profileStyles.profile_officeimg}
+                />
+              </View>
               {/* )} */}
               <View style={profileStyles.profile_b_info_container}>
                 <Text style={profileStyles.profile_b_info_header}>Basic Information</Text>
@@ -161,22 +160,22 @@ class Profile extends React.Component {
                     <ActivityIndicator size="large" color="#00ff00" />
                   </View>
                 ) : ( */}
-                  <View style={profileStyles.profile_b_info_details_container}>
-                    <View style={profileStyles.profile_b_info_profileimg_container}>
-                      <Image
-                        source={{ uri: this.state.consultant.profilePicture }}
-                        style={profileStyles.profile_b_info_profileimg}
-                      />
-                    </View>
-                    <View style={profileStyles.profile_b_info_details}>
-                      <Text >
-                        Specialty: {this.state.consultant.userSpecialty} {"\n"}
-                        {this.state.consultant.userSubSpecialty ? 'Sub-specialty: ' + this.state.consultant.userSubSpecialty : null} {"\n"}
+                <View style={profileStyles.profile_b_info_details_container}>
+                  <View style={profileStyles.profile_b_info_profileimg_container}>
+                    <Image
+                      source={{ uri: this.state.consultant.profilePicture }}
+                      style={profileStyles.profile_b_info_profileimg}
+                    />
+                  </View>
+                  <View style={profileStyles.profile_b_info_details}>
+                    <Text >
+                      Specialty: {this.state.consultant.userSpecialty} {"\n"}
+                      {this.state.consultant.userSubSpecialty ? 'Sub-specialty: ' + this.state.consultant.userSubSpecialty : null} {"\n"}
                       Name: {this.state.consultant.fullName} {"\n"}
                       Email: {this.state.consultant.email}{"\n"}
-                      </Text>
-                    </View>
+                    </Text>
                   </View>
+                </View>
                 {/* )} */}
 
               </View>
@@ -197,7 +196,15 @@ class Profile extends React.Component {
               </View>
               <View style={profileStyles.profile_hours_container}>
                 <Text style={profileStyles.profile_hours_header}>Office Hours</Text>
-                <View style={profileStyles.divider} />
+                {/* {this.props.loading ? (
+                  <View style={[globalStyles.loading_container, globalStyles.loading_horizontal]}>
+                    <ActivityIndicator size="large" color="#00ff00" />
+                  </View>
+                ) : (
+
+                  <View style={profileStyles.divider} />
+                )} */}
+
                 {
                   this.state.office.map((data, i) => {
                     return (
@@ -218,7 +225,7 @@ class Profile extends React.Component {
                 }
 
               </View>
-              <View style={profileStyles.divider} />
+              {/* <View style={profileStyles.divider} /> */}
               {this.state.consultant.uid === this.state.user.uid ? <TouchableOpacity
                 activeOpacity={0.6}
                 style={profileStyles.edit_button}

@@ -37,6 +37,12 @@ export default (state = reducerDefaultState, action) => {
                 loading: true,
                 error: null
             };
+        case 'LOAD_END':
+            return {
+                ...state,
+                loading: false,
+                error: null
+            };
         case 'RECOVER_PASS_SUCCESS':
             return {
                 ...state,
@@ -51,7 +57,11 @@ export default (state = reducerDefaultState, action) => {
                 error: action.payload.error
             };
         case GET_CONSULTANT:
-            return { ...state, loading: false, singleConsultant: action.payload.singleConsultant }
+            return {
+                ...state,
+                loading: false,
+                singleConsultant: action.payload.singleConsultant
+            };
         case UPDATE_PROFILE_IMAGE:
             return { ...state, profilePicture: action.payload.uri }
         case UPDATE_OFFICE_IMAGE:

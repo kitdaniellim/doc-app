@@ -146,12 +146,12 @@ const Global = {
 
   modal_button_container_fade: {
     height: 30,
-    width: 110,
+    width: 100,
     backgroundColor: '#FFAD3A95',
     borderRadius: 15,
     marginTop: 7,
     marginBottom: 20,
-    marginHorizontal: 2,
+    marginHorizontal: 4,
     padding: 5,
     justifyContent: 'center',
     alignSelf: 'center'
@@ -159,12 +159,12 @@ const Global = {
   
   modal_button_container_fade_dblue: {
     height: 30,
-    width: 110,
+    width: 100,
     backgroundColor: '#379ae580',
     borderRadius: 15,
     marginTop: 7,
     marginBottom: 20,
-    marginHorizontal: 2,
+    marginHorizontal: 4,
     padding: 5,
     justifyContent: 'center',
     alignSelf: 'center'
@@ -172,12 +172,12 @@ const Global = {
 
   modal_button_container: {
     height: 30,
-    width: 110,
+    width: 100,
     backgroundColor: '#FFAD3A',
     borderRadius: 15,
     marginTop: 7,
     marginBottom: 20,
-    marginHorizontal: 2,
+    marginHorizontal: 4,
     padding: 5,
     justifyContent: 'center',
     alignSelf: 'center'
@@ -185,12 +185,12 @@ const Global = {
 
   modal_button_container_dblue: {
     height: 30,
-    width: 110,
+    width: 100,
     backgroundColor: '#379ae5',
     borderRadius: 15,
     marginTop: 7,
     marginBottom: 20,
-    marginHorizontal: 2,
+    marginHorizontal: 4,
     padding: 5,
     justifyContent: 'center',
     alignSelf: 'center'
@@ -198,7 +198,7 @@ const Global = {
 
   modal_button_container_verified: {
     height: 30,
-    width: 110,
+    width: 100,
     backgroundColor: '#56D74F',
     borderRadius: 15,
     marginTop: 7,

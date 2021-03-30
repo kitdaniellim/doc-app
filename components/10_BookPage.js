@@ -10,6 +10,7 @@ import { bookAppointment, getAppointments } from "../actions/appointments";
 import moment from "moment";
 import AsyncStorage from '@react-native-community/async-storage';
 import { getConsultant } from "../actions/users";
+import { addNotif } from '../actions/notifs';
 
 class BookPage extends React.Component {
   constructor(props) {
@@ -30,7 +31,8 @@ class BookPage extends React.Component {
       symptoms: [],
       files: [],
       user: {},
-      daysAvailable: []
+      daysAvailable: [],
+      loaded: false
     };
   }
 
@@ -39,32 +41,54 @@ class BookPage extends React.Component {
     const user = await JSON.parse(
       await AsyncStorage.getItem("user")
     );
-    if (!user) {
-      navigation.navigate('Login');
-    } else {
-      this.setState(() => ({ user }));
-      await this.props.getConsultant(this.state.consultant_id);
-      await this.props.getAppointments(user.uid, this.state.consultant_id);
-      if (this.props.appointments.length > 0) {
+    this.setState(() => ({ user }));
+    await this.props.getConsultant(this.state.consultant_id);
+    await this.props.getAppointments(user.uid, this.state.consultant_id);
+    if (this.props.appointments != undefined && this.props.appointments.length > 0) {
+      this.props.appointments.map((appointment) => {
+        occupied_dates.push(appointment.date);
+      });
+      occupied_dates.sort((a, b) => a - b);
+      this.setState(() => ({
+        occupied_dates,
+        loaded: true
+      }));
+      this.showOccupiedDates();
+    }
+    this.props.singleConsultant.office_details.map(ind_od => {
+      ind_od.office_day.map(ind_day => {
+        const filter = daysAvailable.filter(item => item.day == ind_day);
+        filter.length == 0 && daysAvailable.push({ day: ind_day });
+      });
+    });
+    await this.setState(() => ({ daysAvailable }))
+    // console.log('================days available===================');
+    // console.log(daysAvailable);
+    // console.log('================consultant data===================');
+    // console.log(this.props.singleConsultant);
+    // console.log('==================================================');
+
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.appointments !== prevProps.appointments && this.state.loaded === false) {
+      let occupied_dates = [];
+      if (this.props.appointments != undefined && this.props.appointments.length > 0) {
         this.props.appointments.map((appointment) => {
           occupied_dates.push(appointment.date);
         });
         occupied_dates.sort((a, b) => a - b);
-        this.setState(() => ({ occupied_dates }));
+        this.setState(() => ({
+          occupied_dates,
+          loaded: true
+        }));
         this.showOccupiedDates();
       }
-      this.props.singleConsultant.office_details.map(ind_od => {
-        ind_od.office_day.map(ind_day => {
-          const filter = daysAvailable.filter(item => item.day == ind_day);
-          filter.length == 0 && daysAvailable.push({ day: ind_day });
-        });
-      });
-      await this.setState(() => ({ daysAvailable }))
-      // console.log('================days available===================');
-      // console.log(daysAvailable);
-      // console.log('================consultant data===================');
-      // console.log(this.props.singleConsultant);
-      // console.log('==================================================');
+    }
+    if (this.props.appointment !== prevProps.appointment) {
+      console.log('SENDING NOTIF')
+      console.log(this.props.appointment)
+      this.props.addNotif('CLIENT', this.props.appointment, 'BOOK')
     }
   }
 
@@ -190,6 +214,7 @@ class BookPage extends React.Component {
       created_at: moment().format('YYYY-MM-DD HH:mm:ss').toString()
     };
     await this.props.bookAppointment(appointment);
+
     if (this.props.error) {
       console.log(this.props.error);
       Alert.alert(
@@ -204,6 +229,7 @@ class BookPage extends React.Component {
         { cancelable: true }
       );
     } else if (!this.props.error) {
+
       Alert.alert(
         'Booking Successful',
         'Thank you for booking',
@@ -212,17 +238,16 @@ class BookPage extends React.Component {
             text: 'OK',
             onPress: () => {
               this.props.navigation.navigate("Home");
-              this.props.navigation.navigate("Calendar1");
+              this.props.navigation.navigate("Calendar", { screen: 'Calendar1' });
             }
           }
         ],
         { cancelable: true }
       );
-    }
 
-    // await this.props.getUserAppointments(this.state.user.uid, 'CLIENT');
+    }
   };
-  
+
   render() {
     return (
       <View style={calendarStyles.container}>
@@ -285,6 +310,7 @@ const mapDispatchToProps = (dispatch) => ({
   getAppointments: (client_id, consultant_id) =>
     dispatch(getAppointments(client_id, consultant_id)),
   getConsultant: (uid) => dispatch(getConsultant(uid)),
+  addNotif: (userType, uid, type) => dispatch(addNotif(userType, uid, type)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BookPage);

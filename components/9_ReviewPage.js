@@ -138,7 +138,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getReviewedBy } from '../actions/reviews';
 import AsyncStorage from '@react-native-community/async-storage';
-import { reviewStyles } from '../styles/styles';
+import { reviewStyles, calendarStyles } from '../styles/styles';
 
 
 class Review extends React.Component {
@@ -203,46 +203,54 @@ class Review extends React.Component {
         </View>
         <View style={reviewStyles.scaffold}>
           <View>
-            <FlatList
-              data={this.props.client_reviews}
-              scrollEnabled={true}
-              showsVerticalScrollIndicator={false}
-              keyExtractor={(item) => item.uid}
-              renderItem={({ item }) => (
-                <View style={reviewStyles.review_container}>
-                  <View style={reviewStyles.review_details_container}>
-                    <View>
-                      <Text style={reviewStyles.review_details_header}>You to {item.reviewee_name}</Text>
-                      <View style={{ alignItems: 'flex-start' }}>
-                        <StarRating
-                          disabled={true}
-                          maxStars={5}
-                          rating={item.rating}
-                          fullStarColor='#FDBB3B'
-                          starSize={13}
-                          starStyle={{ marginRight: 10 }}
-                        />
-                      </View>
-                      <Text style={reviewStyles.review_details_header}>{item.created_at}</Text>
-                    </View>
-                    <View style={{ justifyContent: 'center', marginBottom: 8 }}>
-                      <TouchableOpacity
-                        activeOpacity={0.6}
-                        onPress={() => {this.Edit(item.uid)}}
-                        style={reviewStyles.review_details_submit_button}
-                      >
-                        <Text style={reviewStyles.date_details_button_label}>Edit</Text>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                  <View style={reviewStyles.review_textinput_container}>
-                    <Text style={reviewStyles.review_textinput}>
-                      {item.comment}
-                    </Text>
-                  </View>
+            {this.props.client_reviews.length == 0 ?
+              <View style={calendarStyles.no_appointments_scaffold}>
+                <View style={calendarStyles.date_details_button_container}>
+                  <Text style={calendarStyles.no_appointments_text}>No Reviews Yet</Text>
                 </View>
-              )}
-            />
+              </View>
+              :
+              <FlatList
+                data={this.props.client_reviews}
+                scrollEnabled={true}
+                showsVerticalScrollIndicator={false}
+                keyExtractor={(item) => item.uid}
+                renderItem={({ item }) => (
+                  <View style={reviewStyles.review_container}>
+                    <View style={reviewStyles.review_details_container}>
+                      <View>
+                        <Text style={reviewStyles.review_details_header}>You to {item.reviewee_name}</Text>
+                        <View style={{ alignItems: 'flex-start' }}>
+                          <StarRating
+                            disabled={true}
+                            maxStars={5}
+                            rating={item.rating}
+                            fullStarColor='#FDBB3B'
+                            starSize={13}
+                            starStyle={{ marginRight: 10 }}
+                          />
+                        </View>
+                        <Text style={reviewStyles.review_details_header}>{item.created_at}</Text>
+                      </View>
+                      <View style={{ justifyContent: 'center', marginBottom: 8 }}>
+                        <TouchableOpacity
+                          activeOpacity={0.6}
+                          onPress={() => { this.Edit(item.uid) }}
+                          style={reviewStyles.review_details_submit_button}
+                        >
+                          <Text style={reviewStyles.date_details_button_label}>Edit</Text>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                    <View style={reviewStyles.review_textinput_container}>
+                      <Text style={reviewStyles.review_textinput}>
+                        {item.comment}
+                      </Text>
+                    </View>
+                  </View>
+                )}
+              />
+            }
           </View>
         </View>
       </View>

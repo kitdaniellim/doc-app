@@ -12,6 +12,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import { calendarStyles, globalStyles } from "../styles/styles";
 import Modal from "react-native-modal";
 import { getUserAppointments, getFiles, updateAppointmentStatus } from "../actions/appointments";
+import { addNotif } from '../actions/notifs';
 import AsyncStorage from "@react-native-community/async-storage";
 import FilesModal from "./7_FilesModal.js";
 import moment from "moment";
@@ -59,6 +60,12 @@ class CalendarPage2 extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.appointments !== prevProps.appointments) {
+      this.setState(() => ({ appointments: this.props.appointments.filter((appointment) => appointment.date == this.props.route.params.date) }));
+    }
+  }
+
   //Toggle modal of viewing reason for decline/cancel
   toggleViewReasonModal = (reasonView) => {
     if (this.state.isViewReasonModalVisible) {
@@ -92,11 +99,6 @@ class CalendarPage2 extends React.Component {
 
   // CHANGE MODAL STYLE HERE
   acceptClient = (id) => {
-
-
-
-
-
     Alert.alert(
       'Appointment Approval',
       'Accept appointment?',
@@ -106,6 +108,7 @@ class CalendarPage2 extends React.Component {
             console.log("Client accepted by consultant");
             this.props.updateAppointmentStatus(id, "Approved");
             //insert notif from consultant to client- your appointment has been approved @client
+            this.props.addNotif(this.state.user.userType, id, 'APPROVE')
             if (!this.props.error) {
               Alert.alert(
                 'Success!',
@@ -159,38 +162,39 @@ class CalendarPage2 extends React.Component {
   };
 
   //Toggle modal to notify single client via "Notify All" button
-  toggleNotifyClientModal = () => {
+  toggleNotifyClientModal = (id) => {
     if (this.state.isNotifyModalVisible) {
       this.setState(() => ({ isNotifyModalVisible: false }));
     } else {
       this.setState(() => ({ isNotifyModalVisible: true }));
+      this.setState(() => ({ id }));
     }
   };
 
   //Toggle modal to notify multiple clients via "Notify" button
-  toggleNotifyAllClientsModal = () => {
+  toggleNotifyAllClientsModal = (id) => {
     if (this.state.isNotifyAllModalVisible) {
       this.setState(() => ({ isNotifyAllModalVisible: false }));
     } else {
       this.setState(() => ({ isNotifyAllModalVisible: true }));
+      this.setState(() => ({ id }));
     }
   };
 
   //Function called when Notify on modal-popup is pressed. Sends text to single client
   notifyClient = () => {
     if (this.state.text != "") {
-      console.log("Notification sent to client. " + this.state.text);
-      //insert function to insert notifs to notifs collection
-      //from consultant to client
-      //addNotif()
+      console.log("Notification sent to client: " + this.state.text);
+      this.props.addNotif(this.state.user.userType, this.state.id, this.state.text)
       this.setState(() => ({ isNotifyModalVisible: false, text: "" }));
     }
   };
 
   //Function called when Notify on modal-popup is pressed. Sends text to multiple client
-  notifyAllClients = () => {
+  notifyAllClients = (id) => {
     if (this.state.text != "") {
       console.log("Notification sent to all clients. " + this.state.text);
+      this.props.addNotif(this.state.user.userType, this.state.id, this.state.text)
       this.setState(() => ({ isNotifyAllModalVisible: false, text: "" }));
     }
   };
@@ -226,6 +230,7 @@ class CalendarPage2 extends React.Component {
           text: 'Yes', onPress: async () => {
             await this.props.updateAppointmentStatus(id, "Done");
             //insert notif from consultant to client - please leave a review for the consultant @client
+            this.props.addNotif(this.state.user.userType, this.state.id, 'DONE')
             if (!this.props.error) {
               Alert.alert(
                 'Success!',
@@ -287,7 +292,8 @@ class CalendarPage2 extends React.Component {
     //   );
     // } else {
     await this.props.updateAppointmentStatus(this.state.id, this.state.typeofReject, this.state.reason);
-    //insert notif that appointment has been cancelled
+    //insert notif that appointment has been cancelled/declined
+    this.props.addNotif(this.state.user.userType, this.state.id, this.state.typeofReject)
     //if current user type is client, send notif to consultant, and vice versa
     await new Promise(acc => {
       setTimeout(acc, 2000);
@@ -389,9 +395,9 @@ class CalendarPage2 extends React.Component {
   };
 
   render() {
-    console.log('showing appointments')
-    console.log(this.state.appointments)
-    console.log('--------------')
+    // console.log('showing appointments')
+    // console.log(this.state.appointments)
+    // console.log('--------------')
     return (
       <View style={calendarStyles.container}>
         <FilesModal
@@ -578,19 +584,20 @@ class CalendarPage2 extends React.Component {
               <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                 <TouchableOpacity
                   activeOpacity={0.6}
+                  onPress={this.toggleDeclineClientModal}
+                  style={globalStyles.modal_button_container_fade}
+                >
+                  <Text style={globalStyles.modal_button_label}>No</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.6}
                   // onPress={this.toggleReasonCancelModal}
                   onPress={this.cancelAppointment}
                   style={globalStyles.modal_button_container}
                 >
                   <Text style={globalStyles.modal_button_label}>Yes</Text>
                 </TouchableOpacity>
-                <TouchableOpacity
-                  activeOpacity={0.6}
-                  onPress={this.toggleDeclineClientModal}
-                  style={globalStyles.modal_button_container_fade}
-                >
-                  <Text style={globalStyles.modal_button_label}>No</Text>
-                </TouchableOpacity>
+
               </View>
             </View>
           </View>
@@ -642,6 +649,13 @@ class CalendarPage2 extends React.Component {
               <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                 <TouchableOpacity
                   activeOpacity={0.6}
+                  onPress={this.toggleCancelAppointmentModal}
+                  style={globalStyles.modal_button_container_fade}
+                >
+                  <Text style={globalStyles.modal_button_label}>No</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.6}
                   // onPress={() => {
                   //   if (this.state.user.userType == "CONSULTANT") {
                   //     this.toggleReasonCancelModal()
@@ -655,13 +669,7 @@ class CalendarPage2 extends React.Component {
                 >
                   <Text style={globalStyles.modal_button_label}>Yes</Text>
                 </TouchableOpacity>
-                <TouchableOpacity
-                  activeOpacity={0.6}
-                  onPress={this.toggleCancelAppointmentModal}
-                  style={globalStyles.modal_button_container_fade}
-                >
-                  <Text style={globalStyles.modal_button_label}>No</Text>
-                </TouchableOpacity>
+
               </View>
             </View>
           </View>
@@ -721,7 +729,7 @@ class CalendarPage2 extends React.Component {
             <View style={{ flexDirection: "row", flex: 3 }}>
               <TouchableOpacity
                 activeOpacity={0.6}
-                // onPress={this.toggleNotifyAllClientsModal}
+                // onPress={() => { this.toggleNotifyAllClientsModal(item.uid) }}
                 onPress={() => { }}
                 style={calendarStyles.header_confirmall_container}
               >
@@ -757,11 +765,11 @@ class CalendarPage2 extends React.Component {
             >
               <View style={calendarStyles.date_header_container}>
                 <Text style={calendarStyles.date_details_header}>
-                  {moment(this.props.route.params.date)
+                  {moment(this.props.route.params.date, "YYYY-MM-DD")
                     .format("dddd")
                     .toUpperCase() +
                     ", " +
-                    moment(this.props.route.params.date)
+                    moment(this.props.route.params.date, "YYYY-MM-DD")
                       .format("MMMM DD YYYY")
                       .toUpperCase()}
                 </Text>
@@ -984,8 +992,8 @@ class CalendarPage2 extends React.Component {
                           <TouchableOpacity
                             activeOpacity={0.6}
                             style={calendarStyles.date_details_button_notify}
-                            // onPress={this.toggleNotifyClientModal(item.uid)}
-                            onPress={() => { }}
+                            onPress={() => { this.toggleNotifyClientModal(item.uid) }}
+                          // onPress={() => { }}
                           >
                             <Text
                               style={calendarStyles.date_details_button_label}
@@ -1021,8 +1029,8 @@ class CalendarPage2 extends React.Component {
                           <TouchableOpacity
                             activeOpacity={0.6}
                             style={calendarStyles.date_details_button_notify}
-                            // onPress={this.toggleNotifyClientModal(item.uid)}
-                            onPress={() => { }}
+                            onPress={() => { this.toggleNotifyClientModal(item.uid) }}
+                          // onPress={() => { }}
                           >
                             <Text
                               style={calendarStyles.date_details_button_label}
@@ -1134,7 +1142,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   getUserAppointments: (id, type) => dispatch(getUserAppointments(id, type)),
   getFiles: (appointment_id) => dispatch(getFiles(appointment_id)),
-  updateAppointmentStatus: (appointment_id, status, reason) => dispatch(updateAppointmentStatus(appointment_id, status, reason))
+  updateAppointmentStatus: (appointment_id, status, reason) => dispatch(updateAppointmentStatus(appointment_id, status, reason)),
+  addNotif: (userType, uid, type) => dispatch(addNotif(userType, uid, type)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CalendarPage2);

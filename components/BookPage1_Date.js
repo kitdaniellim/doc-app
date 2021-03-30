@@ -1,7 +1,7 @@
 import React from 'react';
-import { Text, FlatList, View, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, Text, FlatList, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Calendar  } from 'react-native-calendars';
+import { Calendar } from 'react-native-calendars';
 import moment from "moment";
 import { calendarStyles, globalStyles } from '../styles/styles';
 
@@ -22,8 +22,6 @@ class BookPage1_Date extends React.Component {
     if (this.props !== prevProps) {
       // console.log(this.props.daysAvailable)
       // console.log(prevProps.daysAvailable)
-
-
       const AVAILABLE_DAYS = [];
       this.props.daysAvailable.forEach((item) => {
         AVAILABLE_DAYS.push(item.day);
@@ -65,7 +63,9 @@ class BookPage1_Date extends React.Component {
     if (this.props.currentStep !== 1) {
       return null;
     } else {
-
+      // console.log('showingBOOK 1 props')
+      // console.log(this.props)
+      // console.log('------')
       return (
         <React.Fragment>
           <View style={calendarStyles.header_container}>
@@ -82,49 +82,56 @@ class BookPage1_Date extends React.Component {
           </View>
           <View style={calendarStyles.scaffold}>
             <View style={calendarStyles.calendar_container}>
-              <Calendar
-                current={new Date()}
-                minDate={new Date()}
-                // disabledByDefault
-                onDayPress={(day) => { this.props.onStep1Submit(day.dateString) }}
-                //36 months
-                pastScrollRange={36}
-                //24 months
-                futureScrollRange={24}
-                style={{
-                  borderRadius: 15,
-                }}
-                markedDates={this.state.markedDates}
-                onMonthChange={(date) => {
-                  this.setState({
-                    markedDates: this.getDaysInMonth(date.month - 1, date.year, this.state.AVAILABLE_DAYS)
-                  })
-                }}
-                disableAllTouchEventsForDisabledDays={true}
-                theme={{
-                  backgroundColor: '#fff',
-                  calendarBackground: '#fff',
-                  textSectionTitleColor: '#8B8787',
-                  todayTextColor: '#19BAB9',
-                  dayTextColor: 'black',
-                  textDayFontSize: 10,
-                  textMonthFontSize: 14,
-                  textDayHeaderFontSize: 12,
-                  'stylesheet.day.basic': {
-                    'base': {
-                      width: 25,
-                      height: 25,
-                      alignItems: 'center',
-                      borderRadius: 0,
+              {/* {this.props.occupied_dates_obj === undefined ? (
+                <View style={[globalStyles.loading_container, globalStyles.loading_horizontal]}>
+                  <ActivityIndicator size="large" color="#00ff00" />
+                </View>
+              ) : ( */}
+                <Calendar
+                  current={new Date()}
+                  minDate={new Date()}
+                  // disabledByDefault
+                  onDayPress={(day) => { this.props.onStep1Submit(day.dateString) }}
+                  //36 months
+                  pastScrollRange={36}
+                  //24 months
+                  futureScrollRange={24}
+                  style={{
+                    borderRadius: 15,
+                  }}
+                  markedDates={this.state.markedDates}
+                  onMonthChange={(date) => {
+                    this.setState({
+                      markedDates: this.getDaysInMonth(date.month - 1, date.year, this.state.AVAILABLE_DAYS)
+                    })
+                  }}
+                  disableAllTouchEventsForDisabledDays={true}
+                  theme={{
+                    backgroundColor: '#fff',
+                    calendarBackground: '#fff',
+                    textSectionTitleColor: '#8B8787',
+                    todayTextColor: '#19BAB9',
+                    dayTextColor: 'black',
+                    textDayFontSize: 10,
+                    textMonthFontSize: 14,
+                    textDayHeaderFontSize: 12,
+                    'stylesheet.day.basic': {
+                      'base': {
+                        width: 25,
+                        height: 25,
+                        alignItems: 'center',
+                        borderRadius: 0,
+                      }
                     }
-                  }
-                }}
-              // enableSwipeMonths={true}
-              />
+                  }}
+                // enableSwipeMonths={true}
+                />
+              {/* )} */}
             </View>
             <View style={calendarStyles.calendar_legend_container}>
               <Text style={calendarStyles.calendar_legend_label}>Available Days:</Text>
               <FlatList
+                keyExtractor={(item, index) => index.toString()}
                 data={this.props.daysAvailable}
                 renderItem={({ item }) => <Text style={calendarStyles.calendar_legend_text}>{item.day} ({item.day.substr(0, 3)})</Text>}
               />
