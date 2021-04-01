@@ -350,9 +350,8 @@ export const getConsultant = uid => {
                 .collection('users')
                 .doc(uid)
                 .get()
-            //console.log(singleConsultant.data());
+            // console.log(singleConsultant.data());
             dispatch({ type: GET_CONSULTANT, payload: { singleConsultant: singleConsultant.data() } })
-            dispatch(loadEnd());
         } catch (e) {
             console.log('Error: ' + e);
         }

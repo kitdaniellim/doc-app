@@ -18,11 +18,9 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 
 //App Screens
 import Landing from '../components/1_LandingPage.js';
-import Tutorial from '../components/1_TutorialPage.js';
 import Home from '../components/6_HomePage.js';
 import Calendar1 from '../components/7_CalendarPage1.js';
 import Calendar2 from '../components/7_CalendarPage2.js';
-import Calendar3_Notify from '../components/7_CalendarPage3_Notify.js';
 import Calendar3_Review from '../components/7_CalendarPage3_Review.js';
 import Search from '../components/8_SearchPage.js';
 import Review from '../components/9_ReviewPage.js';

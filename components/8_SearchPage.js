@@ -160,7 +160,7 @@ class Search extends React.Component {
                                     />
                                   </View>
                                   <View style={{ justifyContent: 'center' }}>
-                                    <Text style={searchStyles.scaffold_list_item_data}>{(value.userSpecialty === "Doctor") ? 'Dr. ' : value.userSpecialty} {value.fullName}</Text>
+                                    <Text style={searchStyles.scaffold_list_item_data}>{value.fullName}</Text>
                                     <View style={searchStyles.scaffold_list_item_data_stars}>
                                       <StarRating
                                         disabled={true}
@@ -193,8 +193,18 @@ class Search extends React.Component {
                                       />
                                     </View>
                                     <View style={{ justifyContent: 'center' }}>
-                                      <Text style={searchStyles.scaffold_list_item_data}>Dr. {value.fullName}</Text>
-                                      <Text style={searchStyles.scaffold_list_item_data}>Rating: {value.rating}</Text>
+                                      <Text style={searchStyles.scaffold_list_item_data}>{value.fullName}</Text>
+                                      <View style={searchStyles.scaffold_list_item_data_stars}>
+                                        <StarRating
+                                          disabled={true}
+                                          maxStars={5}
+                                          rating={value.rating}
+                                          selectedStar={() => { }}
+                                          fullStarColor='#FDBB3B'
+                                          starSize={12}
+                                          starStyle={{ marginRight: 5, alignSelf: 'center' }}
+                                        />
+                                      </View>
                                     </View>
                                   </View>
                                 </TouchableOpacity>
@@ -229,8 +239,18 @@ class Search extends React.Component {
                                       />
                                     </View>
                                     <View style={{ justifyContent: 'center' }}>
-                                      <Text style={searchStyles.scaffold_list_item_data}>Dr. {value.fullName}</Text>
-                                      <Text style={searchStyles.scaffold_list_item_data}>Rating: {value.rating}</Text>
+                                      <Text style={searchStyles.scaffold_list_item_data}>{value.fullName}</Text>
+                                      <View style={searchStyles.scaffold_list_item_data_stars}>
+                                        <StarRating
+                                          disabled={true}
+                                          maxStars={5}
+                                          rating={value.rating}
+                                          selectedStar={() => { }}
+                                          fullStarColor='#FDBB3B'
+                                          starSize={12}
+                                          starStyle={{ marginRight: 5, alignSelf: 'center' }}
+                                        />
+                                      </View>
                                     </View>
                                   </View>
                                 </TouchableOpacity>
@@ -252,8 +272,18 @@ class Search extends React.Component {
                                         />
                                       </View>
                                       <View style={{ justifyContent: 'center' }}>
-                                        <Text style={searchStyles.scaffold_list_item_data}>Dr. {value.fullName}</Text>
-                                        <Text style={searchStyles.scaffold_list_item_data}>Rating: {value.rating}</Text>
+                                        <Text style={searchStyles.scaffold_list_item_data}>{value.fullName}</Text>
+                                        <View style={searchStyles.scaffold_list_item_data_stars}>
+                                          <StarRating
+                                            disabled={true}
+                                            maxStars={5}
+                                            rating={value.rating}
+                                            selectedStar={() => { }}
+                                            fullStarColor='#FDBB3B'
+                                            starSize={12}
+                                            starStyle={{ marginRight: 5, alignSelf: 'center' }}
+                                          />
+                                        </View>
                                       </View>
                                     </View>
                                   </TouchableOpacity>

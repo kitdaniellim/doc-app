@@ -10,6 +10,7 @@ import { addNotif } from '../actions/notifs';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
+import { uniqueId } from 'lodash';
 
 class Home extends React.Component {
   constructor(props) {
@@ -32,6 +33,7 @@ class Home extends React.Component {
   }
 
   Profile = async (uid) => {
+    console.log('Clicked ' + uid)
     await this.props.getConsultant(uid);
     await this.props.getReviews(uid);
 

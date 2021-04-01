@@ -89,7 +89,8 @@ const Profile = {
   },
 
   profile_b_info_details: {
-    marginLeft: 4,
+    flexDirection: 'column',
+    paddingHorizontal: 5,
   },
 
   profile_b_info_profileimg: {
@@ -129,6 +130,8 @@ const Profile = {
   },
 
   profile_hours_details: {
+    flex: 1,
+    flexDirection: 'row',
     backgroundColor: '#ECECEC',
     borderRadius: 15,
     paddingVertical: 10,

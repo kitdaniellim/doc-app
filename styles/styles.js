@@ -1,5 +1,4 @@
 import Global from "./components/AP_Global";
-import Nav from "./components/AP_Nav";
 
 import Login from "./components/LoginPage";
 import ForgotPassword from "./components/FpassPage";
@@ -11,9 +10,6 @@ import Calendar from './components/CalendarPage';
 import Search from './components/SearchPage';
 
 import Appointment from './components/AppointmentPage';
-
-// import Review from './components/ReviewPage';
-
 import Review from './components/ReviewPage';
 import Profile from './components/ProfilePage';
 import Paypal from './components/PaypalPage';
@@ -29,9 +25,6 @@ export const homeStyles = StyleSheet.create(Home);
 export const calendarStyles = StyleSheet.create(Calendar);
 export const searchStyles = StyleSheet.create(Search);
 export const appointmentStyles = StyleSheet.create(Appointment);
-// export const reviewStyles = StyleSheet.create(Review);
 export const reviewStyles = StyleSheet.create(Review);
 export const profileStyles = StyleSheet.create(Profile);
 export const paypalStyles = StyleSheet.create(Paypal);
-
-export const navStyles = StyleSheet.create(Nav);

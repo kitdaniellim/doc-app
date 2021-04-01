@@ -251,33 +251,34 @@ class EditProfile_1 extends React.Component {
   async checkCameraRollPermission() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL)
     if (status !== 'granted') {
-      Alert.alert(
-        'Allow access to Camera Roll',
-        'SetMeApp needs permission to view your camera roll.',
-        [
-          { text: 'Settings', onPress: () => Linking.openURL('app-settings:') },
-          {
-            text: 'Cancel',
-            onPress: () => console.log('Cancel Pressed'),
-            style: 'cancel'
-          }
-        ]
-      )
-      this.setState({
-        hasCameraRollPermissions: false
-      })
+      // Alert.alert(
+      //   'Allow access to Camera Roll',
+      //   'SetMeApp needs permission to view your camera roll.',
+      //   [
+      //     {
+      //       text: 'Cancel',
+      //       onPress: () => console.log('Cancel Pressed'),
+      //       style: 'cancel'
+      //     },
+      //     { text: 'Settings', onPress: () => Linking.openURL('app-settings:') },
+
+      //   ]
+      // )
+      // this.setState({
+      //   hasCameraRollPermissions: false
+      // })
       return false
     }
-    this.setState({
-      hasCameraRollPermissions: true
-    })
+    // this.setState({
+    //   hasCameraRollPermissions: true
+    // })
     return true
   }
 
   _pickImage = async (text) => {
 
     const checkPermissions = await this.checkCameraRollPermission()
-    console.log(checkPermissions, '--what is returned here determins the permissions');
+    // console.log(checkPermissions, '--what is returned here determins the permissions');
     if (!checkPermissions) return
 
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -287,17 +288,16 @@ class EditProfile_1 extends React.Component {
 
 
     if (!result.cancelled) {
-      console.log('SHOWING SHIT==============');
-      console.log(result)
-      console.log('---------------------');
-      console.log(result.uri)
-      console.log('---------------------');
+      // console.log('SHOWING SHIT==============');
+      // console.log(result)
+      // console.log('---------------------');
+      // console.log(result.uri)
+      // console.log('---------------------');
       if (text === 'profile') {
         this.props.updateProfileImage(result.uri);
       } else {
         this.props.updateOfficeImage(result.uri);
       }
-
     }
   };
 
@@ -384,35 +384,10 @@ class EditProfile_1 extends React.Component {
                 </TouchableOpacity>
               </View>
 
-
-              {/* <View style={profileStyles.profile_hours_container}>
-                <Text style={profileStyles.profile_hours_header}>Office Hours</Text>
-                <View style={profileStyles.divider} />
-                {
-                  office.map((data, i) => {
-                    return (
-                      <View key={i} style={profileStyles.profile_hours_details}>
-                        <Text>
-                          {data.office_location}{"\n"}
-                          {data.office_hour_from} - {data.office_hour_to}
-                        </Text>
-                        <Text>Days: </Text>
-                        { data.office_day.map((data1, i) => {
-                          return (
-                            <Text key={i}>{data1}</Text>
-                          )
-                        })}
-                      </View>
-                    )
-                  })
-                }
-              </View> */}
-
-
               <View style={profileStyles.divider} />
               <View style={profileStyles.profile_b_info_container}>
                 <Text style={profileStyles.profile_b_info_header}>Basic Information</Text>
-                <View style={signupStyles.forms_textinput_container}>
+                {/* <View style={signupStyles.forms_textinput_container}>
                   <Icon style={globalStyles.icon_global} name="envelope" size={18} />
                   <TextInput
                     placeholder="Email Address"
@@ -421,7 +396,7 @@ class EditProfile_1 extends React.Component {
                     value={this.props.email}
                     onChangeText={email => this.props.updateEmail(email)}
                   />
-                </View>
+                </View> */}
                 <View style={signupStyles.forms_textinput_container}>
                   <Icon style={globalStyles.icon_global} name="user-circle" size={18} />
                   <TextInput

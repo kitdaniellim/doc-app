@@ -48,15 +48,15 @@ class Profile extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.singleConsultant !== prevProps.singleConsultant) {
+    if (this.props !== prevProps) {
       let consultant = this.props.singleConsultant;
       let reviews = this.props.reviews;
       let average = this.getRatingAverage(this.props.reviews);
-      // let office; 
-      // if(consultant !== undefined) {
-      //   office = Array.from(consultant.office_details);
-      // }
-      let office = Array.from(consultant.office_details);
+      let office;
+      if (consultant !== undefined) {
+        office = Array.from(consultant.office_details);
+      }
+      // let office = Array.from(consultant.office_details);
 
       this.setState(() => ({
         consultant: consultant,
@@ -113,9 +113,9 @@ class Profile extends React.Component {
   }
 
   render() {
-    // console.log('SHOWING PROFILE PROPS============')
-    // console.log(this.props.loading)
-    // console.log('END OF PROFILE PROPS============')
+    console.log('SHOWING PROFILE PROPS============')
+    console.log(this.props.singleConsultant)
+    console.log('END OF PROFILE PROPS============')
     return (
       <View style={profileStyles.container}>
         <View style={profileStyles.header_container}>
@@ -170,12 +170,42 @@ class Profile extends React.Component {
                     />
                   </View>
                   <View style={profileStyles.profile_b_info_details}>
-                    <Text >
-                      Specialty: {this.state.consultant.userSpecialty} {"\n"}
-                      {this.state.consultant.userSubSpecialty ? 'Sub-specialty: ' + this.state.consultant.userSubSpecialty : null} {"\n"}
-                      Name: {this.state.consultant.fullName} {"\n"}
-                      Email: {this.state.consultant.email}{"\n"}
-                    </Text>
+                    {this.state.consultant.userSpecialty ?
+                      <View style={{ flexDirection: 'row' }}>
+                        <Text style={{ flex: 1, flexWrap: 'wrap' }}>
+                          Specialty: {this.state.consultant.userSpecialty}
+                        </Text>
+                      </View>
+                      :
+                      null
+                    }
+                    {this.state.consultant.userSubSpecialty ?
+                      <View style={{ flexDirection: 'row' }}>
+                        <Text style={{ flex: 1, flexWrap: 'wrap' }}>
+                          Sub-specialty: {this.state.consultant.userSubSpecialty}
+                        </Text>
+                      </View>
+                      :
+                      null
+                    }
+                    {this.state.consultant.userSpecialty ?
+                      <View style={{ fullName: 'row' }}>
+                        <Text style={{ flex: 1, flexWrap: 'wrap' }}>
+                          Name: {this.state.consultant.fullName}
+                        </Text>
+                      </View>
+                      :
+                      null
+                    }
+                    {this.state.consultant.email ?
+                      <View style={{ flexDirection: 'row' }}>
+                        <Text style={{ flex: 1, flexWrap: 'wrap' }}>
+                          Email: {this.state.consultant.email}
+                        </Text>
+                      </View>
+                      :
+                      null
+                    }
                   </View>
                 </View>
                 {/* )} */}
@@ -211,16 +241,21 @@ class Profile extends React.Component {
                   this.state.office.map((data, i) => {
                     return (
                       <View key={i} style={profileStyles.profile_hours_details}>
-                        <Text>
-                          {data.office_location}{"\n"}
-                          {data.office_hour_from} - {data.office_hour_to}
-                        </Text>
-                        <Text>Days: </Text>
-                        { data.office_day.map((data1, i) => {
-                          return (
-                            <Text key={i}>{data1}</Text>
-                          )
-                        })}
+                        <View style={{ flex: 1 }}>
+                          <Text>
+                            {data.office_location}{"\n"}
+                            {data.office_hour_from} - {data.office_hour_to}
+                          </Text>
+                        </View>
+                        <View style={{ flex: 1 }}>
+                          <Text>Available Days: </Text>
+                          {data.office_day.map((data1, i) => {
+                            return (
+                              <Text key={i}>{data1}</Text>
+                            )
+                          })}
+                        </View>
+
                       </View>
                     )
                   })
