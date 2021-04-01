@@ -1,5 +1,5 @@
 import { LOGIN, LOGOUT, SIGNUP, EDIT_PROFILE, UPDATE_TOKEN, UPDATE_USER_TYPE, UPDATE_EMAIL, UPDATE_PASSWORD, UPDATE_FULL_NAME, UPDATE_MOBILE_NUMBER, UPDATE_BIRTH_DAY, UPDATE_CURRENT_USER, UPDATE_USER_LIC, UPDATE_USER_SPECIALTY, UPDATE_USER_SUB_SPECIALTY, UPDATE_OFFICE_LOCATION, UPDATE_OFFICE_HOURS } from '../actions/users';
-import { GET_ALL_CONSULTANT, GET_CONSULTANT, GET_PROFILE_IMAGE, GET_OFFICE_IMAGE, UPDATE_PROFILE_IMAGE, UPDATE_OFFICE_IMAGE, UPDATE_OFFICE_DETAILS, UPDATE_LOCATION_DETAIL, UPDATE_TO_HOUR_DETAIL, UPDATE_FROM_HOUR_DETAIL, UPDATE_DAY_DETAIL } from '../actions/users';
+import { GET_ALL_CONSULTANT, GET_CONSULTANT, UPDATE_PROFILE_IMAGE, UPDATE_OFFICE_IMAGE, UPDATE_OFFICE_DETAILS, UPDATE_LOCATION_DETAIL, UPDATE_TO_HOUR_DETAIL, UPDATE_FROM_HOUR_DETAIL, UPDATE_DAY_DETAIL } from '../actions/users';
 
 const reducerDefaultState = {
     loading: false,
@@ -75,15 +75,15 @@ export default (state = reducerDefaultState, action) => {
         case UPDATE_DAY_DETAIL:
             return { ...state, day: action.payload.user_location }
         case GET_ALL_CONSULTANT:
-            return { ...state, consultant: action.payload.consultant }
+            return { ...state, loading: false, consultant: action.payload.consultant }
         case LOGIN:
-            return { ...state, user: action.payload.user }
+            return { ...state, loading: false, user: action.payload.user }
         case LOGOUT:
             return { state: reducerDefaultState }
         case SIGNUP:
             return { ...state, user: action.payload.user }
         case EDIT_PROFILE:
-            return { ...state, user: action.payload.user }
+            return { ...state, loading: false, user: action.payload.user }
         case UPDATE_EMAIL:
             return { ...state, email: action.payload.email }
         case UPDATE_PASSWORD:
@@ -97,7 +97,7 @@ export default (state = reducerDefaultState, action) => {
         case UPDATE_USER_TYPE:
             return { ...state, userType: action.payload.userType }
         case UPDATE_CURRENT_USER:
-            return { ...state, current_user: action.payload.current_user }
+            return { ...state, loading: false, current_user: action.payload.current_user }
         case UPDATE_USER_LIC:
             return { ...state, userLIC: action.payload.userLIC }
         case UPDATE_USER_SPECIALTY:

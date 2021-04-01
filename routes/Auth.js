@@ -14,6 +14,7 @@ import SignupConsultant2 from '../components/4_SignupPage2_Consultant.js';
 import SignupConsultant3_1 from '../components/4_SignupPage3_1_Consultant.js';
 import SignupConsultant3_2 from '../components/4_SignupPage3_2_Consultant.js';
 import Signup_TermsAndAgreement from '../components/4_Signup_TermsAndAgreement.js';
+import Tutorial from '../components/1_TutorialPage.js';
 
 class Auth extends React.Component {
     constructor(props) {
@@ -25,7 +26,6 @@ class Auth extends React.Component {
 
     render() {
         const AuthStack = createStackNavigator();
-
         return (
             <AuthStack.Navigator
                 screenOptions={{
@@ -44,14 +44,6 @@ class Auth extends React.Component {
                     title: null,
                 }}
             >
-                {/* <AuthStack.Screen
-                    name="Landing"
-                    component={Landing}
-                    options={{
-                        headerShown: false,
-                    }}
-                    // initialParams={{ path: 'auth',}}
-                /> */}
                 <AuthStack.Screen
                     name="Login"
                     component={Login}
@@ -91,6 +83,13 @@ class Auth extends React.Component {
                 <AuthStack.Screen
                     name="Signup_TermsAndAgreement"
                     component={Signup_TermsAndAgreement}
+                />
+                <AuthStack.Screen
+                    name="Tutorial"
+                    component={Tutorial}
+                    options={{
+                        headerShown: false,
+                    }}
                 />
             </AuthStack.Navigator>
         );

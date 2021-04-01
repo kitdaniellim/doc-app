@@ -24,7 +24,10 @@ class Home extends React.Component {
     this.props.getAllReviews();
     this.props.getAllConsultant();
   }
+
   SeeAll(userSpecialty) {
+    console.log('clicked see all')
+    console.log(userSpecialty)
     this.props.navigation.navigate('Search', { userSpecialty: userSpecialty });
   }
 
@@ -50,7 +53,7 @@ class Home extends React.Component {
 
   render() {
     // console.log('showing props')
-    // console.log(this.props.navigation)
+    // console.log(this.props.consultant)
     // console.log('------')
 
     let images = [

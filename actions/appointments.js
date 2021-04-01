@@ -134,13 +134,6 @@ export const updateAppointmentStatus = (id, status, reason = "") => {
       status: status,
       updated_at: moment().format('YYYY-MM-DD HH:mm:ss').toString()
     })
-    // .then(() => {
-    //   if (reason != "") {
-    //     ref.set({
-    //       reason
-    //     }, { merge: true });
-    //   }
-    // })
     
     .then((result) => {
       dispatch(updateAppointmentStatusSuccess(result));

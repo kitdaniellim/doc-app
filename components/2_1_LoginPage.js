@@ -1,14 +1,19 @@
 import React from 'react';
-import { Text, TextInput, View, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, Text, TextInput, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Modal from 'react-native-modal';
+
 import { loginStyles, globalStyles } from '../styles/styles';
 import { LinearGradient } from 'expo-linear-gradient';
-import Modal from 'react-native-modal';
+
+//Backend
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { updateEmail, updatePassword, updateCurrentUser, login, logout } from '../actions/users';
+
+//Actions
+import { updateEmail, updatePassword, login, logout } from '../actions/users';
 import { resetAppointments } from '../actions/appointments';
-import {  getReviewedBy } from '../actions/reviews';
+import { getReviewedBy } from '../actions/reviews';
 import AsyncStorage from "@react-native-community/async-storage";
 
 class Login extends React.Component {
@@ -24,25 +29,23 @@ class Login extends React.Component {
   }
 
   async componentDidMount() {
-    this.props.logout();
-    this.props.resetAppointments();
-    try {
-      await AsyncStorage.removeItem('user');
-      await AsyncStorage.removeItem('appointments');
-    }
-    catch (exception) {
-      alert('Error in removing session');
-    }
+    // this.props.logout();
+    // this.props.resetAppointments();
+    // try {
+    //   await AsyncStorage.removeItem('user');
+    //   await AsyncStorage.removeItem('appointments');
+    // }
+    // catch (exception) {
+    //   alert('Error in removing session');
+    // }
   }
 
   SignUp = () => {
-    const navigation = this.props.navigation;
-    navigation.navigate('Selection');
+    this.props.navigation.navigate('Selection');
   }
 
   ForgotPassword = () => {
-    const navigation = this.props.navigation;
-    navigation.navigate('ForgotPassword');
+    this.props.navigation.navigate('ForgotPassword');
   }
 
   handleLogin = async () => {
@@ -51,20 +54,20 @@ class Login extends React.Component {
         toggleModal: true
       })
     } else {
-      await AsyncStorage.removeItem('user');
-      console.log(`Attempting to Log in...`);
       await this.props.login(this.state.email.trim(), this.state.password);
 
       if (this.props.user.email) {
-        console.log(`Login successful.`)
         AsyncStorage.setItem('user', JSON.stringify(this.props.user));
-        console.log(this.props.user.userType)
-        this.props.updateCurrentUser({
+        console.log(`Login successful.`)
+        let cur_user = {
           userType: this.props.user.userType,
           uid: this.props.user.uid
-        });
+        }
+        this.props.navigation.navigate('Tutorial', {cur_user: cur_user});
       } else {
-        alert("Error in logging in!");
+        this.setState({
+          toggleModal: true
+        })
       }
 
     }
@@ -98,7 +101,7 @@ class Login extends React.Component {
               </View>
               <View style={globalStyles.modal_container_bottom}>
                 <Text style={globalStyles.modal_notif_bold}>Oops!</Text>
-                <Text style={globalStyles.modal_notif}>Incorrect password or username. Please try again.</Text>
+                <Text style={globalStyles.modal_notif}>Incorrect username or password. Please try again.</Text>
                 <TouchableOpacity
                   activeOpacity={0.6}
                   onPress={this.Close}
@@ -135,10 +138,17 @@ class Login extends React.Component {
                 onChangeText={password => this.setState(() => ({ password }))}
               />
             </View>
+            {this.props.loading ?
+              <View style={[globalStyles.loading_container, globalStyles.loading_horizontal]}>
+                <ActivityIndicator size="large" color="#FFFFFF" />
+              </View>
+              :
+              <View style={[globalStyles.loading_container, globalStyles.loading_horizontal]} />
+            }
             <View style={loginStyles.forms_button_container}>
               <TouchableOpacity
                 activeOpacity={0.6}
-                onPress={this.handleLogin }
+                onPress={this.handleLogin}
                 style={loginStyles.forms_button}
               >
                 <Text style={loginStyles.forms_button_label}>LOGIN</Text>
@@ -173,11 +183,12 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ updateEmail, updatePassword, updateCurrentUser, login, logout, resetAppointments, getReviewedBy }, dispatch)
+  return bindActionCreators({ updateEmail, updatePassword, login, logout, resetAppointments, getReviewedBy }, dispatch)
 }
 
 const mapStateToProps = state => {
   return {
+    loading: state.users.loading,
     user: state.users.user,
     email: state.users.email,
     password: state.users.password,

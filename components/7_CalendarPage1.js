@@ -149,7 +149,7 @@ class CalendarPage extends React.Component {
           <View style={calendarStyles.calendar_container}>
             {this.props.loading ? (
               <View style={[globalStyles.loading_container, globalStyles.loading_horizontal]}>
-                <ActivityIndicator size="large" color="#00ff00" />
+                <ActivityIndicator size="large" color="#56EC65" />
               </View>
             ) : (
               <Calendar

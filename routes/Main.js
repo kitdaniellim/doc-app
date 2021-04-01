@@ -49,6 +49,7 @@ class Main extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            isMounted: false,
             user: {},
             notification: {},
             count: 0,
@@ -75,7 +76,6 @@ class Main extends React.Component {
         this.registerForPushNotificationsAsync(user.uid, user.expoToken);
         this._notificationSubscription = Notifications.addListener(this._handleNotification);
 
-        let count = 0;
         //If user has expoToken, notifications is allowed
         if (this.state.user.expoToken !== undefined) {
             //Listener for real-time notifications
@@ -85,19 +85,16 @@ class Main extends React.Component {
                 .onSnapshot(documentSnapshot => {
                     let result = documentSnapshot.data()
                     if (result !== undefined) {
-                        console.log('HELLLO I RANT');
                         // console.log(result.notifs[0])
-                        console.log(++count);
-                        this.sendPushNotification(result.notifs[0]);
-                        // console.log('something changed ssss');
-                        // this.props.navigation.setOptions({
-                        //   headerRight: () => { 
-                        //     return <Text>Fuckkk</Text> },
-                        // })
+                        if (this.state.isMounted) {
+                            this.sendPushNotification(result.notifs[0]);
+                        }
                     }
-
                 });
         }
+        this.setState(() => ({
+            isMounted: true
+        }))
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -199,7 +196,7 @@ class Main extends React.Component {
                 //   backgroundColor: 'green',
                 marginTop: 48,
                 justifyContent: 'flex-end',
-                width: 260,
+                width: 250,
             },
             optionsWrapper: {
                 //   backgroundColor: 'purple',
@@ -209,15 +206,15 @@ class Main extends React.Component {
             optionWrapper: {
                 //   backgroundColor: 'yellow',
                 // marginRight: 50,
-                height: 85,
+                height: 80,
                 justifyContent: 'center',
                 padding: 10,
-                paddingRight: 20,
+                paddingRight: 16,
                 // marginVertical: 8,
             },
             optionTouchable: {
                 //   underlayColor: 'gold',
-                activeOpacity: 70,
+                activeOpacity: 30,
                 // padding: 15,
                 // margin: 10,
             },
@@ -302,22 +299,6 @@ class Main extends React.Component {
                         component={Calendar3_Review}
                     />
                 </CalendarStack.Navigator>
-            );
-        }
-
-        function GetSearchStack() {
-            return (
-                <SearchStack.Navigator
-                    screenOptions={{
-                        headerShown: false
-                    }}
-                >
-                    <SearchStack.Screen
-                        name="Search"
-                        component={Search}
-                        initialParams={{ userSpecialty: "None" }}
-                    />
-                </SearchStack.Navigator>
             );
         }
 
@@ -423,7 +404,7 @@ class Main extends React.Component {
                     />
                     <Tab.Screen
                         name="Search"
-                        component={GetSearchStack}
+                        component={Search}
                         options={{
                             title: 'Search',
                             tabBarIcon: ({ color }) => (
@@ -488,20 +469,12 @@ class Main extends React.Component {
                 }}
             >
                 {/* <MainStack.Screen
-                    name="Landing"
-                    component={Landing}
-                    options={{
-                        headerShown: false,
-                    }}
-                    initialParams={{ path: 'main', }}
-                /> */}
-                <MainStack.Screen
                     name="Tutorial"
                     component={Tutorial}
                     options={{
                         headerShown: false,
                     }}
-                />
+                /> */}
                 <MainStack.Screen
                     name="Home"
                     options={{
@@ -546,8 +519,8 @@ class Main extends React.Component {
                                         <MenuOptions customStyles={optionsStyles}>
                                             {/* CODE FOR NOTIFICATIONS */}
                                             <View style={{
-                                                minHeight: '30%',
-                                                maxHeight: 270,
+                                                minHeight: 80,
+                                                maxHeight: 240,
                                             }}>
                                                 <FlatList
                                                     data={this.props.userNotifs.notifs}
@@ -575,18 +548,14 @@ class Main extends React.Component {
                                         </MenuOptions>
                                     </Menu>
                                     <Menu onSelect={
-                                        value => {
+                                        async value => {
                                             if (value === 1) {
                                                 Firebase.auth().signOut();
-
-                                                this.props.logout();
-                                                this.props.resetAppointments();
-                                                AsyncStorage.removeItem('user');
-                                                AsyncStorage.removeItem('appointments');
-
-
-
-                                                this.props.updateCurrentUser(undefined);
+                                                await this.props.logout();
+                                                await this.props.resetAppointments();
+                                                await AsyncStorage.removeItem('user');
+                                                await AsyncStorage.removeItem('appointments');
+                                                await this.props.updateCurrentUser(undefined);
                                             }
                                             else {
                                                 // navigation.navigate('Home', { action: -1 })
@@ -604,8 +573,8 @@ class Main extends React.Component {
                                         </MenuTrigger>
                                         <MenuOptions customStyles={optionsStyles}>
                                             <View style={{
-                                                minHeight: '30%',
-                                                maxHeight: 270,
+                                                minHeight: 80,
+                                                maxHeight: 240,
                                             }}>
                                                 <MenuOption value={1} text='Sign Out' />
                                             </View>
@@ -625,16 +594,23 @@ class Main extends React.Component {
                                             />
                                         </MenuTrigger>
                                         <MenuOptions customStyles={optionsStyles}>
-                                            <View style={{ height: 70, justifyContent: 'center' }}>
+                                            <View style={{
+                                                minHeight: 80,
+                                                maxHeight: 240,
+                                            }}>
                                                 <MenuOption text={'You have no notifications yet!'} />
                                             </View>
                                         </MenuOptions>
                                     </Menu>
                                     <Menu onSelect={
-                                        value => {
+                                        async value => {
                                             if (value === 1) {
                                                 Firebase.auth().signOut();
-                                                this.props.updateCurrentUser(undefined);
+                                                await this.props.logout();
+                                                await this.props.resetAppointments();
+                                                await AsyncStorage.removeItem('user');
+                                                await AsyncStorage.removeItem('appointments');
+                                                await this.props.updateCurrentUser(undefined);
                                             }
                                             else {
                                                 // navigation.navigate('Home', { action: -1 })
@@ -651,7 +627,12 @@ class Main extends React.Component {
                                             />
                                         </MenuTrigger>
                                         <MenuOptions customStyles={optionsStyles}>
-                                            <MenuOption value={1} text='Sign Out' />
+                                            <View style={{
+                                                minHeight: 80,
+                                                maxHeight: 240,
+                                            }}>
+                                                <MenuOption value={1} text='Sign Out' />
+                                            </View>
                                         </MenuOptions>
                                     </Menu>
                                 </View>

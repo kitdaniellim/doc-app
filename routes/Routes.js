@@ -66,6 +66,7 @@ const mapDispatchToProps = dispatch => {
 }
 const mapStateToProps = state => {
     return {
+        loading: state.users.loading,
         current_user: state.users.current_user,
     }
 }

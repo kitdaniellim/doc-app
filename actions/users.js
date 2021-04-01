@@ -174,6 +174,7 @@ export const updateOfficeHours = officeHours => {
 export const login = (email, password) => {
     return async (dispatch) => {
         try {
+            dispatch(loadBegin());
             console.log("Attempting to login...")
             console.log(email);
             await Firebase.auth().signInWithEmailAndPassword(email, password).then(async (result) => {
@@ -186,17 +187,7 @@ export const login = (email, password) => {
                     });
             });
         } catch (e) {
-            Alert.alert(
-                'Error!',
-                `Incorrect email or password`,
-                [
-                    {
-                        text: 'Close',
-                        style: 'cancel'
-                    }
-                ],
-                { cancelable: true }
-            );
+            dispatch({ type: LOGIN, payload: { user: {} } })
         }
     }
 }
@@ -363,7 +354,7 @@ export const getConsultant = uid => {
             dispatch({ type: GET_CONSULTANT, payload: { singleConsultant: singleConsultant.data() } })
             dispatch(loadEnd());
         } catch (e) {
-            alert("puta3");
+            console.log('Error: ' + e);
         }
     }
 }

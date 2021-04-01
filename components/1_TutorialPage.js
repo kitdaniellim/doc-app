@@ -2,7 +2,14 @@ import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { ImageSlide } from './custom/ImageSlide'
 import { homeStyles } from '../styles/styles';
+
+import { updateCurrentUser } from '../actions/users';
+
+//Backend
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import AsyncStorage from "@react-native-community/async-storage";
+
 
 class Tutorial extends React.Component {
     constructor(props) {
@@ -23,8 +30,8 @@ class Tutorial extends React.Component {
     }
 
     Skip = () => {
-        const navigation = this.props.navigation;
-        navigation.navigate('Home');
+        console.log(this.props.route.params.cur_user)
+        this.props.updateCurrentUser(this.props.route.params.cur_user);
     }
 
     render() {
@@ -103,4 +110,17 @@ class Tutorial extends React.Component {
     }
 }
 
-export default Tutorial;
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ updateCurrentUser }, dispatch)
+  }
+  
+  const mapStateToProps = state => {
+    return {
+
+    }
+  }
+  
+  export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Tutorial)

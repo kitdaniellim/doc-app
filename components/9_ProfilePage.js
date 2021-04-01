@@ -48,10 +48,14 @@ class Profile extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props !== prevProps) {
+    if (this.props.singleConsultant !== prevProps.singleConsultant) {
       let consultant = this.props.singleConsultant;
       let reviews = this.props.reviews;
       let average = this.getRatingAverage(this.props.reviews);
+      // let office; 
+      // if(consultant !== undefined) {
+      //   office = Array.from(consultant.office_details);
+      // }
       let office = Array.from(consultant.office_details);
 
       this.setState(() => ({
@@ -98,16 +102,20 @@ class Profile extends React.Component {
 
   Paypal = (id) => {
 
-    this.props.navigation.navigate('Paypal', {
-      consultant_id: id
+    // this.props.navigation.navigate('Paypal', {
+    //   consultant_id: id
+    // });
+
+    this.props.navigation.navigate('BookPage', {
+      id
     });
 
   }
 
   render() {
-    console.log('SHOWING PROFILE PROPS============')
-    console.log(this.props.loading)
-    console.log('END OF PROFILE PROPS============')
+    // console.log('SHOWING PROFILE PROPS============')
+    // console.log(this.props.loading)
+    // console.log('END OF PROFILE PROPS============')
     return (
       <View style={profileStyles.container}>
         <View style={profileStyles.header_container}>
@@ -141,18 +149,12 @@ class Profile extends React.Component {
                 </View>
               ) : (
                 <View> */}
-              {/* {this.props.loading ? (
-                <View style={[globalStyles.loading_container, globalStyles.loading_horizontal]}>
-                  <ActivityIndicator size="large" color="#00ff00" />
-                </View>
-              ) : ( */}
               <View style={profileStyles.profile_officeimg_container}>
                 <Image
                   source={{ uri: this.state.consultant.officeImage }}
                   style={profileStyles.profile_officeimg}
                 />
               </View>
-              {/* )} */}
               <View style={profileStyles.profile_b_info_container}>
                 <Text style={profileStyles.profile_b_info_header}>Basic Information</Text>
                 {/* {this.props.loading ? (
@@ -294,7 +296,7 @@ const mapDispatchToProps = dispatch => {
 }
 const mapStateToProps = state => {
   return {
-    loading: state.users.loading,
+    // loading: state.users.loading,
     singleConsultant: state.users.singleConsultant,
     reviews: state.reviews.items
   }

@@ -203,6 +203,20 @@ const Global = {
     borderRadius: 15,
     marginTop: 7,
     marginBottom: 20,
+    marginHorizontal: 4,
+    padding: 5,
+    justifyContent: 'center',
+    alignSelf: 'center'
+  },
+
+  modal_button_container_verified_fade: {
+    height: 30,
+    width: 100,
+    backgroundColor: '#56D74F80',
+    borderRadius: 15,
+    marginTop: 7,
+    marginBottom: 20,
+    marginHorizontal: 4,
     padding: 5,
     justifyContent: 'center',
     alignSelf: 'center'
@@ -226,7 +240,7 @@ const Global = {
 
   loading_container: {
     flex: 1,
-    justifyContent: "center"
+    justifyContent: "center",
   },
 
   loading_horizontal: {

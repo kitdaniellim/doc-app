@@ -89,11 +89,29 @@ class CalendarPage2 extends React.Component {
   toggleConfirmAllModal = () => {
     if (this.state.isConfirmModalVisible) {
       this.setState(() => ({ isConfirmModalVisible: false }));
+
     } else {
-      //Confirm all appointments here
       this.setState(() => ({ isConfirmModalVisible: true }));
     }
   };
+
+  confirmAll = async () => {
+    this.toggleConfirmAllModal();
+
+    setTimeout(() => {
+      console.log('updating')
+      this.state.appointments.map(async (item) => {
+        if (item.status === "Pending") {
+          console.log(item.uid)
+          await this.props.updateAppointmentStatus(item.uid, "Approved");
+          await this.props.addNotif(this.state.user.userType, item.uid, 'APPROVE')
+        }
+      })
+
+      this.props.getUserAppointments(this.state.user.uid, this.state.user.userType);
+      this.setState(() => ({ appointments: this.props.appointments.filter((appointment) => appointment.date == this.props.route.params.date) }));
+    }, 1000);
+  }
 
   //Function called by the consultant to accept the client's request for 
   //an appointment (via check-icon)
@@ -139,7 +157,7 @@ class CalendarPage2 extends React.Component {
               setTimeout(acc, 2000);
             });
             this.props.getUserAppointments(this.state.user.uid, this.state.user.userType);
-            await this.setState(() => ({ appointments: this.props.appointments.filter((appointment) => appointment.date == this.props.route.params.date) }));
+            this.setState(() => ({ appointments: this.props.appointments.filter((appointment) => appointment.date == this.props.route.params.date) }));
           }
         },
         {
@@ -195,7 +213,11 @@ class CalendarPage2 extends React.Component {
   notifyAllClients = (id) => {
     if (this.state.text != "") {
       console.log("Notification sent to all clients. " + this.state.text);
-      this.props.addNotif(this.state.user.userType, this.state.id, this.state.text)
+      this.state.appointments.map(async (item) => {
+        if (item.status === "Pending" || item.status === "Approved") {
+          this.props.addNotif(this.state.user.userType, item.uid, this.state.text)
+        }
+      })
       this.setState(() => ({ isNotifyAllModalVisible: false, text: "" }));
     }
   };
@@ -388,6 +410,9 @@ class CalendarPage2 extends React.Component {
           animationInTiming={1100}
           animationOutTiming={900}
         >
+
+
+
           <View style={globalStyles.modal_container}>
             <View style={globalStyles.modal_container_top_verified}>
               <Icon
@@ -397,17 +422,24 @@ class CalendarPage2 extends React.Component {
               />
             </View>
             <View style={globalStyles.modal_container_bottom}>
-              <Text style={globalStyles.modal_notif_bold}>Confirmed.</Text>
-              <Text style={globalStyles.modal_notif}>
-                All appointments for this day have been scheduled!
-              </Text>
-              <TouchableOpacity
-                activeOpacity={0.6}
-                onPress={this.toggleConfirmAllModal}
-                style={globalStyles.modal_button_container_verified}
-              >
-                <Text style={globalStyles.modal_button_label}>Okay</Text>
-              </TouchableOpacity>
+              <Text style={globalStyles.modal_notif}>Confirm and schedule all clients {"\n"} for today?</Text>
+              <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                <TouchableOpacity
+                  activeOpacity={0.6}
+                  onPress={this.toggleConfirmAllModal}
+                  style={globalStyles.modal_button_container_verified_fade}
+                >
+                  <Text style={globalStyles.modal_button_label}>No</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.6}
+                  onPress={this.confirmAll}
+                  style={globalStyles.modal_button_container_verified}
+                >
+                  <Text style={globalStyles.modal_button_label}>Yes</Text>
+                </TouchableOpacity>
+
+              </View>
             </View>
           </View>
         </Modal>
@@ -457,44 +489,6 @@ class CalendarPage2 extends React.Component {
             </View>
           </View>
         </Modal>
-        {/* If ever design changes, may use this for reference -Dan */}
-        {/* <View style={globalStyles.reason_modal_container}>
-            <View style={globalStyles.modal_container_top_dblue}>
-              <Icon style={globalStyles.modal_icon} name="times-circle-o" size={29} />
-              <View style={{ marginTop: 10 }}>
-                <Text style={globalStyles.modal_notif_bold_white}>Reason for Decline</Text>
-              </View>
-            </View>
-            <View style={globalStyles.reason_modal_container_bottom}>
-              <Text style={globalStyles.reason_modal_notif_center}>Please input your reason to be read {'\n'} by your {this.state.user.userType === "CONSULTANT" ? "client" : "consultant"}.</Text>
-              <TextInput
-                style={calendarStyles.reason_modal_textinput}
-                multiline={true}
-                maxLength={200}
-                numberOfLines={5}
-                onChangeText={(reason) => this.setState({ reason })}
-                value={this.state.reason}
-              />
-              <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                <TouchableOpacity
-                  activeOpacity={0.6}
-                  onPress={this.cancelAppointment}
-                  style={globalStyles.modal_button_container_dblue}
-                >
-                  <Text style={globalStyles.modal_button_label}>Submit</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  activeOpacity={0.6}
-                  onPress={this.toggleReasonCancelModal}
-                  style={globalStyles.modal_button_container_fade_dblue}
-                >
-                  <Text style={globalStyles.modal_button_label}>Close</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View> */}
-
-
         <Modal
           isVisible={this.state.isNotifyAllModalVisible}
           animationIn="slideInUp"
@@ -705,8 +699,7 @@ class CalendarPage2 extends React.Component {
             <View style={{ flexDirection: "row", flex: 3 }}>
               <TouchableOpacity
                 activeOpacity={0.6}
-                // onPress={() => { this.toggleNotifyAllClientsModal(item.uid) }}
-                onPress={() => { }}
+                onPress={this.toggleNotifyAllClientsModal}
                 style={calendarStyles.header_confirmall_container}
               >
                 <Text style={calendarStyles.header_confirmall_text}>
@@ -715,8 +708,7 @@ class CalendarPage2 extends React.Component {
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.6}
-                // onPress={this.toggleConfirmAllModal}
-                onPress={() => { }}
+                onPress={this.toggleConfirmAllModal}
                 style={calendarStyles.header_confirmall_container}
               >
                 <Text style={calendarStyles.header_confirmall_text}>
@@ -969,7 +961,6 @@ class CalendarPage2 extends React.Component {
                             activeOpacity={0.6}
                             style={calendarStyles.date_details_button_notify}
                             onPress={() => { this.toggleNotifyClientModal(item.uid) }}
-                          // onPress={() => { }}
                           >
                             <Text
                               style={calendarStyles.date_details_button_label}
@@ -980,7 +971,7 @@ class CalendarPage2 extends React.Component {
                         </View>
                       ) : item.status === "Approved" ? ( //Appointment is approved
                         <View>
-                          <TouchableOpacity
+                          {/* <TouchableOpacity
                             activeOpacity={0.6}
                             disabled
                             style={calendarStyles.date_details_button_confirmed}
@@ -990,7 +981,7 @@ class CalendarPage2 extends React.Component {
                             >
                               Confirmed
                             </Text>
-                          </TouchableOpacity>
+                          </TouchableOpacity> */}
                           <TouchableOpacity
                             activeOpacity={0.6}
                             style={calendarStyles.date_details_button_markdone}
@@ -1006,7 +997,6 @@ class CalendarPage2 extends React.Component {
                             activeOpacity={0.6}
                             style={calendarStyles.date_details_button_notify}
                             onPress={() => { this.toggleNotifyClientModal(item.uid) }}
-                          // onPress={() => { }}
                           >
                             <Text
                               style={calendarStyles.date_details_button_label}

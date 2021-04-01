@@ -1,10 +1,13 @@
 {
   "expo": {
     "name": "SetMeApp",
-    "icon": "./assets/app_logo_nontransparent.png",
+    "icon": "./assets/app_logo.png",
     "description": "Appointment application for professionals.",
     "slug": "SetMeApp",
     "sdkVersion": "37.0.0",
+    "notification": {
+      "icon": "./assets/app_logo.png"
+    },
     "platforms": [
       "ios",
       "android",
@@ -13,9 +16,9 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splash-setmeapp.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#19BAB9"
     },
     "updates": {
       "fallbackToCacheTimeout": 0

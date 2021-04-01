@@ -21,21 +21,12 @@ class Search extends React.Component {
   }
 
   async componentDidMount() {
-    try {
-      const user = JSON.parse(
-        await AsyncStorage.getItem("user")
-      );
-      await this.props.getAllConsultant();
-
-    } catch (e) {
-      console.log(`Error! Details: ${e}`);
-      this.props.navigation.navigate('Login');
-    }
+    await this.props.getAllConsultant();
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
-      this.setState(() => ({ filterVal: this.props.route.params.userSpecialty }));
+      this.setState(() => ({ filterVal: this.props.route.params?.userSpecialty ?? 'None' }));
     }
   }
 
@@ -49,11 +40,11 @@ class Search extends React.Component {
   }
 
   render() {
-    console.log('=================================');
-    console.log(this.props);
+    // console.log('=================================');
+    // console.log(this.props.route.params);
     // console.log('-----------------------------');
     // console.log(this.state);
-    console.log('=================================');
+    // console.log('=================================');
 
     const userSpecialty_list = [
       {

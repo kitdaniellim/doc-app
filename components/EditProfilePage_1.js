@@ -1,12 +1,12 @@
 import React from 'react';
-import {  Alert, Text, TextInput, Image, ScrollView, View, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, Alert, Text, TextInput, Image, ScrollView, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { signupStyles, profileStyles, globalStyles } from '../styles/styles';
 import RNPickerSelect from 'react-native-picker-select';
 import Modal from 'react-native-modal';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getConsultant, updateProfileImage, updateOfficeImage, editProfile, updateLocation, updateEmail, updatePassword, updateFullName, updateUserSpecialty, updateUserLIC, updateUserSubSpecialty, updateOfficeDetails } from '../actions/users';
+import { getConsultant, getAllConsultant, updateProfileImage, updateOfficeImage, editProfile, updateLocation, updateEmail, updatePassword, updateFullName, updateUserSpecialty, updateUserLIC, updateUserSubSpecialty, updateOfficeDetails } from '../actions/users';
 import { getReviews } from '../actions/reviews';
 
 
@@ -19,7 +19,7 @@ class EditProfile_1 extends React.Component {
   constructor(props) {
     super(props);
     // this.state = {
-      // photo: null,
+    // photo: null,
     // }
     this.state = {
       photo: null,
@@ -77,10 +77,10 @@ class EditProfile_1 extends React.Component {
     //   count++;
     // })
 
-    
+
     this.setState(() => ({
       officeCount: this.props.singleConsultant.office_details.length,
-      office_details : this.props.singleConsultant.office_details,
+      office_details: this.props.singleConsultant.office_details,
     }))
 
   }
@@ -111,14 +111,14 @@ class EditProfile_1 extends React.Component {
   // }
 
   componentDidUpdate(prevProps) {
-    if(this.props.route.params.office_details.length !== prevProps.route.params.office_details.length){
+    if (this.props.route.params.office_details.length !== prevProps.route.params.office_details.length) {
       console.log('DIFFERENT PARAMETERS')
       console.log(this.props.route.params.office_details)
       console.log('---------------------')
       console.log(prevProps.route.params.office_details)
       console.log('==========================')
       this.setState(() => ({
-        office_details : this.props.route.params.office_details,
+        office_details: this.props.route.params.office_details,
       }))
     }
   }
@@ -127,7 +127,7 @@ class EditProfile_1 extends React.Component {
     // console.log('ADDING HOURS')
     // console.log(this.state.office_details[key])
     // console.log('------end')
-    this.props.navigation.navigate('EditProfile_2', {key: key, office_details: this.state.office_details});
+    this.props.navigation.navigate('EditProfile_2', { key: key, office_details: this.state.office_details });
   }
 
   addSchedule = () => {
@@ -164,7 +164,7 @@ class EditProfile_1 extends React.Component {
     let office_locations = this.state.office_details;
     office_locations[i].office_location = text;
 
-    this.setState(() => ({ office_details : office_locations }));
+    this.setState(() => ({ office_details: office_locations }));
   }
 
   updateLocationArray = (location, count) => {
@@ -191,61 +191,61 @@ class EditProfile_1 extends React.Component {
   }
 
   // addLocation = () => {
-    // let locationInput = this.state.locationInput;
-    // let key = this.state.key;
-    // let count = this.state.count;
+  // let locationInput = this.state.locationInput;
+  // let key = this.state.key;
+  // let count = this.state.count;
 
-    // locationInput.push(
-    //   < View key={key.toString()}>
-    //     <View style={signupStyles.forms_textinput_container}>
-    //       <Icon style={globalStyles.icon_global} name="map-marker" size={18} />
-    //       <TextInput
-    //         placeholder="Location"
-    //         placeholderTextColor="#8B8787"
-    //         style={signupStyles.forms_textinput}
-    //         onChangeText={text => this.updateLocation(text, key)}
-    //       //onChangeText = { text => this.props.update_location( text, key )}
-    //       //onChangeText={text => this.setState({ text })}
-    //       />
-    //     </View>
-    //     <View style={signupStyles.forms_add_textinput_container}>
-    //       <TouchableOpacity
-    //         activeOpacity={0.6}
-    //         style={signupStyles.forms_add_textinput_button_container}
-    //         onPress={() => this.addOfficeHours(this.state.text, this.state.count)}
-    //       >
-    //         <Icon style={globalStyles.icon_global} name="plus" size={14} />
-    //         <Text style={signupStyles.forms_add_textinput_text} > ADD OFFICE HOURS </Text>
-    //       </TouchableOpacity>
-    //     </View>
-    //   </View>
-    // )
+  // locationInput.push(
+  //   < View key={key.toString()}>
+  //     <View style={signupStyles.forms_textinput_container}>
+  //       <Icon style={globalStyles.icon_global} name="map-marker" size={18} />
+  //       <TextInput
+  //         placeholder="Location"
+  //         placeholderTextColor="#8B8787"
+  //         style={signupStyles.forms_textinput}
+  //         onChangeText={text => this.updateLocation(text, key)}
+  //       //onChangeText = { text => this.props.update_location( text, key )}
+  //       //onChangeText={text => this.setState({ text })}
+  //       />
+  //     </View>
+  //     <View style={signupStyles.forms_add_textinput_container}>
+  //       <TouchableOpacity
+  //         activeOpacity={0.6}
+  //         style={signupStyles.forms_add_textinput_button_container}
+  //         onPress={() => this.addOfficeHours(this.state.text, this.state.count)}
+  //       >
+  //         <Icon style={globalStyles.icon_global} name="plus" size={14} />
+  //         <Text style={signupStyles.forms_add_textinput_text} > ADD OFFICE HOURS </Text>
+  //       </TouchableOpacity>
+  //     </View>
+  //   </View>
+  // )
 
-    // key += 1;
-    // count += 1;
-    // this.setState({
-    //   key: key,
-    //   count: count,
-    //   locationInput: locationInput,
-    // })
-    // console.log("edit loc")
-    // console.log(count);
-    //console.log(text);
+  // key += 1;
+  // count += 1;
+  // this.setState({
+  //   key: key,
+  //   count: count,
+  //   locationInput: locationInput,
+  // })
+  // console.log("edit loc")
+  // console.log(count);
+  //console.log(text);
   // }
 
   // removeLocation = () => {
-    // let locationInput = this.state.locationInput;
-    // let count = this.state.count;
+  // let locationInput = this.state.locationInput;
+  // let count = this.state.count;
 
-    // if (count > 1) {
-    //   locationInput.pop();
-    //   count -= 1;
-    // }
+  // if (count > 1) {
+  //   locationInput.pop();
+  //   count -= 1;
+  // }
 
-    // this.setState({
-    //   count: count,
-    //   locationInput
-    // });
+  // this.setState({
+  //   count: count,
+  //   locationInput
+  // });
   // }
 
   async checkCameraRollPermission() {
@@ -285,7 +285,7 @@ class EditProfile_1 extends React.Component {
       aspect: [4, 3],
     });
 
-    
+
     if (!result.cancelled) {
       console.log('SHOWING SHIT==============');
       console.log(result)
@@ -306,6 +306,7 @@ class EditProfile_1 extends React.Component {
     await this.props.editProfile(this.props.singleConsultant.uid);
     await this.props.getConsultant(this.props.singleConsultant.uid);
     await this.props.getReviews(this.props.singleConsultant.uid);
+    await this.props.getAllConsultant();
     this.props.navigation.replace('Profile');
   }
 
@@ -518,60 +519,66 @@ class EditProfile_1 extends React.Component {
               <View style={profileStyles.profile_b_info_container}>
                 <Text style={profileStyles.profile_b_info_header}>Office Details</Text>
                 {this.state.office_details.map((value, i) => {
-                      return (
-                        <View key={value.id.toString()}>
-                          <View style={signupStyles.forms_textinput_container}>
-                            <Icon style={globalStyles.icon_global} name="map-marker" size={18} />
-                            <TextInput
-                              placeholder="Location"
-                              placeholderTextColor="#8B8787"
-                              style={signupStyles.forms_textinput}
-                              value={value.office_location}
-                              onChangeText={text => this.setLocation(text, value.id)}
-                            />
-                          </View>
-                          <Text style={profileStyles.profile_b_info_header_justify}>{value.office_hour_from} - {value.office_hour_to} {value.office_day.map((day) => {return ' ' + day})}</Text>
-                          <View style={signupStyles.forms_add_textinput_container}>
-                            
-                            <TouchableOpacity
-                              activeOpacity={0.6}
-                              style={profileStyles.forms_add_textinput_button_container_i}
-                              onPress={() => this.addOfficeHours(value.id)}
-                            >
-                              <View style={{ flexDirection: 'row' }}>
-                                <Icon style={globalStyles.icon_global_i} name="plus" size={14} />
-                                <Text style={profileStyles.forms_chooseimg_button_text_i} >
-                                  ADD OFFICE HOURS
-                                  </Text>
-                              </View>
+                  return (
+                    <View key={value.id.toString()}>
+                      <View style={signupStyles.forms_textinput_container}>
+                        <Icon style={globalStyles.icon_global} name="map-marker" size={18} />
+                        <TextInput
+                          placeholder="Location"
+                          placeholderTextColor="#8B8787"
+                          style={signupStyles.forms_textinput}
+                          value={value.office_location}
+                          onChangeText={text => this.setLocation(text, value.id)}
+                        />
+                      </View>
+                      <Text style={profileStyles.profile_b_info_header_justify}>{value.office_hour_from} - {value.office_hour_to} {value.office_day.map((day) => { return ' ' + day })}</Text>
+                      <View style={signupStyles.forms_add_textinput_container}>
 
-                            </TouchableOpacity>
+                        <TouchableOpacity
+                          activeOpacity={0.6}
+                          style={profileStyles.forms_add_textinput_button_container_i}
+                          onPress={() => this.addOfficeHours(value.id)}
+                        >
+                          <View style={{ flexDirection: 'row' }}>
+                            <Icon style={globalStyles.icon_global_i} name="plus" size={14} />
+                            <Text style={profileStyles.forms_chooseimg_button_text_i} >
+                              ADD OFFICE HOURS
+                                  </Text>
                           </View>
-                        </View>
-                      );
-                    })}
+
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  );
+                })}
 
 
               </View>
               <View style={signupStyles.forms_add_textinput_container}>
-                  <TouchableOpacity
-                    activeOpacity={0.6}
-                    style={profileStyles.forms_add_textinput_button_container_i}
-                    onPress={() => this.addSchedule()}
-                  >
-                    <Icon style={globalStyles.icon_global_i} name="plus" size={14} />
-                    <Text style={profileStyles.forms_chooseimg_button_text_i} > ADD </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.6}
-                    style={profileStyles.forms_add_textinput_button_container_i}
-                    onPress={() => this.removeSchedule()}
-                  >
-                    <Icon style={globalStyles.icon_global_i} name="times" size={14} />
-                    <Text style={profileStyles.forms_chooseimg_button_text_i} >REMOVE </Text>
-                  </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.6}
+                  style={profileStyles.forms_add_textinput_button_container_i}
+                  onPress={() => this.addSchedule()}
+                >
+                  <Icon style={globalStyles.icon_global_i} name="plus" size={14} />
+                  <Text style={profileStyles.forms_chooseimg_button_text_i} > ADD </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.6}
+                  style={profileStyles.forms_add_textinput_button_container_i}
+                  onPress={() => this.removeSchedule()}
+                >
+                  <Icon style={globalStyles.icon_global_i} name="times" size={14} />
+                  <Text style={profileStyles.forms_chooseimg_button_text_i} >REMOVE </Text>
+                </TouchableOpacity>
+              </View>
+              {this.props.loading ?
+                <View style={[globalStyles.loading_container, globalStyles.loading_horizontal]}>
+                  <ActivityIndicator size="large" color="#56EC65" />
                 </View>
-
+                :
+                <View style={[globalStyles.loading_container, globalStyles.loading_horizontal]} />
+              }
               <TouchableOpacity
                 activeOpacity={0.6}
                 style={profileStyles.forms_confirm_edit_profile}
@@ -592,6 +599,7 @@ class EditProfile_1 extends React.Component {
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({
     getConsultant,
+    getAllConsultant,
     getReviews,
     updateProfileImage,
     editProfile,
@@ -608,13 +616,9 @@ const mapDispatchToProps = dispatch => {
 }
 const mapStateToProps = state => {
   return {
-    // user: state.users,
-    // consultant: state.users,
+    loading: state.users.loading,
     singleConsultant: state.users.singleConsultant,
-    // locArray: state.locArray,
-
     email: state.users.email,
-    // password: state.users.password,
     fullName: state.users.fullName,
     userType: state.users.userType,
     userSpecialty: state.users.userSpecialty,
