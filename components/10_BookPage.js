@@ -213,6 +213,7 @@ class BookPage extends React.Component {
       isCancelled: false,
       created_at: moment().format('YYYY-MM-DD HH:mm:ss').toString()
     };
+    console.log(appointment)
     await this.props.bookAppointment(appointment);
 
     if (this.props.error) {
@@ -252,6 +253,7 @@ class BookPage extends React.Component {
   };
 
   render() {
+    // console.log(this.props.route.params)
     return (
       <View style={calendarStyles.container}>
         <BookPage1_Date

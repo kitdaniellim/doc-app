@@ -105,17 +105,17 @@ class Profile extends React.Component {
     // this.props.navigation.navigate('Paypal', {
     //   consultant_id: id
     // });
-
+    console.log(id)
     this.props.navigation.navigate('BookPage', {
-      id
+      consultant_id: id
     });
 
   }
 
   render() {
-    console.log('SHOWING PROFILE PROPS============')
-    console.log(this.props.singleConsultant)
-    console.log('END OF PROFILE PROPS============')
+    // console.log('SHOWING PROFILE PROPS============')
+    // console.log(this.props.singleConsultant)
+    // console.log('END OF PROFILE PROPS============')
     return (
       <View style={profileStyles.container}>
         <View style={profileStyles.header_container}>

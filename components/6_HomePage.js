@@ -27,13 +27,13 @@ class Home extends React.Component {
   }
 
   SeeAll(userSpecialty) {
-    console.log('clicked see all')
-    console.log(userSpecialty)
+    // console.log('clicked see all')
+    // console.log(userSpecialty)
     this.props.navigation.navigate('Search', { userSpecialty: userSpecialty });
   }
 
   Profile = async (uid) => {
-    console.log('Clicked ' + uid)
+    // console.log('Clicked ' + uid)
     await this.props.getConsultant(uid);
     await this.props.getReviews(uid);
 
