@@ -182,8 +182,12 @@ android {
 }
 
 dependencies {
+    implementation platform('com.google.firebase:firebase-bom:26.8.0')
+    
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation 'com.google.firebase:firebase-analytics'
+
     implementation project(path: ':@react-native-picker_picker')
 
     if (enableHermes) {

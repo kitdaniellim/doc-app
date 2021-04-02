@@ -32,7 +32,8 @@
       "bundleIdentifier": "com.appointmentapp"
     },
     "android": {
-      "package": "com.appointmentapp"
+      "package": "com.appointmentapp",
+      "googleServicesFile": "./AppointmentApp/android/app/google-services.json"
     }
   }
 }

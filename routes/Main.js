@@ -160,12 +160,12 @@ class Main extends React.Component {
                         text: 'Yes',
                         onPress: async () => {
                             await Permissions.askAsync(Permissions.NOTIFICATIONS);
-                            await Notifications.getExpoPushTokenAsync().then(async (token) => {
-                                await this.props.updateToken(uid, token).then(async () => {
-                                    let user = this.state.user
-                                    user['expoToken'] = token;
-                                    AsyncStorage.setItem('user', JSON.stringify(user));
-                                })
+                            const token = await Notifications.getExpoPushTokenAsync();
+
+                            await this.props.updateToken(uid, token).then(async () => {
+                                let user = this.state.user
+                                user['expoToken'] = token;
+                                AsyncStorage.setItem('user', JSON.stringify(user));
                             })
                         }
                     }
