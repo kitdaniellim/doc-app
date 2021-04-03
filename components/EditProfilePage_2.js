@@ -67,18 +67,18 @@ class EditProfile_2 extends React.Component {
         canConfirm: false
       }))
     }
-    console.log(value)
-    console.log(key)
-    console.log('===========OFFICE SCHEDS============')
-    console.log(this.state.office_details)
-    console.log('===========-------------============')
+    // console.log(value)
+    // console.log(key)
+    // console.log('===========OFFICE SCHEDS============')
+    // console.log(this.state.office_details)
+    // console.log('===========-------------============')
   }
 
   componentDidMount() {
     let office_details = this.props.route.params.office_details
     let key = this.props.route.params.key;
     let office_location = office_details[key].office_location;
-
+    
     this.setState({
       schedCount: office_details.length,
       office_location: office_location,
@@ -173,7 +173,7 @@ class EditProfile_2 extends React.Component {
 
   render() {
     console.log('====== START OF EDIT PROFILE THINGS ======');
-    console.log(this.state.office_details);
+    console.log(this.props.route.params);
     console.log('====== END OF EDIT PROFILE THINGS ======');
 
     return (

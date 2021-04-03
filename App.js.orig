@@ -3,8 +3,6 @@ import { Alert, Text, AppRegistry, Button, TextInput, View, StyleSheet } from 'r
 import Temp from './components/1_A_Temp.js'
 
 import { globalStyles } from './styles/styles';
-
-import { Constants } from 'expo';
 import Routes from './routes/Routes.js';
 import firebase from "firebase"
 import Icon from 'react-native-vector-icons/FontAwesome';

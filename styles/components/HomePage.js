@@ -113,7 +113,8 @@ const Home = {
   scaffold_hlist_item_box_name: {
     color: '#000',
     textAlign: 'left',
-    fontWeight: '200'
+    fontWeight: '200',
+    flexWrap: 'wrap'
   },
 
 

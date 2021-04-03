@@ -4,7 +4,6 @@
     "icon": "./assets/app_logo.png",
     "description": "Appointment application for professionals.",
     "slug": "SetMeApp",
-    "sdkVersion": "37.0.0",
     "notification": {
       "icon": "./assets/app_logo.png"
     },
@@ -33,6 +32,7 @@
     },
     "android": {
       "package": "com.appointmentapp",
+      "useNextNotificationsApi": true,
       "googleServicesFile": "./AppointmentApp/android/app/google-services.json"
     }
   }

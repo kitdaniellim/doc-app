@@ -233,7 +233,7 @@ export const signup = () => {
                         fullName: fullName,
                         userSpecialty: userSpecialty,
                         userLIC: userLIC,
-                        userSubSpecialty: userSubSpecialty,
+                        userSubSpecialty: (userSubSpecialty === undefined) ? '' : userSubSpecialty,
                         office_details: office_details,
                         userType: userType,
                         profilePicture: await Firebase.storage().ref('users/default/default.jpg').getDownloadURL().catch((error) => { alert("error sa geturl") }),

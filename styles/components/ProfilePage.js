@@ -135,9 +135,14 @@ const Profile = {
     backgroundColor: '#ECECEC',
     borderRadius: 15,
     paddingVertical: 10,
-    paddingHorizontal: 80,
+    paddingHorizontal: 8,
     marginVertical: 6,
-    justifyContent: 'center'
+    justifyContent: 'space-between'
+  },
+
+  profile_hours_details_innercontainer: {
+    flex: 1,
+    marginHorizontal: 8,
   },
 
   edit_button: {

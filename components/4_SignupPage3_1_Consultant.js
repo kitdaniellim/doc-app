@@ -25,7 +25,7 @@ class SignupConsultant3_1 extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props !== prevProps) {
+    if (this.props.route.params.office_schedules !== prevProps.route.params.office_schedules) {
       let office_details = this.state.office_details
       let details = this.props.route.params.office_schedules;
       let key = this.props.route.params.key;
@@ -34,6 +34,8 @@ class SignupConsultant3_1 extends React.Component {
         value.id = count;
         value.office_location = this.state.officeLocations[key].location;
         count++;
+        console.log('======================some shit ---------------------')
+        console.log(value)
       })
       office_details.push(...details)
       

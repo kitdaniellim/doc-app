@@ -181,7 +181,14 @@ class Home extends React.Component {
                                         style={homeStyles.scaffold_hlist_item_box_image}
                                       />
                                     </TouchableOpacity>
-                                    <Text style={homeStyles.scaffold_hlist_item_box_name}>{(data.userSpecialty === "Doctor") ? 'Dr. ' : data.userSpecialty} {data.fullName}</Text>
+                                    {/* <Text style={homeStyles.scaffold_hlist_item_box_name}>{(data.userSpecialty === "Doctor") ? 'Dr. ' : data.userSpecialty} {data.fullName}</Text> */}
+                                    <Text style={homeStyles.scaffold_hlist_item_box_name}>
+                                      {((data.fullName).length > 15) ?
+                                        (((data.fullName).substring(0, 15)) + '...') :
+                                        data.fullName
+                                        }
+
+                                    </Text>
                                     <View style={{ flex: 1, alignSelf: 'flex-start', justifyContent: 'center' }}>
                                       <StarRating
                                         disabled={true}

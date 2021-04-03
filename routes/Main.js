@@ -38,10 +38,17 @@ import { updateCurrentUser, updateToken, logout } from '../actions/users';
 import { getNotifs } from '../actions/notifs';
 import { resetAppointments } from '../actions/appointments';
 import AsyncStorage from "@react-native-community/async-storage";
-import { Notifications } from 'expo';
+import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
-import Constants from 'expo-constants';
 import Firebase, { db } from '../config/Firebase'
+
+Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: true,
+        shouldSetBadge: true,
+    }),
+});
 
 class Main extends React.Component {
     constructor(props) {
@@ -59,21 +66,24 @@ class Main extends React.Component {
             await AsyncStorage.getItem("user")
         );
         await this.props.getNotifs(user.uid);
-        if (this.props.userNotifs !== undefined) {
+        // if (this.props.userNotifs !== undefined) {
             // console.log(this.props.userNotifs)
             // console.log('helhlelhleh')
             // this.setState(() => ({
             //     count: this.props.userNotifs.notifs.length
             // }))
-        }
+        // }
 
         this.setState(() => ({
             user: user
         }))
         console.log(user)
         this.registerForPushNotificationsAsync(user.uid, user.expoToken);
-        this._notificationSubscription = Notifications.addListener(this._handleNotification);
-
+        // this._notificationSubscription = Notifications.addNotificationReceivedListener(this._handleNotification);
+        
+        Notifications.addNotificationReceivedListener(this._handleNotification);
+        Notifications.addNotificationResponseReceivedListener(this._handleNotificationResponse);
+        
         //If user has expoToken, notifications is allowed
         if (this.state.user.expoToken !== undefined) {
             //Listener for real-time notifications
@@ -90,6 +100,7 @@ class Main extends React.Component {
                     }
                 });
         }
+
         this.setState(() => ({
             isMounted: true
         }))
@@ -118,8 +129,6 @@ class Main extends React.Component {
     }
 
     sendPushNotification = async (notif) => {
-        // console.log('PUSHING NOTIFICATION HELLO??')
-
         const message = {
             to: this.state.user.expoToken,
             sound: 'default',
@@ -140,44 +149,73 @@ class Main extends React.Component {
         });
     };
 
-    _handleNotification = () => {
+    // _handleNotification = () => {
+    //     Vibration.vibrate();
+    // };
+
+    _handleNotification = notification => {
         Vibration.vibrate();
+        console.log('HELLOOOOOO')
+        console.log(notification)
+        this.setState({ notification: notification });
+    };
+    
+    _handleNotificationResponse = response => {
+        console.log(response);
     };
 
     registerForPushNotificationsAsync = async (uid, userToken) => {
-        const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+        const { status: existingStatus } = await Notifications.getPermissionsAsync();
+        let finalStatus = existingStatus;
+        console.log(finalStatus);
         if (existingStatus !== 'granted' || userToken === undefined) {
-            Alert.alert(
-                'Allow Push-in Notifications',
-                'Hey! You might want to enable push-in notifications for this app, they are good.',
-                [
-                    {
-                        text: 'No',
-                        onPress: () => console.log('Cancel Pressed'),
-                        style: 'cancel'
-                    },
-                    {
-                        text: 'Yes',
-                        onPress: async () => {
-                            await Permissions.askAsync(Permissions.NOTIFICATIONS);
-                            const token = await Notifications.getExpoPushTokenAsync();
-
-                            await this.props.updateToken(uid, token).then(async () => {
-                                let user = this.state.user
-                                user['expoToken'] = token;
-                                AsyncStorage.setItem('user', JSON.stringify(user));
-                            })
-                        }
-                    }
-                ]
-            )
+            const { status } = await Notifications.requestPermissionsAsync();
+            finalStatus = status;
         }
+        if (finalStatus !== 'granted') {
+            alert('Failed to get push token for push notification!');
+            return;
+        }
+        const token = (await Notifications.getExpoPushTokenAsync()).data;
+        console.log(token)
+        await this.props.updateToken(uid, token).then(async () => {
+            let user = this.state.user
+            user['expoToken'] = token;
+            AsyncStorage.setItem('user', JSON.stringify(user));
+        })
+
+        // if (existingStatus !== 'granted' || userToken === undefined) {
+        //     Alert.alert(
+        //         'Allow Push-in Notifications',
+        //         'Hey! You might want to enable push-in notifications for this app, they are good.',
+        //         [
+        //             {
+        //                 text: 'No',
+        //                 onPress: () => console.log('Cancel Pressed'),
+        //                 style: 'cancel'
+        //             },
+        //             {
+        //                 text: 'Yes',
+        //                 onPress: async () => {
+        //                     await Permissions.askAsync(Permissions.NOTIFICATIONS);
+        //                     const token = await Notifications.getExpoPushTokenAsync();
+
+        //                     await this.props.updateToken(uid, token).then(async () => {
+        //                         let user = this.state.user
+        //                         user['expoToken'] = token;
+        //                         AsyncStorage.setItem('user', JSON.stringify(user));
+        //                     })
+        //                 }
+        //             }
+        //         ]
+        //     )
+        // }
         if (Platform.OS === 'android') {
-            Notifications.createChannelAndroidAsync('default', {
+            Notifications.setNotificationChannelAsync('default', {
                 name: 'default',
-                sound: true,
-                priority: 'max',
-                vibrate: [0, 250, 250, 250],
+                importance: Notifications.AndroidImportance.MAX,
+                vibrationPattern: [0, 250, 250, 250],
+                lightColor: '#FF231F7C',
             });
         }
     };

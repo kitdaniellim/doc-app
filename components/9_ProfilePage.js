@@ -198,11 +198,7 @@ class Profile extends React.Component {
                       null
                     }
                     {this.state.consultant.email ?
-                      <View style={{ flexDirection: 'row' }}>
-                        <Text style={{ flex: 1, flexWrap: 'wrap' }}>
-                          Email: {this.state.consultant.email}
-                        </Text>
-                      </View>
+                      <Text>Email: {this.state.consultant.email} </Text>
                       :
                       null
                     }
@@ -241,14 +237,14 @@ class Profile extends React.Component {
                   this.state.office.map((data, i) => {
                     return (
                       <View key={i} style={profileStyles.profile_hours_details}>
-                        <View style={{ flex: 1 }}>
+                        <View style={profileStyles.profile_hours_details_innercontainer}>
                           <Text>
-                            {data.office_location}{"\n"}
+                            {data.office_location}{"\n\n"}
                             {data.office_hour_from} - {data.office_hour_to}
                           </Text>
                         </View>
-                        <View style={{ flex: 1 }}>
-                          <Text>Available Days: </Text>
+                        <View style={profileStyles.profile_hours_details_innercontainer}>
+                          <Text style={calendarStyles.no_appointments_text}>Available Days: </Text>
                           {data.office_day.map((data1, i) => {
                             return (
                               <Text key={i}>{data1}</Text>
