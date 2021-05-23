@@ -17,7 +17,6 @@ import { getReviewedBy } from '../actions/reviews';
 import AsyncStorage from "@react-native-community/async-storage";
 
 class Login extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -101,7 +100,7 @@ class Login extends React.Component {
               </View>
               <View style={globalStyles.modal_container_bottom}>
                 <Text style={globalStyles.modal_notif_bold}>Oops!</Text>
-                <Text style={globalStyles.modal_notif}>Incorrect username or password. Please try again.</Text>
+                <Text style={globalStyles.modal_notif}>Incorrect email or password. Please try again.</Text>
                 <TouchableOpacity
                   activeOpacity={0.6}
                   onPress={this.Close}
@@ -120,7 +119,7 @@ class Login extends React.Component {
             <View style={loginStyles.forms_textinput_container}>
               <Icon style={globalStyles.icon_global} name="user-circle" size={18} />
               <TextInput
-                placeholder="Username"
+                placeholder="Email"
                 placeholderTextColor="#8B8787"
                 style={loginStyles.forms_textinput}
                 value={this.state.email ? this.state.email : ""}

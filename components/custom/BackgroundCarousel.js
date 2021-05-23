@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: DEVICE_WIDTH,
         height: "100%",
-        resizeMode: 'contain',
+        resizeMode: 'stretch',
     },
 
     circleDiv: {

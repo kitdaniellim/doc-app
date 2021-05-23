@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "SetMeApp",
-    "icon": "./assets/app_logo.png",
+    "icon": "./assets/app_logo_nontransparent.png",
     "description": "Appointment application for professionals.",
     "slug": "SetMeApp",
     "notification": {
@@ -15,8 +15,8 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "splash": {
-      "image": "./assets/splash-setmeapp.png",
-      "resizeMode": "contain",
+      "image": "./assets/splash-setmeapp-v2.png",
+      "resizeMode": "cover",
       "backgroundColor": "#19BAB9"
     },
     "updates": {
@@ -33,7 +33,12 @@
     "android": {
       "package": "com.appointmentapp",
       "useNextNotificationsApi": true,
-      "googleServicesFile": "./AppointmentApp/android/app/google-services.json"
+      "googleServicesFile": "./AppointmentApp/android/app/google-services.json",
+      "config": {
+        "googleSignIn": {
+          "apiKey": "AIzaSyDiWz5p9S6cReH81VVIr2O10uZv5FnuEQg"
+        }
+      }
     }
   }
 }

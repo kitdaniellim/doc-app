@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { signupStyles, globalStyles } from '../styles/styles';
@@ -16,7 +16,7 @@ class Signup_TermsAndAgreement extends React.Component {
     this.state = {
       isTicked: false,
       messageLabel: 'Oops',
-      message: 'Please read the Terms and Agreements carefully before submitting.',
+      message: 'Please read the Terms and Agreements carefully before submitting. Please read the Terms and Agreements carefully before submitting',
       toggleModal: false,
       icon: 'times-circle-o',
     }
@@ -91,10 +91,14 @@ class Signup_TermsAndAgreement extends React.Component {
           <View style={signupStyles.forms_container}>
             <View style={signupStyles.forms_scaffold}>
               <Text style={signupStyles.forms_scaffold_text_bold}>BY SIGNING</Text>
-              <Text style={signupStyles.forms_scaffold_text}>
-                Bacon ipsum dolor amet tri-tip cow corned beef, shankle hamburger cupim ham turkey. Fatback chuck strip steak, ham hock ham short ribs frankfurter. Pork chop capicola t-bone tri-tip tongue. Landjaeger hamburger swine shoulder jerky capicola buffalo venison short loin. Ribeye tri-tip kielbasa pork loin pork chop, corned beef pastrami ham hock shankle pancetta swine. Strip steak kielbasa pancetta, chislic shank buffalo porchetta brisket bresaola jerky pastrami turducken kevin ham. Bresaola biltong ribeye, strip steak jerky burgdoggen tenderloin chuck tri-tip chicken turkey. Fatback burgdoggen jowl tenderloin strip steak filet mignon, picanha bacon. Kielbasa pancetta short loin spare ribs. Landjaeger brisket chicken cupim rump ham hock. Flank cow beef boudin shank, meatball pork loin buffalo chislic chuck short loin ribeye tri-tip pork.{"\n\n"}
-                Landjaeger drumstick t-bone shoulder chuck tenderloin ball tip tail ground round beef ribs boudin tongue pig alcatra. Spare ribs brisket swine burgdoggen strip steak meatball cupim capicola rump pork. Frankfurter sirloin short loin brisket ground round. Ribeye jowl andouille leberkas ham alcatra tri-tip kevin short ribs sirloin pig shoulder bresaola meatloaf. Ball tip pork sirloin pork loin capicola andouille, chicken pastrami kevin hamburger ribeye cow pig brisket. Pig doner frankfurter ball tip alcatra rump meatloaf porchetta buffalo. Tri-tip cupim ground round picanha kevin jerky, chuck fatback brisket rump landjaeger frankfurter chislic shankle. Pastrami porchetta drumstick filet mignon swine.{"\n\n"}
-              </Text>
+              <ScrollView>
+                <Text style={signupStyles.forms_scaffold_text}>
+                  Bacon ipsum dolor amet tri-tip cow corned beef, shankle hamburger cupim ham turkey. Fatback chuck strip steak, ham hock ham short ribs frankfurter. Pork chop capicola t-bone tri-tip tongue. Landjaeger hamburger swine shoulder jerky capicola buffalo venison short loin. Ribeye tri-tip kielbasa pork loin pork chop, corned beef pastrami ham hock shankle pancetta swine. Strip steak kielbasa pancetta, chislic shank buffalo porchetta brisket bresaola jerky pastrami turducken kevin ham. Bresaola biltong ribeye, strip steak jerky burgdoggen tenderloin chuck tri-tip chicken turkey. Fatback burgdoggen jowl tenderloin strip steak filet mignon, picanha bacon. Kielbasa pancetta short loin spare ribs. Landjaeger brisket chicken cupim rump ham hock. Flank cow beef boudin shank, meatball pork loin buffalo chislic chuck short loin ribeye tri-tip pork.{"\n\n"}
+                  Landjaeger drumstick t-bone shoulder chuck tenderloin ball tip tail ground round beef ribs boudin tongue pig alcatra. Spare ribs brisket swine burgdoggen strip steak meatball cupim capicola rump pork. Frankfurter sirloin short loin brisket ground round. Ribeye jowl andouille leberkas ham alcatra tri-tip kevin short ribs sirloin pig shoulder bresaola meatloaf. Ball tip pork sirloin pork loin capicola andouille, chicken pastrami kevin hamburger ribeye cow pig brisket. Pig doner frankfurter ball tip alcatra rump meatloaf porchetta buffalo. Tri-tip cupim ground round picanha kevin jerky, chuck fatback brisket rump landjaeger frankfurter chislic shankle. Pastrami porchetta drumstick filet mignon swine.{"\n\n"}
+                  Landjaeger drumstick t-bone shoulder chuck tenderloin ball tip tail ground round beef ribs boudin tongue pig alcatra. Spare ribs brisket swine burgdoggen strip steak meatball cupim capicola rump pork. Frankfurter sirloin short loin brisket ground round. Ribeye jowl andouille leberkas ham alcatra tri-tip kevin short ribs sirloin pig shoulder bresaola meatloaf. Ball tip pork sirloin pork loin capicola andouille, chicken pastrami kevin hamburger ribeye cow pig brisket. Pig doner frankfurter ball tip alcatra rump meatloaf porchetta buffalo. Tri-tip cupim ground round picanha kevin jerky, chuck fatback brisket rump landjaeger frankfurter chislic shankle. Pastrami porchetta drumstick filet mignon swine.{"\n\n"}
+                  Landjaeger drumstick t-bone shoulder chuck tenderloin ball tip tail ground round beef ribs boudin tongue pig alcatra. Spare ribs brisket swine burgdoggen strip steak meatball cupim capicola rump pork. Frankfurter sirloin short loin brisket ground round. Ribeye jowl andouille leberkas ham alcatra tri-tip kevin short ribs sirloin pig shoulder bresaola meatloaf. Ball tip pork sirloin pork loin capicola andouille, chicken pastrami kevin hamburger ribeye cow pig brisket. Pig doner frankfurter ball tip alcatra rump meatloaf porchetta buffalo. Tri-tip cupim ground round picanha kevin jerky, chuck fatback brisket rump landjaeger frankfurter chislic shankle. Pastrami porchetta drumstick filet mignon swine.{"\n\n"}
+                </Text>
+              </ScrollView>
               <View style={signupStyles.forms_scaffold_checkbox_container}>
                 <CheckBox
                   value={this.state.isTicked}

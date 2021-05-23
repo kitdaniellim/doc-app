@@ -87,7 +87,7 @@ const Global = {
   },
 
   modal_container_bottom: {
-    flex: 2,
+    flex: 3,
     backgroundColor: '#fff',
     padding: 15,
     alignSelf: 'stretch',
@@ -95,7 +95,7 @@ const Global = {
   },
 
   reason_modal_container_bottom: {
-    flex: 2,
+    flex: 3,
     backgroundColor: '#fff',
     padding: 15,
     alignSelf: 'stretch',
@@ -108,6 +108,7 @@ const Global = {
   },
 
   modal_notif: {
+    marginVertical: 7,
     color: '#8B8787',
     fontSize: 15,
     fontWeight: '300',

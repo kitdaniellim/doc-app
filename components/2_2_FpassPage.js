@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Alert, Text, TextInput, View, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { Alert, Text, ActivityIndicator, TextInput, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { fpassStyles, globalStyles } from '../styles/styles';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -18,26 +18,35 @@ class ForgotPassword extends React.Component {
       isModalVisible: false
     }
   }
+
   onTokenChange = async (text) => {
     const token = text;
     await this.setState(() => ({ token }));
   }
+
   onClose = () => {
     if (this.state.isVerified) {
-      navigation.navigate('Login');
+      this.props.navigation.navigate('Login');
     } else {
       this.setState(() => ({ isModalVisible: false }));
     }
   }
+
   onRequest = async () => {
-    if (this.state.token.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
-      await this.props.recoverPassword(this.state.token);
+    console.log(this.state.token)
+    let token = this.state.token.trim();
+    if (token.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
+      await this.props.recoverPassword(token);
       if(!this.props.error) {
         this.setState(() => ({ icon: 'check-circle-o' }));
+        this.setState(() => ({ isVerified: true }));
+        this.setState(() => ({ messageLabel: 'Email Sent!' }));
         this.setState(() => ({ message: this.props.item.message }));
         this.setState(() => ({ isModalVisible: true }));
       } else {
-        this.setState(() => ({ icon: 'check-circle-o' }));
+        this.setState(() => ({ icon: 'times-circle-o' }));
+        this.setState(() => ({ isVerified: false }));
+        this.setState(() => ({ messageLabel: 'Oops' }));
         this.setState(() => ({ message: ` There was an error sending the request: ${this.props.item.message}` }));
         this.setState(() => ({ isModalVisible: true }));
       }
@@ -55,6 +64,7 @@ class ForgotPassword extends React.Component {
       );
     }
   }
+
   render() {
     return (
       <View style={fpassStyles.container}>
@@ -91,19 +101,29 @@ class ForgotPassword extends React.Component {
           <View style={fpassStyles.scaffold}>
             <Text style={fpassStyles.scaffold_text}>
               Forgot your password? No worries! {"\n"}
-              Just enter the username you use to login below and
+              Just enter the email you use to login below and
               we’ll send a recovery key to your email account for you.
             </Text>
             <View style={fpassStyles.scaffold_textinput_container}>
               <Icon style={globalStyles.icon_global} name="user-circle" size={18} />
               <TextInput
-                placeholder="Username"
+                placeholder="Email"
                 placeholderTextColor="#8B8787"
                 style={fpassStyles.scaffold_textinput}
                 onChangeText={this.onTokenChange}
                 value={this.state.token}
               />
             </View>
+            <View style={{height: 50}}>
+              {this.props.loading ?
+                <View style={[globalStyles.loading_container, globalStyles.loading_horizontal]}>
+                  <ActivityIndicator size="large" color="#FFFFFF" />
+                </View>
+                :
+                <View style={[globalStyles.loading_container, globalStyles.loading_horizontal]} />
+              }
+            </View>
+            
             <TouchableOpacity
               activeOpacity={0.6}
               style={fpassStyles.button}
@@ -118,95 +138,8 @@ class ForgotPassword extends React.Component {
   }
 }
 
-
-// const ForgotPassword = ({ navigation }) => {
-//   const [username, setUser] = useState('');
-//   const [icon, setIcon] = useState('times-circle-o');
-//   const [messageLabel, setMessageLabel] = useState('Oops!');
-//   const [message, setMessage] = useState('Please fill in all the required fields before proceeding.');
-//   const [isVerified, verify] = useState(false);
-//   const [isModalVisible, toggleModal] = useState(false);
-
-//   function Close() {
-//     if(isVerified) {
-//       navigation.navigate('Login');
-//     } else {
-//       toggleModal(false)
-//     }
-//   }
-
-//   const Request = () => {
-//     if ((username !== '')) {
-//       verify(true)
-//       setIcon('check-circle-o')
-//       setMessageLabel('Recovery Key sent!')
-//       setMessage('Your key should be delivered shortly. Please check your email.')
-//     }
-//     toggleModal(true)
-//   }
-
-//   return (
-//     <View style={fpassStyles.container}>
-//       <LinearGradient
-//         colors={['rgba(239,239,239,0.5)', 'transparent']}
-//         start={{ x: 0, y: 0 }}
-//         end={{ x: 0, y: 1 }}
-//         style={globalStyles.gradient}
-//       >
-//         <Modal
-//           isVisible={isModalVisible}
-//           animationIn='slideInDown'
-//           animationOut='slideOutUp'
-//           animationInTiming={1100}
-//           animationOutTiming={900}
-//         >
-//           <View style={globalStyles.modal_container}>
-//             <View style={(isVerified)? globalStyles.modal_container_top_verified : globalStyles.modal_container_top}>
-//               <Icon style={globalStyles.modal_icon} name={icon} size={29} />
-//             </View>
-//             <View style={globalStyles.modal_container_bottom}>
-//               <Text style={globalStyles.modal_notif_bold}>{messageLabel}</Text>
-//               <Text style={globalStyles.modal_notif}>{message}</Text>
-//               <TouchableOpacity
-//                 activeOpacity={0.6}
-//                 onPress={Close}
-//                 style={(isVerified)? globalStyles.modal_button_container_verified : globalStyles.modal_button_container}
-//               >
-//                 <Text style={globalStyles.modal_button_label}>Close</Text>
-//               </TouchableOpacity>
-//             </View>
-//           </View>
-//         </Modal>
-//         <View style={fpassStyles.scaffold}>
-//           <Text style={fpassStyles.scaffold_text}>
-//             Forgot your password? No worries! {"\n"}
-//             Just enter the username you use to login below and
-//             we’ll send a recovery key to your email account for you.
-//           </Text>
-//           <View style={fpassStyles.scaffold_textinput_container}>
-//             <Icon style={globalStyles.icon_global} name="user-circle" size={18} />
-//             <TextInput
-//               placeholder="Username"
-//               placeholderTextColor="#8B8787"
-//               style={fpassStyles.scaffold_textinput}
-//               onChangeText={text => setUser(text)}
-//               value={username}
-//             />
-//           </View>
-//           <TouchableOpacity
-//             activeOpacity={0.6}
-//             style={fpassStyles.button}
-//             onPress={Request}
-//           >
-//             <Text style={fpassStyles.button_label}>SEND REQUEST</Text>
-//           </TouchableOpacity>
-//         </View>
-//       </LinearGradient>
-//     </View>
-//   );
-// }
-
 const mapStateToProps = state => ({
+  loading: state.users.loading,
   item: state.users.item,
   error: state.users.error
 });

@@ -77,14 +77,21 @@ const Home = {
     alignItems: 'center'
   },
 
-
   scaffold_hlist_item_container: {
-    justifyContent: 'center',
-    alignItems: 'center'
+    padding: 20,
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: '#ddd',
+    borderBottomWidth: 2,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.9,
+    shadowRadius: 10,
+    marginHorizontal: 8,
   },
 
   scaffold_hlist_item_box_container: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
 
   // scaffold_hlist_item_box_id: {
@@ -97,8 +104,6 @@ const Home = {
   scaffold_hlist_item_box_content: {
     flexDirection: 'column',
     marginHorizontal: 8,
-    justifyContent: 'center',
-    alignSelf: 'center',
   },
 
   scaffold_hlist_item_box_image_container: {

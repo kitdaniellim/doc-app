@@ -96,7 +96,7 @@ class Home extends React.Component {
     return (
       // <SafeAreaView style={{ flex: 1 }}>
       <View style={homeStyles.container}>
-        <View style={{ height: 200 }}>
+        <View style={{ height: 220, marginTop: 10 }}>
           <BackgroundCarousel images={images} />
         </View>
 
@@ -148,7 +148,7 @@ class Home extends React.Component {
                         onPress={() => { }}
                         style={homeStyles.scaffold_vlist_item_header_container}
                       >
-                        <Text style={homeStyles.scaffold_vlist_item_header}>{item.userSpecialty}</Text>
+                        <Text style={homeStyles.scaffold_vlist_item_header}>{item.userSpecialty.toUpperCase()}</Text>
                       </TouchableOpacity>
                       <TouchableOpacity
                         activeOpacity={0.6}
@@ -187,7 +187,6 @@ class Home extends React.Component {
                                         (((data.fullName).substring(0, 15)) + '...') :
                                         data.fullName
                                         }
-
                                     </Text>
                                     <View style={{ flex: 1, alignSelf: 'flex-start', justifyContent: 'center' }}>
                                       <StarRating
@@ -205,7 +204,6 @@ class Home extends React.Component {
                               </View>
                             )
                           }
-
                         })}
                       </ScrollView>
                     </View>

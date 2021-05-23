@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, Vibration, View, FlatList, Text, StyleSheet } from 'react-native';
+import { Vibration, View, FlatList, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Badge } from 'react-native-elements'
 import Header from '../components/custom/Header.js';
@@ -67,23 +67,23 @@ class Main extends React.Component {
         );
         await this.props.getNotifs(user.uid);
         // if (this.props.userNotifs !== undefined) {
-            // console.log(this.props.userNotifs)
-            // console.log('helhlelhleh')
-            // this.setState(() => ({
-            //     count: this.props.userNotifs.notifs.length
-            // }))
+        // console.log(this.props.userNotifs)
+        // console.log('helhlelhleh')
+        // this.setState(() => ({
+        //     count: this.props.userNotifs.notifs.length
+        // }))
         // }
 
         this.setState(() => ({
             user: user
         }))
-        console.log(user)
+        // console.log(user) 
         this.registerForPushNotificationsAsync(user.uid, user.expoToken);
         // this._notificationSubscription = Notifications.addNotificationReceivedListener(this._handleNotification);
-        
+
         Notifications.addNotificationReceivedListener(this._handleNotification);
         Notifications.addNotificationResponseReceivedListener(this._handleNotificationResponse);
-        
+
         //If user has expoToken, notifications is allowed
         if (this.state.user.expoToken !== undefined) {
             //Listener for real-time notifications
@@ -110,12 +110,12 @@ class Main extends React.Component {
         if (this.props.userNotifs == undefined || nextProps.userNotifs == undefined) {
             return true;
         }
-        console.log('THIS PROPS')
-        console.log(this.props.userNotifs.uid)
-        console.log('-------------------')
-        console.log('NEXT PROPS')
-        console.log(nextProps.userNotifs.uid)
-        console.log('-------------------')
+        // console.log('THIS PROPS')
+        // console.log(this.props.userNotifs.uid)
+        // console.log('-------------------')
+        // console.log('NEXT PROPS')
+        // console.log(nextProps.userNotifs.uid)
+        // console.log('-------------------')
         if (
             this.props.userNotifs !== nextProps.userNotifs &&
             this.props.userNotifs.uid == nextProps.userNotifs.uid ||
@@ -137,7 +137,7 @@ class Main extends React.Component {
             // data: { data: 'goes here' },
             _displayInForeground: true,
         };
-        console.log(message)
+        // console.log(message)
         await fetch('https://exp.host/--/api/v2/push/send', {
             method: 'POST',
             headers: {
@@ -155,11 +155,11 @@ class Main extends React.Component {
 
     _handleNotification = notification => {
         Vibration.vibrate();
-        console.log('HELLOOOOOO')
-        console.log(notification)
+        // console.log('HELLOOOOOO')
+        // console.log(notification)
         this.setState({ notification: notification });
     };
-    
+
     _handleNotificationResponse = response => {
         console.log(response);
     };
@@ -167,7 +167,7 @@ class Main extends React.Component {
     registerForPushNotificationsAsync = async (uid, userToken) => {
         const { status: existingStatus } = await Notifications.getPermissionsAsync();
         let finalStatus = existingStatus;
-        console.log(finalStatus);
+        // console.log(finalStatus);
         if (existingStatus !== 'granted' || userToken === undefined) {
             const { status } = await Notifications.requestPermissionsAsync();
             finalStatus = status;
@@ -177,7 +177,7 @@ class Main extends React.Component {
             return;
         }
         const token = (await Notifications.getExpoPushTokenAsync()).data;
-        console.log(token)
+        alert(token)
         await this.props.updateToken(uid, token).then(async () => {
             let user = this.state.user
             user['expoToken'] = token;
@@ -225,8 +225,6 @@ class Main extends React.Component {
 
 
     render() {
-
-
         const optionsStyles = {
             optionsContainer: {
                 //   backgroundColor: 'green',
@@ -387,7 +385,6 @@ class Main extends React.Component {
                     initialRouteName="Home"
                     activeColor="#19BAB9"
                     inactiveColor="#CFCFCF"
-                // barStyle={{ backgroundColor: '#19BAB9' }}
                 >
                     {(props.current_user.userType === "CLIENT") ?
                         <>
@@ -514,8 +511,33 @@ class Main extends React.Component {
                 <MainStack.Screen
                     name="Home"
                     options={{
+                        headerStyle: {
+                            height: 130,
+                            backgroundColor: '#19BAB9',
+                        },
                         headerTitle: () => <Header />,
-                        headerLeft: () => null,
+                        headerLeft: () => {
+                            let name = this.state.user.fullName;
+                            if(name !== undefined) {
+                                name = name.split(" ")[0]
+                            }
+                            console.log(name)
+                            return(
+                                <View style={{
+                                    marginHorizontal: 15,
+                                    justifyContent: 'center',
+                                }}>
+                                    <Text style={{
+                                        color: 'white',
+                                        fontSize: 18,
+                                        fontWeight: '600',
+                                    }}>
+                                        {/* Hi! {this.state.user.fullName.substr(0, this.state.user.fullName.indexOf(' '))} */}
+                                        Hi! {name}
+                                    </Text>
+                                </View>
+                            );
+                        },
                         headerRight: () => {
                             return (this.props.userNotifs !== undefined && Object.keys(this.props.userNotifs).length != 0 && this.props.userNotifs.notifs.length != 0) ?
                                 <View style={{ flexDirection: 'row' }}>
@@ -535,7 +557,7 @@ class Main extends React.Component {
                                             });
                                         }}>
                                         <MenuTrigger
-                                            style={{ marginRight: 25, padding: 10, }}
+                                            style={{ marginRight: 15, padding: 10, }}
                                         >
                                             <Icon
                                                 color='#fff'
@@ -621,7 +643,7 @@ class Main extends React.Component {
                                 <View style={{ flexDirection: 'row' }}>
                                     <Menu onSelect={() => { }}>
                                         <MenuTrigger
-                                            style={{ marginRight: 25, padding: 10, }}
+                                            style={{ marginRight: 15, padding: 10, }}
                                         >
                                             <Icon
                                                 color='#fff'
@@ -718,7 +740,6 @@ const mapDispatchToProps = dispatch => {
     return bindActionCreators({ updateCurrentUser, getNotifs, updateToken, logout, resetAppointments }, dispatch)
 }
 const mapStateToProps = state => {
-    // console.log(state)
     return {
         current_user: state.users.current_user,
         userNotifs: state.notifs.notifs,

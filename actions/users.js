@@ -41,7 +41,7 @@ export const recoverPassword = (token) => {
             await Firebase.auth().sendPasswordResetEmail(token)
                 .then(() => {
                     const result = {
-                        message: "Email has been sent for " + token + ". \n\n Please check the email for instructions in resetting the password."
+                        message: "Please check " + token + " for instructions in resetting your password."
                     }
                     dispatch(recoverPassSuccess(result));
                 })
