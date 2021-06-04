@@ -61,15 +61,23 @@ class Home extends React.Component {
     let images = [
       {
         key: 1,
-        img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/homepage%2Fassets_carousel_sample1.png?alt=media&token=b84c2e8e-c810-41ba-99aa-74655ee4cac6',
+        img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/homepage%2Fcarousel_1.png?alt=media&token=1a018edf-bdfb-47ae-a293-5e4336f861fc',
       },
       {
         key: 2,
-        img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/homepage%2Fassets_carousel_sample2.png?alt=media&token=02db3f2f-a342-454b-8ae1-ecc32543a769',
+        img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/homepage%2Fcarousel_2.png?alt=media&token=b3d55721-fa07-4b3f-b8a0-d17b53f9caab',
       },
       {
         key: 3,
-        img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/homepage%2Fassets_carousel_sample3.png?alt=media&token=60635cf7-dc00-4685-b379-731d722673b9',
+        img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/homepage%2Fcarousel_3.png?alt=media&token=9cecb0a8-4f5e-4a01-b2cd-6ea9fa3ca6c0',
+      },
+      {
+        key: 4,
+        img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/homepage%2Fcarousel_4.png?alt=media&token=c1f7f535-6165-413a-9e94-fc45c0525424',
+      },
+      {
+        key: 5,
+        img: 'https://firebasestorage.googleapis.com/v0/b/appointmentapp-d867d.appspot.com/o/homepage%2Fcarousel_5.png?alt=media&token=877d306f-f6ca-4d75-9ce6-da91cadb7ed8',
       },
     ];
 
@@ -77,26 +85,26 @@ class Home extends React.Component {
     const userSpecialty_list = [
       {
         key: 1,
-        userSpecialty: "Engineer",
-      },
-      {
-        key: 2,
-        userSpecialty: "Architect",
-      },
-      {
-        key: 3,
         userSpecialty: "Doctor",
       },
       {
-        key: 4,
+        key: 2,
         userSpecialty: "Lawyer",
+      },
+      {
+        key: 3,
+        userSpecialty: "Engineer",
+      },
+      {
+        key: 4,
+        userSpecialty: "Architect",
       },
     ]
 
     return (
       // <SafeAreaView style={{ flex: 1 }}>
       <View style={homeStyles.container}>
-        <View style={{ height: 220, marginTop: 10 }}>
+        <View style={{ height: 250, marginTop: 10 }}>
           <BackgroundCarousel images={images} />
         </View>
 

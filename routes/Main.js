@@ -512,16 +512,16 @@ class Main extends React.Component {
                     name="Home"
                     options={{
                         headerStyle: {
-                            height: 130,
+                            height: 120,
                             backgroundColor: '#19BAB9',
                         },
                         headerTitle: () => <Header />,
-                        headerLeft: () => {
-                            let name = this.state.user.fullName;
+                        headerLeft: (props) => {
+                            let name = this.props.current_user.fullName;
                             if(name !== undefined) {
                                 name = name.split(" ")[0]
                             }
-                            console.log(name)
+                            console.log(name.length);
                             return(
                                 <View style={{
                                     marginHorizontal: 15,
@@ -529,11 +529,12 @@ class Main extends React.Component {
                                 }}>
                                     <Text style={{
                                         color: 'white',
-                                        fontSize: 18,
+                                        fontSize: (name.length < 8)? 21 : 16,
                                         fontWeight: '600',
                                     }}>
                                         {/* Hi! {this.state.user.fullName.substr(0, this.state.user.fullName.indexOf(' '))} */}
-                                        Hi! {name}
+                                        {/* Hi! {name} */}
+                                        Hi! {(name.length < 8)? name : "\n" + name }
                                     </Text>
                                 </View>
                             );
@@ -557,7 +558,7 @@ class Main extends React.Component {
                                             });
                                         }}>
                                         <MenuTrigger
-                                            style={{ marginRight: 15, padding: 10, }}
+                                            style={{ marginRight: 10, padding: 10, }}
                                         >
                                             <Icon
                                                 color='#fff'
@@ -621,7 +622,7 @@ class Main extends React.Component {
                                         }
                                     }>
                                         <MenuTrigger
-                                            style={{ marginRight: 25, padding: 10, }}
+                                            style={{ marginRight: 10, padding: 10, }}
                                         >
                                             <Icon
                                                 color='#fff'

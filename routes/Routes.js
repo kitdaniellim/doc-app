@@ -26,11 +26,13 @@ class Routes extends React.Component {
         const user = JSON.parse(
             await AsyncStorage.getItem("user")
         );
-
+        console.log('HELLOOO')
+        console.log(user);
         if (user != null) {
             this.props.updateCurrentUser({
                 userType: user.userType,
-                uid: user.uid
+                uid: user.uid,
+                fullName: user.fullName
             });
         }
     }

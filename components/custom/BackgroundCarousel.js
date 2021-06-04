@@ -28,7 +28,7 @@ class BackgroundCarousel extends React.Component {
                         x: DEVICE_WIDTH * this.state.selectedIndex
                     })
                 })
-        }, 3000)
+        }, 8000)
     }
 
     componentWillUnmount = () => {
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: DEVICE_WIDTH,
         height: "100%",
-        resizeMode: 'stretch',
+        resizeMode: 'contain',
     },
 
     circleDiv: {

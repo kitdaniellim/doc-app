@@ -23,13 +23,13 @@ const styles = StyleSheet.create({
         marginLeft: 45,
     },
     image: {
-        height: 40,
-        width: 70
+        height: 50,
+        width: 80
     },
     image_2: {
-        height: 40,
-        width: 30,
-        marginRight: 8,
+        height: 50,
+        width: 40,
+        marginRight: 2,
     },
 });
 

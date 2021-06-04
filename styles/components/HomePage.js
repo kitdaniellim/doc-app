@@ -53,10 +53,11 @@ const Home = {
 
   scaffold_vlist_item_header: {
     fontSize: 17,
+    fontFamily: Platform.OS === 'ios' ? "Times New Roman" : "sans-serif-medium",
     marginBottom: 5,
     paddingLeft: 8,
     letterSpacing: 0.2,
-    fontWeight: '600',
+    fontWeight: '400',
     color: '#000',
   },
 
