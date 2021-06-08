@@ -14,7 +14,7 @@ import { connect } from 'react-redux';
 import { updateEmail, updatePassword, login, logout } from '../actions/users';
 import { resetAppointments } from '../actions/appointments';
 import { getReviewedBy } from '../actions/reviews';
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 class Login extends React.Component {
   constructor(props) {
@@ -60,7 +60,8 @@ class Login extends React.Component {
         console.log(`Login successful.`)
         let cur_user = {
           userType: this.props.user.userType,
-          uid: this.props.user.uid
+          uid: this.props.user.uid,
+          fullName: this.props.user.fullName
         }
         this.props.navigation.navigate('Tutorial', {cur_user: cur_user});
       } else {

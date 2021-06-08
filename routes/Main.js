@@ -37,7 +37,7 @@ import { bindActionCreators } from 'redux';
 import { updateCurrentUser, updateToken, logout } from '../actions/users';
 import { getNotifs } from '../actions/notifs';
 import { resetAppointments } from '../actions/appointments';
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
 import Firebase, { db } from '../config/Firebase'
@@ -177,7 +177,6 @@ class Main extends React.Component {
             return;
         }
         const token = (await Notifications.getExpoPushTokenAsync()).data;
-        alert(token)
         await this.props.updateToken(uid, token).then(async () => {
             let user = this.state.user
             user['expoToken'] = token;
@@ -516,12 +515,12 @@ class Main extends React.Component {
                             backgroundColor: '#19BAB9',
                         },
                         headerTitle: () => <Header />,
-                        headerLeft: (props) => {
+                        headerLeft: () => {
                             let name = this.props.current_user.fullName;
+                            console.log(this.props)
                             if(name !== undefined) {
                                 name = name.split(" ")[0]
                             }
-                            console.log(name.length);
                             return(
                                 <View style={{
                                     marginHorizontal: 15,

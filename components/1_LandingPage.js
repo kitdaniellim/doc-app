@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { loginStyles, globalStyles } from '../styles/styles';
 import { LinearGradient } from 'expo-linear-gradient';
 import ImageLoader from './custom/ImageLoader.js';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Login from './2_1_LoginPage.js';
 
 const Landing = (props) => {

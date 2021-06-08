@@ -8,7 +8,7 @@ import { reviewStyles, calendarStyles } from '../styles/styles';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getReviewedBy } from '../actions/reviews';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 class Review extends React.Component {

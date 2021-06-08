@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Calendar } from "react-native-calendars";
 import { calendarStyles, globalStyles } from "../styles/styles";
 import { getUserAppointments } from "../actions/appointments";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 class CalendarPage extends React.Component {
   constructor(props) {

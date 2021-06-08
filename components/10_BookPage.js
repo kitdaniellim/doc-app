@@ -8,7 +8,7 @@ import BookPage4_Confirmation from "./BookPage4_Confirmation";
 import { calendarStyles } from "../styles/styles";
 import { bookAppointment, getAppointments } from "../actions/appointments";
 import moment from "moment";
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getConsultant } from "../actions/users";
 import { addNotif } from '../actions/notifs';
 

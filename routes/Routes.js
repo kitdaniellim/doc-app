@@ -12,7 +12,7 @@ import { navigationRef } from './RootNavigation';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { updateCurrentUser, } from '../actions/users';
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 class Routes extends React.Component {
     constructor(props) {

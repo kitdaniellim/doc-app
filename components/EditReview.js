@@ -103,7 +103,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getReviewByUID, updateReview } from '../actions/reviews';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { reviewStyles, globalStyles } from '../styles/styles';
 
 class EditReview extends React.Component {

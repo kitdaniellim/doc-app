@@ -9,7 +9,7 @@ import { getReviews, getAllReviews } from '../actions/reviews';
 import { addNotif } from '../actions/notifs';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { uniqueId } from 'lodash';
 
 class Home extends React.Component {

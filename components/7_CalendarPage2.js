@@ -13,7 +13,7 @@ import { calendarStyles, globalStyles } from "../styles/styles";
 import Modal from "react-native-modal";
 import { getUserAppointments, getFiles, updateAppointmentStatus } from "../actions/appointments";
 import { addNotif } from '../actions/notifs';
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import FilesModal from "./7_FilesModal.js";
 import moment from "moment";
 
