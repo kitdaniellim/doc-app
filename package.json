@@ -1,15 +1,15 @@
 {
-  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "start": "react-native start",
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
     "web": "expo start --web",
     "eject": "expo eject"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.5",
     "@react-native-community/checkbox": "^0.4.2",
+    "@react-native-community/cli": "^5.0.1",
     "@react-native-community/datetimepicker": "3.2.0",
     "@react-native-community/masked-view": "0.1.10",
     "@react-native-community/picker": "^1.6.5",
@@ -26,6 +26,9 @@
     "expo-image-picker": "~10.1.4",
     "expo-linear-gradient": "^9.1.0",
     "expo-notifications": "~0.11.6",
+    "expo-splash-screen": "~0.10.2",
+    "expo-status-bar": "~1.0.4",
+    "expo-updates": "~0.5.4",
     "extglob": "^3.0.0",
     "firebase": "8.2.3",
     "firebase-admin": "^8.13.0",
@@ -36,7 +39,7 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-files": "^2.4.8",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz",
+    "react-native": "~0.63.4",
     "react-native-banner-carousel": "^1.0.3",
     "react-native-calendars": "^1.265.0",
     "react-native-code-push": "^7.0.0",
@@ -60,6 +63,7 @@
     "react-native-screens": "~3.0.0",
     "react-native-selectmultiple-button": "^0.1.105",
     "react-native-star-rating": "^1.1.0",
+    "react-native-unimodules": "~0.13.3",
     "react-native-uuid": "^1.4.9",
     "react-native-vector-icons": "^6.7.0",
     "react-native-web": "~0.13.12",
@@ -76,5 +80,7 @@
     "babel-preset-expo": "8.3.0",
     "react-native-dotenv": "^0.2.0"
   },
-  "private": true
+  "private": true,
+  "name": "doc-app",
+  "version": "1.0.0"
 }
