@@ -1,7 +1,5 @@
 # DocApp
 
-Project under DoctorsEpic. SetMeApp is an appointment setting tool for use between doctors and patients. The application allows doctors to register and create their own profile, send message to clients, set appointment dates in the calendar, and accept and reject appointments. Created using React Native and Expo. 
-
 ![1](https://user-images.githubusercontent.com/60454465/132158692-4a6dd6a5-42b1-4959-91ef-d19f7dd986a4.jpg)
 
 ![5](https://user-images.githubusercontent.com/60454465/132158702-4e910894-7ed3-4178-940e-17e35567ec28.jpg)
